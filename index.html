@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Paweł Sypniewski</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   /* ---------- RESET / BASE ---------- */
-  *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+  *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   html, body { height: 100%; }
   body {
     font-family: 'Futura', 'Futura PT', 'Jost', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -575,15 +576,295 @@
   .tweaks .tw-options button:hover { background: #000; color: #fff; }
 
   /* ============================================================
-     MOBILE-ISH FALLBACK (only the essentials)
+     RESPONSIVE — TABLET (<=1024px)
      ============================================================ */
-  @media (max-width: 800px) {
-    .shell { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
-    .sidebar { height: auto; border-right: none; border-bottom: 1px solid #000; padding: 16px 20px; }
-    .sidenav { flex-direction: row; flex-wrap: wrap; gap: 16px; margin-top: 16px; }
-    .sidefoot { display: none; }
-    .home-vignelli .title, .home-stack .row .title, .home-index .row .title { font-size: 48px; }
+  @media (max-width: 1024px) {
+    .shell { grid-template-columns: 200px 1fr; }
+    .home-vignelli { padding: 0 36px; }
+    .home-index { padding: 80px 36px 40px; }
+    .home-index .header, .home-index .row {
+      grid-template-columns: 60px 1fr 140px 90px 80px;
+      gap: 16px;
+    }
+    .home-stack .row { padding: 0 36px; }
+    .home-poster { padding: 56px 20px 20px; gap: 8px; }
+    .proj-top, .proj-bottom { padding-left: 24px; padding-right: 24px; }
+    .text-page { padding: 72px 36px 40px; gap: 48px; }
   }
+
+  /* ============================================================
+     RESPONSIVE — MOBILE (<=720px)
+     ============================================================ */
+  @media (max-width: 720px) {
+    body { overflow: auto; }
+    html, body { height: auto; min-height: 100%; }
+
+    /* shell -> single column with top header */
+    .shell {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr;
+      height: auto;
+      min-height: 100dvh;
+    }
+
+    /* --- SIDEBAR becomes a top header --- */
+    .sidebar {
+      height: auto;
+      width: 100%;
+      border-right: none;
+      border-bottom: 1px solid #000;
+      padding: 14px 18px;
+      display: block;
+      position: sticky;
+      top: 0;
+      background: #fff;
+      z-index: 50;
+    }
+    .sidebar > div:first-child {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .sidebar .brand .name {
+      font-size: 13px;
+      line-height: 1.05;
+    }
+    .sidebar .brand .role { display: none; }
+
+    .sidenav {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 0;
+      justify-content: flex-end;
+    }
+    .sidenav a { font-size: 12px; line-height: 1.2; }
+
+    .sidefoot {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 9px;
+    }
+    .sidefoot .langs { margin-bottom: 0; }
+    .sidefoot .meta { text-align: right; }
+    .sidefoot .meta > div:not(:last-child) { display: none; }
+    .sidefoot .meta > div:last-child { margin-top: 0 !important; }
+
+    /* --- MAIN --- */
+    .main { height: auto; min-height: calc(100dvh - 110px); overflow: visible; }
+    .view {
+      position: relative;
+      height: auto;
+      opacity: 1;
+      pointer-events: auto;
+      display: none;
+    }
+    .view.active { display: block; }
+
+    /* --- HOMEPAGE variants --- */
+    .home-stage { height: auto; min-height: calc(100dvh - 110px); }
+    .home-topline {
+      position: relative;
+      top: 0; left: 0; right: 0;
+      padding: 14px 18px;
+      font-size: 9px;
+      flex-wrap: wrap;
+      gap: 8px;
+      border-bottom: 1px solid #000;
+    }
+
+    /* VIGNELLI on mobile — vertical list, large but fits */
+    .home-vignelli {
+      padding: 0 18px;
+      height: auto;
+      display: block;
+    }
+    .home-vignelli li {
+      grid-template-columns: 32px 1fr;
+      grid-template-rows: auto auto;
+      gap: 8px 12px;
+      padding: 18px 0 14px;
+    }
+    .home-vignelli li:hover { padding-left: 0; }
+    .home-vignelli .num { font-size: 10px; align-self: start; padding-top: 4px; }
+    .home-vignelli .title {
+      font-size: clamp(34px, 9vw, 56px);
+      line-height: 0.95;
+      grid-column: 2;
+    }
+    .home-vignelli .meta {
+      grid-column: 2;
+      text-align: left;
+      font-size: 9px;
+      opacity: 0.7;
+      margin-top: 4px;
+    }
+    .home-vignelli .meta br { display: inline; }
+    .home-vignelli .meta br::before { content: " · "; }
+
+    /* INDEX on mobile — drop columns, stack info */
+    .home-index { padding: 18px; height: auto; display: block; }
+    .home-index .header { display: none; }
+    .home-index .row {
+      grid-template-columns: 32px 1fr;
+      grid-template-rows: auto auto;
+      gap: 6px 12px;
+      padding: 16px 0;
+    }
+    .home-index .row:hover { background: transparent; color: inherit; }
+    .home-index .row .no { font-size: 10px; align-self: start; padding-top: 6px; }
+    .home-index .row .title {
+      font-size: clamp(28px, 8vw, 48px);
+      grid-column: 2;
+    }
+    .home-index .row .col:not(.no) {
+      grid-column: 2;
+      font-size: 9px;
+      opacity: 0.65;
+      display: inline;
+    }
+    .home-index .row .col:not(.no):not(:last-child)::after {
+      content: " · ";
+      opacity: 0.5;
+    }
+
+    /* STACK on mobile — auto-height rows */
+    .home-stack { padding-top: 0; height: auto; }
+    .home-stack .row {
+      flex: 0 0 auto;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto;
+      padding: 24px 18px;
+      gap: 6px;
+      min-height: 0;
+    }
+    .home-stack .row:hover { background: transparent; color: inherit; }
+    .home-stack .row:hover .title { transform: none; }
+    .home-stack .row .title {
+      font-size: clamp(36px, 10vw, 64px);
+      white-space: normal;
+      line-height: 0.9;
+    }
+    .home-stack .row .side {
+      text-align: left;
+      font-size: 9px;
+    }
+
+    /* POSTER on mobile — single column */
+    .home-poster {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+      padding: 18px;
+      gap: 8px;
+      height: auto;
+    }
+    .home-poster .cell {
+      grid-column: 1 / -1 !important;
+      grid-row: auto !important;
+      min-height: 120px;
+      padding: 16px;
+      gap: 32px;
+    }
+    .home-poster .cell:hover { background: transparent; color: inherit; }
+    .home-poster .cell .title {
+      font-size: clamp(28px, 8vw, 48px);
+    }
+
+    /* --- PROJECT VIEW --- */
+    .project {
+      height: auto;
+      min-height: calc(100dvh - 110px);
+      grid-template-rows: auto auto auto;
+    }
+    .proj-top {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 16px 18px;
+    }
+    .proj-top .pj-title { font-size: clamp(28px, 8vw, 40px); }
+    .proj-top .pj-meta { text-align: left; }
+    .proj-stage {
+      height: 60vh;
+      min-height: 360px;
+      touch-action: pan-y pinch-zoom;
+    }
+    .proj-slide { padding: 16px 14px; }
+    .proj-slide img { cursor: pointer; }
+    .proj-nav-left, .proj-nav-right { display: none; }
+    .proj-bottom {
+      padding: 12px 18px 16px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+      font-size: 10px;
+    }
+    .proj-bottom .caption { max-width: 100%; }
+
+    /* mobile nav controls under gallery */
+    .proj-mobile-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 18px;
+      border-top: 1px solid #000;
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .proj-mobile-nav button {
+      padding: 10px 16px;
+      border: 1px solid #000;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      min-height: 44px;
+      min-width: 88px;
+    }
+    .proj-mobile-nav button:active { background: #000; color: #fff; }
+
+    /* --- TEXT PAGES --- */
+    .text-page {
+      grid-template-columns: 1fr;
+      padding: 28px 18px 40px;
+      gap: 32px;
+      height: auto;
+      overflow: visible;
+    }
+    .text-page h1 {
+      font-size: clamp(42px, 11vw, 72px);
+      margin-bottom: 16px;
+    }
+    .text-page .body { font-size: 14px; }
+
+    /* --- LIGHTBOX --- */
+    .lightbox { padding: 50px 12px; }
+    .lightbox .lb-close { top: 14px; right: 16px; font-size: 11px; padding: 6px; }
+    .lightbox .lb-counter { bottom: 14px; left: 16px; font-size: 11px; }
+
+    /* --- TWEAKS PANEL on mobile -> bottom sheet --- */
+    .tweaks {
+      bottom: 0;
+      right: 0;
+      left: 0;
+      width: 100%;
+      border-left: none;
+      border-right: none;
+      border-bottom: none;
+      max-height: 70dvh;
+      overflow-y: auto;
+    }
+  }
+
+  /* Desktop-only: hide mobile nav controls */
+  .proj-mobile-nav { display: none; }
 </style>
 </head>
 <body>
@@ -679,6 +960,11 @@
         <div class="proj-bottom">
           <div class="caption" id="pjCaption">—</div>
           <div class="counter" id="pjCounter">01/01</div>
+        </div>
+        <div class="proj-mobile-nav">
+          <button id="pjPrevMobile" type="button" data-i18n="proj.prev">poprzednie</button>
+          <span id="pjCounterMobile">01/01</span>
+          <button id="pjNextMobile" type="button" data-i18n="proj.next">następne</button>
         </div>
       </div>
     </section>
