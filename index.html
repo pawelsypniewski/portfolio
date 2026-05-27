@@ -640,6 +640,58 @@
   }
 
   /* ============================================================
+     RESPONSIVE — RETINA / 16" MACBOOK PRO (2880x1800)
+     Larger than the 2200px tier — bigger type, more air.
+     Must come AFTER the 2200px block to override it.
+     ============================================================ */
+  @media (min-width: 2800px) {
+    .shell { grid-template-columns: 360px 1fr; }
+    .sidebar { padding: 44px 32px; }
+    .sidebar .brand .name { font-size: 22px; }
+    .sidenav a { font-size: 18px; line-height: 1.7; }
+    .sidefoot { font-size: 12px; }
+
+    .home-vignelli { padding: 0 96px; }
+    .home-vignelli li { padding: 28px 0 22px; grid-template-columns: 80px 1fr auto; gap: 48px; }
+    .home-vignelli .num { font-size: 14px; }
+    .home-vignelli .title { font-size: clamp(96px, 6.4vw, 160px); }
+    .home-vignelli .meta { font-size: 13px; }
+
+    .home-index { padding: 72px 96px; }
+    .home-index .header,
+    .home-index .row { grid-template-columns: 100px 1fr 220px 160px 160px; gap: 32px; }
+    .home-index .row { padding: 44px 0; }
+    .home-index .row .title { font-size: clamp(60px, 4.8vw, 100px); }
+    .home-index .header { font-size: 12px; }
+    .home-index .row .col { font-size: 14px; }
+
+    .home-stack .row { padding: 0 96px; }
+    .home-stack .row .title { font-size: clamp(100px, 7.6vw, 200px); }
+    .home-stack .row .side { font-size: 13px; }
+
+    .home-poster { padding: 40px 56px; gap: 16px; }
+    .home-poster .cell { padding: 28px; }
+    .home-poster .cell .num { font-size: 12px; }
+    .home-poster .cell .title { font-size: clamp(48px, 3.6vw, 80px); }
+    .home-poster .cell .meta { font-size: 12px; }
+
+    .proj-top { padding: 32px 56px 22px; }
+    .proj-top .pj-title { font-size: clamp(40px, 3.6vw, 64px); }
+    .proj-top .pj-meta { font-size: 13px; }
+    .proj-top .pj-sub { font-size: 12px; }
+    .proj-bottom { padding: 18px 56px 28px; font-size: 13px; }
+    .proj-slide { padding: 48px 56px; }
+
+    .text-page { padding: 120px 96px 96px; max-width: 2200px; gap: 120px; }
+    .text-page h1 { font-size: clamp(96px, 7vw, 168px); margin-bottom: 56px; }
+    .text-page .body { font-size: 18px; line-height: 1.55; }
+    .text-page .side { font-size: 13px; }
+    .text-page .side h3 { font-size: 12px; }
+
+    .home-topline { padding: 18px 56px; font-size: 13px; }
+  }
+
+  /* ============================================================
      RESPONSIVE — SHORT LAPTOP SCREENS (1366x768, 1440x900, 1280x800)
      Tighten vertical rhythm so the homepage fits without scroll.
      ============================================================ */
