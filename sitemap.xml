@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/0.9">
+
+  <!-- ============ HOMEPAGE ============ -->
+  <url>
+    <loc>https://pawelsypniewski.github.io/portfolio/</loc>
+    <lastmod>2026-05-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://pawelsypniewski.github.io/portfolio/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://pawelsypniewski.github.io/portfolio/?lang=en" />
+  </url>
+
+  <!-- ============ STATIC PAGES ============ -->
+  <url>
+    <loc>https://pawelsypniewski.github.io/portfolio/#about</loc>
+    <lastmod>2026-05-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pawelsypniewski.github.io/portfolio/#contact</loc>
+    <lastmod>2026-05-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- ============ PROJECTS ============ -->
+
+  <!-- 01 — Ustawienia domyślne (2024) -->
+  <url>
+    <loc>https://pawelsypniewski.github.io/portfolio/#project/ustawienia-domyslne</loc>
+    <lastmod>2024-12-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://pawelsypniewski.github.io/portfolio/images/ustawienia/01.jpg</image:loc>
+      <image:title>Ustawienia domyślne — 01</image:title>
+      <image:caption>Cykl dokumentalny o codzienności i fragmentach krajobrazu</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pawelsypniewski.github.io/portfolio/images/ustawienia/02.jpg</image:loc>
+      <image:title>Ustawienia domyślne — 02</image:title>
+    </image:image>
+  </url>
+
+  <!-- 02 — Superpozycja (2023) -->
+  <url>
+    <loc>https://pawelsypniewski.github.io/portfolio/#project/superpozycja</loc>
+    <lastmod>2023-12-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://pawelsypniewski.github.io/portfolio/images/superpozycja/01.jpg</image:loc>
+      <image:title>Superpozycja — 01</image:title>
+      <image:caption>Kreacyjny cykl portretowy / kwantowa wizja</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pawelsypniewski.github.io/portfolio/images/superpozycja/04.jpg</image:loc>
+      <image:title>Superpozycja — 04</image:title>
+    </image:image>
+  </url>
+
+  <!-- 03 — Gra o tron (2022) -->
+  <url>
+    <loc>https://pawelsypniewski.github.io/portfolio/#project/gra-o-tron</loc>
+    <lastmod>2022-12-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://pawelsypniewski.github.io/portfolio/images/gra_o_tron/01.jpg</image:loc>
+      <image:title>Gra o tron — 01</image:title>
+      <image:caption>Dokumentalny zapis krajobrazu politycznego polskiej prowincji</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pawelsypniewski.github.io/portfolio/images/gra_o_tron/05.jpg</image:loc>
+      <image:title>Gra o tron — 05</image:title>
+    </image:image>
+  </url>
+
+  <!-- 04 — Nowa topografia Polski (2022) -->
+  <url>
+    <loc>https://pawelsypniewski.github.io/portfolio/#project/nowa-topografia</loc>
+    <lastmod>2022-12-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://pawelsypniewski.github.io/portfolio/images/topografia/01.jpg</image:loc>
+      <image:title>Nowa topografia Polski — 01</image:title>
+      <image:caption>Krajobraz peryferii — polska moim okiem</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pawelsypniewski.github.io/portfolio/images/topografia/05.jpg</image:loc>
+      <image:title>Nowa topografia Polski — 05</image:title>
+    </image:image>
+  </url>
+
+  <!-- 05 — Labirynt (2024) -->
+  <url>
+    <loc>https://pawelsypniewski.github.io/portfolio/#project/labirynt</loc>
+    <lastmod>2024-12-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://pawelsypniewski.github.io/portfolio/images/labirynt/01.jpg</image:loc>
+      <image:title>Labirynt — 01</image:title>
+      <image:caption>Książka fotograficzna o stanach zawieszenia (ITF Opava)</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pawelsypniewski.github.io/portfolio/images/labirynt/08.jpg</image:loc>
+      <image:title>Labirynt — 08</image:title>
+    </image:image>
+  </url>
+
+</urlset>
