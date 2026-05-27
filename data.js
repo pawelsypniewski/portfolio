@@ -192,29 +192,19 @@ window.ABOUT = {
 
 window.CONTACT = {
   pl: {
-    body: `<p>W sprawach wystaw, publikacji, współprac i sprzedaży odbitek autorskich — proszę o kontakt mailowy. Odpowiadam w ciągu kilku dni roboczych.</p>
-<p>W przypadku zapytań o reprezentację galeryjną oraz licencjonowanie obrazów — proszę o podanie kontekstu i przewidywanego pola eksploatacji.</p>`,
+    body: `<p>Odbitki autorskie w limitowanych edycjach są dostępne w sprzedaży. Możesz zapytać o dowolne zdjęcie, które Cię zainteresowało. W sprawie nakładu, formatów i cen — napisz do mnie mailem.</p>`,
     side: `
 <h3>E-mail</h3>
 <ul><li><a href="mailto:katedranalogowa@gmail.com">katedranalogowa@gmail.com</a></li></ul>
-<h3>Social</h3>
-<ul>
-  <li><a href="https://www.instagram.com/sypniewskistudio/" target="_blank" rel="noopener">Instagram → @sypniewskistudio</a></li>
-</ul>
-<h3>Reprezentacja</h3>
-<ul><li>—</li></ul>`
+<h3>Instagram</h3>
+<ul><li><a href="https://www.instagram.com/sypniewskistudio/" target="_blank" rel="noopener">@sypniewskistudio</a></li></ul>`
   },
   en: {
-    body: `<p>For exhibitions, publications, collaborations and editioned print sales — please get in touch by email. Replies within a few working days.</p>
-<p>For inquiries about gallery representation and image licensing, please include context and the intended scope of use.</p>`,
+    body: `<p>Limited edition prints are available for sale. Please ask for any picture you like. For details — amounts, sizes, pricing — send me an email.</p>`,
     side: `
 <h3>E-mail</h3>
 <ul><li><a href="mailto:katedranalogowa@gmail.com">katedranalogowa@gmail.com</a></li></ul>
-<h3>Social</h3>
-<ul>
-  <li><a href="https://www.instagram.com/sypniewskistudio/" target="_blank" rel="noopener">Instagram → @sypniewskistudio</a></li>
-</ul>
-<h3>Representation</h3>
-<ul><li>—</li></ul>`
+<h3>Instagram</h3>
+<ul><li><a href="https://www.instagram.com/sypniewskistudio/" target="_blank" rel="noopener">@sypniewskistudio</a></li></ul>`
   }
 };
