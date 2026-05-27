@@ -6,7 +6,7 @@ const state = {
   projectSlug: null,
   slideIndex: 0,
   lang: "pl",
-  homeVariant: "vignelli", // vignelli | index | stack | poster
+  homeVariant: "poster", // vignelli | index | stack | poster
 };
 
 const $  = (s, r=document) => r.querySelector(s);
@@ -67,13 +67,29 @@ function renderHome() {
   `).join("");
 
   // VARIANT 4 — POSTER GRID
-  $("#homeListPoster").innerHTML = projs.map((p, i) => `
+  $("#homeListPoster").innerHTML = projs.map((p, i) => {
+    const randomImg = p.images[Math.floor(Math.random() * p.images.length)];
+    return `
     <div class="cell c${i+1}" data-slug="${p.slug}">
       <div class="num">${p.no} / ${L==="pl"?"PRACE":"WORKS"}</div>
-      <div class="title">${p.title[L]}</div>
+      <div class="title">
+        <span class="title-text">${p.title[L]}</span>
+        <div class="thumb-frame" style="background-image:url('${randomImg}')"></div>
+      </div>
       <div class="meta">${p.year} · ${p.place[L]} · ${p.works} ${L==="pl"?"prac":"works"}</div>
     </div>
-  `).join("");
+  `;}).join("");
+
+  // Re-randomise the poster thumbnail each time user hovers a cell
+  $$(".home-poster .cell").forEach(cell => {
+    cell.addEventListener("mouseenter", () => {
+      const p = window.PROJECTS.find(x => x.slug === cell.dataset.slug);
+      if (!p) return;
+      const img = p.images[Math.floor(Math.random() * p.images.length)];
+      const frame = cell.querySelector(".thumb-frame");
+      if (frame) frame.style.backgroundImage = `url('${img}')`;
+    });
+  });
 
   // Click handlers for ALL variants (delegated)
   $$(".home-variant [data-slug]").forEach(el => {
@@ -131,8 +147,10 @@ function updateSlide() {
   if (!total) return;
   state.slideIndex = Math.max(0, Math.min(state.slideIndex, total - 1));
   track.style.transform = `translateX(-${state.slideIndex * 100}%)`;
-  $("#pjCounter").textContent =
-    `${String(state.slideIndex+1).padStart(2,"0")} / ${String(total).padStart(2,"0")}`;
+  const counterStr = `${String(state.slideIndex+1).padStart(2,"0")} / ${String(total).padStart(2,"0")}`;
+  $("#pjCounter").textContent = counterStr;
+  const cm = $("#pjCounterMobile");
+  if (cm) cm.textContent = counterStr;
 }
 
 function navProjectPrev() { state.slideIndex--; updateSlide(); }
@@ -242,6 +260,39 @@ function init() {
   // project nav arrows
   $("#pjPrev").addEventListener("click", navProjectPrev);
   $("#pjNext").addEventListener("click", navProjectNext);
+  const prevMobile = $("#pjPrevMobile");
+  const nextMobile = $("#pjNextMobile");
+  if (prevMobile) prevMobile.addEventListener("click", navProjectPrev);
+  if (nextMobile) nextMobile.addEventListener("click", navProjectNext);
+
+  // touch swipe on project stage
+  const stage = document.querySelector(".proj-stage");
+  if (stage) {
+    let touchStartX = 0, touchStartY = 0, touchMoved = false;
+    stage.addEventListener("touchstart", (e) => {
+      const t = e.touches[0];
+      touchStartX = t.clientX;
+      touchStartY = t.clientY;
+      touchMoved = false;
+    }, { passive: true });
+    stage.addEventListener("touchmove", (e) => {
+      const t = e.touches[0];
+      const dx = t.clientX - touchStartX;
+      const dy = t.clientY - touchStartY;
+      if (Math.abs(dx) > 10 || Math.abs(dy) > 10) touchMoved = true;
+    }, { passive: true });
+    stage.addEventListener("touchend", (e) => {
+      if (!touchMoved) return;
+      const t = e.changedTouches[0];
+      const dx = t.clientX - touchStartX;
+      const dy = t.clientY - touchStartY;
+      // only horizontal swipes
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.2) {
+        if (dx < 0) navProjectNext();
+        else navProjectPrev();
+      }
+    });
+  }
 
   // lightbox
   $("#lightbox").addEventListener("click", (e) => {

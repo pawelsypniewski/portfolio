@@ -315,16 +315,44 @@
   }
   .home-poster .cell {
     border: 1px solid #000;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
     padding: 16px;
     cursor: pointer;
     overflow: hidden;
-    transition: background 180ms ease, color 180ms ease;
+    transition: background 220ms ease, color 220ms ease;
     position: relative;
+    isolation: isolate;
+  }
+  .home-poster .cell > .num   { grid-row: 1; align-self: start; }
+  .home-poster .cell > .title { grid-row: 2; align-self: center; }
+  .home-poster .cell > .meta  { grid-row: 3; align-self: end; }
+  .home-poster .cell .title {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .home-poster .cell .title-text { flex: 0 1 auto; min-width: 0; }
+  .home-poster .cell .thumb-frame {
+    flex: 0 0 auto;
+    width: clamp(120px, 20vh, 260px);
+    height: clamp(120px, 18vh, 260px);
+    max-width: 0;
+    align-self: flex-start;
+    background-size: contain;
+    background-position: left top;
+    background-repeat: no-repeat;
+    opacity: 0;
+    overflow: hidden;
+    transition: opacity 240ms ease, max-width 420ms cubic-bezier(0.2, 0.7, 0.2, 1);
+    pointer-events: none;
+    filter: grayscale(1);
   }
   .home-poster .cell:hover { background: #000; color: #fff; }
+  .home-poster .cell:hover .thumb-frame {
+    opacity: 1;
+    max-width: 280px;
+  }
   .home-poster .cell .num {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-weight: 500;
@@ -1055,11 +1083,11 @@
       <div class="home-stage">
         <div class="home-topline">
           <span data-i18n="home.label">Prace / Selected works</span>
-          <span id="homeVariantLabel">[01] Vignelli</span>
+          <span id="homeVariantLabel">[04] Poster — Grid</span>
         </div>
 
         <!-- VARIANT 1: VIGNELLI LIST -->
-        <div class="home-vignelli home-variant" data-variant="vignelli">
+        <div class="home-vignelli home-variant" data-variant="vignelli" style="display:none">
           <ol id="homeListVignelli"></ol>
         </div>
 
@@ -1081,7 +1109,7 @@
         </div>
 
         <!-- VARIANT 4: POSTER GRID -->
-        <div class="home-poster home-variant" data-variant="poster" style="display:none">
+        <div class="home-poster home-variant" data-variant="poster">
           <div id="homeListPoster" style="display:contents"></div>
         </div>
       </div>
@@ -1151,10 +1179,10 @@
   <div class="tw-section">
     <h4 data-i18n="tw.home">Układ strony głównej</h4>
     <div class="tw-options" id="twHomeOptions">
-      <button data-variant="vignelli" class="active">[01] Vignelli — Lista</button>
+      <button data-variant="vignelli">[01] Vignelli — Lista</button>
       <button data-variant="index">[02] Indeks — Tabela</button>
       <button data-variant="stack">[03] Stack — Bloki</button>
-      <button data-variant="poster">[04] Poster — Grid</button>
+      <button data-variant="poster" class="active">[04] Poster — Grid</button>
     </div>
   </div>
   <div class="tw-section">
