@@ -144,24 +144,27 @@
   /* ============================================================
      HOMEPAGE — 4 LAYOUT VARIANTS
      ============================================================ */
-  .home-stage { height: 100%; width: 100%; position: relative; overflow: hidden; }
+  .home-stage { height: 100%; width: 100%; position: relative; overflow: hidden; display: flex; flex-direction: column; }
 
-  /* shared topline used on all variants */
+  /* shared topline — sits as a normal-flow strip at the bottom */
   .home-topline {
-    position: absolute;
-    top: 24px;
-    left: 28px;
-    right: 28px;
+    order: 99;
+    flex: 0 0 auto;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    padding: 12px 28px;
+    border-top: 1px solid #000;
+    background: #fff;
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-weight: 400;
     font-size: 10px;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    opacity: 0.55;
+    opacity: 0.7;
     z-index: 2;
   }
+  .home-variant { flex: 1 1 auto; min-height: 0; }
 
   /* ---- HOME [01] VIGNELLI LIST ---- */
   .home-vignelli {
@@ -210,7 +213,7 @@
 
   /* ---- HOME [02] INDEX TABLE ---- */
   .home-index {
-    padding: 88px 60px 60px;
+    padding: 36px 60px 36px;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -264,7 +267,6 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    padding-top: 56px;
   }
   .home-stack .row {
     flex: 1;
@@ -308,7 +310,7 @@
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    padding: 56px 32px 32px;
+    padding: 24px 32px 24px;
     gap: 12px;
   }
   .home-poster .cell {
@@ -709,12 +711,10 @@
     .home-stage { height: auto; min-height: calc(100dvh - 110px); }
     .home-topline {
       position: relative;
-      top: 0; left: 0; right: 0;
-      padding: 14px 18px;
+      padding: 12px 18px;
       font-size: 9px;
       flex-wrap: wrap;
       gap: 8px;
-      border-bottom: 1px solid #000;
     }
 
     /* VIGNELLI on mobile — vertical list, large but fits */
