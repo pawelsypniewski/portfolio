@@ -129,6 +129,42 @@ window.PROJECTS = [
    ============================================================ */
 window.ACHIEVEMENTS = [
   {
+    id: "fotoartfestival-dias-show-2025",
+    dateISO: "2025-10-11",
+    date: {
+      pl: "10 – 12 października 2025",
+      en: "10 – 12 October 2025"
+    },
+    type: { pl: "Laureat / Pokaz festiwalowy", en: "Laureate / Festival screening" },
+    title: {
+      pl: "DIAS SHOW — laureat XI FotoArtFestival",
+      en: "DIAS SHOW — XI FotoArtFestival laureate"
+    },
+    place: {
+      pl: "Foto Art Festival, Bielsko-Biała",
+      en: "Foto Art Festival, Bielsko-Biała"
+    },
+    description: {
+      pl: "Wyróżnienie w międzynarodowym konkursie multimedialnym DIAS SHOW podczas 11. edycji Foto Art Festival w Bielsku-Białej. Cykl „Labirynt” znalazł się wśród dziewięciu zwycięskich prac. Laureaci otrzymują możliwość zorganizowania wystawy indywidualnej w Galerii Fotografii B&B lub podczas kolejnej edycji festiwalu. DIAS SHOW łączy fotografię z muzyką i narracją, prezentując dynamiczne sekwencje obrazów na dużym ekranie.",
+      en: "Distinction in the international multimedia competition DIAS SHOW during the 11th edition of Foto Art Festival in Bielsko-Biała. The \"Labirynt\" series was among nine winning works. Laureates receive the opportunity to organise a solo exhibition at the B&B Photography Gallery or during a future festival edition. DIAS SHOW combines photography with music and narration, presenting dynamic image sequences on a large screen."
+    },
+    links: [
+      {
+        label: { pl: "Lista laureatów DIAS SHOW", en: "DIAS SHOW laureates" },
+        url: "https://fotoartfestival.com/finalisci-dias-show-2025/"
+      },
+      {
+        label: { pl: "Slideshow „Labirynt” na YouTube", en: "\"Labirynt\" slideshow on YouTube" },
+        url: "https://www.youtube.com/watch?v=4JCT6mdi9NA"
+      }
+    ],
+    images: [
+      "images/achievements/fotoartfestival-dias-show-2025/01.jpg",
+      "images/achievements/fotoartfestival-dias-show-2025/02.jpg",
+      "images/achievements/fotoartfestival-dias-show-2025/03.jpg"
+    ]
+  },
+  {
     id: "zpaf-przyjecie-2025",
     dateISO: "2025-12-05",
     date: {
