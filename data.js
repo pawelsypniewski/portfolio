@@ -237,12 +237,12 @@ window.ABOUT = {
    Jeśli chcesz linkować konkretne posty, edytuj url poniżej.
    ============================================================ */
 const IG_TILES = [
-  { img: "images/instagram/01.jpg", url: "https://www.instagram.com/sypniewskistudio/" },
-  { img: "images/instagram/02.jpg", url: "https://www.instagram.com/sypniewskistudio/" },
-  { img: "images/instagram/03.jpg", url: "https://www.instagram.com/sypniewskistudio/" },
-  { img: "images/instagram/04.jpg", url: "https://www.instagram.com/sypniewskistudio/" },
-  { img: "images/instagram/05.jpg", url: "https://www.instagram.com/sypniewskistudio/" },
-  { img: "images/instagram/06.jpg", url: "https://www.instagram.com/sypniewskistudio/" }
+  { img: "images/instagram/01.jpg", url: "https://www.instagram.com/p/C5L33N1IeEz/" },
+  { img: "images/instagram/02.jpg", url: "https://www.instagram.com/p/DDElbqPI8tL/" },
+  { img: "images/instagram/03.jpg", url: "https://www.instagram.com/p/DCMoYLComsI/" },
+  { img: "images/instagram/04.jpg", url: "https://www.instagram.com/p/C__MGoGodx7/" },
+  { img: "images/instagram/05.jpg", url: "https://www.instagram.com/p/DCPeeERoB0_/" },
+  { img: "images/instagram/06.jpg", url: "https://www.instagram.com/p/DGbNquTI_p8/" }
 ];
 
 function buildIgSection(L) {
