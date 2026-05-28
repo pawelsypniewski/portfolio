@@ -123,76 +123,31 @@ window.PROJECTS = [
 
 /* ============================================================
    ACHIEVEMENTS — wystawy, publikacje, edukacja, członkostwa
-   Każdy wpis: 1-5 zdjęć w folderze images/achievements/<slug>/
-   Sortowanie: chronologicznie odwrotnie (najnowsze u góry)
+   Sortowanie: chronologicznie odwrotnie (najnowsze u góry).
+   Każdy wpis: zdjęcia w folderze images/achievements/<id>/
    ============================================================ */
 window.ACHIEVEMENTS = [
   {
-    id: "labirynt-book",
-    year: "2024",
-    type: { pl: "Publikacja", en: "Publication" },
-    title: { pl: "Książka „Labirynt”", en: "Book \"Labyrinth\"" },
-    place: { pl: "Instytut Fotografii Twórczej, Opawa", en: "Institute of Creative Photography, Opava" },
+    id: "pamietnik-przetrwania-2025",
+    year: "2025",
+    type: { pl: "Wystawa indywidualna", en: "Solo exhibition" },
+    title: { pl: "Pamiętnik przetrwania", en: "Diary of Survival" },
+    place: {
+      pl: "Galeria MAL — Terminal Kultury Gocław, Warszawa",
+      en: "MAL Gallery — Terminal Kultury Gocław, Warsaw"
+    },
     description: {
-      pl: "Książka fotograficzna o stanach zawieszenia, błądzeniu i braku perspektyw. Praca dyplomowa realizowana w ramach ITF Opava.",
-      en: "A photobook on states of suspension, drift and dead ends. Diploma project at the Institute of Creative Photography, Opava."
+      pl: "Osobisty zapis fotograficzny walki z depresją. Projekt powstał z potrzeby przełamania społecznego tabu wokół chorób psychicznych i dotarcia do osób zmagających się z podobnymi doświadczeniami — z myślą, że prośba o pomoc nie jest oznaką słabości, lecz odwagą. Wernisaż 3 grudnia 2025, ekspozycja do 10 stycznia 2026.",
+      en: "A personal photographic record of struggle with depression. The project was born from the need to break the social taboo around mental illness and to reach others fighting similar battles — with the conviction that asking for help is not a sign of weakness, but of courage. Opening December 3, 2025, on view through January 10, 2026."
     },
     url: "",
     images: [
-      "images/achievements/labirynt-book/01.jpg",
-      "images/achievements/labirynt-book/02.jpg",
-      "images/achievements/labirynt-book/03.jpg",
-      "images/achievements/labirynt-book/04.jpg"
-    ]
-  },
-  {
-    id: "itf-opava",
-    year: "2024",
-    type: { pl: "Edukacja", en: "Education" },
-    title: { pl: "Instytut Fotografii Twórczej", en: "Institute of Creative Photography" },
-    place: { pl: "Opawa, Czechy", en: "Opava, Czech Republic" },
-    description: {
-      pl: "Studia w jednej z najbardziej renomowanych europejskich szkół fotografii. Kontynuacja kierunku rozpoczętego w polskich Studiach ZPAF.",
-      en: "Studies at one of Europe's most respected schools of photography. Continuation of the path begun in the ZPAF School of Photography in Poland."
-    },
-    url: "https://itf.fpf.slu.cz/",
-    images: [
-      "images/achievements/itf-opava/01.jpg",
-      "images/achievements/itf-opava/02.jpg",
-      "images/achievements/itf-opava/03.jpg"
-    ]
-  },
-  {
-    id: "sputnik",
-    year: "2022",
-    type: { pl: "Program mentorski", en: "Mentor programme" },
-    title: { pl: "Sputnik Photos — Program Mentorski", en: "Sputnik Photos Mentor Programme" },
-    place: { pl: "Warszawa, Polska", en: "Warsaw, Poland" },
-    description: {
-      pl: "Roczny program prowadzony przez kolektyw Sputnik Photos — jedno z najważniejszych miejsc dla rozwoju fotografii dokumentalnej w Europie Środkowej. Praca nad cyklem „Gra o tron”.",
-      en: "One-year programme led by the Sputnik Photos collective — one of the key centres for documentary photography in Central Europe. Work on the 'Game of Thrones' series."
-    },
-    url: "https://sputnikphotos.com/",
-    images: [
-      "images/achievements/sputnik/01.jpg",
-      "images/achievements/sputnik/02.jpg",
-      "images/achievements/sputnik/03.jpg"
-    ]
-  },
-  {
-    id: "zpaf",
-    year: "2020",
-    type: { pl: "Członkostwo", en: "Membership" },
-    title: { pl: "Związek Polskich Artystów Fotografików", en: "Union of Polish Art Photographers" },
-    place: { pl: "Okręg Warszawski, ZPAF", en: "Warsaw Branch, ZPAF" },
-    description: {
-      pl: "Przyjęcie w poczet członków ZPAF — najstarszego i najważniejszego stowarzyszenia fotografów artystycznych w Polsce, działającego od 1947 roku.",
-      en: "Admission to the Union of Polish Art Photographers (ZPAF) — the oldest and most prestigious association of art photographers in Poland, founded in 1947."
-    },
-    url: "https://zpaf.pl/",
-    images: [
-      "images/achievements/zpaf/01.jpg",
-      "images/achievements/zpaf/02.jpg"
+      "images/achievements/pamietnik-przetrwania-2025/01.jpg",
+      "images/achievements/pamietnik-przetrwania-2025/02.jpg",
+      "images/achievements/pamietnik-przetrwania-2025/03.jpg",
+      "images/achievements/pamietnik-przetrwania-2025/04.jpg",
+      "images/achievements/pamietnik-przetrwania-2025/05.jpg",
+      "images/achievements/pamietnik-przetrwania-2025/06.jpg"
     ]
   }
 ];
