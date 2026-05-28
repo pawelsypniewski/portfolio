@@ -657,6 +657,64 @@
   .proj-mobile-nav { display: none; }
 
   /* ============================================================
+     INSTAGRAM GRID — sekcja na stronie Kontakt
+     6 zdjęć w gridzie 3×2 (desktop), 3×2 (mobile), 2×3 (small mobile)
+     Greyscale → color on hover, klikalne → profil IG
+     ============================================================ */
+  .ig-section { margin-top: 48px; }
+  .ig-heading {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    opacity: 0.7;
+  }
+  .ig-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 22px;
+    max-width: 720px;
+  }
+  .ig-tile {
+    display: block;
+    aspect-ratio: 1 / 1;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: grayscale(1);
+    transition: filter 280ms ease, transform 280ms ease;
+    cursor: pointer;
+  }
+  .ig-tile:hover {
+    filter: grayscale(0);
+    transform: scale(1.02);
+  }
+  .ig-more {
+    display: inline-block;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    opacity: 0.8;
+    transition: opacity 200ms ease;
+  }
+  .ig-more:hover { opacity: 1; }
+
+  @media (max-width: 720px) {
+    .ig-section { margin-top: 32px; }
+    .ig-grid { gap: 6px; }
+  }
+  @media (max-width: 380px) {
+    .ig-grid { grid-template-columns: repeat(2, 1fr); gap: 4px; }
+  }
+
+  /* ============================================================
      CAMERA FLASH — efekt lampy błyskowej przy przewijaniu zdjęć
      Aktywowany tylko dla projektów z flashEffect: true (data.js)
      ============================================================ */

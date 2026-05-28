@@ -231,9 +231,37 @@ window.ABOUT = {
   }
 };
 
+/* ============================================================
+   INSTAGRAM TILES — 6 zdjęć z folderu /images/instagram/
+   Aby zmienić: zastąp pliki 01-06.jpg w /images/instagram/.
+   Jeśli chcesz linkować konkretne posty, edytuj url poniżej.
+   ============================================================ */
+const IG_TILES = [
+  { img: "images/instagram/01.jpg", url: "https://www.instagram.com/sypniewskistudio/" },
+  { img: "images/instagram/02.jpg", url: "https://www.instagram.com/sypniewskistudio/" },
+  { img: "images/instagram/03.jpg", url: "https://www.instagram.com/sypniewskistudio/" },
+  { img: "images/instagram/04.jpg", url: "https://www.instagram.com/sypniewskistudio/" },
+  { img: "images/instagram/05.jpg", url: "https://www.instagram.com/sypniewskistudio/" },
+  { img: "images/instagram/06.jpg", url: "https://www.instagram.com/sypniewskistudio/" }
+];
+
+function buildIgSection(L) {
+  const heading = L === "pl" ? "Codziennie na Instagramie" : "Daily on Instagram";
+  const aria    = L === "pl" ? "Zobacz post na Instagramie" : "View on Instagram";
+  const tiles = IG_TILES.map(t =>
+    `<a class="ig-tile" href="${t.url}" target="_blank" rel="noopener noreferrer" aria-label="${aria}" style="background-image:url('${t.img}')"></a>`
+  ).join("");
+  return `
+<div class="ig-section">
+  <div class="ig-heading">${heading}</div>
+  <div class="ig-grid">${tiles}</div>
+  <a class="ig-more" href="https://www.instagram.com/sypniewskistudio/" target="_blank" rel="noopener noreferrer">@sypniewskistudio →</a>
+</div>`;
+}
+
 window.CONTACT = {
   pl: {
-    body: `<p>Odbitki autorskie w limitowanych edycjach są dostępne w sprzedaży. Możesz zapytać o dowolne zdjęcie, które Cię zainteresowało. W sprawie nakładu, formatów i cen — napisz do mnie mailem.</p>`,
+    body: `<p>Odbitki autorskie w limitowanych edycjach są dostępne w sprzedaży. Możesz zapytać o dowolne zdjęcie, które Cię zainteresowało. W sprawie nakładu, formatów i cen — napisz do mnie mailem.</p>` + buildIgSection("pl"),
     side: `
 <h3>E-mail</h3>
 <ul><li><a href="mailto:katedranalogowa@gmail.com">katedranalogowa@gmail.com</a></li></ul>
@@ -241,7 +269,7 @@ window.CONTACT = {
 <ul><li><a href="https://www.instagram.com/sypniewskistudio/" target="_blank" rel="noopener">@sypniewskistudio</a></li></ul>`
   },
   en: {
-    body: `<p>Limited edition prints are available for sale. Please ask for any picture you like. For details — amounts, sizes, pricing — send me an email.</p>`,
+    body: `<p>Limited edition prints are available for sale. Please ask for any picture you like. For details — amounts, sizes, pricing — send me an email.</p>` + buildIgSection("en"),
     side: `
 <h3>E-mail</h3>
 <ul><li><a href="mailto:katedranalogowa@gmail.com">katedranalogowa@gmail.com</a></li></ul>
