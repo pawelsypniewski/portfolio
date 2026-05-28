@@ -42,7 +42,7 @@ function renderHome() {
   ol.innerHTML = projs.map(p => `
     <li data-slug="${p.slug}">
       <span class="num">${p.no}</span>
-      <span class="title">${p.title[L]}</span>
+      <h2 class="title">${p.title[L]}</h2>
       <span class="meta">${p.year} · ${p.place[L]}<br>${p.works} ${L==="pl"?"prac":"works"}</span>
     </li>
   `).join("");
@@ -51,7 +51,7 @@ function renderHome() {
   $("#homeListIndex").innerHTML = projs.map(p => `
     <div class="row" data-slug="${p.slug}">
       <div class="no col">${p.no}</div>
-      <div class="title">${p.title[L]}</div>
+      <h2 class="title">${p.title[L]}</h2>
       <div class="col">${p.category[L]}</div>
       <div class="col">${p.year}</div>
       <div class="col">${String(p.works).padStart(2,"0")}</div>
@@ -61,7 +61,7 @@ function renderHome() {
   // VARIANT 3 — STACK
   $("#homeListStack").innerHTML = projs.map(p => `
     <div class="row" data-slug="${p.slug}">
-      <div class="title">${p.title[L]}</div>
+      <h2 class="title">${p.title[L]}</h2>
       <div class="side">${p.year}<br>${p.works} ${L==="pl"?"prac":"works"}<br>${p.place[L]}</div>
     </div>
   `).join("");
@@ -70,14 +70,14 @@ function renderHome() {
   $("#homeListPoster").innerHTML = projs.map((p, i) => {
     const randomImg = p.images[Math.floor(Math.random() * p.images.length)];
     return `
-    <div class="cell c${i+1}" data-slug="${p.slug}">
+    <article class="cell c${i+1}" data-slug="${p.slug}" itemscope itemtype="https://schema.org/CreativeWork">
       <div class="num">${p.no} / ${L==="pl"?"PRACE":"WORKS"}</div>
       <div class="title">
-        <span class="title-text">${p.title[L]}</span>
-        <div class="thumb-frame" style="background-image:url('${randomImg}')"></div>
+        <h2 class="title-text" itemprop="name">${p.title[L]}</h2>
+        <div class="thumb-frame" style="background-image:url('${randomImg}')" role="img" aria-label="${p.title[L]} — podgląd"></div>
       </div>
-      <div class="meta">${p.year} · ${p.place[L]} · ${p.works} ${L==="pl"?"prac":"works"}</div>
-    </div>
+      <div class="meta"><span itemprop="dateCreated">${p.year}</span> · <span itemprop="contentLocation">${p.place[L]}</span> · ${p.works} ${L==="pl"?"prac":"works"}</div>
+    </article>
   `;}).join("");
 
   // Re-randomise the poster thumbnail each time user hovers a cell
@@ -148,10 +148,10 @@ function renderProject() {
   $("#pjMeta").innerHTML    = `${p.year}<br>${p.place[L]}<br>${p.works} ${L==="pl"?"prac":"works"}`;
   $("#pjCaption").textContent = p.caption[L];
 
-  // Build track
+  // Build track — semantyczny alt + lazy loading dla wydajności / SEO
   const track = $("#pjTrack");
   track.innerHTML = p.images.map((src, i) =>
-    `<div class="proj-slide"><img src="${src}" alt="${p.title[L]} ${i+1}" data-index="${i}"></div>`
+    `<div class="proj-slide"><img src="${src}" alt="${p.title[L]} — zdjęcie ${i+1} z ${p.images.length}, ${p.year}, ${p.category[L]}" data-index="${i}" loading="${i === 0 ? 'eager' : 'lazy'}" fetchpriority="${i === 0 ? 'high' : 'auto'}" decoding="async"></div>`
   ).join("");
 
   // Lightbox click
@@ -217,8 +217,58 @@ function renderTextPages() {
 }
 
 /* ============================================================
-   ROUTING
+   ROUTING + DYNAMIC SEO META
    ============================================================ */
+const BASE_URL = "https://pawelsypniewski.pl";
+
+function updateSEO(route) {
+  const L = state.lang;
+  let title, desc, url;
+
+  if (route === "project" && state.projectSlug) {
+    const p = window.PROJECTS.find(x => x.slug === state.projectSlug);
+    if (p) {
+      title = `${p.title[L]} — ${p.year} · Paweł Sypniewski`;
+      desc  = `${p.caption[L].substring(0, 155)}`;
+      url   = `${BASE_URL}/#/${p.slug}`;
+    }
+  } else if (route === "about") {
+    title = L === "pl"
+      ? "O autorze — Paweł Sypniewski, fotograf i artysta wizualny"
+      : "About — Paweł Sypniewski, photographer and visual artist";
+    desc  = L === "pl"
+      ? "Paweł Sypniewski (ur. 1987) — fotograf i artysta wizualny z Warszawy, członek ZPAF. Edukacja: ITF Opawa, Sputnik Photos."
+      : "Paweł Sypniewski (b. 1987) — photographer and visual artist from Warsaw, ZPAF member. Education: ITF Opava, Sputnik Photos.";
+    url   = `${BASE_URL}/#/about`;
+  } else if (route === "contact") {
+    title = L === "pl"
+      ? "Kontakt — Paweł Sypniewski"
+      : "Contact — Paweł Sypniewski";
+    desc  = L === "pl"
+      ? "Limitowane odbitki autorskie. Skontaktuj się mailowo w sprawie nakładu, formatów i cen."
+      : "Limited-edition artist prints available. Get in touch by email for sizes and pricing.";
+    url   = `${BASE_URL}/#/contact`;
+  } else {
+    title = "Paweł Sypniewski — Fotograf i Artysta Wizualny | Warszawa, ZPAF";
+    desc  = L === "pl"
+      ? "Paweł Sypniewski — fotograf i artysta wizualny z Warszawy. Portfolio prac dokumentalnych, reportażowych i kreacyjnych. Członek ZPAF, Okręg Warszawski."
+      : "Paweł Sypniewski — photographer and visual artist from Warsaw. Documentary, reportage and constructed works. Member of ZPAF, Warsaw Branch.";
+    url   = `${BASE_URL}/`;
+  }
+
+  if (title) document.title = title;
+  const setMeta = (sel, val) => { const el = document.querySelector(sel); if (el && val) el.setAttribute("content", val); };
+  setMeta('meta[name="description"]', desc);
+  setMeta('meta[property="og:title"]', title);
+  setMeta('meta[property="og:description"]', desc);
+  setMeta('meta[property="og:url"]', url);
+  setMeta('meta[name="twitter:title"]', title);
+  setMeta('meta[name="twitter:description"]', desc);
+  // canonical do bieżącego widoku
+  const canonical = document.querySelector('link[rel="canonical"]');
+  if (canonical && url) canonical.setAttribute("href", url);
+}
+
 function setRoute(route) {
   state.route = route;
   $$(".view").forEach(v => v.classList.remove("active"));
@@ -232,6 +282,9 @@ function setRoute(route) {
     a.classList.toggle("active",
       r === route || (route === "project" && r === "home"));
   });
+
+  // SEO: dynamic title/description per view
+  updateSEO(route);
 }
 
 function navigateProject(slug) {
@@ -259,6 +312,10 @@ function setLang(lang) {
   renderHome();
   renderTextPages();
   if (state.route === "project") renderProject();
+  // Update SEO meta when language changes
+  updateSEO(state.route);
+  // Aktualizuj atrybut lang dokumentu dla wyszukiwarek
+  document.documentElement.lang = lang;
 }
 
 /* ============================================================

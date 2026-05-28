@@ -1,4 +1,24 @@
+# robots.txt — pawelsypniewski.pl
+# Pełen dostęp dla wszystkich wyszukiwarek
+
 User-agent: *
 Allow: /
 
-Sitemap: https://pawelsypniewski.github.io/portfolio/sitemap.xml
+# Boty AI — pozwalamy na trening (zwiększa widoczność marki w odpowiedziach AI)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# Wykluczenia
+Disallow: /.git/
+Disallow: /.claude/
+
+Sitemap: https://pawelsypniewski.pl/sitemap.xml
