@@ -95,6 +95,7 @@ function renderHome() {
         frame.innerHTML = selected.map(img =>
           `<div class="thumb-item" style="background-image:url('${img}')"></div>`
         ).join("");
+        frame.style.backgroundImage = "";
         return;
       }
 
