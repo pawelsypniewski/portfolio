@@ -735,6 +735,34 @@
   }
 
   /* ============================================================
+     RESPONSIVE — ULTRAWIDE (2880x1800, 5K, etc)
+     Even larger padding and spacing for extremely wide screens
+     ============================================================ */
+  @media (min-width: 2880px) {
+    .shell { grid-template-columns: 420px 1fr; }
+    .sidebar { padding: 56px 40px; }
+    .sidebar .brand .name { font-size: 24px; }
+
+    .home-poster { padding: 60px 120px; gap: 24px; }
+    .home-poster .cell { padding: 40px; }
+    .home-poster .cell .num { font-size: 14px; }
+    .home-poster .cell .title { font-size: clamp(56px, 3.8vw, 96px); }
+    .home-poster .cell .meta { font-size: 13px; }
+    .home-poster .cell .thumb-frame {
+      width: clamp(140px, 22vh, 300px);
+      height: clamp(140px, 20vh, 300px);
+    }
+
+    .proj-top { padding: 48px 120px 32px; }
+    .proj-top .pj-title { font-size: clamp(48px, 4vw, 72px); }
+    .proj-top .pj-meta { font-size: 14px; }
+
+    .text-page { padding: 140px 120px 120px; max-width: 2400px; gap: 140px; }
+    .text-page h1 { font-size: clamp(100px, 7.5vw, 180px); }
+    .text-page .body { font-size: 20px; }
+  }
+
+  /* ============================================================
      RESPONSIVE — SHORT LAPTOP SCREENS (1366x768, 1440x900, 1280x800)
      Tighten vertical rhythm so the homepage fits without scroll.
      ============================================================ */
