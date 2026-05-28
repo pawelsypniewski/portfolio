@@ -439,11 +439,11 @@ function updateSEO(route) {
     url   = `${BASE_URL}/#/about`;
   } else if (route === "achievements") {
     title = L === "pl"
-      ? "Osiągnięcia — Paweł Sypniewski"
-      : "Achievements — Paweł Sypniewski";
+      ? "Aktualności — Paweł Sypniewski"
+      : "News — Paweł Sypniewski";
     desc  = L === "pl"
-      ? "Wystawy, publikacje, edukacja i członkostwa Pawła Sypniewskiego — fotografa i artysty wizualnego. ZPAF, ITF Opawa, Sputnik Photos, książka „Labirynt”."
-      : "Exhibitions, publications, education and memberships of Paweł Sypniewski — photographer and visual artist. ZPAF, ITF Opava, Sputnik Photos, 'Labyrinth' book.";
+      ? "Aktualne wystawy, pokazy festiwalowe i wydarzenia z udziałem Pawła Sypniewskiego — fotografa i artysty wizualnego z Warszawy."
+      : "Current exhibitions, festival screenings and events featuring Paweł Sypniewski — photographer and visual artist based in Warsaw.";
     url   = `${BASE_URL}/#/achievements`;
   } else if (route === "contact") {
     title = L === "pl"
