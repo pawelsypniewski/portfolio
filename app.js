@@ -720,4 +720,78 @@ function init() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", init);
+/* ============================================================
+   COOKIE CONSENT — RODO / GDPR banner
+   ============================================================ */
+const COOKIE_LS_KEY = "ps-cookie-consent"; // 'granted' | 'denied' | null
+
+function getCookieConsent() {
+  try { return localStorage.getItem(COOKIE_LS_KEY); } catch (e) { return null; }
+}
+function setCookieConsent(value) {
+  try { localStorage.setItem(COOKIE_LS_KEY, value); } catch (e) {}
+}
+function applyConsentToGtag(granted) {
+  if (typeof window.gtag !== "function") return;
+  const status = granted ? "granted" : "denied";
+  window.gtag("consent", "update", {
+    "ad_storage":              status,
+    "ad_user_data":            status,
+    "ad_personalization":      status,
+    "analytics_storage":       status,
+    "functionality_storage":   status,
+    "personalization_storage": status
+  });
+}
+function showCookieBanner() {
+  const banner = $("#cookieBanner");
+  if (banner) banner.hidden = false;
+}
+function hideCookieBanner() {
+  const banner = $("#cookieBanner");
+  if (banner) banner.hidden = true;
+}
+function initCookieBanner() {
+  const banner = $("#cookieBanner");
+  if (!banner) return;
+  const accept = $("#cbAccept");
+  const reject = $("#cbReject");
+  const reopen = $("#cookieReopen");
+
+  // Jeśli użytkownik jeszcze nie zdecydował — pokaż banner
+  const current = getCookieConsent();
+  if (current === null) {
+    showCookieBanner();
+  } else if (current === "granted") {
+    // Restore poprzednią zgodę (gtag default już ją zaaplikował z localStorage)
+    applyConsentToGtag(true);
+  }
+
+  if (accept) {
+    accept.addEventListener("click", () => {
+      setCookieConsent("granted");
+      applyConsentToGtag(true);
+      hideCookieBanner();
+      // Wyślij od razu page_view dla aktualnego widoku
+      updateSEO(state.route);
+    });
+  }
+  if (reject) {
+    reject.addEventListener("click", () => {
+      setCookieConsent("denied");
+      applyConsentToGtag(false);
+      hideCookieBanner();
+    });
+  }
+  if (reopen) {
+    reopen.addEventListener("click", (e) => {
+      e.preventDefault();
+      showCookieBanner();
+    });
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  init();
+  initCookieBanner();
+});

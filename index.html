@@ -15,13 +15,32 @@
 <meta name="google-site-verification" content="AJpvQiA3niuDmKpQchC5wnkZz_77YWm4W7Vs8Y0qCL4">
 <meta name="theme-color" content="#ffffff">
 
-<!-- ============ GOOGLE ANALYTICS 4 ============ -->
+<!-- ============ GOOGLE ANALYTICS 4 (Consent Mode v2) ============ -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7VWHM3TZZ"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+
+  // Consent Mode v2 — domyślnie wszystko ZABLOKOWANE
+  // Tracking aktywuje się dopiero po kliknięciu „Akceptuj" w bannerze.
+  // Zapamiętany wybór w localStorage = automatycznie zaaplikowany.
+  (function() {
+    var stored = null;
+    try { stored = localStorage.getItem('ps-cookie-consent'); } catch(e) {}
+    var granted = stored === 'granted';
+
+    gtag('consent', 'default', {
+      'ad_storage':              granted ? 'granted' : 'denied',
+      'ad_user_data':            granted ? 'granted' : 'denied',
+      'ad_personalization':      granted ? 'granted' : 'denied',
+      'analytics_storage':       granted ? 'granted' : 'denied',
+      'functionality_storage':   granted ? 'granted' : 'denied',
+      'personalization_storage': granted ? 'granted' : 'denied',
+      'security_storage':        'granted'
+    });
+  })();
+
   gtag('js', new Date());
-  // SPA: wyłączamy automatyczny page_view, wysyłamy ręcznie przy zmianie widoku
   gtag('config', 'G-H7VWHM3TZZ', {
     send_page_view: false,
     anonymize_ip: true
@@ -925,6 +944,71 @@
   }
   @media (max-width: 380px) {
     .ig-grid { grid-template-columns: repeat(2, 1fr); gap: 4px; }
+  }
+
+  /* ============================================================
+     COOKIE BANNER — RODO consent prompt
+     ============================================================ */
+  .cookie-banner {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: #000;
+    color: #fff;
+    padding: 18px 28px;
+    z-index: 9000;
+    box-shadow: 0 -2px 20px rgba(0,0,0,0.15);
+    animation: cookieSlideUp 320ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .cookie-banner[hidden] { display: none; }
+  @keyframes cookieSlideUp {
+    from { transform: translateY(100%); }
+    to   { transform: translateY(0); }
+  }
+  .cb-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    justify-content: space-between;
+  }
+  .cb-text {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 1.55;
+    letter-spacing: 0.02em;
+    margin: 0;
+    max-width: 780px;
+  }
+  .cb-buttons {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  .cb-btn {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 12px 22px;
+    cursor: pointer;
+    border: 1px solid #fff;
+    background: transparent;
+    color: #fff;
+    transition: background 200ms ease, color 200ms ease;
+  }
+  .cb-btn-primary { background: #fff; color: #000; }
+  .cb-btn-primary:hover { background: transparent; color: #fff; }
+  .cb-btn-secondary:hover { background: #fff; color: #000; }
+
+  @media (max-width: 720px) {
+    .cookie-banner { padding: 14px 18px; }
+    .cb-inner { flex-direction: column; align-items: stretch; gap: 14px; }
+    .cb-text { font-size: 11px; }
+    .cb-buttons { gap: 8px; }
+    .cb-btn { flex: 1; padding: 12px 14px; font-size: 10px; }
   }
 
   /* ============================================================
@@ -1919,6 +2003,7 @@
         <div>© 2017–2026<br>Paweł Sypniewski</div>
         <div>Warszawa / Opava</div>
         <div style="margin-top:10px; cursor:pointer; text-decoration:underline; text-underline-offset:3px;" id="tweaksOpener" data-i18n="tweaks.open">Układ strony →</div>
+        <div style="margin-top:6px; cursor:pointer; text-decoration:underline; text-underline-offset:3px; opacity:0.65;" id="cookieReopen" data-i18n="cookie.manage">Cookies</div>
       </div>
     </div>
   </aside>
@@ -2058,6 +2143,17 @@
 
 <!-- Camera flash overlay — aktywowany przez app.js dla projektów z flashEffect -->
 <div class="camera-flash" id="cameraFlash" aria-hidden="true"></div>
+
+<!-- ============ COOKIE BANNER RODO ============ -->
+<div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Cookie consent" hidden>
+  <div class="cb-inner">
+    <p class="cb-text" data-i18n="cookie.text">Ta strona używa plików cookies do analizy ruchu (Google Analytics). Pomaga to zrozumieć, jak korzystasz z portfolio. Twoje dane są anonimizowane.</p>
+    <div class="cb-buttons">
+      <button id="cbReject" class="cb-btn cb-btn-secondary" type="button" data-i18n="cookie.reject">Odrzuć</button>
+      <button id="cbAccept" class="cb-btn cb-btn-primary" type="button" data-i18n="cookie.accept">Akceptuj</button>
+    </div>
+  </div>
+</div>
 
 <script src="data.js"></script>
 <script src="app.js"></script>

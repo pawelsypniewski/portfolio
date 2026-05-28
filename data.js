@@ -391,7 +391,11 @@ window.I18N = {
     "lb.close": "Zamknij ✕",
     "tw.home": "Układ strony głównej",
     "tw.lang": "Język",
-    "tweaks.open": "Układ strony →"
+    "tweaks.open": "Układ strony →",
+    "cookie.text": "Ta strona używa plików cookies do analizy ruchu (Google Analytics). Pomaga to zrozumieć, jak korzystasz z portfolio. Twoje dane są anonimizowane.",
+    "cookie.accept": "Akceptuj",
+    "cookie.reject": "Odrzuć",
+    "cookie.manage": "Cookies"
   },
   en: {
     "role": "Visual artist / Photographer",
@@ -413,7 +417,11 @@ window.I18N = {
     "lb.close": "Close ✕",
     "tw.home": "Homepage layout",
     "tw.lang": "Language",
-    "tweaks.open": "Page layout →"
+    "tweaks.open": "Page layout →",
+    "cookie.text": "This site uses cookies for traffic analysis (Google Analytics) — to help understand how you interact with the portfolio. Your data is anonymized.",
+    "cookie.accept": "Accept",
+    "cookie.reject": "Reject",
+    "cookie.manage": "Cookies"
   }
 };
 
