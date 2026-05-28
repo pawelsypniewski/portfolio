@@ -93,7 +93,6 @@ function renderHome() {
         frame.innerHTML = p.images.map(img =>
           `<div class="thumb-item" style="background-image:url('${img}')"></div>`
         ).join("");
-        frame.style.display = "grid";
         return;
       }
 
@@ -101,7 +100,6 @@ function renderHome() {
       const img = p.images[Math.floor(Math.random() * p.images.length)];
       frame.innerHTML = "";
       frame.style.backgroundImage = `url('${img}')`;
-      frame.style.display = "";
     });
   });
 
