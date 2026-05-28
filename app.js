@@ -96,6 +96,8 @@ function renderHome() {
           `<div class="thumb-item" style="background-image:url('${img}')"></div>`
         ).join("");
         frame.style.backgroundImage = "";
+        const meta = cell.querySelector(".meta");
+        if (meta) meta.style.opacity = "0";
         return;
       }
 
