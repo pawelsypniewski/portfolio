@@ -50,7 +50,7 @@
   /* ---------- LAYOUT SHELL ---------- */
   .shell {
     display: grid;
-    grid-template-columns: 240px 1fr;
+    grid-template-columns: 300px 1fr;
     height: 100vh;
     width: 100vw;
   }
@@ -58,7 +58,7 @@
   /* ---------- SIDEBAR ---------- */
   .sidebar {
     border-right: 1px solid #000;
-    padding: 24px 20px;
+    padding: 32px 28px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -66,7 +66,7 @@
     position: relative;
   }
   .sidebar .brand {
-    font-size: 16px;
+    font-size: 20px;
     line-height: 1.05;
     letter-spacing: -0.01em;
     text-transform: uppercase;
@@ -76,15 +76,15 @@
   .sidebar .brand .role {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-weight: 400;
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 0.06em;
-    margin-top: 8px;
+    margin-top: 10px;
     text-transform: uppercase;
   }
 
-  .sidenav { display: flex; flex-direction: column; gap: 2px; margin-top: 36px; }
+  .sidenav { display: flex; flex-direction: column; gap: 2px; margin-top: 44px; }
   .sidenav a {
-    font-size: 14px;
+    font-size: 17px;
     text-transform: uppercase;
     letter-spacing: 0.02em;
     line-height: 1.6;
@@ -107,7 +107,7 @@
   .sidefoot {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-weight: 400;
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     line-height: 1.6;
@@ -663,10 +663,10 @@
      RESPONSIVE — LARGE DISPLAYS (>=2200px, 4K/5K monitors)
      ============================================================ */
   @media (min-width: 2200px) {
-    .shell { grid-template-columns: 320px 1fr; }
-    .sidebar { padding: 36px 28px; }
-    .sidebar .brand .name { font-size: 19px; }
-    .sidenav a { font-size: 16px; }
+    .shell { grid-template-columns: 400px 1fr; }
+    .sidebar { padding: 44px 36px; }
+    .sidebar .brand .name { font-size: 24px; }
+    .sidenav a { font-size: 20px; }
     .home-vignelli { padding: 0 80px; }
     .home-vignelli .title { font-size: clamp(72px, 6vw, 132px); }
     .home-index { padding: 56px 80px; }
@@ -688,11 +688,11 @@
      Must come AFTER the 2200px block to override it.
      ============================================================ */
   @media (min-width: 2800px) {
-    .shell { grid-template-columns: 360px 1fr; }
-    .sidebar { padding: 44px 32px; }
-    .sidebar .brand .name { font-size: 22px; }
-    .sidenav a { font-size: 18px; line-height: 1.7; }
-    .sidefoot { font-size: 12px; }
+    .shell { grid-template-columns: 460px 1fr; }
+    .sidebar { padding: 56px 44px; }
+    .sidebar .brand .name { font-size: 28px; }
+    .sidenav a { font-size: 22px; line-height: 1.7; }
+    .sidefoot { font-size: 14px; }
 
     .home-vignelli { padding: 0 96px; }
     .home-vignelli li { padding: 28px 0 22px; grid-template-columns: 80px 1fr auto; gap: 48px; }
@@ -739,9 +739,9 @@
      Even larger padding and spacing for extremely wide screens
      ============================================================ */
   @media (min-width: 2880px) {
-    .shell { grid-template-columns: 420px 1fr; }
-    .sidebar { padding: 56px 40px; }
-    .sidebar .brand .name { font-size: 24px; }
+    .shell { grid-template-columns: 540px 1fr; }
+    .sidebar { padding: 72px 56px; }
+    .sidebar .brand .name { font-size: 32px; }
 
     .home-poster { padding: 60px 120px; gap: 24px; }
     .home-poster .cell { padding: 40px; }
@@ -767,7 +767,7 @@
      Tighten vertical rhythm so the homepage fits without scroll.
      ============================================================ */
   @media (min-width: 1025px) and (max-height: 900px) {
-    .sidebar { padding: 20px 20px; }
+    .sidebar { padding: 20px 24px; }
     .home-vignelli li { padding: 14px 0 12px; }
     .home-vignelli .title { font-size: clamp(40px, 5.4vw, 80px); }
     .home-vignelli .meta { font-size: 10px; }
@@ -797,7 +797,7 @@
      RESPONSIVE — TABLET (<=1024px)
      ============================================================ */
   @media (max-width: 1024px) {
-    .shell { grid-template-columns: 200px 1fr; }
+    .shell { grid-template-columns: 240px 1fr; }
     .home-vignelli { padding: 0 36px; }
     .home-index { padding: 80px 36px 40px; }
     .home-index .header, .home-index .row {
