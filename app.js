@@ -88,9 +88,11 @@ function renderHome() {
       const frame = cell.querySelector(".thumb-frame");
       if (!frame) return;
 
-      // For projects with few images (like danie-dnia), show all thumbnails
+      // For projects with few images (like danie-dnia), show 3 random thumbnails
       if (p.works <= 4) {
-        frame.innerHTML = p.images.map(img =>
+        const shuffled = [...p.images].sort(() => Math.random() - 0.5);
+        const selected = shuffled.slice(0, 3);
+        frame.innerHTML = selected.map(img =>
           `<div class="thumb-item" style="background-image:url('${img}')"></div>`
         ).join("");
         return;
