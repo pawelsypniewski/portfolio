@@ -77,6 +77,21 @@ window.PROJECTS = [
     },
     images: Array.from({length: 15}, (_, i) =>
       `images/labirynt/${String(i+1).padStart(2,"0")}.jpg`)
+  },
+  {
+    slug: "nocne-ptaki",
+    no: "06",
+    title: { pl: "Nocne Ptaki Późno Wracają Do Domu", en: "Night Birds Come Home Late" },
+    year: "2025",
+    category: { pl: "Dokument / Reportaż / Street", en: "Documentary / Reportage / Street" },
+    place: { pl: "Nocny styl życia", en: "Nocturnal life" },
+    works: 8,
+    caption: {
+      pl: "Zapis dokumentalny nocnego stylu życia. Refleksja nad normami społecznymi — kto wraca późno i dlaczego.",
+      en: "A documentary record of nocturnal life. A reflection on social norms — who comes home late and why."
+    },
+    images: Array.from({length: 8}, (_, i) =>
+      `images/nocne-ptaki/${String(i+1).padStart(2,"0")}.jpg`)
   }
 ];
 
