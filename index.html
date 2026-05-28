@@ -691,6 +691,23 @@
   .proj-mobile-nav { display: none; }
 
   /* ============================================================
+     AUTHOR PORTRAIT — autoportret na stronie O autorze
+     ============================================================ */
+  .author-portrait {
+    display: block;
+    width: 100%;
+    max-width: 380px;
+    height: auto;
+    margin: 0 0 32px;
+    filter: grayscale(0.1);
+    transition: filter 380ms ease;
+  }
+  .author-portrait:hover { filter: grayscale(0); }
+  @media (max-width: 720px) {
+    .author-portrait { max-width: 280px; margin-bottom: 24px; }
+  }
+
+  /* ============================================================
      ACHIEVEMENTS — chronologiczna lista wystaw/publikacji/edukacji
      ============================================================ */
   .achievements-page {

@@ -383,7 +383,8 @@ window.I18N = {
    ============================================================ */
 window.ABOUT = {
   pl: {
-    body: `<p>Paweł Sypniewski (ur. 1987 w Warszawie) — artysta wizualny, fotograf i performer. Członek ZPAF, Okręg Warszawski. W swojej twórczości konsekwentnie wychodzi poza tradycyjnie pojmowane ramy fotografii.</p>
+    body: `<img class="author-portrait" src="images/about/portrait.jpg" alt="Paweł Sypniewski — autoportret" loading="lazy" decoding="async">
+<p>Paweł Sypniewski (ur. 1987 w Warszawie) — artysta wizualny, fotograf i performer. Członek ZPAF, Okręg Warszawski. W swojej twórczości konsekwentnie wychodzi poza tradycyjnie pojmowane ramy fotografii.</p>
 <p>Interesuje go relacja obrazu i tekstu, eksperyment oraz prowokacja, a także łączenie fotografii z innymi środkami wyrazu artystycznego. Jego wszechstronny warsztat sprawia, że trudno sklasyfikować go w obrębie jednego stylu.</p>
 <p>W portfolio znajdują się prace dokumentalne, reporterskie, kreacyjne i studyjne, a także realizacje wykorzystujące techniki szlachetne, mixed media i kolaż. Inspiruje się sztuką konceptualną oraz awangardą, tworząc dzieła wymykające się prostym kategoryzacjom.</p>`,
     side: `
@@ -412,7 +413,8 @@ window.ABOUT = {
 </ul>`
   },
   en: {
-    body: `<p>Paweł Sypniewski (born 1987, Warsaw) — visual artist, photographer and performer. Member of ZPAF (Union of Polish Art Photographers), Warsaw Branch. His practice consistently moves beyond the traditional frames of photography.</p>
+    body: `<img class="author-portrait" src="images/about/portrait.jpg" alt="Paweł Sypniewski — self-portrait" loading="lazy" decoding="async">
+<p>Paweł Sypniewski (born 1987, Warsaw) — visual artist, photographer and performer. Member of ZPAF (Union of Polish Art Photographers), Warsaw Branch. His practice consistently moves beyond the traditional frames of photography.</p>
 <p>He is interested in the relation between image and text, experimentation and provocation, and in combining photography with other artistic media. The breadth of his craft makes it difficult to place him within any single style.</p>
 <p>His portfolio spans documentary, reportage, constructed and studio work, alongside projects employing historical photographic processes, mixed media and collage. Drawing from conceptual art and the avant-garde, he produces works that resist simple categorisation.</p>`,
     side: `
