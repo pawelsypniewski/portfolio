@@ -248,12 +248,32 @@ function updateSlide() {
   if (!track) return;
   const total = track.children.length;
   if (!total) return;
-  state.slideIndex = Math.max(0, Math.min(state.slideIndex, total - 1));
+  // Cyrkularnie: -1 → total-1, total → 0
+  if (state.slideIndex < 0) state.slideIndex = total - 1;
+  if (state.slideIndex >= total) state.slideIndex = 0;
   track.style.transform = `translateX(-${state.slideIndex * 100}%)`;
   const counterStr = `${String(state.slideIndex+1).padStart(2,"0")} / ${String(total).padStart(2,"0")}`;
   $("#pjCounter").textContent = counterStr;
   const cm = $("#pjCounterMobile");
   if (cm) cm.textContent = counterStr;
+}
+
+// Pomocnik: gdy slajd wraca do skrajnego (8→1 lub 1→8) — wykonaj instant jump
+// bez animacji, żeby user nie widział brzydkiego przewijania przez wszystkie zdjęcia.
+function jumpSlideInstant() {
+  const track = $("#pjTrack");
+  if (!track) return;
+  // Projekty z flashEffect i tak mają transition: none (klasa flash-mode)
+  if (track.classList.contains("flash-mode")) { updateSlide(); return; }
+  const orig = track.style.transition;
+  track.style.transition = "none";
+  updateSlide();
+  // double rAF żeby na pewno reflow się zakończył przed re-enable
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      track.style.transition = orig;
+    });
+  });
 }
 
 /* ============================================================
@@ -277,13 +297,19 @@ function triggerCameraFlash() {
 
 function navProjectPrev() {
   if (currentProjectHasFlash()) triggerCameraFlash();
+  const track = $("#pjTrack");
+  const total = track ? track.children.length : 0;
+  const wrapping = state.slideIndex === 0 && total > 1;
   state.slideIndex--;
-  updateSlide();
+  if (wrapping) jumpSlideInstant(); else updateSlide();
 }
 function navProjectNext() {
   if (currentProjectHasFlash()) triggerCameraFlash();
+  const track = $("#pjTrack");
+  const total = track ? track.children.length : 0;
+  const wrapping = state.slideIndex === total - 1 && total > 1;
   state.slideIndex++;
-  updateSlide();
+  if (wrapping) jumpSlideInstant(); else updateSlide();
 }
 
 /* ============================================================
@@ -318,6 +344,13 @@ function openLightbox(images, index, opts = {}) {
   }
   lb.classList.add("active");
   document.body.style.overflow = "hidden";
+
+  // Ukryj strzałki jeśli tylko jedno zdjęcie
+  const singleImage = lbImages.length <= 1;
+  const navPrev = document.getElementById("lbNavPrev");
+  const navNext = document.getElementById("lbNavNext");
+  if (navPrev) navPrev.style.display = singleImage ? "none" : "";
+  if (navNext) navNext.style.display = singleImage ? "none" : "";
 }
 
 function closeLightbox() {
@@ -618,11 +651,23 @@ function init() {
     });
   }
 
-  // lightbox click — kliknięcie obrazka = następny, kliknięcie poza = zamknij
+  // lightbox click — klik w ciemne tło zamyka, klik na strzałki/obrazek/close nie
   $("#lightbox").addEventListener("click", (e) => {
-    if (e.target.id === "lbImg") { lbNext(); return; }
+    // Strzałki nawigacji — obsługa osobno (z stopPropagation), tu ignorujemy
+    if (e.target.classList && e.target.classList.contains("lb-nav")) return;
+    // Klik na obrazek — nie zamykaj (user chce mu się przyjrzeć)
+    if (e.target.id === "lbImg") return;
+    // Klik na close button — zamknij
+    if (e.target.classList && e.target.classList.contains("lb-close")) { closeLightbox(); return; }
+    // Klik na pusty obszar (ciemne tło) — zamknij
     closeLightbox();
   });
+
+  // Strzałki nawigacji w lightboxie
+  const lbNavPrev = $("#lbNavPrev");
+  const lbNavNext = $("#lbNavNext");
+  if (lbNavPrev) lbNavPrev.addEventListener("click", (e) => { e.stopPropagation(); lbPrev(); });
+  if (lbNavNext) lbNavNext.addEventListener("click", (e) => { e.stopPropagation(); lbNext(); });
 
   // lightbox touch swipe — następny/poprzedni gestem na mobile
   const lb = $("#lightbox");

@@ -1150,6 +1150,38 @@
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
+  /* ---- Strzałki nawigacji w lightboxie ---- */
+  .lightbox .lb-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 56px;
+    height: 56px;
+    background: rgba(0,0,0,0.04);
+    border: 1px solid #000;
+    color: #000;
+    font-family: 'Futura', 'Jost', sans-serif;
+    font-size: 22px;
+    font-weight: 500;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 200ms ease, transform 200ms ease;
+    user-select: none;
+  }
+  .lightbox .lb-nav:hover {
+    background: #000;
+    color: #fff;
+  }
+  .lightbox .lb-nav:active { transform: translateY(-50%) scale(0.96); }
+  .lightbox .lb-nav-prev { left: 24px; }
+  .lightbox .lb-nav-next { right: 24px; }
+  .lightbox .lb-nav:focus-visible {
+    outline: 2px solid #000;
+    outline-offset: 3px;
+  }
 
   /* ============================================================
      TWEAKS PANEL
@@ -1687,6 +1719,9 @@
     .lightbox { padding: 50px 12px; }
     .lightbox .lb-close { top: 14px; right: 16px; font-size: 11px; padding: 6px; }
     .lightbox .lb-counter { bottom: 14px; left: 16px; font-size: 11px; }
+    .lightbox .lb-nav { width: 44px; height: 44px; font-size: 18px; }
+    .lightbox .lb-nav-prev { left: 10px; }
+    .lightbox .lb-nav-next { right: 10px; }
 
     /* --- TWEAKS PANEL on mobile -> bottom sheet --- */
     .tweaks {
@@ -2113,7 +2148,9 @@
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">
   <div class="lb-close" data-i18n="lb.close">Zamknij ✕</div>
+  <button class="lb-nav lb-nav-prev" id="lbNavPrev" type="button" aria-label="Poprzednie zdjęcie">←</button>
   <img id="lbImg" alt="">
+  <button class="lb-nav lb-nav-next" id="lbNavNext" type="button" aria-label="Następne zdjęcie">→</button>
   <div class="lb-counter" id="lbCounter">01/01</div>
 </div>
 
