@@ -93,8 +93,16 @@ window.PROJECTS = [
       pl: "Zapis dokumentalny nocnego stylu życia. Refleksja nad normami społecznymi.",
       en: "A documentary record of nocturnal life. A reflection on social norms."
     },
-    images: Array.from({length: 8}, (_, i) =>
-      `images/nocne-ptaki/${String(i+1).padStart(2,"0")}.jpg`)
+    images: [
+      "images/nocne-ptaki/04.jpg",
+      "images/nocne-ptaki/03.jpg",
+      "images/nocne-ptaki/01.jpg",
+      "images/nocne-ptaki/07.jpg",
+      "images/nocne-ptaki/06.jpg",
+      "images/nocne-ptaki/08.jpg",
+      "images/nocne-ptaki/02.jpg",
+      "images/nocne-ptaki/05.jpg"
+    ]
   },
   {
     slug: "danie-dnia",
