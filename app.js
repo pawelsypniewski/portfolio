@@ -154,6 +154,14 @@ function renderProject() {
     `<div class="proj-slide"><img src="${src}" alt="${p.title[L]} — zdjęcie ${i+1} z ${p.images.length}, ${p.year}, ${p.category[L]}" data-index="${i}" loading="${i === 0 ? 'eager' : 'lazy'}" fetchpriority="${i === 0 ? 'high' : 'auto'}" decoding="async"></div>`
   ).join("");
 
+  // Flash mode — wyłącz płynne przesuwanie slajdów dla projektów z lampą błyskową.
+  // Slajd ma się PRZEŁĄCZYĆ natychmiast (pod białym mignięciem), nie ślizgać.
+  if (p.flashEffect) {
+    track.classList.add("flash-mode");
+  } else {
+    track.classList.remove("flash-mode");
+  }
+
   // Lightbox click
   $$("#pjTrack img").forEach(img => {
     img.onclick = () => openLightbox(parseInt(img.dataset.index, 10));
@@ -176,8 +184,35 @@ function updateSlide() {
   if (cm) cm.textContent = counterStr;
 }
 
-function navProjectPrev() { state.slideIndex--; updateSlide(); }
-function navProjectNext() { state.slideIndex++; updateSlide(); }
+/* ============================================================
+   CAMERA FLASH — efekt lampy błyskowej
+   ============================================================ */
+function currentProjectHasFlash() {
+  const p = window.PROJECTS.find(x => x.slug === state.projectSlug);
+  return !!(p && p.flashEffect);
+}
+
+function triggerCameraFlash() {
+  const flash = document.getElementById("cameraFlash");
+  if (!flash) return;
+  // Reset animacji żeby zadziałała przy kolejnym wywołaniu
+  flash.classList.remove("flash-active");
+  void flash.offsetWidth; // wymuszenie reflow
+  flash.classList.add("flash-active");
+  // Cleanup po animacji
+  setTimeout(() => flash.classList.remove("flash-active"), 320);
+}
+
+function navProjectPrev() {
+  if (currentProjectHasFlash()) triggerCameraFlash();
+  state.slideIndex--;
+  updateSlide();
+}
+function navProjectNext() {
+  if (currentProjectHasFlash()) triggerCameraFlash();
+  state.slideIndex++;
+  updateSlide();
+}
 
 /* ============================================================
    LIGHTBOX
@@ -196,12 +231,14 @@ function closeLightbox() { $("#lightbox").classList.remove("active"); }
 function lbNext() {
   const p = window.PROJECTS.find(x => x.slug === state.projectSlug);
   if (!p) return;
+  if (p.flashEffect) triggerCameraFlash();
   lbIndex = (lbIndex + 1) % p.images.length;
   openLightbox(lbIndex);
 }
 function lbPrev() {
   const p = window.PROJECTS.find(x => x.slug === state.projectSlug);
   if (!p) return;
+  if (p.flashEffect) triggerCameraFlash();
   lbIndex = (lbIndex - 1 + p.images.length) % p.images.length;
   openLightbox(lbIndex);
 }

@@ -41,6 +41,7 @@ window.PROJECTS = [
     category: { pl: "Dokument / Found", en: "Documentary / Found" },
     place: { pl: "Walka polityczna", en: "Political fight" },
     works: 12,
+    flashEffect: true,
     caption: {
       pl: "Polityczna ikonografia polskiej prowincji. Plakaty, ołtarzyki, prowizoryczne pomniki — krajobraz przed wyborami.",
       en: "Political iconography of the Polish countryside. Posters, makeshift shrines, monuments — the landscape before an election."
@@ -71,6 +72,7 @@ window.PROJECTS = [
     category: { pl: "Dokument / Książka", en: "Documentary / Book" },
     place: { pl: "Zagubieni", en: "The Lost" },
     works: 15,
+    flashEffect: true,
     caption: {
       pl: "Książka fotograficzna o stanach zawieszenia, błądzeniu i braku perspektyw. Zrealizowana w ramach Instytutu Fotografii Twórczej w Opawie.",
       en: "A photobook on states of suspension, drift, and dead ends. Made within the Institute of Creative Photography, Opava."
@@ -86,6 +88,7 @@ window.PROJECTS = [
     category: { pl: "Dokument / Reportaż / Street", en: "Documentary / Reportage / Street" },
     place: { pl: "Nocny styl życia", en: "Nocturnal life" },
     works: 8,
+    flashEffect: true,
     caption: {
       pl: "Zapis dokumentalny nocnego stylu życia. Refleksja nad normami społecznymi.",
       en: "A documentary record of nocturnal life. A reflection on social norms."

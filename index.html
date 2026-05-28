@@ -657,6 +657,42 @@
   .proj-mobile-nav { display: none; }
 
   /* ============================================================
+     CAMERA FLASH — efekt lampy błyskowej przy przewijaniu zdjęć
+     Aktywowany tylko dla projektów z flashEffect: true (data.js)
+     ============================================================ */
+  .camera-flash {
+    position: fixed;
+    inset: 0;
+    background: #ffffff;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9999;
+    will-change: opacity;
+  }
+  .camera-flash.flash-active {
+    animation: cameraFlash 280ms cubic-bezier(0.2, 0, 0.4, 1);
+  }
+  @keyframes cameraFlash {
+    0%   { opacity: 0; }
+    8%   { opacity: 1; }    /* błyskawiczne mignięcie do bieli */
+    18%  { opacity: 0.95; } /* przytrzymanie peaku */
+    100% { opacity: 0; }    /* powolne wygaszanie */
+  }
+  /* dla projektów z efektem flash, slajd nie przesuwa się płynnie,
+     tylko podmienia się natychmiast (jak prawdziwa lampa) */
+  .proj-track.flash-mode { transition: none !important; }
+  /* zmniejszamy intensywność animacji jeśli użytkownik prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    .camera-flash.flash-active {
+      animation: cameraFlashReduced 180ms ease-out;
+    }
+    @keyframes cameraFlashReduced {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 0.4; }
+    }
+  }
+
+  /* ============================================================
      ABOUT / CONTACT
      ============================================================ */
   .text-page {
@@ -1732,6 +1768,9 @@
     </div>
   </div>
 </div>
+
+<!-- Camera flash overlay — aktywowany przez app.js dla projektów z flashEffect -->
+<div class="camera-flash" id="cameraFlash" aria-hidden="true"></div>
 
 <script src="data.js"></script>
 <script src="app.js"></script>
