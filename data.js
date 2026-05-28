@@ -87,8 +87,8 @@ window.PROJECTS = [
     place: { pl: "Nocny styl życia", en: "Nocturnal life" },
     works: 8,
     caption: {
-      pl: "Zapis dokumentalny nocnego stylu życia. Refleksja nad normami społecznymi — kto wraca późno i dlaczego.",
-      en: "A documentary record of nocturnal life. A reflection on social norms — who comes home late and why."
+      pl: "Zapis dokumentalny nocnego stylu życia. Refleksja nad normami społecznymi.",
+      en: "A documentary record of nocturnal life. A reflection on social norms."
     },
     images: Array.from({length: 8}, (_, i) =>
       `images/nocne-ptaki/${String(i+1).padStart(2,"0")}.jpg`)
