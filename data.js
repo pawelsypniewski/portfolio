@@ -92,6 +92,21 @@ window.PROJECTS = [
     },
     images: Array.from({length: 8}, (_, i) =>
       `images/nocne-ptaki/${String(i+1).padStart(2,"0")}.jpg`)
+  },
+  {
+    slug: "danie-dnia",
+    no: "07",
+    title: { pl: "Danie dnia", en: "Dish of the Day" },
+    year: "2025",
+    category: { pl: "Studium / Dokument / Ekologia", en: "Studio / Documentary / Ecology" },
+    place: { pl: "Marnowanie żywności", en: "Food waste" },
+    works: 4,
+    caption: {
+      pl: "Studium fotograficzne o codziennym wyborze i marnowaniu. Dokumentacja konsumpcji — jedzenia które nie trafia na stół.",
+      en: "A photographic study of daily choice and waste. Documentation of consumption — food that never reaches the table."
+    },
+    images: Array.from({length: 4}, (_, i) =>
+      `images/danie-dnia/${String(i+1).padStart(2,"0")}.jpg`)
   }
 ];
 
