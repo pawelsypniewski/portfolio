@@ -122,14 +122,92 @@ window.PROJECTS = [
 ];
 
 /* ============================================================
+   ACHIEVEMENTS — wystawy, publikacje, edukacja, członkostwa
+   Każdy wpis: 1-5 zdjęć w folderze images/achievements/<slug>/
+   Sortowanie: chronologicznie odwrotnie (najnowsze u góry)
+   ============================================================ */
+window.ACHIEVEMENTS = [
+  {
+    id: "labirynt-book",
+    year: "2024",
+    type: { pl: "Publikacja", en: "Publication" },
+    title: { pl: "Książka „Labirynt”", en: "Book \"Labyrinth\"" },
+    place: { pl: "Instytut Fotografii Twórczej, Opawa", en: "Institute of Creative Photography, Opava" },
+    description: {
+      pl: "Książka fotograficzna o stanach zawieszenia, błądzeniu i braku perspektyw. Praca dyplomowa realizowana w ramach ITF Opava.",
+      en: "A photobook on states of suspension, drift and dead ends. Diploma project at the Institute of Creative Photography, Opava."
+    },
+    url: "",
+    images: [
+      "images/achievements/labirynt-book/01.jpg",
+      "images/achievements/labirynt-book/02.jpg",
+      "images/achievements/labirynt-book/03.jpg",
+      "images/achievements/labirynt-book/04.jpg"
+    ]
+  },
+  {
+    id: "itf-opava",
+    year: "2024",
+    type: { pl: "Edukacja", en: "Education" },
+    title: { pl: "Instytut Fotografii Twórczej", en: "Institute of Creative Photography" },
+    place: { pl: "Opawa, Czechy", en: "Opava, Czech Republic" },
+    description: {
+      pl: "Studia w jednej z najbardziej renomowanych europejskich szkół fotografii. Kontynuacja kierunku rozpoczętego w polskich Studiach ZPAF.",
+      en: "Studies at one of Europe's most respected schools of photography. Continuation of the path begun in the ZPAF School of Photography in Poland."
+    },
+    url: "https://itf.fpf.slu.cz/",
+    images: [
+      "images/achievements/itf-opava/01.jpg",
+      "images/achievements/itf-opava/02.jpg",
+      "images/achievements/itf-opava/03.jpg"
+    ]
+  },
+  {
+    id: "sputnik",
+    year: "2022",
+    type: { pl: "Program mentorski", en: "Mentor programme" },
+    title: { pl: "Sputnik Photos — Program Mentorski", en: "Sputnik Photos Mentor Programme" },
+    place: { pl: "Warszawa, Polska", en: "Warsaw, Poland" },
+    description: {
+      pl: "Roczny program prowadzony przez kolektyw Sputnik Photos — jedno z najważniejszych miejsc dla rozwoju fotografii dokumentalnej w Europie Środkowej. Praca nad cyklem „Gra o tron”.",
+      en: "One-year programme led by the Sputnik Photos collective — one of the key centres for documentary photography in Central Europe. Work on the 'Game of Thrones' series."
+    },
+    url: "https://sputnikphotos.com/",
+    images: [
+      "images/achievements/sputnik/01.jpg",
+      "images/achievements/sputnik/02.jpg",
+      "images/achievements/sputnik/03.jpg"
+    ]
+  },
+  {
+    id: "zpaf",
+    year: "2020",
+    type: { pl: "Członkostwo", en: "Membership" },
+    title: { pl: "Związek Polskich Artystów Fotografików", en: "Union of Polish Art Photographers" },
+    place: { pl: "Okręg Warszawski, ZPAF", en: "Warsaw Branch, ZPAF" },
+    description: {
+      pl: "Przyjęcie w poczet członków ZPAF — najstarszego i najważniejszego stowarzyszenia fotografów artystycznych w Polsce, działającego od 1947 roku.",
+      en: "Admission to the Union of Polish Art Photographers (ZPAF) — the oldest and most prestigious association of art photographers in Poland, founded in 1947."
+    },
+    url: "https://zpaf.pl/",
+    images: [
+      "images/achievements/zpaf/01.jpg",
+      "images/achievements/zpaf/02.jpg"
+    ]
+  }
+];
+
+/* ============================================================
    I18N STRINGS
    ============================================================ */
 window.I18N = {
   pl: {
     "role": "Artysta wizualny / Fotograf",
     "nav.works": "Prace",
+    "nav.achievements": "Osiągnięcia",
     "nav.about": "O autorze",
     "nav.contact": "Kontakt",
+    "achievements.h": "Osiągnięcia",
     "home.label": "Prace / Wybrane realizacje",
     "idx.no": "Nr",
     "idx.title": "Tytuł",
@@ -148,8 +226,10 @@ window.I18N = {
   en: {
     "role": "Visual artist / Photographer",
     "nav.works": "Works",
+    "nav.achievements": "Achievements",
     "nav.about": "About",
     "nav.contact": "Contact",
+    "achievements.h": "Achievements",
     "home.label": "Works / Selected projects",
     "idx.no": "No.",
     "idx.title": "Title",

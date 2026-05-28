@@ -691,6 +691,137 @@
   .proj-mobile-nav { display: none; }
 
   /* ============================================================
+     ACHIEVEMENTS — chronologiczna lista wystaw/publikacji/edukacji
+     ============================================================ */
+  .achievements-page {
+    height: 100%;
+    overflow: auto;
+    padding: 88px 60px 80px;
+    max-width: 1400px;
+  }
+  .achievements-page h1 {
+    font-size: clamp(56px, 6vw, 96px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
+    margin-bottom: 56px;
+  }
+  .achievements-list {
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+  }
+  .achievement {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 48px;
+    padding-top: 36px;
+    border-top: 1px solid #000;
+  }
+  .achievement-meta {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.6;
+  }
+  .achievement-meta .year {
+    display: block;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    letter-spacing: 0;
+  }
+  .achievement-meta .type {
+    opacity: 0.6;
+  }
+  .achievement-content {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+  }
+  .achievement-title {
+    font-size: clamp(24px, 2.8vw, 44px);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    line-height: 0.95;
+  }
+  .achievement-place {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0.65;
+  }
+  .achievement-desc {
+    font-size: 15px;
+    line-height: 1.55;
+    max-width: 720px;
+  }
+  .achievement-link {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    opacity: 0.8;
+    transition: opacity 200ms ease;
+    align-self: flex-start;
+  }
+  .achievement-link:hover { opacity: 1; }
+  .achievement-photos {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin-top: 10px;
+    max-width: 720px;
+  }
+  .achievement-photo {
+    aspect-ratio: 1 / 1;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: grayscale(0.4);
+    transition: filter 280ms ease, transform 220ms ease;
+    cursor: zoom-in;
+  }
+  .achievement-photo:hover {
+    filter: grayscale(0);
+    transform: translateY(-2px);
+  }
+
+  /* Tablet portrait */
+  @media (max-width: 1024px) {
+    .achievements-page { padding: 72px 36px 60px; }
+    .achievement { grid-template-columns: 150px 1fr; gap: 28px; }
+    .achievement-photos { grid-template-columns: repeat(4, 1fr); }
+  }
+  /* Mobile */
+  @media (max-width: 720px) {
+    .achievements-page { padding: 28px 18px 40px; }
+    .achievements-page h1 { font-size: clamp(42px, 11vw, 64px); margin-bottom: 32px; }
+    .achievements-list { gap: 44px; }
+    .achievement {
+      grid-template-columns: 1fr;
+      gap: 14px;
+      padding-top: 24px;
+    }
+    .achievement-meta { display: flex; gap: 16px; align-items: baseline; }
+    .achievement-meta .year { font-size: 16px; margin-bottom: 0; }
+    .achievement-photos { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+    .achievement-desc { font-size: 14px; }
+  }
+  @media (max-width: 380px) {
+    .achievement-photos { grid-template-columns: repeat(3, 1fr); gap: 4px; }
+  }
+
+  /* ============================================================
      INSTAGRAM GRID — sekcja na stronie Kontakt
      6 zdjęć w gridzie 3×2 (desktop), 3×2 (mobile), 2×3 (small mobile)
      Greyscale → color on hover, klikalne → profil IG
@@ -1724,6 +1855,7 @@
 
       <nav class="sidenav">
         <a href="#" data-route="home" data-i18n="nav.works">Prace</a>
+        <a href="#" data-route="achievements" data-i18n="nav.achievements">Osiągnięcia</a>
         <a href="#" data-route="about" data-i18n="nav.about">O autorze</a>
         <a href="#" data-route="contact" data-i18n="nav.contact">Kontakt</a>
       </nav>
@@ -1813,6 +1945,14 @@
           <span id="pjCounterMobile">01/01</span>
           <button id="pjNextMobile" type="button" data-i18n="proj.next">następne</button>
         </div>
+      </div>
+    </section>
+
+    <!-- ===== ACHIEVEMENTS ===== -->
+    <section class="view" id="view-achievements">
+      <div class="achievements-page">
+        <h1 data-i18n="achievements.h">Osiągnięcia</h1>
+        <div id="achievementsList" class="achievements-list"></div>
       </div>
     </section>
 

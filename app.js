@@ -45,6 +45,8 @@ function parseHash() {
   const hash = (window.location.hash || "").replace(/^#\/?/, "");
   if (!hash) return { route: "home" };
   if (hash === "about" || hash === "contact") return { route: hash };
+  // PL i EN slug dla osiągnięć (zachowujemy oba)
+  if (hash === "achievements" || hash === "osiagniecia") return { route: "achievements" };
   // Sprawdzamy czy to slug projektu
   if (window.PROJECTS && window.PROJECTS.find(p => p.slug === hash)) {
     return { route: "project", slug: hash };
@@ -54,8 +56,9 @@ function parseHash() {
 
 function writeHash(route, slug) {
   let target = "";
-  if (route === "about")        target = "#/about";
-  else if (route === "contact") target = "#/contact";
+  if (route === "about")             target = "#/about";
+  else if (route === "contact")      target = "#/contact";
+  else if (route === "achievements") target = "#/achievements";
   else if (route === "project" && slug) target = "#/" + slug;
   // home → bez hasha
   const current = window.location.hash;
@@ -284,51 +287,62 @@ function navProjectNext() {
 }
 
 /* ============================================================
-   LIGHTBOX — z integracją browser back button
+   LIGHTBOX — generyczny, przyjmuje dowolny zestaw obrazów
    ============================================================ */
+let lbImages = [];          // aktualny zestaw obrazów w lightboxie
 let lbIndex = 0;
 let lbHistoryEntry = false; // czy dodaliśmy wpis do history przy otwarciu
+let lbWithFlash = false;    // czy nawigacja w tym lightboxie ma triggerować flash
 
-function openLightbox(i) {
-  const p = window.PROJECTS.find(x => x.slug === state.projectSlug);
-  if (!p) return;
+function openLightbox(images, index, opts = {}) {
+  // Backward-compat: jeśli pierwszy arg to liczba, użyj projektu z state
+  if (typeof images === "number") {
+    const p = window.PROJECTS.find(x => x.slug === state.projectSlug);
+    if (!p) return;
+    opts = { flash: !!p.flashEffect };
+    index = images;
+    images = p.images;
+  }
+  if (!Array.isArray(images) || !images.length) return;
   const lb = $("#lightbox");
   const wasOpen = lb.classList.contains("active");
-  lbIndex = i;
-  $("#lbImg").src = p.images[lbIndex];
+  lbImages = images;
+  lbIndex = Math.max(0, Math.min(index || 0, images.length - 1));
+  lbWithFlash = !!opts.flash;
+  $("#lbImg").src = lbImages[lbIndex];
   $("#lbCounter").textContent =
-    `${String(lbIndex+1).padStart(2,"0")} / ${String(p.images.length).padStart(2,"0")}`;
-  // Tylko przy pierwszym otwarciu dodaj wpis do history (back zamknie lightbox)
+    `${String(lbIndex+1).padStart(2,"0")} / ${String(lbImages.length).padStart(2,"0")}`;
   if (!wasOpen) {
     history.pushState({ lb: true }, "", window.location.hash || window.location.pathname);
     lbHistoryEntry = true;
   }
   lb.classList.add("active");
-  document.body.style.overflow = "hidden"; // zablokuj scroll pod spodem
+  document.body.style.overflow = "hidden";
 }
 
 function closeLightbox() {
   $("#lightbox").classList.remove("active");
   document.body.style.overflow = "";
-  // Zdejmij wpis history który dodaliśmy przy otwieraniu
   if (lbHistoryEntry) {
     lbHistoryEntry = false;
     history.back();
   }
 }
 function lbNext() {
-  const p = window.PROJECTS.find(x => x.slug === state.projectSlug);
-  if (!p) return;
-  if (p.flashEffect) triggerCameraFlash();
-  lbIndex = (lbIndex + 1) % p.images.length;
-  openLightbox(lbIndex);
+  if (!lbImages.length) return;
+  if (lbWithFlash) triggerCameraFlash();
+  lbIndex = (lbIndex + 1) % lbImages.length;
+  $("#lbImg").src = lbImages[lbIndex];
+  $("#lbCounter").textContent =
+    `${String(lbIndex+1).padStart(2,"0")} / ${String(lbImages.length).padStart(2,"0")}`;
 }
 function lbPrev() {
-  const p = window.PROJECTS.find(x => x.slug === state.projectSlug);
-  if (!p) return;
-  if (p.flashEffect) triggerCameraFlash();
-  lbIndex = (lbIndex - 1 + p.images.length) % p.images.length;
-  openLightbox(lbIndex);
+  if (!lbImages.length) return;
+  if (lbWithFlash) triggerCameraFlash();
+  lbIndex = (lbIndex - 1 + lbImages.length) % lbImages.length;
+  $("#lbImg").src = lbImages[lbIndex];
+  $("#lbCounter").textContent =
+    `${String(lbIndex+1).padStart(2,"0")} / ${String(lbImages.length).padStart(2,"0")}`;
 }
 
 /* ============================================================
@@ -339,6 +353,55 @@ function renderTextPages() {
   $("#aboutSide").innerHTML   = window.ABOUT[state.lang].side;
   $("#contactBody").innerHTML = window.CONTACT[state.lang].body;
   $("#contactSide").innerHTML = window.CONTACT[state.lang].side;
+}
+
+/* ============================================================
+   ACHIEVEMENTS — render chronologicznej listy
+   ============================================================ */
+function renderAchievements() {
+  const list = $("#achievementsList");
+  if (!list || !window.ACHIEVEMENTS) return;
+  const L = state.lang;
+  list.innerHTML = window.ACHIEVEMENTS.map((a, ai) => {
+    const photos = (a.images || []).map((src, i) =>
+      `<div class="achievement-photo" style="background-image:url('${src}')" data-achievement="${ai}" data-photo="${i}" role="button" tabindex="0" aria-label="${a.title[L]} — ${i+1}"></div>`
+    ).join("");
+    const linkLabel = L === "pl" ? "Zobacz więcej →" : "Learn more →";
+    const link = a.url ? `<a class="achievement-link" href="${a.url}" target="_blank" rel="noopener noreferrer">${linkLabel}</a>` : "";
+    return `
+      <article class="achievement" itemscope itemtype="https://schema.org/CreativeWork">
+        <div class="achievement-meta">
+          <span class="year" itemprop="dateCreated">${a.year}</span>
+          <span class="type">${a.type[L]}</span>
+        </div>
+        <div class="achievement-content">
+          <h2 class="achievement-title" itemprop="name">${a.title[L]}</h2>
+          <div class="achievement-place" itemprop="contentLocation">${a.place[L]}</div>
+          <p class="achievement-desc" itemprop="description">${a.description[L]}</p>
+          ${photos ? `<div class="achievement-photos">${photos}</div>` : ""}
+          ${link}
+        </div>
+      </article>
+    `;
+  }).join("");
+
+  // Click handlers — otwieranie lightboxa z konkretnym zestawem zdjęć
+  $$(".achievement-photo").forEach(el => {
+    el.onclick = () => {
+      const ai = parseInt(el.dataset.achievement, 10);
+      const pi = parseInt(el.dataset.photo, 10);
+      const a = window.ACHIEVEMENTS[ai];
+      if (!a) return;
+      openLightbox(a.images, pi, { flash: false });
+    };
+    // Keyboard support
+    el.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        el.click();
+      }
+    });
+  });
 }
 
 /* ============================================================
@@ -365,6 +428,14 @@ function updateSEO(route) {
       ? "Paweł Sypniewski (ur. 1987) — fotograf i artysta wizualny z Warszawy, członek ZPAF. Edukacja: ITF Opawa, Sputnik Photos."
       : "Paweł Sypniewski (b. 1987) — photographer and visual artist from Warsaw, ZPAF member. Education: ITF Opava, Sputnik Photos.";
     url   = `${BASE_URL}/#/about`;
+  } else if (route === "achievements") {
+    title = L === "pl"
+      ? "Osiągnięcia — Paweł Sypniewski"
+      : "Achievements — Paweł Sypniewski";
+    desc  = L === "pl"
+      ? "Wystawy, publikacje, edukacja i członkostwa Pawła Sypniewskiego — fotografa i artysty wizualnego. ZPAF, ITF Opawa, Sputnik Photos, książka „Labirynt”."
+      : "Exhibitions, publications, education and memberships of Paweł Sypniewski — photographer and visual artist. ZPAF, ITF Opava, Sputnik Photos, 'Labyrinth' book.";
+    url   = `${BASE_URL}/#/achievements`;
   } else if (route === "contact") {
     title = L === "pl"
       ? "Kontakt — Paweł Sypniewski"
@@ -449,6 +520,7 @@ function setLang(lang) {
   applyI18n();
   renderHome();
   renderTextPages();
+  renderAchievements();
   if (state.route === "project") renderProject();
   // Update SEO meta when language changes
   updateSEO(state.route);
@@ -466,9 +538,7 @@ function init() {
     el.addEventListener("click", e => {
       e.preventDefault();
       const r = el.dataset.route;
-      if (r === "home") setRoute("home");
-      else if (r === "about") setRoute("about");
-      else if (r === "contact") setRoute("contact");
+      if (["home","about","contact","achievements"].includes(r)) setRoute(r);
     });
   });
 
@@ -600,6 +670,7 @@ function init() {
   applyI18n();
   renderHome();
   renderTextPages();
+  renderAchievements();
   // ustaw aktywny przycisk wariantu w tweaks panelu
   $$("#twHomeOptions button").forEach(b =>
     b.classList.toggle("active", b.dataset.variant === state.homeVariant));
