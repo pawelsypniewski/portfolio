@@ -165,6 +165,10 @@ window.ACHIEVEMENTS = [
     },
     links: [
       {
+        label: { pl: "Strona festiwalu", en: "Festival website" },
+        url: "https://festiwal.rybnik.pl/"
+      },
+      {
         label: { pl: "Slideshow na YouTube", en: "Slideshow on YouTube" },
         url: "https://www.youtube.com/watch?v=4JCT6mdi9NA"
       },
