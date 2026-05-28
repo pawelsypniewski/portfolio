@@ -106,6 +106,12 @@ function renderHome() {
       frame.innerHTML = "";
       frame.style.backgroundImage = `url('${img}')`;
     });
+
+    // Reset styles on mouse leave
+    cell.addEventListener("mouseleave", () => {
+      const meta = cell.querySelector(".meta");
+      if (meta) meta.style.opacity = "";
+    });
   });
 
   // Click handlers for ALL variants (delegated)
