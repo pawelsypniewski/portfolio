@@ -584,6 +584,40 @@
     text-align: right;
     line-height: 1.5;
   }
+
+  /* ---- PROJECT NAV — przejście do poprzedniego/następnego projektu ---- */
+  .proj-titleblock { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .pj-projnav {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 12px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 400;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0.55;
+    transition: opacity 220ms ease;
+  }
+  .pj-projnav:hover { opacity: 0.95; }
+  .pj-projnav-btn {
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 280px;
+    transition: transform 200ms ease;
+  }
+  .pj-projnav-btn:hover { transform: translateY(-1px); }
+  .pj-projnav-btn:focus-visible {
+    outline: 1px solid #000;
+    outline-offset: 4px;
+  }
+  .pj-projnav-sep { opacity: 0.35; }
+  .pj-projnav .pn-arrow { font-weight: 500; }
+  .pj-projnav .pn-label { padding: 0 4px; }
   .proj-stage {
     position: relative;
     overflow: hidden;
@@ -1329,6 +1363,8 @@
     }
     .proj-top .pj-title { font-size: clamp(28px, 8vw, 40px); }
     .proj-top .pj-meta { text-align: left; }
+    .pj-projnav { font-size: 9px; gap: 10px; margin-top: 8px; }
+    .pj-projnav-btn { max-width: 130px; }
     .proj-stage {
       height: 60vh;
       min-height: 360px;
@@ -1752,9 +1788,14 @@
     <section class="view" id="view-project">
       <div class="project">
         <div class="proj-top">
-          <div>
+          <div class="proj-titleblock">
             <div class="pj-title" id="pjTitle">—</div>
             <div class="pj-sub" id="pjSub">—</div>
+            <div class="pj-projnav">
+              <a class="pj-projnav-btn" id="pjProjPrev" role="button" tabindex="0"></a>
+              <span class="pj-projnav-sep" aria-hidden="true">/</span>
+              <a class="pj-projnav-btn" id="pjProjNext" role="button" tabindex="0"></a>
+            </div>
           </div>
           <div class="pj-meta" id="pjMeta">—</div>
         </div>

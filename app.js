@@ -13,6 +13,59 @@ const $  = (s, r=document) => r.querySelector(s);
 const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
 
 /* ============================================================
+   PREFERENCES — localStorage persistence
+   ============================================================ */
+const LS = {
+  lang:    "ps-portfolio-lang",
+  variant: "ps-portfolio-variant"
+};
+
+function loadPrefs() {
+  try {
+    const lang = localStorage.getItem(LS.lang);
+    if (lang === "pl" || lang === "en") state.lang = lang;
+    const variant = localStorage.getItem(LS.variant);
+    if (["vignelli","index","stack","poster"].includes(variant)) state.homeVariant = variant;
+  } catch (e) { /* localStorage może być niedostępny — ignoruj */ }
+}
+
+function savePref(key, value) {
+  try { localStorage.setItem(key, value); } catch (e) {}
+}
+
+/* ============================================================
+   HASH ROUTING — URL ↔ state synchronization
+   Przykłady URL-i:
+     /              → home
+     /#/about       → about
+     /#/contact     → contact
+     /#/labirynt    → project labirynt
+   ============================================================ */
+function parseHash() {
+  const hash = (window.location.hash || "").replace(/^#\/?/, "");
+  if (!hash) return { route: "home" };
+  if (hash === "about" || hash === "contact") return { route: hash };
+  // Sprawdzamy czy to slug projektu
+  if (window.PROJECTS && window.PROJECTS.find(p => p.slug === hash)) {
+    return { route: "project", slug: hash };
+  }
+  return { route: "home" };
+}
+
+function writeHash(route, slug) {
+  let target = "";
+  if (route === "about")        target = "#/about";
+  else if (route === "contact") target = "#/contact";
+  else if (route === "project" && slug) target = "#/" + slug;
+  // home → bez hasha
+  const current = window.location.hash;
+  if (current !== target) {
+    if (target) history.pushState(null, "", target);
+    else        history.pushState(null, "", window.location.pathname + window.location.search);
+  }
+}
+
+/* ============================================================
    I18N
    ============================================================ */
 function applyI18n() {
@@ -148,6 +201,22 @@ function renderProject() {
   $("#pjMeta").innerHTML    = `${p.year}<br>${p.place[L]}<br>${p.works} ${L==="pl"?"prac":"works"}`;
   $("#pjCaption").textContent = p.caption[L];
 
+  // Nawigacja między projektami — prev/next w kolejności PROJECTS
+  const idx = window.PROJECTS.findIndex(x => x.slug === p.slug);
+  const total = window.PROJECTS.length;
+  const prev = window.PROJECTS[(idx - 1 + total) % total];
+  const next = window.PROJECTS[(idx + 1) % total];
+  const prevBtn = $("#pjProjPrev");
+  const nextBtn = $("#pjProjNext");
+  if (prevBtn && nextBtn) {
+    prevBtn.innerHTML = `<span class="pn-arrow">←</span> <span class="pn-label">${prev.no} ${prev.title[L]}</span>`;
+    prevBtn.onclick = () => navigateProject(prev.slug);
+    prevBtn.setAttribute("aria-label", (L==="pl"?"Poprzedni projekt: ":"Previous project: ") + prev.title[L]);
+    nextBtn.innerHTML = `<span class="pn-label">${next.no} ${next.title[L]}</span> <span class="pn-arrow">→</span>`;
+    nextBtn.onclick = () => navigateProject(next.slug);
+    nextBtn.setAttribute("aria-label", (L==="pl"?"Następny projekt: ":"Next project: ") + next.title[L]);
+  }
+
   // Build track — semantyczny alt + lazy loading dla wydajności / SEO
   const track = $("#pjTrack");
   track.innerHTML = p.images.map((src, i) =>
@@ -215,19 +284,38 @@ function navProjectNext() {
 }
 
 /* ============================================================
-   LIGHTBOX
+   LIGHTBOX — z integracją browser back button
    ============================================================ */
 let lbIndex = 0;
+let lbHistoryEntry = false; // czy dodaliśmy wpis do history przy otwarciu
+
 function openLightbox(i) {
   const p = window.PROJECTS.find(x => x.slug === state.projectSlug);
   if (!p) return;
+  const lb = $("#lightbox");
+  const wasOpen = lb.classList.contains("active");
   lbIndex = i;
   $("#lbImg").src = p.images[lbIndex];
   $("#lbCounter").textContent =
     `${String(lbIndex+1).padStart(2,"0")} / ${String(p.images.length).padStart(2,"0")}`;
-  $("#lightbox").classList.add("active");
+  // Tylko przy pierwszym otwarciu dodaj wpis do history (back zamknie lightbox)
+  if (!wasOpen) {
+    history.pushState({ lb: true }, "", window.location.hash || window.location.pathname);
+    lbHistoryEntry = true;
+  }
+  lb.classList.add("active");
+  document.body.style.overflow = "hidden"; // zablokuj scroll pod spodem
 }
-function closeLightbox() { $("#lightbox").classList.remove("active"); }
+
+function closeLightbox() {
+  $("#lightbox").classList.remove("active");
+  document.body.style.overflow = "";
+  // Zdejmij wpis history który dodaliśmy przy otwieraniu
+  if (lbHistoryEntry) {
+    lbHistoryEntry = false;
+    history.back();
+  }
+}
 function lbNext() {
   const p = window.PROJECTS.find(x => x.slug === state.projectSlug);
   if (!p) return;
@@ -306,7 +394,7 @@ function updateSEO(route) {
   if (canonical && url) canonical.setAttribute("href", url);
 }
 
-function setRoute(route) {
+function setRoute(route, opts = {}) {
   state.route = route;
   $$(".view").forEach(v => v.classList.remove("active"));
   const id = `view-${route}`;
@@ -322,12 +410,24 @@ function setRoute(route) {
 
   // SEO: dynamic title/description per view
   updateSEO(route);
+
+  // URL sync — chyba że woła nas popstate (back/forward)
+  if (!opts.skipHash) {
+    writeHash(route, state.projectSlug);
+  }
+
+  // Scroll do góry przy zmianie widoku (poprawia UX na mobile po przewinięciu)
+  if (!opts.skipScroll) {
+    window.scrollTo({ top: 0, behavior: "instant" });
+    const main = document.querySelector(".main");
+    if (main) main.scrollTop = 0;
+  }
 }
 
-function navigateProject(slug) {
+function navigateProject(slug, opts = {}) {
   state.projectSlug = slug;
   renderProject();
-  setRoute("project");
+  setRoute("project", opts);
 }
 
 /* ============================================================
@@ -341,6 +441,7 @@ function setHomeVariant(v) {
   renderHome();
   $$("#twHomeOptions button").forEach(b =>
     b.classList.toggle("active", b.dataset.variant === v));
+  savePref(LS.variant, v);
 }
 
 function setLang(lang) {
@@ -353,6 +454,7 @@ function setLang(lang) {
   updateSEO(state.route);
   // Aktualizuj atrybut lang dokumentu dla wyszukiwarek
   document.documentElement.lang = lang;
+  savePref(LS.lang, lang);
 }
 
 /* ============================================================
@@ -411,11 +513,42 @@ function init() {
     });
   }
 
-  // lightbox
+  // lightbox click — kliknięcie obrazka = następny, kliknięcie poza = zamknij
   $("#lightbox").addEventListener("click", (e) => {
     if (e.target.id === "lbImg") { lbNext(); return; }
     closeLightbox();
   });
+
+  // lightbox touch swipe — następny/poprzedni gestem na mobile
+  const lb = $("#lightbox");
+  if (lb) {
+    let lbStartX = 0, lbStartY = 0, lbMoved = false;
+    lb.addEventListener("touchstart", (e) => {
+      const t = e.touches[0];
+      lbStartX = t.clientX; lbStartY = t.clientY; lbMoved = false;
+    }, { passive: true });
+    lb.addEventListener("touchmove", (e) => {
+      const t = e.touches[0];
+      if (Math.abs(t.clientX - lbStartX) > 10 || Math.abs(t.clientY - lbStartY) > 10) {
+        lbMoved = true;
+      }
+    }, { passive: true });
+    lb.addEventListener("touchend", (e) => {
+      if (!lbMoved) return;
+      const t = e.changedTouches[0];
+      const dx = t.clientX - lbStartX;
+      const dy = t.clientY - lbStartY;
+      // pionowy swipe w dół = zamknij; poziomy = nawigacja
+      if (Math.abs(dy) > 80 && Math.abs(dy) > Math.abs(dx)) {
+        if (dy > 0) closeLightbox();
+        return;
+      }
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.2) {
+        if (dx < 0) lbNext();
+        else        lbPrev();
+      }
+    });
+  }
 
   // keyboard
   document.addEventListener("keydown", (e) => {
@@ -438,11 +571,47 @@ function init() {
   $$("#twHomeOptions button").forEach(b =>
     b.addEventListener("click", () => setHomeVariant(b.dataset.variant)));
 
-  // initial render
+  // browser back/forward (popstate) — synchronizuj stan z URL
+  window.addEventListener("popstate", () => {
+    // Jeśli otwarty lightbox — zamknij go (back gest. już zdjął history entry)
+    if ($("#lightbox").classList.contains("active")) {
+      $("#lightbox").classList.remove("active");
+      document.body.style.overflow = "";
+      lbHistoryEntry = false;
+      return;
+    }
+    const parsed = parseHash();
+    if (parsed.route === "project" && parsed.slug) {
+      state.projectSlug = parsed.slug;
+      renderProject();
+      setRoute("project", { skipHash: true });
+    } else {
+      setRoute(parsed.route || "home", { skipHash: true });
+    }
+  });
+
+  // 1. Załaduj zapisane preferencje (język, wariant)
+  loadPrefs();
+
+  // 2. Sparsuj URL — co użytkownik chce zobaczyć (refresh / shared link)
+  const initial = parseHash();
+
+  // 3. Pierwszy render z odpowiednim językiem i wariantem
   applyI18n();
   renderHome();
   renderTextPages();
-  setRoute("home");
+  // ustaw aktywny przycisk wariantu w tweaks panelu
+  $$("#twHomeOptions button").forEach(b =>
+    b.classList.toggle("active", b.dataset.variant === state.homeVariant));
+
+  // 4. Skieruj do żądanego widoku
+  if (initial.route === "project" && initial.slug) {
+    state.projectSlug = initial.slug;
+    renderProject();
+    setRoute("project", { skipHash: true });
+  } else {
+    setRoute(initial.route || "home", { skipHash: true });
+  }
 }
 
 document.addEventListener("DOMContentLoaded", init);
