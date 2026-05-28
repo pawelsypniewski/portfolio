@@ -366,8 +366,17 @@ function renderAchievements() {
     const photos = (a.images || []).map((src, i) =>
       `<div class="achievement-photo" style="background-image:url('${src}')" data-achievement="${ai}" data-photo="${i}" role="button" tabindex="0" aria-label="${a.title[L]} — ${i+1}"></div>`
     ).join("");
-    const linkLabel = L === "pl" ? "Zobacz więcej →" : "Learn more →";
-    const link = a.url ? `<a class="achievement-link" href="${a.url}" target="_blank" rel="noopener noreferrer">${linkLabel}</a>` : "";
+    // Linki — obsługa zarówno pojedynczego `url` jak i tablicy `links`
+    let link = "";
+    if (a.links && a.links.length) {
+      const items = a.links.map(l =>
+        `<a class="achievement-link" href="${l.url}" target="_blank" rel="noopener noreferrer">${l.label[L]} →</a>`
+      ).join("");
+      link = `<div class="achievement-links">${items}</div>`;
+    } else if (a.url) {
+      const fallback = L === "pl" ? "Zobacz więcej →" : "Learn more →";
+      link = `<a class="achievement-link" href="${a.url}" target="_blank" rel="noopener noreferrer">${fallback}</a>`;
+    }
     return `
       <article class="achievement" itemscope itemtype="https://schema.org/CreativeWork">
         <div class="achievement-meta">

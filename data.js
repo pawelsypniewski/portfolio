@@ -151,6 +151,31 @@ window.ACHIEVEMENTS = [
     ]
   },
   {
+    id: "rybnik-foto-festival-2025",
+    year: "2025",
+    type: { pl: "Pokaz festiwalowy", en: "Festival screening" },
+    title: { pl: "Rybnik Foto Festival — slideshow „Labirynt”", en: "Rybnik Foto Festival — \"Labirynt\" slideshow" },
+    place: {
+      pl: "Galeria Sztuki Rzeczna, Rybnik",
+      en: "Galeria Sztuki Rzeczna, Rybnik"
+    },
+    description: {
+      pl: "Prezentacja slideshow cyklu „Labirynt” na 22. edycji Rybnik Foto Festival. Opowieść o młodych ludziach uwikłanych przez małe miasteczka — niczym przez budowle o złożonych strukturach. Metafora trudności do pokonania i zawiłości życiowych wyborów: czy widz znajdzie drogę wyjścia? Festiwal zaprezentował projekt w kontekście absolwentów Programu Mentorskiego Sputnik Photos. Pokaz 28 marca 2025.",
+      en: "Slideshow presentation of the \"Labirynt\" series at the 22nd edition of Rybnik Foto Festival. A story of young people entangled in small towns — like buildings of complex structure that evoke a sense of being lost. A metaphor for difficulties to overcome and the tangled nature of life choices: will the viewer find a way out? The festival presented the project in the context of Sputnik Photos Mentor Programme alumni. Screening 28 March 2025."
+    },
+    links: [
+      {
+        label: { pl: "Slideshow na YouTube", en: "Slideshow on YouTube" },
+        url: "https://www.youtube.com/watch?v=4JCT6mdi9NA"
+      },
+      {
+        label: { pl: "Post festiwalu na Instagramie", en: "Festival's Instagram post" },
+        url: "https://www.instagram.com/p/DHIWSF6uK1I/"
+      }
+    ],
+    images: []
+  },
+  {
     id: "w-glowie-sie-nie-miesci-2025",
     year: "2025",
     type: { pl: "Wystawa indywidualna", en: "Solo exhibition" },
