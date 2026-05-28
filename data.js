@@ -16,7 +16,7 @@ window.PROJECTS = [
       en: "A series on the everyday — fragments of landscape and public space. What remains once everything is reduced to factory settings."
     },
     images: Array.from({length: 18}, (_, i) =>
-      `images/ustawienia/${String(i+1).padStart(2,"0")}.jpg`)
+      `images/ustawienia/${String(i+1).padStart(2,"0")}.webp`)
   },
   {
     slug: "superpozycja",
@@ -31,7 +31,7 @@ window.PROJECTS = [
       en: "Image layered on image — a figure dressed in discarded circuit boards drifts through the city. A work on the simultaneity of being."
     },
     images: Array.from({length: 8}, (_, i) =>
-      `images/superpozycja/${String(i+1).padStart(2,"0")}.jpg`)
+      `images/superpozycja/${String(i+1).padStart(2,"0")}.webp`)
   },
   {
     slug: "gra-o-tron",
@@ -47,7 +47,7 @@ window.PROJECTS = [
       en: "Political iconography of the Polish countryside. Posters, makeshift shrines, monuments — the landscape before an election."
     },
     images: Array.from({length: 12}, (_, i) =>
-      `images/gra_o_tron/${String(i+1).padStart(2,"0")}.jpg`)
+      `images/gra_o_tron/${String(i+1).padStart(2,"0")}.webp`)
   },
   {
     slug: "nowa-topografia",
@@ -62,7 +62,7 @@ window.PROJECTS = [
       en: "Poland through my eye — a landscape of edges, fences, notice boards, makeshift things. Traces of the everyday ordering of space."
     },
     images: Array.from({length: 9}, (_, i) =>
-      `images/topografia/${String(i+1).padStart(2,"0")}.jpg`)
+      `images/topografia/${String(i+1).padStart(2,"0")}.webp`)
   },
   {
     slug: "labirynt",
@@ -78,7 +78,7 @@ window.PROJECTS = [
       en: "A photobook on states of suspension, drift, and dead ends. Made within the Institute of Creative Photography, Opava."
     },
     images: Array.from({length: 15}, (_, i) =>
-      `images/labirynt/${String(i+1).padStart(2,"0")}.jpg`)
+      `images/labirynt/${String(i+1).padStart(2,"0")}.webp`)
   },
   {
     slug: "nocne-ptaki",
@@ -94,14 +94,14 @@ window.PROJECTS = [
       en: "A documentary record of nocturnal life. A reflection on social norms."
     },
     images: [
-      "images/nocne-ptaki/04.jpg",
-      "images/nocne-ptaki/03.jpg",
-      "images/nocne-ptaki/01.jpg",
-      "images/nocne-ptaki/07.jpg",
-      "images/nocne-ptaki/06.jpg",
-      "images/nocne-ptaki/08.jpg",
-      "images/nocne-ptaki/02.jpg",
-      "images/nocne-ptaki/05.jpg"
+      "images/nocne-ptaki/04.webp",
+      "images/nocne-ptaki/03.webp",
+      "images/nocne-ptaki/01.webp",
+      "images/nocne-ptaki/07.webp",
+      "images/nocne-ptaki/06.webp",
+      "images/nocne-ptaki/08.webp",
+      "images/nocne-ptaki/02.webp",
+      "images/nocne-ptaki/05.webp"
     ]
   },
   {
@@ -117,7 +117,7 @@ window.PROJECTS = [
       en: "A photographic study of daily choice and waste. Documentation of consumption — food that never reaches the table."
     },
     images: Array.from({length: 4}, (_, i) =>
-      `images/danie-dnia/${String(i+1).padStart(2,"0")}.jpg`)
+      `images/danie-dnia/${String(i+1).padStart(2,"0")}.webp`)
   }
 ];
 
@@ -155,10 +155,10 @@ window.ACHIEVEMENTS = [
       }
     ],
     images: [
-      "images/achievements/itf-opava-start-2025/01.jpg",
-      "images/achievements/itf-opava-start-2025/02.jpg",
-      "images/achievements/itf-opava-start-2025/03.jpg",
-      "images/achievements/itf-opava-start-2025/04.jpg"
+      "images/achievements/itf-opava-start-2025/01.webp",
+      "images/achievements/itf-opava-start-2025/02.webp",
+      "images/achievements/itf-opava-start-2025/03.webp",
+      "images/achievements/itf-opava-start-2025/04.webp"
     ]
   },
   {
@@ -192,9 +192,9 @@ window.ACHIEVEMENTS = [
       }
     ],
     images: [
-      "images/achievements/fotoartfestival-dias-show-2025/01.jpg",
-      "images/achievements/fotoartfestival-dias-show-2025/02.jpg",
-      "images/achievements/fotoartfestival-dias-show-2025/03.jpg"
+      "images/achievements/fotoartfestival-dias-show-2025/01.webp",
+      "images/achievements/fotoartfestival-dias-show-2025/02.webp",
+      "images/achievements/fotoartfestival-dias-show-2025/03.webp"
     ]
   },
   {
@@ -224,12 +224,12 @@ window.ACHIEVEMENTS = [
       }
     ],
     images: [
-      "images/achievements/zpaf-przyjecie-2025/06.jpg",
-      "images/achievements/zpaf-przyjecie-2025/01.jpg",
-      "images/achievements/zpaf-przyjecie-2025/02.jpg",
-      "images/achievements/zpaf-przyjecie-2025/03.jpg",
-      "images/achievements/zpaf-przyjecie-2025/04.jpg",
-      "images/achievements/zpaf-przyjecie-2025/05.jpg"
+      "images/achievements/zpaf-przyjecie-2025/06.webp",
+      "images/achievements/zpaf-przyjecie-2025/01.webp",
+      "images/achievements/zpaf-przyjecie-2025/02.webp",
+      "images/achievements/zpaf-przyjecie-2025/03.webp",
+      "images/achievements/zpaf-przyjecie-2025/04.webp",
+      "images/achievements/zpaf-przyjecie-2025/05.webp"
     ]
   },
   {
@@ -254,12 +254,12 @@ window.ACHIEVEMENTS = [
       en: "A personal photographic record of struggle with depression. The project was born from the need to break the social taboo around mental illness and to reach others fighting similar battles — with the conviction that asking for help is not a sign of weakness, but of courage."
     },
     images: [
-      "images/achievements/pamietnik-przetrwania-2025/01.jpg",
-      "images/achievements/pamietnik-przetrwania-2025/02.jpg",
-      "images/achievements/pamietnik-przetrwania-2025/03.jpg",
-      "images/achievements/pamietnik-przetrwania-2025/04.jpg",
-      "images/achievements/pamietnik-przetrwania-2025/05.jpg",
-      "images/achievements/pamietnik-przetrwania-2025/06.jpg"
+      "images/achievements/pamietnik-przetrwania-2025/01.webp",
+      "images/achievements/pamietnik-przetrwania-2025/02.webp",
+      "images/achievements/pamietnik-przetrwania-2025/03.webp",
+      "images/achievements/pamietnik-przetrwania-2025/04.webp",
+      "images/achievements/pamietnik-przetrwania-2025/05.webp",
+      "images/achievements/pamietnik-przetrwania-2025/06.webp"
     ]
   },
   {
@@ -284,11 +284,11 @@ window.ACHIEVEMENTS = [
       en: "Solo exhibition bringing together four of the artist's series — \"Diary of Survival\", \"Flashback\", \"Labyrinth\" and \"Superposition\". A journey into human consciousness and subconsciousness — memory, limits of freedom, fears and desires. Photography as a tool for dialogue — with oneself, the viewer and the world. Curator: Agata Rząsowska-Grabicka."
     },
     images: [
-      "images/achievements/w-glowie-sie-nie-miesci-2025/01.jpg",
-      "images/achievements/w-glowie-sie-nie-miesci-2025/02.jpg",
-      "images/achievements/w-glowie-sie-nie-miesci-2025/03.jpg",
-      "images/achievements/w-glowie-sie-nie-miesci-2025/04.jpg",
-      "images/achievements/w-glowie-sie-nie-miesci-2025/05.jpg"
+      "images/achievements/w-glowie-sie-nie-miesci-2025/01.webp",
+      "images/achievements/w-glowie-sie-nie-miesci-2025/02.webp",
+      "images/achievements/w-glowie-sie-nie-miesci-2025/03.webp",
+      "images/achievements/w-glowie-sie-nie-miesci-2025/04.webp",
+      "images/achievements/w-glowie-sie-nie-miesci-2025/05.webp"
     ]
   },
   {
@@ -323,7 +323,7 @@ window.ACHIEVEMENTS = [
       }
     ],
     images: [
-      "images/achievements/rybnik-foto-festival-2025/01.jpg"
+      "images/achievements/rybnik-foto-festival-2025/01.webp"
     ]
   },
   {
@@ -357,12 +357,12 @@ window.ACHIEVEMENTS = [
       }
     ],
     images: [
-      "images/achievements/10-przykazan-2023/01.jpg",
-      "images/achievements/10-przykazan-2023/02.jpg",
-      "images/achievements/10-przykazan-2023/03.jpg",
-      "images/achievements/10-przykazan-2023/04.jpg",
-      "images/achievements/10-przykazan-2023/05.jpg",
-      "images/achievements/10-przykazan-2023/06.jpg"
+      "images/achievements/10-przykazan-2023/01.webp",
+      "images/achievements/10-przykazan-2023/02.webp",
+      "images/achievements/10-przykazan-2023/03.webp",
+      "images/achievements/10-przykazan-2023/04.webp",
+      "images/achievements/10-przykazan-2023/05.webp",
+      "images/achievements/10-przykazan-2023/06.webp"
     ]
   }
 ];
@@ -422,7 +422,7 @@ window.I18N = {
    ============================================================ */
 window.ABOUT = {
   pl: {
-    body: `<img class="author-portrait" src="images/about/portrait.jpg" alt="Paweł Sypniewski — autoportret" loading="lazy" decoding="async">
+    body: `<img class="author-portrait" src="images/about/portrait.webp" alt="Paweł Sypniewski — autoportret" loading="lazy" decoding="async">
 <p>Paweł Sypniewski (ur. 1987 w Warszawie) — artysta wizualny, fotograf i performer. Członek ZPAF, Okręg Warszawski. W swojej twórczości konsekwentnie wychodzi poza tradycyjnie pojmowane ramy fotografii.</p>
 <p>Interesuje go relacja obrazu i tekstu, eksperyment oraz prowokacja, a także łączenie fotografii z innymi środkami wyrazu artystycznego. Jego wszechstronny warsztat sprawia, że trudno sklasyfikować go w obrębie jednego stylu.</p>
 <p>W portfolio znajdują się prace dokumentalne, reporterskie, kreacyjne i studyjne, a także realizacje wykorzystujące techniki szlachetne, mixed media i kolaż. Inspiruje się sztuką konceptualną oraz awangardą, tworząc dzieła wymykające się prostym kategoryzacjom.</p>`,
@@ -452,7 +452,7 @@ window.ABOUT = {
 </ul>`
   },
   en: {
-    body: `<img class="author-portrait" src="images/about/portrait.jpg" alt="Paweł Sypniewski — self-portrait" loading="lazy" decoding="async">
+    body: `<img class="author-portrait" src="images/about/portrait.webp" alt="Paweł Sypniewski — self-portrait" loading="lazy" decoding="async">
 <p>Paweł Sypniewski (born 1987, Warsaw) — visual artist, photographer and performer. Member of ZPAF (Union of Polish Art Photographers), Warsaw Branch. His practice consistently moves beyond the traditional frames of photography.</p>
 <p>He is interested in the relation between image and text, experimentation and provocation, and in combining photography with other artistic media. The breadth of his craft makes it difficult to place him within any single style.</p>
 <p>His portfolio spans documentary, reportage, constructed and studio work, alongside projects employing historical photographic processes, mixed media and collage. Drawing from conceptual art and the avant-garde, he produces works that resist simple categorisation.</p>`,
@@ -485,16 +485,16 @@ window.ABOUT = {
 
 /* ============================================================
    INSTAGRAM TILES — 6 zdjęć z folderu /images/instagram/
-   Aby zmienić: zastąp pliki 01-06.jpg w /images/instagram/.
+   Aby zmienić: zastąp pliki 01-06.webp w /images/instagram/.
    Jeśli chcesz linkować konkretne posty, edytuj url poniżej.
    ============================================================ */
 const IG_TILES = [
-  { img: "images/instagram/01.jpg", url: "https://www.instagram.com/p/C5L33N1IeEz/" },
-  { img: "images/instagram/02.jpg", url: "https://www.instagram.com/p/DDElbqPI8tL/" },
-  { img: "images/instagram/03.jpg", url: "https://www.instagram.com/p/DCMoYLComsI/" },
-  { img: "images/instagram/04.jpg", url: "https://www.instagram.com/p/C__MGoGodx7/" },
-  { img: "images/instagram/05.jpg", url: "https://www.instagram.com/p/DCPeeERoB0_/" },
-  { img: "images/instagram/06.jpg", url: "https://www.instagram.com/p/DGbNquTI_p8/" }
+  { img: "images/instagram/01.webp", url: "https://www.instagram.com/p/C5L33N1IeEz/" },
+  { img: "images/instagram/02.webp", url: "https://www.instagram.com/p/DDElbqPI8tL/" },
+  { img: "images/instagram/03.webp", url: "https://www.instagram.com/p/DCMoYLComsI/" },
+  { img: "images/instagram/04.webp", url: "https://www.instagram.com/p/C__MGoGodx7/" },
+  { img: "images/instagram/05.webp", url: "https://www.instagram.com/p/DCPeeERoB0_/" },
+  { img: "images/instagram/06.webp", url: "https://www.instagram.com/p/DGbNquTI_p8/" }
 ];
 
 function buildIgSection(L) {

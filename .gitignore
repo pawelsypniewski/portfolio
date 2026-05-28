@@ -1,0 +1,16 @@
+# Node.js dependencies
+node_modules/
+
+# Editor configs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Claude Code local config (already inside repo, ignored from future tracking)
+.claude/
