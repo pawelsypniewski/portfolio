@@ -356,13 +356,25 @@ function renderTextPages() {
 }
 
 /* ============================================================
-   ACHIEVEMENTS — render chronologicznej listy
+   ACHIEVEMENTS / AKTUALNOŚCI — render chronologicznej listy
+   Auto-sort: malejąco po dateISO (najnowsze u góry)
    ============================================================ */
 function renderAchievements() {
   const list = $("#achievementsList");
   if (!list || !window.ACHIEVEMENTS) return;
   const L = state.lang;
-  list.innerHTML = window.ACHIEVEMENTS.map((a, ai) => {
+
+  // Sortuj malejąco po dateISO. Fallback: legacy `year` field.
+  const sorted = [...window.ACHIEVEMENTS].sort((a, b) => {
+    const aKey = a.dateISO || (a.year ? a.year + "-00-00" : "0000-00-00");
+    const bKey = b.dateISO || (b.year ? b.year + "-00-00" : "0000-00-00");
+    return bKey.localeCompare(aKey);
+  });
+
+  // Trzymaj referencję do posortowanej listy dla click handlera
+  window._achievementsSorted = sorted;
+
+  list.innerHTML = sorted.map((a, ai) => {
     const photos = (a.images || []).map((src, i) =>
       `<div class="achievement-photo" style="background-image:url('${src}')" data-achievement="${ai}" data-photo="${i}" role="button" tabindex="0" aria-label="${a.title[L]} — ${i+1}"></div>`
     ).join("");
@@ -377,15 +389,21 @@ function renderAchievements() {
       const fallback = L === "pl" ? "Zobacz więcej →" : "Learn more →";
       link = `<a class="achievement-link" href="${a.url}" target="_blank" rel="noopener noreferrer">${fallback}</a>`;
     }
+    // Data wyświetlana — preferuj `date` (string PL/EN), fallback do `year`
+    const displayDate = a.date ? a.date[L] : (a.year || "");
+    const addressBlock = a.address ? `<div class="achievement-address">${a.address[L]}</div>` : "";
+
     return `
-      <article class="achievement" itemscope itemtype="https://schema.org/CreativeWork">
+      <article class="achievement" itemscope itemtype="https://schema.org/Event">
+        <meta itemprop="startDate" content="${a.dateISO || ""}">
         <div class="achievement-meta">
-          <span class="year" itemprop="dateCreated">${a.year}</span>
+          <span class="date">${displayDate}</span>
           <span class="type">${a.type[L]}</span>
         </div>
         <div class="achievement-content">
           <h2 class="achievement-title" itemprop="name">${a.title[L]}</h2>
-          <div class="achievement-place" itemprop="contentLocation">${a.place[L]}</div>
+          <div class="achievement-place" itemprop="location">${a.place[L]}</div>
+          ${addressBlock}
           <p class="achievement-desc" itemprop="description">${a.description[L]}</p>
           ${photos ? `<div class="achievement-photos">${photos}</div>` : ""}
           ${link}
@@ -399,11 +417,10 @@ function renderAchievements() {
     el.onclick = () => {
       const ai = parseInt(el.dataset.achievement, 10);
       const pi = parseInt(el.dataset.photo, 10);
-      const a = window.ACHIEVEMENTS[ai];
+      const a = (window._achievementsSorted || window.ACHIEVEMENTS)[ai];
       if (!a) return;
       openLightbox(a.images, pi, { flash: false });
     };
-    // Keyboard support
     el.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();

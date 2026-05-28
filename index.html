@@ -727,15 +727,26 @@
     text-transform: uppercase;
     line-height: 1.6;
   }
-  .achievement-meta .year {
+  .achievement-meta .date {
     display: block;
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 500;
-    margin-bottom: 6px;
-    letter-spacing: 0;
+    margin-bottom: 12px;
+    letter-spacing: 0.02em;
+    color: #000;
   }
   .achievement-meta .type {
     opacity: 0.6;
+    display: block;
+  }
+  .achievement-address {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    opacity: 0.5;
+    margin-top: -8px;
   }
   .achievement-content {
     display: flex;
@@ -818,8 +829,9 @@
       gap: 14px;
       padding-top: 24px;
     }
-    .achievement-meta { display: flex; gap: 16px; align-items: baseline; }
-    .achievement-meta .year { font-size: 16px; margin-bottom: 0; }
+    .achievement-meta { display: block; }
+    .achievement-meta .date { font-size: 13px; margin-bottom: 6px; }
+    .achievement-address { font-size: 10px; margin-top: -4px; }
     .achievement-photos { grid-template-columns: repeat(4, 1fr); gap: 6px; }
     .achievement-desc { font-size: 14px; }
   }

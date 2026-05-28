@@ -122,25 +122,33 @@ window.PROJECTS = [
 ];
 
 /* ============================================================
-   ACHIEVEMENTS — wystawy, publikacje, edukacja, członkostwa
-   Sortowanie: chronologicznie odwrotnie (najnowsze u góry).
-   Każdy wpis: zdjęcia w folderze images/achievements/<id>/
+   ACHIEVEMENTS / AKTUALNOŚCI — wystawy, pokazy, publikacje, etc.
+   Każdy wpis musi mieć `dateISO` (YYYY-MM-DD) — używane do
+   automatycznego sortowania chronologicznie (najnowsze u góry)
+   oraz do Schema.org / SEO.
    ============================================================ */
 window.ACHIEVEMENTS = [
   {
     id: "pamietnik-przetrwania-2025",
-    year: "2025",
+    dateISO: "2025-12-03",
+    date: {
+      pl: "3 grudnia 2025 – 10 stycznia 2026",
+      en: "3 December 2025 – 10 January 2026"
+    },
     type: { pl: "Wystawa indywidualna", en: "Solo exhibition" },
     title: { pl: "Pamiętnik przetrwania", en: "Diary of Survival" },
     place: {
       pl: "Galeria MAL — Terminal Kultury Gocław, Warszawa",
       en: "MAL Gallery — Terminal Kultury Gocław, Warsaw"
     },
-    description: {
-      pl: "Osobisty zapis fotograficzny walki z depresją. Projekt powstał z potrzeby przełamania społecznego tabu wokół chorób psychicznych i dotarcia do osób zmagających się z podobnymi doświadczeniami — z myślą, że prośba o pomoc nie jest oznaką słabości, lecz odwagą. Wernisaż 3 grudnia 2025, ekspozycja do 10 stycznia 2026.",
-      en: "A personal photographic record of struggle with depression. The project was born from the need to break the social taboo around mental illness and to reach others fighting similar battles — with the conviction that asking for help is not a sign of weakness, but of courage. Opening December 3, 2025, on view through January 10, 2026."
+    address: {
+      pl: "ul. Jana Nowaka-Jeziorańskiego 24, Praga-Południe",
+      en: "ul. Jana Nowaka-Jeziorańskiego 24, Praga-Południe"
     },
-    url: "",
+    description: {
+      pl: "Osobisty zapis fotograficzny walki z depresją. Projekt powstał z potrzeby przełamania społecznego tabu wokół chorób psychicznych i dotarcia do osób zmagających się z podobnymi doświadczeniami — z myślą, że prośba o pomoc nie jest oznaką słabości, lecz odwagą.",
+      en: "A personal photographic record of struggle with depression. The project was born from the need to break the social taboo around mental illness and to reach others fighting similar battles — with the conviction that asking for help is not a sign of weakness, but of courage."
+    },
     images: [
       "images/achievements/pamietnik-przetrwania-2025/01.jpg",
       "images/achievements/pamietnik-przetrwania-2025/02.jpg",
@@ -151,8 +159,41 @@ window.ACHIEVEMENTS = [
     ]
   },
   {
+    id: "w-glowie-sie-nie-miesci-2025",
+    dateISO: "2025-09-05",
+    date: {
+      pl: "5 – 19 września 2025",
+      en: "5 – 19 September 2025"
+    },
+    type: { pl: "Wystawa indywidualna", en: "Solo exhibition" },
+    title: { pl: "W głowie się nie mieści", en: "W głowie się nie mieści" },
+    place: {
+      pl: "Lokal Bródno, Warszawa",
+      en: "Lokal Bródno, Warsaw"
+    },
+    address: {
+      pl: "ul. Kondratowicza 18b/406",
+      en: "ul. Kondratowicza 18b/406"
+    },
+    description: {
+      pl: "Indywidualna wystawa łącząca cztery cykle artysty — „Pamiętnik przetrwania”, „Flashback”, „Labirynt” i „Superpozycja”. Podróż w głąb ludzkiej świadomości i podświadomości: o pamięci, granicach wolności, lękach i pragnieniach. Fotografia jako narzędzie dialogu — z samym sobą, z odbiorcą, ze światem. Kuratorka: Agata Rząsowska-Grabicka.",
+      en: "Solo exhibition bringing together four of the artist's series — \"Diary of Survival\", \"Flashback\", \"Labyrinth\" and \"Superposition\". A journey into human consciousness and subconsciousness — memory, limits of freedom, fears and desires. Photography as a tool for dialogue — with oneself, the viewer and the world. Curator: Agata Rząsowska-Grabicka."
+    },
+    images: [
+      "images/achievements/w-glowie-sie-nie-miesci-2025/01.jpg",
+      "images/achievements/w-glowie-sie-nie-miesci-2025/02.jpg",
+      "images/achievements/w-glowie-sie-nie-miesci-2025/03.jpg",
+      "images/achievements/w-glowie-sie-nie-miesci-2025/04.jpg",
+      "images/achievements/w-glowie-sie-nie-miesci-2025/05.jpg"
+    ]
+  },
+  {
     id: "rybnik-foto-festival-2025",
-    year: "2025",
+    dateISO: "2025-03-28",
+    date: {
+      pl: "28 marca 2025",
+      en: "28 March 2025"
+    },
     type: { pl: "Pokaz festiwalowy", en: "Festival screening" },
     title: { pl: "Rybnik Foto Festival — slideshow „Labirynt”", en: "Rybnik Foto Festival — \"Labirynt\" slideshow" },
     place: {
@@ -160,8 +201,8 @@ window.ACHIEVEMENTS = [
       en: "Galeria Sztuki Rzeczna, Rybnik"
     },
     description: {
-      pl: "Prezentacja slideshow cyklu „Labirynt” na 22. edycji Rybnik Foto Festival. Opowieść o młodych ludziach uwikłanych przez małe miasteczka. Metafora trudności do pokonania i zawiłości życiowych wyborów: czy widz znajdzie drogę wyjścia? Pokaz 28 marca 2025.",
-      en: "Slideshow presentation of the \"Labirynt\" series at the 22nd edition of Rybnik Foto Festival. A story of young people entangled in small towns. A metaphor for difficulties to overcome and the tangled nature of life choices: will the viewer find a way out? Screening 28 March 2025."
+      pl: "Prezentacja slideshow cyklu „Labirynt” na 22. edycji Rybnik Foto Festival. Opowieść o młodych ludziach uwikłanych przez małe miasteczka. Metafora trudności do pokonania i zawiłości życiowych wyborów: czy widz znajdzie drogę wyjścia?",
+      en: "Slideshow presentation of the \"Labirynt\" series at the 22nd edition of Rybnik Foto Festival. A story of young people entangled in small towns. A metaphor for difficulties to overcome and the tangled nature of life choices: will the viewer find a way out?"
     },
     links: [
       {
@@ -179,28 +220,6 @@ window.ACHIEVEMENTS = [
     ],
     images: [
       "images/achievements/rybnik-foto-festival-2025/01.jpg"
-    ]
-  },
-  {
-    id: "w-glowie-sie-nie-miesci-2025",
-    year: "2025",
-    type: { pl: "Wystawa indywidualna", en: "Solo exhibition" },
-    title: { pl: "W głowie się nie mieści", en: "W głowie się nie mieści" },
-    place: {
-      pl: "Lokal Bródno, ul. Kondratowicza 18b/406, Warszawa",
-      en: "Lokal Bródno, Kondratowicza 18b/406, Warsaw"
-    },
-    description: {
-      pl: "Indywidualna wystawa łącząca cztery cykle artysty — „Pamiętnik przetrwania”, „Flashback”, „Labirynt” i „Superpozycja”. Podróż w głąb ludzkiej świadomości i podświadomości: o pamięci, granicach wolności, lękach i pragnieniach. Fotografia jako narzędzie dialogu — z samym sobą, z odbiorcą, ze światem. Kuratorka: Agata Rząsowska-Grabicka. Wernisaż 5 września 2025, ekspozycja do 19 września.",
-      en: "Solo exhibition bringing together four of the artist's series — \"Diary of Survival\", \"Flashback\", \"Labyrinth\" and \"Superposition\". A journey into human consciousness and subconsciousness — memory, limits of freedom, fears and desires. Photography as a tool for dialogue — with oneself, the viewer and the world. Curator: Agata Rząsowska-Grabicka. Opening 5 September 2025, on view through 19 September."
-    },
-    url: "",
-    images: [
-      "images/achievements/w-glowie-sie-nie-miesci-2025/01.jpg",
-      "images/achievements/w-glowie-sie-nie-miesci-2025/02.jpg",
-      "images/achievements/w-glowie-sie-nie-miesci-2025/03.jpg",
-      "images/achievements/w-glowie-sie-nie-miesci-2025/04.jpg",
-      "images/achievements/w-glowie-sie-nie-miesci-2025/05.jpg"
     ]
   }
 ];
