@@ -149,6 +149,28 @@ window.ACHIEVEMENTS = [
       "images/achievements/pamietnik-przetrwania-2025/05.jpg",
       "images/achievements/pamietnik-przetrwania-2025/06.jpg"
     ]
+  },
+  {
+    id: "w-glowie-sie-nie-miesci-2025",
+    year: "2025",
+    type: { pl: "Wystawa indywidualna", en: "Solo exhibition" },
+    title: { pl: "W głowie się nie mieści", en: "W głowie się nie mieści" },
+    place: {
+      pl: "Lokal Bródno, ul. Kondratowicza 18b/406, Warszawa",
+      en: "Lokal Bródno, Kondratowicza 18b/406, Warsaw"
+    },
+    description: {
+      pl: "Indywidualna wystawa łącząca cztery cykle artysty — „Pamiętnik przetrwania”, „Flashback”, „Labirynt” i „Superpozycja”. Podróż w głąb ludzkiej świadomości i podświadomości: o pamięci, granicach wolności, lękach i pragnieniach. Fotografia jako narzędzie dialogu — z samym sobą, z odbiorcą, ze światem. Kuratorka: Agata Rząsowska-Grabicka. Wernisaż 5 września 2025, ekspozycja do 19 września.",
+      en: "Solo exhibition bringing together four of the artist's series — \"Diary of Survival\", \"Flashback\", \"Labyrinth\" and \"Superposition\". A journey into human consciousness and subconsciousness — memory, limits of freedom, fears and desires. Photography as a tool for dialogue — with oneself, the viewer and the world. Curator: Agata Rząsowska-Grabicka. Opening 5 September 2025, on view through 19 September."
+    },
+    url: "",
+    images: [
+      "images/achievements/w-glowie-sie-nie-miesci-2025/01.jpg",
+      "images/achievements/w-glowie-sie-nie-miesci-2025/02.jpg",
+      "images/achievements/w-glowie-sie-nie-miesci-2025/03.jpg",
+      "images/achievements/w-glowie-sie-nie-miesci-2025/04.jpg",
+      "images/achievements/w-glowie-sie-nie-miesci-2025/05.jpg"
+    ]
   }
 ];
 
