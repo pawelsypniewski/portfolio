@@ -14,6 +14,19 @@
 <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1">
 <meta name="google-site-verification" content="AJpvQiA3niuDmKpQchC5wnkZz_77YWm4W7Vs8Y0qCL4">
 <meta name="theme-color" content="#ffffff">
+
+<!-- ============ GOOGLE ANALYTICS 4 ============ -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-H7VWHM3TZZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  // SPA: wyłączamy automatyczny page_view, wysyłamy ręcznie przy zmianie widoku
+  gtag('config', 'G-H7VWHM3TZZ', {
+    send_page_view: false,
+    anonymize_ip: true
+  });
+</script>
 <meta name="format-detection" content="telephone=no">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta http-equiv="content-language" content="pl">

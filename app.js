@@ -489,6 +489,15 @@ function updateSEO(route) {
   // canonical do bieżącego widoku
   const canonical = document.querySelector('link[rel="canonical"]');
   if (canonical && url) canonical.setAttribute("href", url);
+
+  // Google Analytics 4 — virtual page_view dla SPA
+  if (typeof window.gtag === "function" && url) {
+    window.gtag('event', 'page_view', {
+      page_title: title,
+      page_location: url,
+      page_path: url.replace("https://pawelsypniewski.pl", "") || "/"
+    });
+  }
 }
 
 function setRoute(route, opts = {}) {
