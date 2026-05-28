@@ -129,6 +129,39 @@ window.PROJECTS = [
    ============================================================ */
 window.ACHIEVEMENTS = [
   {
+    id: "itf-opava-start-2025",
+    dateISO: "2025-06-16",
+    date: {
+      pl: "16 czerwca 2025",
+      en: "16 June 2025"
+    },
+    type: { pl: "Edukacja", en: "Education" },
+    title: {
+      pl: "Rozpoczęcie studiów — ITF Opawa",
+      en: "Studies started — ITF Opava"
+    },
+    place: {
+      pl: "Institut tvůrčí fotografie, Uniwersytet Śląski w Opawie, Czechy",
+      en: "Institut tvůrčí fotografie, Silesian University in Opava, Czech Republic"
+    },
+    description: {
+      pl: "Rozpoczęcie studiów w Instytucie Fotografii Twórczej (Institut tvůrčí fotografie) na Uniwersytecie Śląskim w Opawie — jednej z najbardziej prestiżowych europejskich szkół fotografii artystycznej. Założony w 1990 roku, kształci kolejne pokolenia fotografów z całego regionu Europy Środkowej.",
+      en: "Beginning studies at the Institute of Creative Photography (Institut tvůrčí fotografie) at Silesian University in Opava — one of Europe's most prestigious schools of art photography. Founded in 1990, it has shaped generations of photographers across Central Europe."
+    },
+    links: [
+      {
+        label: { pl: "Strona ITF Opawa", en: "ITF Opava website" },
+        url: "https://itf.fpf.slu.cz/"
+      }
+    ],
+    images: [
+      "images/achievements/itf-opava-start-2025/01.jpg",
+      "images/achievements/itf-opava-start-2025/02.jpg",
+      "images/achievements/itf-opava-start-2025/03.jpg",
+      "images/achievements/itf-opava-start-2025/04.jpg"
+    ]
+  },
+  {
     id: "fotoartfestival-dias-show-2025",
     dateISO: "2025-10-11",
     date: {
