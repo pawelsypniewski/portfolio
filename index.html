@@ -179,13 +179,13 @@
       "creator": { "@id": "https://pawelsypniewski.pl/#person" },
       "url": "https://pawelsypniewski.pl/",
       "hasPart": [
-        { "@type": "CreativeWork", "name": "Ustawienia domyślne",       "dateCreated": "2024", "genre": "Dokument",                       "creator": { "@id": "https://pawelsypniewski.pl/#person" } },
-        { "@type": "CreativeWork", "name": "Superpozycja",               "dateCreated": "2023", "genre": "Kreacja / Portret",              "creator": { "@id": "https://pawelsypniewski.pl/#person" } },
-        { "@type": "CreativeWork", "name": "Gra o tron",                 "dateCreated": "2022", "genre": "Dokument / Found",               "creator": { "@id": "https://pawelsypniewski.pl/#person" } },
-        { "@type": "CreativeWork", "name": "Nowa topografia Polski",     "dateCreated": "2022", "genre": "Dokument / Krajobraz",           "creator": { "@id": "https://pawelsypniewski.pl/#person" } },
-        { "@type": "Book",         "name": "Labirynt",                   "dateCreated": "2024", "genre": "Książka fotograficzna",          "publisher": "Instytut Fotografii Twórczej, Opawa", "creator": { "@id": "https://pawelsypniewski.pl/#person" } },
-        { "@type": "CreativeWork", "name": "Nocne Ptaki Późno Wracają Do Domu", "dateCreated": "2025", "genre": "Dokument / Reportaż / Street", "creator": { "@id": "https://pawelsypniewski.pl/#person" } },
-        { "@type": "CreativeWork", "name": "Danie dnia",                 "dateCreated": "2025", "genre": "Studio / Dokument / Ekologia",   "creator": { "@id": "https://pawelsypniewski.pl/#person" } }
+        { "@type": "CreativeWork", "name": "Ustawienia domyślne",       "dateCreated": "2024", "genre": "Dokument",                       "description": "Cykl o glitchach, artefaktach i błędach obrazów generowanych przez sztuczną inteligencję. Pytanie o prawdę fotograficzną w epoce AI. Zdjęcia wykonane na czarno-białym negatywie średnioformatowym, przeniesione na mokrą płytę kolodionową.", "creator": { "@id": "https://pawelsypniewski.pl/#person" } },
+        { "@type": "CreativeWork", "name": "Superpozycja",               "dateCreated": "2023", "genre": "Kreacja / Portret",              "description": "Fotograficzny zapis kwantowej superpozycji — jednoczesności przeszłości, teraźniejszości i przyszłości. Cykl metaforycznie ukazuje, że to, co widzimy, zależy od perspektywy obserwatora.", "creator": { "@id": "https://pawelsypniewski.pl/#person" } },
+        { "@type": "CreativeWork", "name": "Gra o tron",                 "dateCreated": "2022", "genre": "Dokument / Found",               "description": "Polityczna ikonografia polskiej prowincji. Plakaty, ołtarzyki, prowizoryczne pomniki — krajobraz przed wyborami.", "creator": { "@id": "https://pawelsypniewski.pl/#person" } },
+        { "@type": "CreativeWork", "name": "Nowa topografia Polski",     "dateCreated": "2022", "genre": "Dokument / Krajobraz",           "description": "Polska moim okiem — krajobraz peryferii, ogrodzeń, tablic, prowizorek. Ślady codziennego porządkowania przestrzeni.", "creator": { "@id": "https://pawelsypniewski.pl/#person" } },
+        { "@type": "Book",         "name": "Labirynt",                   "dateCreated": "2024", "genre": "Dokument",                       "description": "Cykl o ludziach uwikłanych w pułapki małych miasteczek — błądzenie, zawieszenie i brak perspektyw. Zrealizowany w ramach Instytutu Fotografii Twórczej w Opawie.", "publisher": "Instytut Fotografii Twórczej, Opawa", "creator": { "@id": "https://pawelsypniewski.pl/#person" } },
+        { "@type": "CreativeWork", "name": "Nocne Ptaki Późno Wracają Do Domu", "dateCreated": "2025", "genre": "Dokument / Reportaż / Street", "description": "Zapis dokumentalny nocnego stylu życia. Refleksja nad normami społecznymi.", "creator": { "@id": "https://pawelsypniewski.pl/#person" } },
+        { "@type": "CreativeWork", "name": "Danie dnia",                 "dateCreated": "2025", "genre": "Studio / Dokument / Ekologia",   "description": "Warzywa i owoce przeznaczone przez sklep do wyrzucenia — sfotografowane, potem zjedzone. Projekt dokumentalny o marnowaniu żywności (ok. 5 mln ton rocznie w Polsce, 60% z gospodarstw domowych).", "creator": { "@id": "https://pawelsypniewski.pl/#person" } }
       ]
     }
   ]
@@ -717,6 +717,20 @@
   }
   .proj-bottom .caption { opacity: 0.6; max-width: 50%; }
   .proj-bottom .counter { letter-spacing: 0.1em; }
+
+  .proj-description {
+    padding: 28px 32px 40px;
+    border-top: 1px solid #000;
+    font-family: 'Jost', 'Helvetica Neue', sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 1.55;
+    text-wrap: pretty;
+    max-width: 760px;
+  }
+  .proj-description p { margin: 0; }
+  .proj-description p + p { margin-top: 1em; }
+  .proj-description p.kw { text-align: center; }
 
   /* Mobile nav controls — domyślnie ukryte na desktopie,
      widoczne tylko w mobile media queries poniżej */
@@ -1302,6 +1316,7 @@
     .text-page { padding: 120px 96px 96px; max-width: 2200px; gap: 120px; }
     .text-page h1 { font-size: clamp(96px, 7vw, 168px); margin-bottom: 56px; }
     .text-page .body { font-size: 18px; line-height: 1.55; }
+    .proj-description { font-size: 18px; line-height: 1.55; }
     .text-page .side { font-size: 13px; }
     .text-page .side h3 { font-size: 12px; }
 
@@ -1334,6 +1349,7 @@
     .text-page { padding: 140px 120px 120px; max-width: 2400px; gap: 140px; }
     .text-page h1 { font-size: clamp(100px, 7.5vw, 180px); }
     .text-page .body { font-size: 20px; }
+    .proj-description { font-size: 20px; }
   }
 
   /* ============================================================
@@ -1381,6 +1397,7 @@
     .home-stack .row { padding: 0 36px; }
     .home-poster { padding: 56px 20px 20px; gap: 8px; }
     .proj-top, .proj-bottom { padding-left: 24px; padding-right: 24px; }
+    .proj-description { padding: 22px 24px 32px; font-size: 14px; line-height: 1.55; }
     .text-page { padding: 72px 36px 40px; gap: 48px; }
   }
 
@@ -1785,6 +1802,7 @@
     .text-page { padding: 24px 14px 32px; gap: 24px; }
     .text-page h1 { font-size: clamp(30px, 10vw, 44px); margin-bottom: 12px; }
     .text-page .body { font-size: 13px; line-height: 1.5; }
+    .proj-description { font-size: 13px; line-height: 1.5; padding: 18px 20px 28px; }
     .text-page .side { font-size: 11px; }
     .text-page .side h3 { font-size: 10px; }
 
@@ -1898,6 +1916,7 @@
     }
     .text-page h1 { font-size: clamp(28px, 5vw, 40px); margin-bottom: 14px; grid-column: 1 / -1; }
     .text-page .body { font-size: 12px; }
+    .proj-description { font-size: 12px; padding: 16px 16px 24px; }
 
     /* Lightbox */
     .lightbox { padding: 30px 12px; }
@@ -1939,13 +1958,13 @@
       <article>
         <p class="meta">01 · 2024 · Dokument · 18 prac</p>
         <h3>Ustawienia domyślne</h3>
-        <p>Cykl o codzienności, fragmentach krajobrazu i obrazach przestrzeni publicznej. Co zostaje, gdy wszystko sprowadzić do ustawień fabrycznych.</p>
+        <p>Glitche, artefakty i błędy obrazów generowanych przez sztuczną inteligencję. Pytanie o prawdę fotograficzną w epoce AI. Mokra płyta kolodionowa.</p>
       </article>
 
       <article>
         <p class="meta">02 · 2023 · Kreacja / Portret · 8 prac</p>
         <h3>Superpozycja</h3>
-        <p>Obraz nakładający się na obraz — postać w stroju z porzuconych obwodów drukowanych krąży po przestrzeni miasta. Praca o równoczesności bytów.</p>
+        <p>Fotograficzny zapis kwantowej superpozycji — jednoczesność przeszłości, teraźniejszości i przyszłości. To, co widzimy, zależy od perspektywy obserwatora.</p>
       </article>
 
       <article>
@@ -1961,9 +1980,9 @@
       </article>
 
       <article>
-        <p class="meta">05 · 2024 · Dokument / Książka fotograficzna · 15 prac</p>
+        <p class="meta">05 · 2024 · Dokument · 15 prac</p>
         <h3>Labirynt</h3>
-        <p>Książka fotograficzna o stanach zawieszenia, błądzeniu i braku perspektyw. Zrealizowana w ramach Instytutu Fotografii Twórczej w Opawie.</p>
+        <p>Ludzie uwikłani w pułapki małych miasteczek. Cykl o błądzeniu, zawieszeniu i braku perspektyw. ITF Opawa.</p>
       </article>
 
       <article>
@@ -1975,7 +1994,7 @@
       <article>
         <p class="meta">07 · 2025 · Studio / Dokument / Ekologia · 4 prace</p>
         <h3>Danie dnia</h3>
-        <p>Studium fotograficzne o codziennym wyborze i marnowaniu. Dokumentacja konsumpcji — jedzenia, które nie trafia na stół.</p>
+        <p>Warzywa i owoce przeznaczone przez sklep do wyrzucenia — sfotografowane, potem zjedzone. Projekt dokumentalny o marnowaniu żywności.</p>
       </article>
     </section>
 
@@ -2108,6 +2127,7 @@
           <div class="caption" id="pjCaption">—</div>
           <div class="counter" id="pjCounter">01/01</div>
         </div>
+        <div class="proj-description" id="pjDescription" hidden></div>
         <div class="proj-mobile-nav">
           <button id="pjPrevMobile" type="button" data-i18n="proj.prev">poprzednie</button>
           <span id="pjCounterMobile">01/01</span>

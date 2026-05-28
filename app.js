@@ -204,6 +204,21 @@ function renderProject() {
   $("#pjMeta").innerHTML    = `${p.year}<br>${p.place[L]}<br>${p.works} ${L==="pl"?"prac":"works"}`;
   $("#pjCaption").textContent = p.caption[L];
 
+  const descEl = $("#pjDescription");
+  if (p.description && p.description[L]) {
+    descEl.innerHTML = p.description[L]
+      .split("\n\n")
+      .map(par => {
+        const cls = par.length < 100 ? ' class="kw"' : "";
+        return `<p${cls}>${par.replace(/\n/g, "<br>")}</p>`;
+      })
+      .join("");
+    descEl.hidden = false;
+  } else {
+    descEl.innerHTML = "";
+    descEl.hidden = true;
+  }
+
   // Nawigacja między projektami — prev/next w kolejności PROJECTS
   const idx = window.PROJECTS.findIndex(x => x.slug === p.slug);
   const total = window.PROJECTS.length;
@@ -476,7 +491,11 @@ function updateSEO(route) {
     const p = window.PROJECTS.find(x => x.slug === state.projectSlug);
     if (p) {
       title = `${p.title[L]} — ${p.year} · Paweł Sypniewski`;
-      desc  = `${p.caption[L].substring(0, 155)}`;
+      // Prefer richer `description` for snippet; fall back to short `caption`.
+      const seoSrc = (p.description && p.description[L])
+        ? p.description[L].replace(/\s+/g, " ").trim()
+        : p.caption[L];
+      desc  = seoSrc.length > 160 ? seoSrc.substring(0, 157).trimEnd() + "…" : seoSrc;
       url   = `${BASE_URL}/#/${p.slug}`;
     }
   } else if (route === "about") {
