@@ -652,6 +652,10 @@
   .proj-bottom .caption { opacity: 0.6; max-width: 50%; }
   .proj-bottom .counter { letter-spacing: 0.1em; }
 
+  /* Mobile nav controls — domyślnie ukryte na desktopie,
+     widoczne tylko w mobile media queries poniżej */
+  .proj-mobile-nav { display: none; }
+
   /* ============================================================
      ABOUT / CONTACT
      ============================================================ */
@@ -958,6 +962,79 @@
   }
 
   /* ============================================================
+     RESPONSIVE — TABLET PORTRAIT (721px-900px)
+     iPad portrait (768/810px), Galaxy Tab portrait — sidebar musi być
+     węższy, a poster grid przeskalowany z 12-kol landscape na 2-kol portrait.
+     Musi być PO bloku max-width:1024px, żeby go nadpisać.
+     ============================================================ */
+  @media (min-width: 721px) and (max-width: 900px) {
+    .shell { grid-template-columns: 200px 1fr; }
+    .sidebar { padding: 24px 20px; }
+    .sidebar .brand .name { font-size: 16px; line-height: 1.05; }
+    .sidebar .brand .role { font-size: 11px; }
+    .sidenav { margin-top: 32px; }
+    .sidenav a { font-size: 15px; }
+    .sidefoot { font-size: 10px; }
+
+    /* Vignelli — bardziej zwarty */
+    .home-vignelli { padding: 0 24px; }
+    .home-vignelli li { padding: 18px 0 14px; grid-template-columns: 40px 1fr auto; gap: 16px; }
+    .home-vignelli .title { font-size: clamp(38px, 7vw, 64px); }
+    .home-vignelli .meta { font-size: 10px; }
+
+    /* Index — wąskie kolumny */
+    .home-index { padding: 32px 24px; }
+    .home-index .header,
+    .home-index .row {
+      grid-template-columns: 40px 1fr 110px 60px 56px;
+      gap: 12px;
+    }
+    .home-index .row { padding: 18px 0; }
+    .home-index .row .title { font-size: clamp(22px, 4vw, 40px); }
+    .home-index .header { font-size: 9px; }
+    .home-index .row .col { font-size: 11px; }
+
+    /* Stack */
+    .home-stack .row { padding: 0 24px; }
+    .home-stack .row .title { font-size: clamp(40px, 8vw, 80px); }
+
+    /* Poster — przebudowa na 2-kolumnowy layout */
+    .home-poster {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: repeat(4, 1fr);
+      padding: 16px;
+      gap: 8px;
+    }
+    .home-poster .c1 { grid-column: 1 / -1; grid-row: 1; }
+    .home-poster .c2 { grid-column: 1; grid-row: 2; }
+    .home-poster .c3 { grid-column: 2; grid-row: 2; }
+    .home-poster .c4 { grid-column: 1; grid-row: 3; }
+    .home-poster .c5 { grid-column: 2; grid-row: 3; }
+    .home-poster .c6 { grid-column: 1; grid-row: 4; }
+    .home-poster .c7 { grid-column: 2; grid-row: 4; }
+    .home-poster .cell { padding: 14px; }
+    .home-poster .cell .title { font-size: clamp(20px, 3.2vw, 32px); }
+    .home-poster .cell .thumb-frame {
+      width: clamp(70px, 12vh, 130px);
+      height: clamp(70px, 11vh, 130px);
+    }
+    .home-poster .cell .num { font-size: 9px; }
+    .home-poster .cell .meta { font-size: 9px; }
+
+    /* Project view */
+    .proj-top { padding: 18px 24px 14px; }
+    .proj-top .pj-title { font-size: clamp(24px, 4.5vw, 40px); }
+    .proj-bottom { padding: 14px 24px 18px; }
+    .proj-slide { padding: 20px 24px; }
+
+    /* Text pages */
+    .text-page { padding: 56px 28px 32px; gap: 32px; }
+    .text-page h1 { font-size: clamp(40px, 7vw, 72px); margin-bottom: 28px; }
+    .text-page .body { font-size: 14px; }
+    .text-page .side { font-size: 11px; }
+  }
+
+  /* ============================================================
      RESPONSIVE — MOBILE (<=720px)
      ============================================================ */
   @media (max-width: 720px) {
@@ -1232,8 +1309,172 @@
     }
   }
 
-  /* Desktop-only: hide mobile nav controls */
-  .proj-mobile-nav { display: none; }
+  /* ============================================================
+     RESPONSIVE — SMALL MOBILE (<=380px)
+     iPhone SE (320), Galaxy Fold zamknięty (344), małe Androidy (360)
+     Musi być PO max-width:720px, żeby go nadpisać.
+     ============================================================ */
+  @media (max-width: 380px) {
+    .sidebar { padding: 10px 14px; }
+    .sidebar .brand .name { font-size: 12px; }
+    .sidenav { gap: 10px; }
+    .sidenav a { font-size: 11px; }
+    .sidefoot { font-size: 8px; padding-top: 10px; margin-top: 10px; }
+
+    .home-topline { padding: 10px 14px; font-size: 8px; }
+
+    /* Vignelli — najmniejsze fonty żeby długie tytuły się zmieściły */
+    .home-vignelli { padding: 0 14px; }
+    .home-vignelli .title { font-size: clamp(26px, 8.5vw, 38px); }
+    .home-vignelli .meta { font-size: 8px; }
+
+    /* Index */
+    .home-index { padding: 14px; }
+    .home-index .row { padding: 14px 0; }
+    .home-index .row .title { font-size: clamp(22px, 7.5vw, 34px); }
+
+    /* Stack */
+    .home-stack .row { padding: 0 14px; }
+    .home-stack .row .title { font-size: clamp(30px, 10vw, 48px); }
+
+    /* Poster */
+    .home-poster { padding: 14px; gap: 6px; }
+    .home-poster .cell { padding: 12px; min-height: 90px; gap: 20px; }
+    .home-poster .cell .title { font-size: clamp(22px, 7vw, 32px); }
+    .home-poster .cell .num { font-size: 8px; }
+
+    /* Project view */
+    .proj-top { padding: 14px; }
+    .proj-top .pj-title { font-size: clamp(22px, 7vw, 30px); }
+    .proj-top .pj-sub, .proj-top .pj-meta { font-size: 9px; }
+    .proj-stage { min-height: 280px; }
+    .proj-slide { padding: 10px; }
+    .proj-bottom { padding: 10px 14px 14px; font-size: 9px; }
+    .proj-mobile-nav { padding: 8px 14px; font-size: 10px; }
+    .proj-mobile-nav button { padding: 8px 12px; font-size: 10px; min-width: 76px; }
+
+    /* Text pages */
+    .text-page { padding: 24px 14px 32px; gap: 24px; }
+    .text-page h1 { font-size: clamp(30px, 10vw, 44px); margin-bottom: 12px; }
+    .text-page .body { font-size: 13px; line-height: 1.5; }
+    .text-page .side { font-size: 11px; }
+    .text-page .side h3 { font-size: 10px; }
+
+    /* Lightbox */
+    .lightbox { padding: 40px 8px; }
+    .lightbox .lb-close { font-size: 10px; padding: 6px 10px; }
+    .lightbox .lb-counter { font-size: 9px; }
+  }
+
+  /* ============================================================
+     RESPONSIVE — MOBILE LANDSCAPE
+     Telefon trzymany poziomo (np. iPhone 14: 844x390, iPhone Pro Max: 932x430)
+     Wysokość znika — galeria projektu musi się zmieścić,
+     sidebar w kompaktowej formie u góry.
+     Sprawdzamy max-width:950px żeby nie łapać desktopów z małym oknem.
+     ============================================================ */
+  @media (max-height: 500px) and (orientation: landscape) and (max-width: 950px) {
+    body { overflow: auto; }
+    html, body { height: auto; min-height: 100%; }
+
+    .shell {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr;
+      height: auto;
+      min-height: 100dvh;
+    }
+
+    /* Sidebar jako pełny header u góry */
+    .sidebar {
+      height: auto; width: 100%;
+      border-right: none; border-bottom: 1px solid #000;
+      padding: 8px 16px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky; top: 0; background: #fff; z-index: 50;
+      gap: 16px;
+    }
+    .sidebar > div:first-child {
+      display: flex; align-items: center; gap: 18px; flex: 1;
+    }
+    .sidebar .brand .name { font-size: 12px; line-height: 1; }
+    .sidebar .brand .role { display: none; }
+    .sidenav {
+      flex-direction: row; gap: 14px;
+      margin-top: 0;
+      flex-wrap: wrap;
+    }
+    .sidenav a { font-size: 11px; line-height: 1; }
+    .sidefoot {
+      margin-top: 0; padding-top: 0; border-top: none;
+      display: flex; gap: 12px; align-items: center;
+      font-size: 9px;
+    }
+    .sidefoot .meta > div:not(:last-child) { display: none; }
+    .sidefoot .meta > div:last-child { margin-top: 0 !important; }
+
+    /* Main */
+    .main { height: auto; min-height: calc(100dvh - 48px); }
+    .view { position: relative; height: auto; opacity: 1; pointer-events: auto; display: none; }
+    .view.active { display: block; }
+
+    /* Home stage */
+    .home-stage { height: auto; min-height: calc(100dvh - 48px); }
+    .home-topline { padding: 8px 16px; font-size: 9px; }
+
+    /* Poster w landscape — 4 kolumny żeby coś zobaczyć */
+    .home-poster {
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      padding: 10px;
+      gap: 6px;
+      height: auto;
+      min-height: calc(100dvh - 60px);
+    }
+    .home-poster .c1 { grid-column: 1 / span 2; grid-row: 1; }
+    .home-poster .c2 { grid-column: 3 / span 2; grid-row: 1; }
+    .home-poster .c3 { grid-column: 1; grid-row: 2; }
+    .home-poster .c4 { grid-column: 2; grid-row: 2; }
+    .home-poster .c5 { grid-column: 3; grid-row: 2; }
+    .home-poster .c6 { grid-column: 4; grid-row: 2; }
+    .home-poster .c7 { display: none; } /* za mało miejsca, ukrywamy ostatni */
+    .home-poster .cell {
+      grid-column: auto !important; grid-row: auto !important;
+      min-height: auto;
+      padding: 8px;
+      gap: 8px;
+    }
+    .home-poster .cell .title { font-size: clamp(14px, 2.5vw, 22px); }
+    .home-poster .cell .num { font-size: 8px; }
+    .home-poster .cell .meta { font-size: 8px; }
+    .home-poster .cell .thumb-frame { display: none !important; }
+
+    /* Project gallery — maksymalna wysokość */
+    .project { height: auto; }
+    .proj-stage { height: calc(100vh - 100px); min-height: 220px; }
+    .proj-top { padding: 8px 16px; flex-direction: row; gap: 10px; }
+    .proj-top .pj-title { font-size: clamp(18px, 3vw, 26px); }
+    .proj-top .pj-meta { font-size: 9px; text-align: right; }
+    .proj-bottom { padding: 6px 16px; flex-direction: row; font-size: 9px; gap: 12px; }
+    .proj-nav-left, .proj-nav-right { display: block; }
+    .proj-nav-arrow { font-size: 11px; }
+    .proj-mobile-nav { display: none; }
+    .proj-slide { padding: 10px 16px; }
+
+    /* Text pages */
+    .text-page {
+      grid-template-columns: 1fr 1fr;
+      padding: 20px 24px; gap: 28px;
+    }
+    .text-page h1 { font-size: clamp(28px, 5vw, 40px); margin-bottom: 14px; grid-column: 1 / -1; }
+    .text-page .body { font-size: 12px; }
+
+    /* Lightbox */
+    .lightbox { padding: 30px 12px; }
+  }
+
 </style>
 </head>
 <body>
