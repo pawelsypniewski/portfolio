@@ -85,9 +85,23 @@ function renderHome() {
     cell.addEventListener("mouseenter", () => {
       const p = window.PROJECTS.find(x => x.slug === cell.dataset.slug);
       if (!p) return;
-      const img = p.images[Math.floor(Math.random() * p.images.length)];
       const frame = cell.querySelector(".thumb-frame");
-      if (frame) frame.style.backgroundImage = `url('${img}')`;
+      if (!frame) return;
+
+      // For projects with few images (like danie-dnia), show all thumbnails
+      if (p.works <= 4) {
+        frame.innerHTML = p.images.map(img =>
+          `<div class="thumb-item" style="background-image:url('${img}')"></div>`
+        ).join("");
+        frame.style.display = "grid";
+        return;
+      }
+
+      // Otherwise randomise single image
+      const img = p.images[Math.floor(Math.random() * p.images.length)];
+      frame.innerHTML = "";
+      frame.style.backgroundImage = `url('${img}')`;
+      frame.style.display = "";
     });
   });
 
