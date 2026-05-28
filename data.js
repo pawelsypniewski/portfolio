@@ -173,7 +173,9 @@ window.ACHIEVEMENTS = [
         url: "https://www.instagram.com/p/DHIWSF6uK1I/"
       }
     ],
-    images: []
+    images: [
+      "images/achievements/rybnik-foto-festival-2025/01.jpg"
+    ]
   },
   {
     id: "w-glowie-sie-nie-miesci-2025",
