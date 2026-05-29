@@ -717,7 +717,7 @@ function buildNavPreview(route, L) {
   if (route === "home") {
     const items = window.PROJECTS.map(p => `
       <button class="np-item" data-slug="${p.slug}" aria-label="${p.title[L]}">
-        <span class="np-thumb" style="background-image:url('${p.images[0]}')"></span>
+        <span class="np-thumb" style="background-image:url('${p.thumb || p.images[0]}')"></span>
         <span class="np-text"><span class="np-no">${p.no}</span><span class="np-name">${p.title[L]}</span></span>
       </button>`).join("");
     return `<div class="np-head">${L === "pl" ? "Wybrane realizacje" : "Selected works"}</div>

@@ -11,6 +11,7 @@ window.PROJECTS = [
     category: { pl: "Dokument", en: "Documentary" },
     place: { pl: "O sztucznej inteligencji", en: "On artificial intelligence" },
     works: 17,
+    thumb: "images/ustawienia/03.webp",
     caption: {
       pl: "Glicze, artefakty i błędy obrazów generowanych przez sztuczną inteligencję. Pytanie o prawdę fotograficzną w epoce AI. Mokra płyta kolodionowa.",
       en: "Glitches, artifacts and errors of AI-generated images. A question about photographic truth in the age of AI. Wet plate collodion."
