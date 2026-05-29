@@ -2,6 +2,16 @@
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
+<!-- ============ PRZEKIEROWANIE Z GITHUB PAGES NA DOMENĘ DOCELOWĄ ============
+     Jeśli ktoś wejdzie na *.github.io, natychmiast (przed renderem) kieruj
+     na pawelsypniewski.pl, zachowując ścieżkę hash routingu (#/...). -->
+<script>
+  (function () {
+    if (location.hostname.endsWith("github.io")) {
+      location.replace("https://pawelsypniewski.pl/" + location.search + location.hash);
+    }
+  })();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
 <!-- ============ PRIMARY META ============ -->
