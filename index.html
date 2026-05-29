@@ -577,6 +577,9 @@
     min-height: 520px;
     overflow: hidden;
   }
+  /* atrybut `hidden` musi naprawdę ukryć książkę — inaczej pusty box
+     kradnie wiersz 1fr siatki i zgniata pokaz slajdów innych projektów */
+  .proj-book[hidden] { display: none; }
   .book-stage {
     position: relative;
     width: 100%;
