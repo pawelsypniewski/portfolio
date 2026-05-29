@@ -125,19 +125,148 @@ window.PROJECTS = [
     year: "2025",
     category: { pl: "Studium / Dokument / Ekologia", en: "Studio / Documentary / Ecology" },
     place: { pl: "Marnowanie żywności", en: "Food waste" },
-    works: 4,
+    works: 20,
+    book: true,
+    thumb: "images/danie-dnia/book/19.webp",
     caption: {
       pl: "Warzywa i owoce przeznaczone przez sklep do wyrzucenia — sfotografowane, potem zjedzone. Projekt dokumentalny o marnowaniu żywności.",
       en: "Vegetables and fruit marked for disposal by the shop — photographed, then eaten. A documentary project on food waste."
     },
     description: {
-      pl: "Wszystkie warzywa i owoce wykorzystane w książce zostały przeznaczone przez sklep do wyrzucenia, następnie sfotografowane i zjedzone po uprzednim usunięciu zepsutych fragmentów.\n\nProjekt dokumentalny, ekologiczny, skupiający się na problemie marnowania żywności.\n\nW Polsce rocznie marnuje się ok. 5 mln ton żywności. Aż 60% tej skali pochodzi z gospodarstw domowych — to ok. 3 mln ton wyrzucanego jedzenia rocznie. 45% Polaków przyznaje się do wyrzucania żywności przynajmniej od czasu do czasu. Najczęściej do kosza trafiają wędliny (36%), warzywa (34%) i owoce (30%).",
-      en: "All vegetables and fruit used in the book had been marked for disposal by the shop, then photographed and eaten after removing the spoiled parts.\n\nA documentary, ecological project focused on the problem of food waste.\n\nIn Poland, around 5 million tonnes of food are wasted every year. As much as 60% of this comes from households — about 3 million tonnes of discarded food per year. 45% of Poles admit to throwing food away at least occasionally. The most commonly discarded products are cold cuts (36%), vegetables (34%), and fruit (30%)."
+      pl: "W Polsce rocznie marnuje się ok. 5 mln ton żywności. Aż 60% tej skali pochodzi z gospodarstw domowych — to ok. 3 mln ton wyrzucanego jedzenia rocznie. 45% Polaków przyznaje się do wyrzucania żywności przynajmniej od czasu do czasu. Najczęściej do kosza trafiają wędliny (36%), warzywa (34%) i owoce (30%).",
+      en: "In Poland, around 5 million tonnes of food are wasted every year. As much as 60% of this comes from households — about 3 million tonnes of discarded food per year. 45% of Poles admit to throwing food away at least occasionally. The most commonly discarded products are cold cuts (36%), vegetables (34%), and fruit (30%)."
     },
-    images: Array.from({length: 4}, (_, i) =>
-      `images/danie-dnia/${String(i+1).padStart(2,"0")}.webp`)
+    images: Array.from({length: 20}, (_, i) =>
+      `images/danie-dnia/book/${String(i+1).padStart(2,"0")}.webp`)
   }
 ];
+
+/* ============================================================
+   DANIE DNIA — dane książki (flipbook)
+   Odwzorowanie układu stron z PDF-a: okładka, strona tytułowa,
+   stopka redakcyjna, sekcje/przepisy + zdjęcia warzyw, zakończenie,
+   tylna okładka. Treść przepisów w oryginale (PL) — to reprodukcja
+   realnej książki kucharskiej.
+   ============================================================ */
+window.DANIE_BOOK = (function () {
+  const P = n => `images/danie-dnia/book/${String(n).padStart(2, "0")}.webp`;
+
+  const recipes = [
+    {
+      section: { pl: "Napój", en: "Drink" },
+      title: "Lemoniada",
+      ing: [
+        "4 cytryny",
+        "1 szklanka ksylitolu",
+        "6–8 szklanek wody mineralnej, źródlanej lub filtrowanej",
+        "1 gruszka",
+        "1 granat",
+        "1 marakuja",
+        "lód do podania"
+      ],
+      steps: "Wyciśnij sok z cytryn, używając wyciskarki do cytrusów lub ręcznie przez sitko tak, aby oddzielić nasiona. W rondelku zagotuj 1 szklankę wody i dodaj ksylitol. Gotuj na małym ogniu, mieszając, aż ksylitol się rozpuści. Następnie zdejmij z ognia i ostudź. W dużym dzbanku połącz sok z cytryn z przestudzonym syropem z ksylitolu. Dodaj resztę wody (około 5–7 szklanek) do dzbanka i dokładnie wymieszaj. Dodaj pestki granatu i marakui oraz plasterki gruszki, aby wzbogacić smak i kolor lemoniady. Odstaw lemoniadę na kilka minut, aby składniki się przegryzły i napój nabrał pełni smaku."
+    },
+    {
+      section: { pl: "Przystawka", en: "Starter" },
+      title: "Twarożek z Rzodkiewką",
+      ing: [
+        "300 g twarogu w kostce, np. półtłusty",
+        "1 mały pęczek rzodkiewki",
+        "1 czubata łyżka śmietany",
+        "2 ząbki czosnku",
+        "1/4 łyżeczki soli",
+        "większa szczypta pieprzu czarnego",
+        "1 łyżeczka szczypiorku"
+      ],
+      steps: "Rzodkiewki umyj i pokrój w drobną kostkę, czosnek przeciśnij przez praskę. Przełóż twaróg do miski i rozgnieć go widelcem, do uzyskania jednolitej konsystencji. Do twarogu dodaj śmietanę, drobno posiekane rzodkiewki i czosnek, dopraw solą i pieprzem. Całość dokładnie wymieszaj łyżką. Drobno posiekanym szczypiorkiem udekoruj wierzch twarożku lub dodaj go do środka i wymieszaj. Twarożek podawaj z pokrojoną bagietką lub domowym pieczywem."
+    },
+    {
+      section: { pl: "Zupa", en: "Soup" },
+      title: "Polewka Letnia",
+      ing: [
+        "2 duże kartofle",
+        "1 sałata",
+        "1 cebula",
+        "1 pietruszka",
+        "1 łyżka masła",
+        "sól",
+        "pieprz"
+      ],
+      steps: "Obrane ziemniaki umyj i pokrój w plasterki, następnie zalej je gorącą wodą i gotuj przez około 10 minut. Po tym czasie ziemniaki odcedź. Pokrojoną drobno i obraną pietruszkę, cebulę, sałatę i podgotowane ziemniaki włóż do rondelka, zalej ½ litra wody i gotuj do miękkości. Następnie przetrzyj ziemniaki przez sito, dodaj łyżkę masła oraz sól i pieprz do smaku."
+    },
+    {
+      section: { pl: "Drugie Danie", en: "Main Course" },
+      title: "Lasagne z kapusty",
+      ing: [
+        "1 kapusta",
+        "2 cebule",
+        "1 łyżka oleju",
+        "3 ząbki czosnku",
+        "2 marchewki",
+        "3 pieczarki",
+        "1 i 1/2 szklanki przecieru pomidorowego",
+        "1 łyżka sosu sojowego",
+        "1 łyżka płatków drożdżowych",
+        "szczypta mielonej kozieradki",
+        "pieprz",
+        "sól",
+        "suszona bazylia"
+      ],
+      steps: "Kapustę obgotuj i zdejmij z niej zewnętrzne liście, wycinając z nich zgrubiałe części. Naczynie żaroodporne (15 × 25 centymetrów) wyłóż warstwą ugotowanych liści kapusty. Cebule obierz i pokrój w drobną kostkę. Na patelni rozgrzej olej, dodaj cebulę oraz przeciśnięty przez praskę ząbek czosnku. Obierz marchewki, zetrzyj je na tarce o grubych oczkach i podsmaż razem z cebulą. Następnie dodaj pokrojone w kostkę pieczarki. Farsz dopraw kozieradką, bazylią, solą oraz pieprzem. Dodaj 1 szklankę przecieru pomidorowego i podsmaż do odparowania wody. Na koniec dopraw sosem sojowym, a w razie potrzeby pieprzem i solą. Farsz wyłóż na liście kapusty, a następnie przykryj go kolejną warstwą liści. Wierzch zalej ½ szklanki przecieru pomidorowego wymieszanego z płatkami drożdżowymi, solą i pieprzem. Piecz całość przez 20 minut w temperaturze 180 stopni."
+    },
+    {
+      section: { pl: "Deser", en: "Dessert" },
+      title: "Szarlotka z Mandarynkami",
+      ing: [
+        "Ciasto:",
+        "5 żółtek",
+        "250 g masła",
+        "5 łyżek cukru",
+        "1/2 kg mąki tortowej",
+        "3 łyżeczki proszku do pieczenia",
+        "sok z połowy cytryny",
+        "3 łyżki tartej bułki",
+        "Beza:",
+        "5 białek",
+        "szczypta soli",
+        "1 szklanka cukru",
+        "Dodatkowo:",
+        "1,5 kg jabłek i mandarynek (proporcje 1:1)",
+        "3 łyżki cukru trzcinowego",
+        "cynamon"
+      ],
+      steps: "Utrzyj w misie żółtka z cukrem i masłem. Przesiej do misy mąkę z proszkiem do pieczenia, dodaj sok z cytryny i zmiksuj całość, aż powstanie konsystencja przypominająca „żwirek”. Odsyp 1/3 ciasta na kruszonkę, a resztę zagnieć. Większą część ciasta przełóż na blaszkę (30 × 40 cm) wyłożoną papierem do pieczenia i dociśnij, wyrównując powierzchnię. Jabłka obierz, pokrój w plasterki i ułóż na cieście posypanym tartą bułką. Na jabłkach ułóż odsączone mandarynki. Posyp owoce cukrem i cynamonem. Białka ubij ze szczyptą soli, a następnie stopniowo dodawaj cukier, kontynuując ubijanie. Wyłóż powstałą masę na jabłka, a na wierzchu rozsyp pozostałą część ciasta. Piecz przez 40 minut w temperaturze 180°C (góra–dół), następnie przełącz piekarnik tylko na dolne grzanie i piecz jeszcze przez 15 minut. Jeśli góra ciasta za bardzo się rumieni, przykryj ją papierem do pieczenia. Po ostygnięciu posyp ciasto cukrem pudrem."
+    }
+  ];
+
+  // Liczba zdjęć przypadająca na każdą sekcję (kolejność = recipes)
+  const photoGroups = [4, 3, 4, 6, 3]; // razem 20
+
+  // Budowa płaskiej listy stron — odwzorowanie rozkładówek z PDF.
+  // Para (left,right) tworzy rozkładówkę: indeksy (1,2)(3,4)... ; okładka sama.
+  const pages = [];
+  pages.push({ type: "cover" });
+  pages.push({ type: "title" });
+  pages.push({ type: "colophon" });
+
+  let ph = 0;
+  recipes.forEach((r, ri) => {
+    // zdjęcia tej grupy (przed sekcją w sekwencji PDF — patrz mapowanie)
+    for (let k = 0; k < photoGroups[ri]; k++) {
+      pages.push({ type: "blank" });
+      pages.push({ type: "photo", src: P(++ph) });
+    }
+    // strona przepisu (lewa) + pusta (prawa)
+    pages.push({ type: "recipe", r });
+    pages.push({ type: "blank" });
+  });
+
+  pages.push({ type: "blank" });
+  pages.push({ type: "closing" });
+  pages.push({ type: "backcover" });
+
+  return { pages, recipes };
+})();
 
 /* ============================================================
    ACHIEVEMENTS / AKTUALNOŚCI — wystawy, pokazy, publikacje, etc.

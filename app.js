@@ -142,6 +142,301 @@ function renderHome() {
 /* ============================================================
    PROJECT VIEW
    ============================================================ */
+/* ============================================================
+   DANIE DNIA — FLIPBOOK (efekt przewracania kartek 3D)
+   Desktop: rozkładówka (2 strony), obrót kartki rotateY wokół grzbietu.
+   Mobile:  pojedyncza strona, pomijamy puste/czarne strony.
+   ============================================================ */
+const DanieBook = (function () {
+  let data = null;
+  let pages = [];
+  let mobilePages = [];
+  let leaves = 0;
+  let cur = 0;          // liczba przewróconych kartek (desktop)
+  let mIndex = 0;       // indeks strony (mobile)
+  let animating = false;
+  let mobile = false;
+  let wired = false;
+  let mq = null;
+
+  const $b = () => document.getElementById("bookEl");
+  const $stage = () => document.querySelector("#pjBook .book-stage");
+
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+
+  function pageHTML(pg) {
+    if (!pg) return `<div class="bpage bpage-blank"></div>`;
+    switch (pg.type) {
+      case "cover":
+        return `<div class="bpage bpage-text">
+          <div class="bp-kicker">Książka kucharska</div>
+          <div class="bp-covertitle">Danie<br>Dnia</div>
+          <div class="bp-author">Paweł Sypniewski</div>
+          <div class="bp-year">2025</div>
+        </div>`;
+      case "title":
+        return `<div class="bpage bpage-text">
+          <div class="bp-covertitle" style="font-size:clamp(26px,5vw,56px)">Danie<br>Dnia</div>
+          <div class="bp-author">Paweł Sypniewski</div>
+        </div>`;
+      case "colophon":
+        return `<div class="bpage bpage-text">
+          <div class="bp-colophon">
+            <div class="bp-cl-row"><span class="bp-cl-label">Projekt okładki i zdjęcia</span>Paweł Sypniewski</div>
+            <div class="bp-cl-row"><span class="bp-cl-label">Korekta</span>Magdalena Chechelska</div>
+            <div class="bp-cl-row"><span class="bp-cl-label">Mentoring</span>Michał Łuczak</div>
+            <div class="bp-cl-row"><span class="bp-cl-label">Copyright</span>© Paweł Sypniewski</div>
+            <div class="bp-cl-row"><span class="bp-cl-label">Wydanie I</span>Nakład 5 sztuk</div>
+          </div>
+        </div>`;
+      case "photo":
+        return `<div class="bpage bpage-photo" style="background-image:url('${pg.src}')"></div>`;
+      case "blank":
+        return `<div class="bpage bpage-blank"></div>`;
+      case "recipe":
+        return recipeHTML(pg.r);
+      case "closing":
+        return `<div class="bpage bpage-text">
+          <div class="bp-closing">Wszystkie warzywa i owoce wykorzystane w książce zostały przeznaczone przez sklep do wyrzucenia, następnie sfotografowane i zjedzone po uprzednim usunięciu zepsutych fragmentów.</div>
+        </div>`;
+      case "backcover":
+        return `<div class="bpage bpage-text bp-backcover">
+          <div class="bp-mark">Danie Dnia</div>
+          <div class="bp-year">Paweł Sypniewski · 2025</div>
+        </div>`;
+      default:
+        return `<div class="bpage bpage-blank"></div>`;
+    }
+  }
+
+  function recipeHTML(r) {
+    const L = state.lang;
+    const ing = r.ing.map(line => {
+      const sub = /:\s*$/.test(line);
+      return `<li class="${sub ? "bp-ing-sub" : ""}">${esc(line)}</li>`;
+    }).join("");
+    return `<div class="bpage bpage-recipe"><div class="bp-fit">
+      <div class="bp-section">${esc(r.section[L] || r.section.pl)}</div>
+      <div class="bp-recipe-title">${esc(r.title)}</div>
+      <div class="bp-rule"></div>
+      <div class="bp-ing-h">${L === "pl" ? "Składniki" : "Ingredients"}</div>
+      <ul class="bp-ing">${ing}</ul>
+      <div class="bp-steps-h">${L === "pl" ? "Wykonanie" : "Method"}</div>
+      <p class="bp-steps">${esc(r.steps)}</p>
+    </div></div>`;
+  }
+
+  /* ---------- DESKTOP (kartki) ---------- */
+  function buildDesktop() {
+    const book = $b();
+    if (!book) return;
+    book.classList.remove("book-mobile");
+    const st = $stage();
+    if (st) st.classList.remove("single");
+    leaves = Math.ceil(pages.length / 2);
+    let html = "";
+    for (let i = 0; i < leaves; i++) {
+      const front = pages[2 * i];
+      const back = pages[2 * i + 1];
+      html += `<div class="book-leaf" data-leaf="${i}">
+        <div class="leaf-face leaf-front">${pageHTML(front)}</div>
+        <div class="leaf-face leaf-back">${pageHTML(back)}</div>
+      </div>`;
+    }
+    book.innerHTML = html;
+    applyZ();
+    setShift(false);
+    updateChrome();
+    fitRecipes();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitRecipes);
+  }
+
+  // Dopasuj tekst przepisu do wysokości strony (jak w PDF — wszystko na 1 stronie).
+  // Wspólna skala dla wszystkich przepisów → spójna typografia.
+  function fitRecipes() {
+    const book = $b();
+    if (!book || mobile) return;
+    requestAnimationFrame(() => {
+      book.querySelectorAll(".bpage-recipe").forEach(pg => {
+        const inner = pg.querySelector(".bp-fit");
+        if (!inner) return;
+        inner.style.transform = "none";
+        const avail = pg.clientHeight;
+        const need = inner.scrollHeight;
+        const scale = need > avail ? (avail / need) : 1;
+        inner.style.transform = scale < 1 ? `scale(${scale.toFixed(4)})` : "none";
+      });
+    });
+  }
+
+  function applyZ() {
+    const book = $b();
+    if (!book) return;
+    [...book.children].forEach((leaf, i) => {
+      leaf.classList.toggle("turned", i < cur);
+      leaf.style.zIndex = i < cur ? i : (leaves - i);
+    });
+  }
+
+  function setShift(animate) {
+    const book = $b();
+    if (!book) return;
+    if (!animate) book.style.transition = "none";
+    let x = "0%";
+    if (cur <= 0) x = "-25%";
+    else if (cur >= leaves) x = "25%";
+    book.style.transform = `translateX(${x})`;
+    if (!animate) {
+      // wymuś reflow i przywróć transition
+      void book.offsetWidth;
+      book.style.transition = "";
+    }
+  }
+
+  function goDesktop(dir) {
+    if (animating) return;
+    if (dir > 0 && cur >= leaves) return;
+    if (dir < 0 && cur <= 0) return;
+    animating = true;
+    const idx = dir > 0 ? cur : cur - 1;
+    const book = $b();
+    const leaf = book.children[idx];
+    if (leaf) leaf.style.zIndex = 1000;
+    if (dir > 0) { if (leaf) leaf.classList.add("turned"); cur++; }
+    else { if (leaf) leaf.classList.remove("turned"); cur--; }
+    setShift(true);
+    updateChrome();
+    setTimeout(() => { animating = false; applyZ(); }, 780);
+  }
+
+  /* ---------- MOBILE (pojedyncza strona) ---------- */
+  function buildMobile() {
+    const book = $b();
+    if (!book) return;
+    book.classList.add("book-mobile");
+    const st = $stage();
+    if (st) st.classList.add("single");
+    mobilePages = pages.filter(p => p.type !== "blank");
+    if (mIndex >= mobilePages.length) mIndex = 0;
+    book.innerHTML = `<div class="mpage">${pageHTML(mobilePages[mIndex])}</div>`;
+    applyMobileSizing();
+    updateChrome();
+  }
+
+  // Strony tekstowe (przepis/stopka) bywają dłuższe niż format zdjęcia —
+  // na mobile pozwalamy im rosnąć w pionie, zamiast przycinać treść.
+  function applyMobileSizing() {
+    const st = $stage();
+    if (!st) return;
+    const t = mobilePages[mIndex] ? mobilePages[mIndex].type : "";
+    const flowing = (t === "recipe" || t === "colophon");
+    st.classList.toggle("flow", flowing);
+  }
+
+  function goMobile(dir) {
+    if (animating) return;
+    const ni = mIndex + dir;
+    if (ni < 0 || ni >= mobilePages.length) return;
+    animating = true;
+    const card = $b().querySelector(".mpage");
+    card.style.transition = "transform 220ms ease-in";
+    card.style.transform = `rotateY(${dir > 0 ? -88 : 88}deg)`;
+    setTimeout(() => {
+      mIndex = ni;
+      card.innerHTML = pageHTML(mobilePages[mIndex]);
+      card.style.transition = "none";
+      card.style.transform = `rotateY(${dir > 0 ? 88 : -88}deg)`;
+      void card.offsetWidth;
+      applyMobileSizing();
+      card.style.transition = "transform 220ms ease-out";
+      card.style.transform = "rotateY(0deg)";
+      updateChrome();
+      setTimeout(() => { animating = false; }, 240);
+    }, 220);
+  }
+
+  /* ---------- wspólne ---------- */
+  function go(dir) { mobile ? goMobile(dir) : goDesktop(dir); }
+
+  function updateChrome() {
+    const prev = document.getElementById("bookPrev");
+    const next = document.getElementById("bookNext");
+    const counter = document.getElementById("bookCounter");
+    if (mobile) {
+      if (prev) prev.disabled = mIndex <= 0;
+      if (next) next.disabled = mIndex >= mobilePages.length - 1;
+      if (counter) counter.textContent =
+        `${String(mIndex + 1).padStart(2, "0")} / ${String(mobilePages.length).padStart(2, "0")}`;
+    } else {
+      if (prev) prev.disabled = cur <= 0;
+      if (next) next.disabled = cur >= leaves;
+      if (counter) counter.textContent =
+        `${String(cur).padStart(2, "0")} / ${String(leaves).padStart(2, "0")}`;
+    }
+  }
+
+  function rebuild() {
+    mobile = !!(mq && mq.matches);
+    if (mobile) buildMobile(); else buildDesktop();
+  }
+
+  function wire() {
+    if (wired) return;
+    wired = true;
+    const prev = document.getElementById("bookPrev");
+    const next = document.getElementById("bookNext");
+    if (prev) prev.addEventListener("click", () => go(-1));
+    if (next) next.addEventListener("click", () => go(1));
+    mq = window.matchMedia("(max-width: 820px)");
+    mq.addEventListener("change", () => { if (!$b()) return; rebuild(); });
+
+    // klik w połowy rozkładówki = przewracanie
+    const stage = $stage();
+    if (stage) {
+      stage.addEventListener("click", (e) => {
+        if (e.target.closest(".book-nav")) return;
+        const rect = stage.getBoundingClientRect();
+        go((e.clientX - rect.left) > rect.width / 2 ? 1 : -1);
+      });
+      // swipe
+      let sx = 0, sy = 0, moved = false;
+      stage.addEventListener("touchstart", (e) => {
+        const t = e.touches[0]; sx = t.clientX; sy = t.clientY; moved = false;
+      }, { passive: true });
+      stage.addEventListener("touchmove", (e) => {
+        const t = e.touches[0];
+        if (Math.abs(t.clientX - sx) > 10 || Math.abs(t.clientY - sy) > 10) moved = true;
+      }, { passive: true });
+      stage.addEventListener("touchend", (e) => {
+        if (!moved) return;
+        const t = e.changedTouches[0];
+        const dx = t.clientX - sx, dy = t.clientY - sy;
+        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.2) go(dx < 0 ? 1 : -1);
+      });
+    }
+  }
+
+  function init(bookData) {
+    data = bookData;
+    pages = data.pages;
+    cur = 0; mIndex = 0; animating = false;
+    wire();
+    rebuild();
+  }
+
+  function destroy() {
+    const book = $b();
+    if (book) book.innerHTML = "";
+  }
+
+  function isActive() {
+    const w = document.getElementById("pjBook");
+    return w && !w.hidden;
+  }
+
+  return { init, destroy, go, isActive };
+})();
+
 function renderProject() {
   const p = window.PROJECTS.find(x => x.slug === state.projectSlug);
   if (!p) return;
@@ -181,6 +476,26 @@ function renderProject() {
     nextBtn.innerHTML = `<span class="pn-label">${next.no} ${next.title[L]}</span> <span class="pn-arrow">→</span>`;
     nextBtn.onclick = () => navigateProject(next.slug);
     nextBtn.setAttribute("aria-label", (L==="pl"?"Następny projekt: ":"Next project: ") + next.title[L]);
+  }
+
+  // --- Tryb KSIĄŻKI (flipbook) dla projektów z flagą `book` ---
+  const bookWrap = $("#pjBook");
+  const stageEl = document.querySelector(".proj-stage");
+  const mobileNav = document.querySelector(".proj-mobile-nav");
+  const bottomCounter = $("#pjCounter");
+  if (p.book && window.DANIE_BOOK) {
+    if (stageEl) stageEl.style.display = "none";
+    if (mobileNav) mobileNav.style.display = "none";
+    if (bottomCounter) bottomCounter.style.visibility = "hidden";
+    if (bookWrap) bookWrap.hidden = false;
+    DanieBook.init(window.DANIE_BOOK);
+    return;
+  } else {
+    if (bookWrap) bookWrap.hidden = true;
+    if (stageEl) stageEl.style.display = "";
+    if (mobileNav) mobileNav.style.display = "";
+    if (bottomCounter) bottomCounter.style.visibility = "";
+    DanieBook.destroy();
   }
 
   // Build track — semantyczny alt + lazy loading dla wydajności / SEO
@@ -662,6 +977,12 @@ function init() {
       return;
     }
     if (state.route === "project") {
+      if (DanieBook.isActive()) {
+        if (e.key === "ArrowRight") DanieBook.go(1);
+        else if (e.key === "ArrowLeft") DanieBook.go(-1);
+        else if (e.key === "Escape") setRoute("home");
+        return;
+      }
       if (e.key === "ArrowRight") navProjectNext();
       if (e.key === "ArrowLeft") navProjectPrev();
       if (e.key === "Escape") setRoute("home");
