@@ -6,7 +6,6 @@ const state = {
   projectSlug: null,
   slideIndex: 0,
   lang: "pl",
-  homeVariant: "poster", // vignelli | index | stack | poster
 };
 
 const $  = (s, r=document) => r.querySelector(s);
@@ -16,16 +15,13 @@ const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
    PREFERENCES — localStorage persistence
    ============================================================ */
 const LS = {
-  lang:    "ps-portfolio-lang",
-  variant: "ps-portfolio-variant"
+  lang: "ps-portfolio-lang"
 };
 
 function loadPrefs() {
   try {
     const lang = localStorage.getItem(LS.lang);
     if (lang === "pl" || lang === "en") state.lang = lang;
-    const variant = localStorage.getItem(LS.variant);
-    if (["vignelli","index","stack","poster"].includes(variant)) state.homeVariant = variant;
   } catch (e) { /* localStorage może być niedostępny — ignoruj */ }
 }
 
@@ -81,48 +77,16 @@ function applyI18n() {
   // sidebar lang buttons
   $$(".sidefoot .langs button").forEach(b =>
     b.classList.toggle("active", b.dataset.lang === state.lang));
-  // tweaks lang buttons
-  $$("#twLangOptions button").forEach(b =>
-    b.classList.toggle("active", b.dataset.lang === state.lang));
 }
 
 /* ============================================================
-   HOME LISTS — render all 4 variants
+   HOME — poster grid
    ============================================================ */
 function renderHome() {
   const projs = window.PROJECTS;
   const L = state.lang;
 
-  // VARIANT 1 — VIGNELLI
-  const ol = $("#homeListVignelli");
-  ol.innerHTML = projs.map(p => `
-    <li data-slug="${p.slug}">
-      <span class="num">${p.no}</span>
-      <h2 class="title">${p.title[L]}</h2>
-      <span class="meta">${p.year} · ${p.place[L]}<br>${p.works} ${L==="pl"?"prac":"works"}</span>
-    </li>
-  `).join("");
-
-  // VARIANT 2 — INDEX TABLE
-  $("#homeListIndex").innerHTML = projs.map(p => `
-    <div class="row" data-slug="${p.slug}">
-      <div class="no col">${p.no}</div>
-      <h2 class="title">${p.title[L]}</h2>
-      <div class="col">${p.category[L]}</div>
-      <div class="col">${p.year}</div>
-      <div class="col">${String(p.works).padStart(2,"0")}</div>
-    </div>
-  `).join("");
-
-  // VARIANT 3 — STACK
-  $("#homeListStack").innerHTML = projs.map(p => `
-    <div class="row" data-slug="${p.slug}">
-      <h2 class="title">${p.title[L]}</h2>
-      <div class="side">${p.year}<br>${p.works} ${L==="pl"?"prac":"works"}<br>${p.place[L]}</div>
-    </div>
-  `).join("");
-
-  // VARIANT 4 — POSTER GRID
+  // POSTER GRID — jedyny układ strony głównej
   $("#homeListPoster").innerHTML = projs.map((p, i) => {
     return `
     <article class="cell c${i+1}" data-slug="${p.slug}" itemscope itemtype="https://schema.org/CreativeWork">
@@ -169,25 +133,10 @@ function renderHome() {
     });
   });
 
-  // Click handlers for ALL variants (delegated)
-  $$(".home-variant [data-slug]").forEach(el => {
+  // Click handlers
+  $$(".home-poster .cell").forEach(el => {
     el.onclick = () => navigateProject(el.dataset.slug);
   });
-
-  // Show active variant only
-  $$(".home-variant").forEach(el => {
-    el.style.display = (el.dataset.variant === state.homeVariant) ? "" : "none";
-  });
-  $("#homeVariantLabel").textContent = variantLabel(state.homeVariant);
-}
-
-function variantLabel(v) {
-  return {
-    vignelli: "[01] Vignelli — Lista",
-    index:    "[02] Indeks — Tabela",
-    stack:    "[03] Stack — Bloki",
-    poster:   "[04] Poster — Grid"
-  }[v] || v;
 }
 
 /* ============================================================
@@ -587,20 +536,6 @@ function navigateProject(slug, opts = {}) {
   setRoute("project", opts);
 }
 
-/* ============================================================
-   TWEAKS PANEL
-   ============================================================ */
-function openTweaks() { $("#tweaks").classList.add("active"); }
-function closeTweaks() { $("#tweaks").classList.remove("active"); }
-
-function setHomeVariant(v) {
-  state.homeVariant = v;
-  renderHome();
-  $$("#twHomeOptions button").forEach(b =>
-    b.classList.toggle("active", b.dataset.variant === v));
-  savePref(LS.variant, v);
-}
-
 function setLang(lang) {
   state.lang = lang;
   applyI18n();
@@ -628,7 +563,7 @@ function init() {
     });
   });
 
-  // langs (sidebar + tweaks)
+  // langs (sidebar)
   $$("[data-lang]").forEach(b =>
     b.addEventListener("click", () => setLang(b.dataset.lang)));
 
@@ -733,12 +668,6 @@ function init() {
     }
   });
 
-  // tweaks
-  $("#tweaksOpener").addEventListener("click", openTweaks);
-  $("#tweaksClose").addEventListener("click", closeTweaks);
-  $$("#twHomeOptions button").forEach(b =>
-    b.addEventListener("click", () => setHomeVariant(b.dataset.variant)));
-
   // browser back/forward (popstate) — synchronizuj stan z URL
   window.addEventListener("popstate", () => {
     // Jeśli otwarty lightbox — zamknij go (back gest. już zdjął history entry)
@@ -758,20 +687,17 @@ function init() {
     }
   });
 
-  // 1. Załaduj zapisane preferencje (język, wariant)
+  // 1. Załaduj zapisane preferencje (język)
   loadPrefs();
 
   // 2. Sparsuj URL — co użytkownik chce zobaczyć (refresh / shared link)
   const initial = parseHash();
 
-  // 3. Pierwszy render z odpowiednim językiem i wariantem
+  // 3. Pierwszy render z odpowiednim językiem
   applyI18n();
   renderHome();
   renderTextPages();
   renderAchievements();
-  // ustaw aktywny przycisk wariantu w tweaks panelu
-  $$("#twHomeOptions button").forEach(b =>
-    b.classList.toggle("active", b.dataset.variant === state.homeVariant));
 
   // 4. Skieruj do żądanego widoku
   if (initial.route === "project" && initial.slug) {
@@ -781,6 +707,127 @@ function init() {
   } else {
     setRoute(initial.route || "home", { skipHash: true });
   }
+}
+
+/* ============================================================
+   NAV PREVIEW — podgląd zawartości sekcji po najechaniu na link
+   (tylko desktop z myszą — na dotyku hover nie ma sensu)
+   ============================================================ */
+function buildNavPreview(route, L) {
+  if (route === "home") {
+    const items = window.PROJECTS.map(p => `
+      <button class="np-item" data-slug="${p.slug}" aria-label="${p.title[L]}">
+        <span class="np-thumb" style="background-image:url('${p.images[0]}')"></span>
+        <span class="np-text"><span class="np-no">${p.no}</span><span class="np-name">${p.title[L]}</span></span>
+      </button>`).join("");
+    return `<div class="np-head">${L === "pl" ? "Wybrane realizacje" : "Selected works"}</div>
+      <div class="np-works">${items}</div>`;
+  }
+
+  if (route === "achievements") {
+    const sorted = [...window.ACHIEVEMENTS].sort((a, b) => {
+      const ak = a.dateISO || (a.year ? a.year + "-00-00" : "0000-00-00");
+      const bk = b.dateISO || (b.year ? b.year + "-00-00" : "0000-00-00");
+      return bk.localeCompare(ak);
+    }).slice(0, 4);
+    const items = sorted.map(a => `
+      <div class="np-news">
+        <span class="np-date">${a.date ? a.date[L] : (a.year || "")} · ${a.type[L]}</span>
+        <span class="np-news-title">${a.title[L]}</span>
+        <span class="np-news-place">${a.place[L]}</span>
+      </div>`).join("");
+    return `<div class="np-head">${L === "pl" ? "Najnowsze" : "Latest"}</div>${items}`;
+  }
+
+  if (route === "about") {
+    const tmp = document.createElement("div");
+    tmp.innerHTML = window.ABOUT[L].body;
+    const firstP = tmp.querySelector("p");
+    const intro = firstP ? firstP.textContent : "";
+    const facts = L === "pl"
+      ? ["ZPAF", "ITF Opawa", "Sputnik Photos", "Warszawa / Opawa"]
+      : ["ZPAF", "ITF Opava", "Sputnik Photos", "Warsaw / Opava"];
+    return `
+      <div class="np-about">
+        <span class="np-portrait" style="background-image:url('images/about/portrait.webp')"></span>
+        <p class="np-bio">${intro}</p>
+      </div>
+      <div class="np-facts">${facts.map(f => `<span class="np-fact">${f}</span>`).join("")}</div>`;
+  }
+
+  if (route === "contact") {
+    return `
+      <div class="np-head">${L === "pl" ? "Kontakt" : "Get in touch"}</div>
+      <div class="np-contact">
+        <div class="np-cline">
+          <span class="np-clabel">E-mail</span>
+          <a href="mailto:katedranalogowa@gmail.com">katedranalogowa@gmail.com</a>
+        </div>
+        <div class="np-cline">
+          <span class="np-clabel">Instagram</span>
+          <a href="https://www.instagram.com/sypniewskistudio/" target="_blank" rel="noopener noreferrer">@sypniewskistudio</a>
+        </div>
+        <p class="np-cnote">${L === "pl"
+          ? "Odbitki autorskie w limitowanych edycjach — napisz w sprawie formatów i cen."
+          : "Limited-edition artist prints — get in touch about sizes and pricing."}</p>
+      </div>`;
+  }
+
+  return "";
+}
+
+function initNavPreview() {
+  const panel = document.getElementById("navPreview");
+  if (!panel) return;
+  // Tylko urządzenia z myszą — pomijamy dotyk
+  if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+
+  const links = $$(".sidenav a[data-route]");
+  let hideTimer = null;
+
+  function position(link) {
+    const sb = document.querySelector(".sidebar").getBoundingClientRect();
+    const rect = link.getBoundingClientRect();
+    panel.style.left = sb.right + "px";
+    // tymczasowo pokaż żeby zmierzyć wysokość
+    const h = panel.offsetHeight;
+    let top = rect.top;
+    const maxTop = window.innerHeight - h - 16;
+    if (top > maxTop) top = Math.max(16, maxTop);
+    panel.style.top = top + "px";
+  }
+
+  function show(link) {
+    clearTimeout(hideTimer);
+    panel.innerHTML = buildNavPreview(link.dataset.route, state.lang);
+    panel.querySelectorAll(".np-item[data-slug]").forEach(b => {
+      b.onclick = () => { navigateProject(b.dataset.slug); hide(true); };
+    });
+    panel.classList.add("active");
+    panel.setAttribute("aria-hidden", "false");
+    position(link);
+  }
+
+  function hide(immediate) {
+    clearTimeout(hideTimer);
+    const doHide = () => {
+      panel.classList.remove("active");
+      panel.setAttribute("aria-hidden", "true");
+    };
+    if (immediate) doHide();
+    else hideTimer = setTimeout(doHide, 160);
+  }
+
+  links.forEach(link => {
+    link.addEventListener("mouseenter", () => show(link));
+    link.addEventListener("mouseleave", () => hide(false));
+    link.addEventListener("focus", () => show(link));
+    link.addEventListener("blur", () => hide(false));
+    link.addEventListener("click", () => hide(true));
+  });
+  panel.addEventListener("mouseenter", () => clearTimeout(hideTimer));
+  panel.addEventListener("mouseleave", () => hide(false));
+  window.addEventListener("scroll", () => hide(true), { passive: true });
 }
 
 /* ============================================================
@@ -857,4 +904,5 @@ function initCookieBanner() {
 document.addEventListener("DOMContentLoaded", () => {
   init();
   initCookieBanner();
+  initNavPreview();
 });

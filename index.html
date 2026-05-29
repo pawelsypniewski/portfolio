@@ -344,145 +344,7 @@
   }
   .home-variant { flex: 1 1 auto; min-height: 0; }
 
-  /* ---- HOME [01] VIGNELLI LIST ---- */
-  .home-vignelli {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 0 60px;
-    height: 100%;
-  }
-  .home-vignelli ol { list-style: none; }
-  .home-vignelli li {
-    display: grid;
-    grid-template-columns: 56px 1fr auto;
-    align-items: baseline;
-    gap: 32px;
-    border-top: 1px solid #000;
-    padding: 18px 0 14px 0;
-    cursor: pointer;
-    transition: padding-left 220ms ease, color 180ms ease;
-  }
-  .home-vignelli li:last-child { border-bottom: 1px solid #000; }
-  .home-vignelli li:hover { padding-left: 16px; }
-  .home-vignelli .num {
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-weight: 500;
-    font-size: 12px;
-    letter-spacing: 0.04em;
-  }
-  .home-vignelli .title {
-    font-size: clamp(48px, 6.2vw, 96px);
-    font-weight: 900;
-    line-height: 0.95;
-    letter-spacing: -0.02em;
-    text-transform: uppercase;
-  }
-  .home-vignelli .meta {
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-weight: 400;
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    text-align: right;
-    line-height: 1.4;
-    opacity: 0.7;
-  }
-
-  /* ---- HOME [02] INDEX TABLE ---- */
-  .home-index {
-    padding: 36px 60px 36px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-  .home-index .header {
-    display: grid;
-    grid-template-columns: 80px 1fr 160px 120px 120px;
-    gap: 24px;
-    border-bottom: 1px solid #000;
-    padding-bottom: 10px;
-    margin-bottom: 4px;
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-weight: 500;
-    font-size: 10px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-  .home-index .row {
-    display: grid;
-    grid-template-columns: 80px 1fr 160px 120px 120px;
-    gap: 24px;
-    align-items: center;
-    border-bottom: 1px solid #000;
-    padding: 28px 0;
-    cursor: pointer;
-    transition: background 180ms ease, color 180ms ease;
-  }
-  .home-index .row:hover { background: #000; color: #fff; }
-  .home-index .row .no {
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-weight: 500;
-    font-size: 14px;
-  }
-  .home-index .row .title {
-    font-size: clamp(36px, 4.4vw, 64px);
-    font-weight: 900;
-    line-height: 0.95;
-    letter-spacing: -0.02em;
-    text-transform: uppercase;
-  }
-  .home-index .row .col {
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-weight: 400;
-    font-size: 12px;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-
-  /* ---- HOME [03] STACK (one per viewport row) ---- */
-  .home-stack {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-  .home-stack .row {
-    flex: 1;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    padding: 0 60px;
-    border-top: 1px solid #000;
-    cursor: pointer;
-    overflow: hidden;
-    position: relative;
-    transition: background 200ms ease, color 200ms ease;
-  }
-  .home-stack .row:last-child { border-bottom: 1px solid #000; }
-  .home-stack .row:hover { background: #000; color: #fff; }
-  .home-stack .row .title {
-    font-size: clamp(48px, 7.5vw, 132px);
-    font-weight: 900;
-    line-height: 0.85;
-    letter-spacing: -0.035em;
-    text-transform: uppercase;
-    white-space: nowrap;
-    transform-origin: left center;
-    transition: transform 280ms cubic-bezier(0.2, 0.7, 0.2, 1);
-  }
-  .home-stack .row:hover .title { transform: translateX(20px); }
-  .home-stack .row .side {
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-weight: 400;
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    text-align: right;
-    line-height: 1.5;
-    opacity: 0.6;
-  }
-
-  /* ---- HOME [04] GRID POSTER ---- */
+  /* ---- HOME — GRID POSTER ---- */
   .home-poster {
     height: 100%;
     display: grid;
@@ -1197,54 +1059,67 @@
   }
 
   /* ============================================================
-     TWEAKS PANEL
+     NAV PREVIEW — flyout peek on hovering sidebar links
      ============================================================ */
-  .tweaks {
+  .nav-preview {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 260px;
+    z-index: 150;
+    width: 320px;
+    max-height: calc(100dvh - 32px);
+    overflow-y: auto;
     background: #fff;
     border: 1px solid #000;
-    padding: 16px;
-    z-index: 200;
+    padding: 18px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-8px);
+    transition: opacity 140ms ease, transform 140ms ease, visibility 140ms;
+    box-shadow: 10px 10px 0 rgba(0,0,0,0.06);
+  }
+  .nav-preview.active { opacity: 1; visibility: visible; transform: translateX(0); }
+  .np-head {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 11px;
-    letter-spacing: 0.04em;
+    font-size: 10px;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    display: none;
+    opacity: 0.5;
+    margin-bottom: 14px;
   }
-  .tweaks.active { display: block; }
-  .tweaks .tw-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #000;
-    padding-bottom: 8px;
-    margin-bottom: 12px;
-    font-weight: 700;
+  /* PRACE — siatka miniatur */
+  .np-works { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 10px; }
+  .np-item {
+    display: flex; flex-direction: column; gap: 6px;
+    text-align: left; border: none; background: none; cursor: pointer; padding: 0;
+    font: inherit; color: inherit;
   }
-  .tweaks .tw-close { cursor: pointer; }
-  .tweaks .tw-section { margin-bottom: 14px; }
-  .tweaks .tw-section h4 {
-    font-size: 9px;
-    opacity: 0.55;
-    margin-bottom: 8px;
-    letter-spacing: 0.1em;
-    font-weight: 500;
+  .np-thumb {
+    width: 100%; aspect-ratio: 4 / 3;
+    background-size: cover; background-position: center;
+    filter: grayscale(1); transition: filter 180ms ease;
   }
-  .tweaks .tw-options { display: flex; flex-direction: column; gap: 4px; }
-  .tweaks .tw-options button {
-    text-align: left;
-    padding: 8px 10px;
-    border: 1px solid #000;
-    font-size: 11px;
-    letter-spacing: 0.04em;
-    cursor: pointer;
-    transition: background 120ms ease, color 120ms ease;
-  }
-  .tweaks .tw-options button.active,
-  .tweaks .tw-options button:hover { background: #000; color: #fff; }
+  .np-item:hover .np-thumb { filter: grayscale(0); }
+  .np-text { display: flex; gap: 6px; align-items: baseline; }
+  .np-no { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 9px; opacity: 0.45; }
+  .np-name { font-size: 12px; line-height: 1.15; font-weight: 600; }
+  /* AKTUALNOŚCI — najnowsze wpisy */
+  .np-news { padding: 12px 0; border-top: 1px solid rgba(0,0,0,0.12); display: flex; flex-direction: column; gap: 3px; }
+  .np-news:first-child { border-top: none; padding-top: 0; }
+  .np-date { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.5; }
+  .np-news-title { font-size: 13px; font-weight: 600; line-height: 1.25; }
+  .np-news-place { font-size: 11px; opacity: 0.6; line-height: 1.3; }
+  /* O AUTORZE — portret + bio */
+  .np-about { display: flex; gap: 14px; margin-bottom: 14px; }
+  .np-portrait { flex: 0 0 74px; width: 74px; height: 92px; background-size: cover; background-position: center top; filter: grayscale(1); }
+  .np-bio { font-size: 12px; line-height: 1.5; }
+  .np-facts { display: flex; flex-wrap: wrap; gap: 6px; }
+  .np-fact { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid rgba(0,0,0,0.25); padding: 4px 7px; }
+  /* KONTAKT */
+  .np-contact { display: flex; flex-direction: column; gap: 12px; }
+  .np-cline { display: flex; flex-direction: column; gap: 3px; }
+  .np-clabel { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.5; }
+  .np-cline a { font-size: 13px; color: #000; text-decoration: none; border-bottom: 1px solid rgba(0,0,0,0.3); width: fit-content; }
+  .np-cline a:hover { border-bottom-color: #000; }
+  .np-cnote { font-size: 11px; opacity: 0.6; line-height: 1.4; margin-top: 2px; }
 
   /* ============================================================
      RESPONSIVE — LARGE DISPLAYS (>=2200px, 4K/5K monitors)
@@ -1254,13 +1129,6 @@
     .sidebar { padding: 44px 36px; }
     .sidebar .brand .name { font-size: 24px; }
     .sidenav a { font-size: 20px; }
-    .home-vignelli { padding: 0 80px; }
-    .home-vignelli .title { font-size: clamp(72px, 6vw, 132px); }
-    .home-index { padding: 56px 80px; }
-    .home-index .row { padding: 36px 0; }
-    .home-index .row .title { font-size: clamp(48px, 4.2vw, 80px); }
-    .home-stack .row { padding: 0 80px; }
-    .home-stack .row .title { font-size: clamp(80px, 7vw, 160px); }
     .home-poster { padding: 32px 48px; }
     .home-poster .cell { padding: 24px; }
     .home-poster .cell .title { font-size: clamp(40px, 3.2vw, 64px); }
@@ -1280,24 +1148,6 @@
     .sidebar .brand .name { font-size: 28px; }
     .sidenav a { font-size: 22px; line-height: 1.7; }
     .sidefoot { font-size: 14px; }
-
-    .home-vignelli { padding: 0 96px; }
-    .home-vignelli li { padding: 28px 0 22px; grid-template-columns: 80px 1fr auto; gap: 48px; }
-    .home-vignelli .num { font-size: 14px; }
-    .home-vignelli .title { font-size: clamp(96px, 6.4vw, 160px); }
-    .home-vignelli .meta { font-size: 13px; }
-
-    .home-index { padding: 72px 96px; }
-    .home-index .header,
-    .home-index .row { grid-template-columns: 100px 1fr 220px 160px 160px; gap: 32px; }
-    .home-index .row { padding: 44px 0; }
-    .home-index .row .title { font-size: clamp(60px, 4.8vw, 100px); }
-    .home-index .header { font-size: 12px; }
-    .home-index .row .col { font-size: 14px; }
-
-    .home-stack .row { padding: 0 96px; }
-    .home-stack .row .title { font-size: clamp(100px, 7.6vw, 200px); }
-    .home-stack .row .side { font-size: 13px; }
 
     .home-poster { padding: 40px 56px; gap: 16px; }
     .home-poster .cell { padding: 28px; }
@@ -1357,13 +1207,6 @@
      ============================================================ */
   @media (min-width: 1025px) and (max-height: 900px) {
     .sidebar { padding: 20px 24px; }
-    .home-vignelli li { padding: 14px 0 12px; }
-    .home-vignelli .title { font-size: clamp(40px, 5.4vw, 80px); }
-    .home-vignelli .meta { font-size: 10px; }
-    .home-index { padding: 28px 60px; }
-    .home-index .row { padding: 20px 0; }
-    .home-index .row .title { font-size: clamp(28px, 3.6vw, 52px); }
-    .home-stack .row .title { font-size: clamp(44px, 6.2vw, 108px); }
     .home-poster { padding: 20px 32px; }
     .home-poster .cell { padding: 14px; }
     .home-poster .cell .title { font-size: clamp(22px, 2.6vw, 44px); }
@@ -1373,11 +1216,6 @@
 
   /* Even shorter screens (1366x768 / 1280x720) */
   @media (min-width: 1025px) and (max-height: 780px) {
-    .home-vignelli li { padding: 10px 0 8px; }
-    .home-vignelli .title { font-size: clamp(34px, 4.4vw, 62px); }
-    .home-stack .row .title { font-size: clamp(36px, 5.2vw, 92px); }
-    .home-index .row { padding: 14px 0; }
-    .home-index .row .title { font-size: clamp(24px, 3.2vw, 44px); }
     .text-page { padding: 36px 60px 32px; }
     .text-page h1 { font-size: clamp(36px, 4.4vw, 64px); margin-bottom: 16px; }
   }
@@ -1387,13 +1225,6 @@
      ============================================================ */
   @media (max-width: 1024px) {
     .shell { grid-template-columns: 240px 1fr; }
-    .home-vignelli { padding: 0 36px; }
-    .home-index { padding: 80px 36px 40px; }
-    .home-index .header, .home-index .row {
-      grid-template-columns: 60px 1fr 140px 90px 80px;
-      gap: 16px;
-    }
-    .home-stack .row { padding: 0 36px; }
     .home-poster { padding: 56px 20px 20px; gap: 8px; }
     .proj-top, .proj-bottom { padding-left: 24px; padding-right: 24px; }
     .proj-description { padding: 22px 24px 32px; font-size: 14px; line-height: 1.55; }
@@ -1414,28 +1245,6 @@
     .sidenav { margin-top: 32px; }
     .sidenav a { font-size: 15px; }
     .sidefoot { font-size: 10px; }
-
-    /* Vignelli — bardziej zwarty */
-    .home-vignelli { padding: 0 24px; }
-    .home-vignelli li { padding: 18px 0 14px; grid-template-columns: 40px 1fr auto; gap: 16px; }
-    .home-vignelli .title { font-size: clamp(38px, 7vw, 64px); }
-    .home-vignelli .meta { font-size: 10px; }
-
-    /* Index — wąskie kolumny */
-    .home-index { padding: 32px 24px; }
-    .home-index .header,
-    .home-index .row {
-      grid-template-columns: 40px 1fr 110px 60px 56px;
-      gap: 12px;
-    }
-    .home-index .row { padding: 18px 0; }
-    .home-index .row .title { font-size: clamp(22px, 4vw, 40px); }
-    .home-index .header { font-size: 9px; }
-    .home-index .row .col { font-size: 11px; }
-
-    /* Stack */
-    .home-stack .row { padding: 0 24px; }
-    .home-stack .row .title { font-size: clamp(40px, 8vw, 80px); }
 
     /* Poster — przebudowa na 2-kolumnowy layout */
     .home-poster {
@@ -1557,83 +1366,6 @@
       gap: 8px;
     }
 
-    /* VIGNELLI on mobile — vertical list, large but fits */
-    .home-vignelli {
-      padding: 0 18px;
-      height: auto;
-      display: block;
-    }
-    .home-vignelli li {
-      grid-template-columns: 32px 1fr;
-      grid-template-rows: auto auto;
-      gap: 8px 12px;
-      padding: 18px 0 14px;
-    }
-    .home-vignelli li:hover { padding-left: 0; }
-    .home-vignelli .num { font-size: 10px; align-self: start; padding-top: 4px; }
-    .home-vignelli .title {
-      font-size: clamp(34px, 9vw, 56px);
-      line-height: 0.95;
-      grid-column: 2;
-    }
-    .home-vignelli .meta {
-      grid-column: 2;
-      text-align: left;
-      font-size: 9px;
-      opacity: 0.7;
-      margin-top: 4px;
-    }
-    .home-vignelli .meta br { display: inline; }
-    .home-vignelli .meta br::before { content: " · "; }
-
-    /* INDEX on mobile — drop columns, stack info */
-    .home-index { padding: 18px; height: auto; display: block; }
-    .home-index .header { display: none; }
-    .home-index .row {
-      grid-template-columns: 32px 1fr;
-      grid-template-rows: auto auto;
-      gap: 6px 12px;
-      padding: 16px 0;
-    }
-    .home-index .row:hover { background: transparent; color: inherit; }
-    .home-index .row .no { font-size: 10px; align-self: start; padding-top: 6px; }
-    .home-index .row .title {
-      font-size: clamp(28px, 8vw, 48px);
-      grid-column: 2;
-    }
-    .home-index .row .col:not(.no) {
-      grid-column: 2;
-      font-size: 9px;
-      opacity: 0.65;
-      display: inline;
-    }
-    .home-index .row .col:not(.no):not(:last-child)::after {
-      content: " · ";
-      opacity: 0.5;
-    }
-
-    /* STACK on mobile — auto-height rows */
-    .home-stack { padding-top: 0; height: auto; }
-    .home-stack .row {
-      flex: 0 0 auto;
-      grid-template-columns: 1fr;
-      grid-template-rows: auto auto;
-      padding: 24px 18px;
-      gap: 6px;
-      min-height: 0;
-    }
-    .home-stack .row:hover { background: transparent; color: inherit; }
-    .home-stack .row:hover .title { transform: none; }
-    .home-stack .row .title {
-      font-size: clamp(36px, 10vw, 64px);
-      white-space: normal;
-      line-height: 0.9;
-    }
-    .home-stack .row .side {
-      text-align: left;
-      font-size: 9px;
-    }
-
     /* POSTER on mobile — single column */
     .home-poster {
       grid-template-columns: 1fr;
@@ -1739,18 +1471,6 @@
     .lightbox .lb-nav-prev { left: 10px; }
     .lightbox .lb-nav-next { right: 10px; }
 
-    /* --- TWEAKS PANEL on mobile -> bottom sheet --- */
-    .tweaks {
-      bottom: 0;
-      right: 0;
-      left: 0;
-      width: 100%;
-      border-left: none;
-      border-right: none;
-      border-bottom: none;
-      max-height: 70dvh;
-      overflow-y: auto;
-    }
   }
 
   /* ============================================================
@@ -1766,20 +1486,6 @@
     .sidefoot { font-size: 8px; padding-top: 10px; margin-top: 10px; }
 
     .home-topline { padding: 10px 14px; font-size: 8px; }
-
-    /* Vignelli — najmniejsze fonty żeby długie tytuły się zmieściły */
-    .home-vignelli { padding: 0 14px; }
-    .home-vignelli .title { font-size: clamp(26px, 8.5vw, 38px); }
-    .home-vignelli .meta { font-size: 8px; }
-
-    /* Index */
-    .home-index { padding: 14px; }
-    .home-index .row { padding: 14px 0; }
-    .home-index .row .title { font-size: clamp(22px, 7.5vw, 34px); }
-
-    /* Stack */
-    .home-stack .row { padding: 0 14px; }
-    .home-stack .row .title { font-size: clamp(30px, 10vw, 48px); }
 
     /* Poster */
     .home-poster { padding: 14px; gap: 6px; }
@@ -2055,11 +1761,13 @@
       <div class="meta">
         <div>© 2017–2026<br>Paweł Sypniewski</div>
         <div>Warszawa / Opava</div>
-        <div style="margin-top:10px; cursor:pointer; text-decoration:underline; text-underline-offset:3px;" id="tweaksOpener" data-i18n="tweaks.open">Układ strony →</div>
-        <div style="margin-top:6px; cursor:pointer; text-decoration:underline; text-underline-offset:3px; opacity:0.65;" id="cookieReopen" data-i18n="cookie.manage">Cookies</div>
+        <div style="margin-top:10px; cursor:pointer; text-decoration:underline; text-underline-offset:3px; opacity:0.65;" id="cookieReopen" data-i18n="cookie.manage">Cookies</div>
       </div>
     </div>
   </aside>
+
+  <!-- Nav preview flyout — peek into a section on hover (desktop only) -->
+  <div class="nav-preview" id="navPreview" aria-hidden="true"></div>
 
   <!-- ============== MAIN ============== -->
   <main class="main">
@@ -2070,33 +1778,10 @@
       <div class="home-stage">
         <div class="home-topline">
           <span data-i18n="home.label">Prace / Selected works</span>
-          <span id="homeVariantLabel">[04] Poster — Grid</span>
         </div>
 
-        <!-- VARIANT 1: VIGNELLI LIST -->
-        <div class="home-vignelli home-variant" data-variant="vignelli" style="display:none">
-          <ol id="homeListVignelli"></ol>
-        </div>
-
-        <!-- VARIANT 2: INDEX TABLE -->
-        <div class="home-index home-variant" data-variant="index" style="display:none">
-          <div class="header">
-            <div data-i18n="idx.no">No.</div>
-            <div data-i18n="idx.title">Tytuł / Title</div>
-            <div data-i18n="idx.cat">Kategoria</div>
-            <div data-i18n="idx.year">Rok</div>
-            <div data-i18n="idx.works">Prace</div>
-          </div>
-          <div id="homeListIndex"></div>
-        </div>
-
-        <!-- VARIANT 3: STACK -->
-        <div class="home-stack home-variant" data-variant="stack" style="display:none">
-          <div id="homeListStack" style="display:contents"></div>
-        </div>
-
-        <!-- VARIANT 4: POSTER GRID -->
-        <div class="home-poster home-variant" data-variant="poster">
+        <!-- POSTER GRID -->
+        <div class="home-poster home-variant">
           <div id="homeListPoster" style="display:contents"></div>
         </div>
       </div>
@@ -2171,30 +1856,6 @@
   <img id="lbImg" alt="">
   <button class="lb-nav lb-nav-next" id="lbNavNext" type="button" aria-label="Następne zdjęcie">→</button>
   <div class="lb-counter" id="lbCounter">01/01</div>
-</div>
-
-<!-- TWEAKS PANEL -->
-<div class="tweaks" id="tweaks">
-  <div class="tw-head">
-    <span>Tweaks</span>
-    <span class="tw-close" id="tweaksClose">✕</span>
-  </div>
-  <div class="tw-section">
-    <h4 data-i18n="tw.home">Układ strony głównej</h4>
-    <div class="tw-options" id="twHomeOptions">
-      <button data-variant="vignelli">[01] Vignelli — Lista</button>
-      <button data-variant="index">[02] Indeks — Tabela</button>
-      <button data-variant="stack">[03] Stack — Bloki</button>
-      <button data-variant="poster" class="active">[04] Poster — Grid</button>
-    </div>
-  </div>
-  <div class="tw-section">
-    <h4 data-i18n="tw.lang">Język</h4>
-    <div class="tw-options" id="twLangOptions">
-      <button data-lang="pl" class="active">Polski</button>
-      <button data-lang="en">English</button>
-    </div>
-  </div>
 </div>
 
 <!-- Camera flash overlay — aktywowany przez app.js dla projektów z flashEffect -->
