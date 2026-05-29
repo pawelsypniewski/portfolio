@@ -124,13 +124,12 @@ function renderHome() {
 
   // VARIANT 4 — POSTER GRID
   $("#homeListPoster").innerHTML = projs.map((p, i) => {
-    const randomImg = p.images[Math.floor(Math.random() * p.images.length)];
     return `
     <article class="cell c${i+1}" data-slug="${p.slug}" itemscope itemtype="https://schema.org/CreativeWork">
       <div class="num">${p.no} / ${L==="pl"?"PRACE":"WORKS"}</div>
       <div class="title">
         <h2 class="title-text" itemprop="name">${p.title[L]}</h2>
-        <div class="thumb-frame" style="background-image:url('${randomImg}')" role="img" aria-label="${p.title[L]} — podgląd"></div>
+        <div class="thumb-frame" role="img" aria-label="${p.title[L]} — podgląd"></div>
       </div>
       <div class="meta"><span itemprop="dateCreated">${p.year}</span> · <span itemprop="contentLocation">${p.place[L]}</span> · ${p.works} ${L==="pl"?"prac":"works"}</div>
     </article>
