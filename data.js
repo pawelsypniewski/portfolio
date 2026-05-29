@@ -64,12 +64,12 @@ window.PROJECTS = [
     year: "2022",
     category: { pl: "Dokument / Krajobraz", en: "Documentary / Landscape" },
     place: { pl: "Polska moim okiem", en: "Poland through my eye" },
-    works: 9,
+    works: 14,
     caption: {
-      pl: "Polska moim okiem — krajobraz peryferii, ogrodzeń, tablic, prowizorek. Ślady codziennego porządkowania przestrzeni.",
-      en: "Poland through my eye — a landscape of edges, fences, notice boards, makeshift things. Traces of the everyday ordering of space."
+      pl: "Polska moim okiem — krajobraz peryferii, ogrodzeń, tablic, prowizorek. Ślady ingerencji człowieka w minimalistyczny krajobraz.",
+      en: "Poland through my eye — a landscape of edges, fences, notice boards, makeshift things. Traces of human intervention in a minimalist landscape."
     },
-    images: Array.from({length: 9}, (_, i) =>
+    images: Array.from({length: 14}, (_, i) =>
       `images/topografia/${String(i+1).padStart(2,"0")}.webp`)
   },
   {
