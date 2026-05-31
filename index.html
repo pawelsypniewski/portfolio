@@ -1446,6 +1446,24 @@
   .np-cnote { font-size: 11px; opacity: 0.6; line-height: 1.4; margin-top: 2px; }
 
   /* ============================================================
+     RESPONSIVE — FULL HD / 1920×1080 (1600–2199px)
+     Najpopularniejszy desktop. Baza projektowana pod ~1440px
+     zostawiała tu ciasne kafle i nadmiar bieli — pośredni stopień
+     między bazą a QHD: większe kafle, więcej oddechu.
+     Dolna granica 1600 obejmuje też laptop Acer 2880×1800 przy
+     skalowaniu Windows 175% (≈1645×1029) i 150% (1920×1200).
+     ============================================================ */
+  @media (min-width: 1600px) and (max-width: 2199px) {
+    .home-poster { padding: 28px 56px; }
+    .home-poster .cell { padding: 20px; }
+    .home-poster .cell .title { font-size: clamp(32px, 3vw, 56px); }
+    .proj-top, .proj-bottom { padding-left: 40px; padding-right: 40px; }
+    .text-page { max-width: 1600px; padding: 92px 72px 72px; gap: 88px; }
+    .achievements-page { max-width: 1560px; padding: 88px 72px 80px; }
+    .home-topline { padding: 13px 36px; }
+  }
+
+  /* ============================================================
      RESPONSIVE — LARGE DISPLAYS (>=2200px, 4K/5K monitors)
      ============================================================ */
   @media (min-width: 2200px) {
@@ -1542,6 +1560,34 @@
   @media (min-width: 1025px) and (max-height: 780px) {
     .text-page { padding: 36px 60px 32px; }
     .text-page h1 { font-size: clamp(36px, 4.4vw, 64px); margin-bottom: 16px; }
+  }
+
+  /* ============================================================
+     RESPONSIVE — 2880×1800 @ skalowanie 200% (np. laptop Acer / MacBook)
+     2880×1800 to fizyczne piksele. Przy skalowaniu systemu 200% (domyślne
+     w Windows dla takich gęstych paneli 14″) przeglądarka widzi logiczne
+     1440×900, DPR = 2. Ekran SZEROKI, ale NISKI i bardzo OSTRY.
+     Bez ograniczeń wysokości — zmaksymalizowane okno ma viewport ~1440×780
+     (pasek zadań + UI przeglądarki), więc warunek wysokości tylko by to psuł.
+     Tylko HiDPI (2dppx): zwykły monitor 1440-szeroki @1× tu NIE wpada.
+     Inne skalowania Acera (150% → 1920×1200, 125% → 2304×1440, 100% →
+     2880×1800) obsługują kolejno bloki Full HD / 2200px / 2880px.
+     Musi być PO blokach max-height, żeby je doprecyzować.
+     ============================================================ */
+  @media (min-resolution: 2dppx)
+     and (min-width: 1390px) and (max-width: 1560px) {
+    /* poster: pełne wykorzystanie szerokości, kompaktowo w pionie,
+       mieści się bez przewijania na 900px */
+    .sidebar { padding: 24px 26px; }
+    .home-poster { padding: 22px 48px; gap: 12px; }
+    .home-poster .cell { padding: 16px; }
+    .home-poster .cell .title { font-size: clamp(26px, 2.7vw, 46px); letter-spacing: -0.03em; }
+    .home-poster .cell .num { font-size: 10px; }
+    .home-poster .cell .meta { font-size: 10px; }
+
+    /* strony tekstowe / osiągnięcia: komfortowa miara czytania */
+    .text-page { max-width: 1280px; padding: 72px 64px 56px; gap: 72px; }
+    .achievements-page { max-width: 1320px; padding: 80px 64px 72px; }
   }
 
   /* ============================================================
