@@ -61,14 +61,18 @@ window.PROJECTS = [
   {
     slug: "nowa-topografia",
     no: "04",
-    title: { pl: "Nowa topografia Polski", en: "New Topography of Poland" },
+    title: { pl: "Post-Topografia Polski", en: "Post-Topography of Poland" },
     year: "2022",
     category: { pl: "Dokument / Krajobraz", en: "Documentary / Landscape" },
-    place: { pl: "Polska moim okiem", en: "Poland through my eye" },
+    place: { pl: "Krajobraz po transformacji", en: "Landscape after the transition" },
     works: 14,
     caption: {
-      pl: "Polska moim okiem — krajobraz peryferii, ogrodzeń, tablic, prowizorek. Ślady ingerencji człowieka w minimalistyczny krajobraz.",
-      en: "Poland through my eye — a landscape of edges, fences, notice boards, makeshift things. Traces of human intervention in a minimalist landscape."
+      pl: "Transformacja · Relikty PRL · Prowizorka lat 90. · Deweloperka",
+      en: "Transition · Communist-era relics · 1990s makeshift · Property development"
+    },
+    description: {
+      pl: `Polski krajobraz po transformacji — przestrzeń ukształtowana przez nawarstwienie epok: reliktów PRL, prowizorki lat 90. i agresywnej deweloperki.`,
+      en: `The Polish landscape after the transition — a space shaped by the layering of eras: relics of the communist era, the makeshift of the 1990s, and aggressive property development.`,
     },
     images: Array.from({length: 14}, (_, i) =>
       `images/topografia/${String(i+1).padStart(2,"0")}.webp`)
