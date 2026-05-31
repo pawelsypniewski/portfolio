@@ -4,10 +4,28 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex" />
-  <title>Panel — Paweł Sypniewski</title>
+  <title>Panel — tymczasowo odłączony</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background:#1a1a1a; color:#ddd;
+           display:grid; place-items:center; min-height:100vh; margin:0;
+           text-align:center; padding:24px; }
+    h1 { font-weight:600; font-size:1.4rem; }
+    p { opacity:.8; }
+  </style>
 </head>
 <body>
-  <!-- Sveltia CMS — nowoczesny następca Decap. Sam wczytuje admin/config.yml. -->
-  <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js" type="module"></script>
+  <div>
+    <h1>Panel jest tymczasowo odłączony</h1>
+    <p>Zarządzanie treścią wróci później. Strona działa normalnie.</p>
+    <p style="opacity:.5; font-size:.9em">Jak włączyć z powrotem — patrz INSTRUKCJA-PANEL.md</p>
+  </div>
+
+  <!--
+    PANEL ODŁĄCZONY 2026-05-31 (na życzenie — nic nie usunięto).
+    Aby włączyć panel z powrotem: usuń ten komentarz i przywróć poniższą linię
+    (oraz ustaw base_url w admin/config.yml, jeśli ma działać logowanie online):
+
+    <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js" type="module"></script>
+  -->
 </body>
 </html>
