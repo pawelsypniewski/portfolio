@@ -156,18 +156,25 @@ collections:
         file: content/settings/about.json
         format: json
         fields:
+          - { label: "Portret (zdjęcie)", name: portrait, widget: image, required: false }
+          - label: "Opis portretu (alt)"
+            name: portraitAlt
+            widget: object
+            fields:
+              - { label: PL, name: pl, widget: string, required: false }
+              - { label: EN, name: en, widget: string, required: false }
           - label: "Polski"
             name: pl
             widget: object
             fields:
-              - { label: "Treść główna (HTML)", name: body, widget: text }
-              - { label: "Kolumna boczna (HTML)", name: side, widget: text }
+              - { label: "Treść (bio)", name: body, widget: markdown }
+              - { label: "Kolumna boczna (nagłówki + listy)", name: side, widget: markdown }
           - label: "English"
             name: en
             widget: object
             fields:
-              - { label: "Treść główna (HTML)", name: body, widget: text }
-              - { label: "Kolumna boczna (HTML)", name: side, widget: text }
+              - { label: "Treść (bio)", name: body, widget: markdown }
+              - { label: "Kolumna boczna (nagłówki + listy)", name: side, widget: markdown }
       - name: contact
         label: "Kontakt"
         file: content/settings/contact.json
@@ -177,11 +184,35 @@ collections:
             name: pl
             widget: object
             fields:
-              - { label: "Treść główna (HTML)", name: body, widget: text }
-              - { label: "Kolumna boczna (HTML)", name: side, widget: text }
+              - { label: "Tekst wstępny", name: intro, widget: markdown }
+              - { label: "Kolumna boczna (e-mail, linki)", name: side, widget: markdown }
           - label: "English"
             name: en
             widget: object
             fields:
-              - { label: "Treść główna (HTML)", name: body, widget: text }
-              - { label: "Kolumna boczna (HTML)", name: side, widget: text }
+              - { label: "Tekst wstępny", name: intro, widget: markdown }
+              - { label: "Kolumna boczna (e-mail, linki)", name: side, widget: markdown }
+          - label: "Galeria Instagrama"
+            name: instagram
+            widget: object
+            fields:
+              - label: "Nagłówek"
+                name: heading
+                widget: object
+                fields:
+                  - { label: PL, name: pl, widget: string }
+                  - { label: EN, name: en, widget: string }
+              - label: "Etykieta dostępności (aria-label kafelka)"
+                name: ariaLabel
+                widget: object
+                fields:
+                  - { label: PL, name: pl, widget: string }
+                  - { label: EN, name: en, widget: string }
+              - { label: "Adres profilu", name: profileUrl, widget: string }
+              - { label: "Podpis pod galerią", name: profileLabel, widget: string }
+              - label: "Kafelki (zdjęcie + link do posta)"
+                name: tiles
+                widget: list
+                fields:
+                  - { label: "Zdjęcie", name: image, widget: image }
+                  - { label: "Link do posta", name: url, widget: string }

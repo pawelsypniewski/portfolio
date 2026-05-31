@@ -95,7 +95,12 @@ Zapisz, zcommituj i wypchnij (`git push`). Od teraz wchodzisz na
 | **Projekty**      | Tytuł, rok, kategoria, opis i podpis PL+EN, galeria zdjęć, miniatura     |
 | **Kolejność**     | Pole **„Kolejność"** w projekcie (1 = pierwszy na stronie)               |
 | **Widoczność**    | Przełącznik **„Ukryty"** — chowa projekt bez usuwania                     |
-| **Teksty strony** | „O autorze" (bio) i „Kontakt" — treść PL+EN (w formacie HTML)            |
+| **Teksty strony** | „O autorze" (bio) i „Kontakt" — tekst sformatowany PL+EN (bez HTML)      |
+
+> **Teksty piszesz zwykłym tekstem, nie w HTML.** Edytor ma pasek narzędzi
+> (nagłówki, listy, pogrubienie, linki) — formatowanie zamienia się na HTML
+> automatycznie przy wczytywaniu strony. Portret i galeria Instagrama mają osobne
+> pola (zdjęcie + linki), więc też nie dotykasz kodu.
 
 ### Dodawanie projektu / aktualności
 Kliknij **„New …"**, wypełnij pola, dodaj zdjęcia (przeciągnij lub wybierz z dysku),
@@ -117,7 +122,6 @@ automat przebuduje stronę w odpowiedniej kolejności.
 ## Komendy pomocnicze (terminal)
 ```
 npm run serve      # podgląd strony i panelu lokalnie (http://localhost:3000)
-npm run migrate    # (jednorazowo) odtworzenie content/ z data.js
-npm run build      # przebudowa plików zbiorczych
+npm run build      # przebudowa plików zbiorczych (po edycji lokalnej)
 npm run optimize   # konwersja zdjęć z images/uploads na WebP
 ```

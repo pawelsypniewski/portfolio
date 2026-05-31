@@ -19,6 +19,82 @@
     return res.json();
   }
 
+  // --- Minimalny konwerter Markdown → HTML --------------------------------
+  // Obsługuje to, co produkuje edytor w panelu: nagłówki (#…), listy (- …),
+  // akapity, pogrubienie (**…**), kursywę (*…*/_…_), linki [t](url) i obrazy.
+  // Linki http(s) dostają target="_blank" rel="noopener" (jak w oryginale).
+  function inlineMd(s) {
+    return s
+      .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_, a, src) =>
+        `<img src="${src}" alt="${a}" loading="lazy" decoding="async">`)
+      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, t, u) =>
+        /^https?:\/\//i.test(u)
+          ? `<a href="${u}" target="_blank" rel="noopener">${t}</a>`
+          : `<a href="${u}">${t}</a>`)
+      .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+      .replace(/(^|[^*])\*([^*\n]+)\*(?!\*)/g, "$1<em>$2</em>")
+      .replace(/_([^_\n]+)_/g, "<em>$1</em>");
+  }
+  function mdToHtml(md) {
+    if (!md) return "";
+    const lines = String(md).replace(/\r\n/g, "\n").split("\n");
+    const blocks = [];
+    let para = [];
+    let list = null;
+    const flushPara = () => {
+      if (para.length) { blocks.push(`<p>${inlineMd(para.join(" ").trim())}</p>`); para = []; }
+    };
+    const flushList = () => {
+      if (list) { blocks.push(`<ul>${list.map((li) => `<li>${inlineMd(li)}</li>`).join("")}</ul>`); list = null; }
+    };
+    for (const raw of lines) {
+      const line = raw.trim();
+      if (line === "") { flushPara(); flushList(); continue; }
+      const h = line.match(/^(#{1,6})\s+(.*)$/);
+      if (h) { flushPara(); flushList(); blocks.push(`<h${h[1].length}>${inlineMd(h[2].trim())}</h${h[1].length}>`); continue; }
+      const li = line.match(/^[-*]\s+(.*)$/);
+      if (li) { flushPara(); (list = list || []).push(li[1].trim()); continue; }
+      flushList(); para.push(line);
+    }
+    flushPara(); flushList();
+    return blocks.join("\n");
+  }
+
+  // --- Składanie sekcji ABOUT / CONTACT z pól strukturalnych --------------
+  function buildAbout(about) {
+    const out = {};
+    for (const L of ["pl", "en"]) {
+      const lang = about[L] || {};
+      const alt = (about.portraitAlt && about.portraitAlt[L]) || "";
+      const img = about.portrait
+        ? `<img class="author-portrait" src="${about.portrait}" alt="${alt}" loading="lazy" decoding="async">\n`
+        : "";
+      out[L] = { body: img + mdToHtml(lang.body), side: mdToHtml(lang.side) };
+    }
+    return out;
+  }
+  function buildInstagram(ig, L) {
+    if (!ig || !ig.tiles || !ig.tiles.length) return "";
+    const aria = (ig.ariaLabel && ig.ariaLabel[L]) || "";
+    const heading = (ig.heading && ig.heading[L]) || "";
+    const tiles = ig.tiles
+      .map((t) => `<a class="ig-tile" href="${t.url}" target="_blank" rel="noopener noreferrer" aria-label="${aria}" style="background-image:url('${t.image}')"></a>`)
+      .join("");
+    return `<div class="ig-section">\n  <div class="ig-heading">${heading}</div>\n  <div class="ig-grid">${tiles}</div>\n  <a class="ig-more" href="${ig.profileUrl}" target="_blank" rel="noopener noreferrer">${ig.profileLabel}</a>\n</div>`;
+  }
+  function buildContact(contact) {
+    const out = {};
+    for (const L of ["pl", "en"]) {
+      const lang = contact[L] || {};
+      const ig = buildInstagram(contact.instagram, L);
+      out[L] = {
+        body: [mdToHtml(lang.intro), ig].filter(Boolean).join("\n"),
+        side: mdToHtml(lang.side),
+      };
+    }
+    return out;
+  }
+
   window.__DATA_READY = (async function loadContent() {
     try {
       const [projects, news, about, contact] = await Promise.all([
@@ -34,8 +110,9 @@
       // Aktualności: app.js sam sortuje po dateISO.
       window.ACHIEVEMENTS = news || [];
 
-      window.ABOUT = about;
-      window.CONTACT = contact;
+      // Teksty: markdown + pola strukturalne → gotowy HTML (jak oczekuje app.js).
+      window.ABOUT = buildAbout(about);
+      window.CONTACT = buildContact(contact);
     } catch (err) {
       console.error("[loader] Nie udało się wczytać treści:", err);
       // Zabezpieczenie: pozwól app.js wystartować bez wywrotki.
