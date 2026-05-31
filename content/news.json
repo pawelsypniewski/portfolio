@@ -1,0 +1,283 @@
+[
+  {
+    "id": "10-przykazan-2023",
+    "dateISO": "2023-09-27",
+    "date": {
+      "pl": "27 września – 18 października 2023",
+      "en": "27 September – 18 October 2023"
+    },
+    "type": {
+      "pl": "Wystawa zbiorowa",
+      "en": "Group exhibition"
+    },
+    "title": {
+      "pl": "10 przykazań",
+      "en": "10 Commandments"
+    },
+    "place": {
+      "pl": "Galeria Obok ZPAF, Warszawa",
+      "en": "Galeria Obok ZPAF, Warsaw"
+    },
+    "description": {
+      "pl": "Wystawa zbiorowa będąca owocem rocznej pracy jedenastu słuchaczy Studium Fotografii ZPAF pod kierunkiem Jolanty Rycerskiej. Dekalog — jako temat i wspólny mianownik projektu — skłonił autorów do wizualnych analiz świata wartości, zarówno tych historycznych, wpisanych w naszą kulturę, jak i tych aktualnie przetwarzanych pod wpływem dynamicznych zmian społecznych. Wielogłos pytań, nie odpowiedzi. Kuratorka: Jolanta Rycerska.",
+      "en": "Group exhibition — the fruit of one year's work by eleven students of the ZPAF School of Photography under the guidance of Jolanta Rycerska. The Decalogue — as theme and common denominator — led the authors to visual analyses of values, both historical, embedded in our culture, and those currently being reworked under dynamic social change. A multi-voice of questions rather than answers. Curator: Jolanta Rycerska."
+    },
+    "links": [
+      {
+        "label": {
+          "pl": "Strona wystawy na ZPAF",
+          "en": "Exhibition page at ZPAF"
+        },
+        "url": "https://www.zpaf.pl/aktualnosci/galeria-obok-zpaf/10-przykazan-sluchacze-SF-ZPAF/"
+      }
+    ],
+    "images": [
+      "images/achievements/10-przykazan-2023/01.webp",
+      "images/achievements/10-przykazan-2023/02.webp",
+      "images/achievements/10-przykazan-2023/03.webp",
+      "images/achievements/10-przykazan-2023/04.webp",
+      "images/achievements/10-przykazan-2023/05.webp",
+      "images/achievements/10-przykazan-2023/06.webp"
+    ]
+  },
+  {
+    "id": "rybnik-foto-festival-2025",
+    "dateISO": "2025-03-28",
+    "date": {
+      "pl": "28 marca 2025",
+      "en": "28 March 2025"
+    },
+    "type": {
+      "pl": "Pokaz festiwalowy",
+      "en": "Festival screening"
+    },
+    "title": {
+      "pl": "Rybnik Foto Festival — slideshow „Labirynt”",
+      "en": "Rybnik Foto Festival — \"Labirynt\" slideshow"
+    },
+    "place": {
+      "pl": "Galeria Sztuki Rzeczna, Rybnik",
+      "en": "Galeria Sztuki Rzeczna, Rybnik"
+    },
+    "description": {
+      "pl": "Prezentacja slideshow cyklu „Labirynt” na 22. edycji Rybnik Foto Festival. Opowieść o młodych ludziach uwikłanych przez małe miasteczka. Metafora trudności do pokonania i zawiłości życiowych wyborów: czy widz znajdzie drogę wyjścia?",
+      "en": "Slideshow presentation of the \"Labirynt\" series at the 22nd edition of Rybnik Foto Festival. A story of young people entangled in small towns. A metaphor for difficulties to overcome and the tangled nature of life choices: will the viewer find a way out?"
+    },
+    "links": [
+      {
+        "label": {
+          "pl": "Strona festiwalu",
+          "en": "Festival website"
+        },
+        "url": "https://festiwal.rybnik.pl/"
+      },
+      {
+        "label": {
+          "pl": "Slideshow na YouTube",
+          "en": "Slideshow on YouTube"
+        },
+        "url": "https://www.youtube.com/watch?v=4JCT6mdi9NA"
+      },
+      {
+        "label": {
+          "pl": "Post festiwalu na Instagramie",
+          "en": "Festival's Instagram post"
+        },
+        "url": "https://www.instagram.com/p/DHIWSF6uK1I/"
+      }
+    ],
+    "images": [
+      "images/achievements/rybnik-foto-festival-2025/01.webp"
+    ]
+  },
+  {
+    "id": "itf-opava-start-2025",
+    "dateISO": "2025-06-16",
+    "date": {
+      "pl": "16 czerwca 2025",
+      "en": "16 June 2025"
+    },
+    "type": {
+      "pl": "Edukacja",
+      "en": "Education"
+    },
+    "title": {
+      "pl": "Rozpoczęcie studiów — ITF Opawa",
+      "en": "Studies started — ITF Opava"
+    },
+    "place": {
+      "pl": "Institut tvůrčí fotografie, Uniwersytet Śląski w Opawie, Czechy",
+      "en": "Institut tvůrčí fotografie, Silesian University in Opava, Czech Republic"
+    },
+    "description": {
+      "pl": "Rozpoczęcie studiów w Instytucie Fotografii Twórczej (Institut tvůrčí fotografie) na Uniwersytecie Śląskim w Opawie — jednej z najbardziej prestiżowych europejskich szkół fotografii artystycznej. Założony w 1990 roku, kształci kolejne pokolenia fotografów z całego regionu Europy Środkowej.",
+      "en": "Beginning studies at the Institute of Creative Photography (Institut tvůrčí fotografie) at Silesian University in Opava — one of Europe's most prestigious schools of art photography. Founded in 1990, it has shaped generations of photographers across Central Europe."
+    },
+    "links": [
+      {
+        "label": {
+          "pl": "Strona ITF Opawa",
+          "en": "ITF Opava website"
+        },
+        "url": "https://itf.fpf.slu.cz/"
+      }
+    ],
+    "images": [
+      "images/achievements/itf-opava-start-2025/01.webp",
+      "images/achievements/itf-opava-start-2025/02.webp",
+      "images/achievements/itf-opava-start-2025/03.webp",
+      "images/achievements/itf-opava-start-2025/04.webp"
+    ]
+  },
+  {
+    "id": "w-glowie-sie-nie-miesci-2025",
+    "dateISO": "2025-09-05",
+    "date": {
+      "pl": "5 – 19 września 2025",
+      "en": "5 – 19 September 2025"
+    },
+    "type": {
+      "pl": "Wystawa indywidualna",
+      "en": "Solo exhibition"
+    },
+    "title": {
+      "pl": "W głowie się nie mieści",
+      "en": "W głowie się nie mieści"
+    },
+    "place": {
+      "pl": "Lokal Bródno, Warszawa",
+      "en": "Lokal Bródno, Warsaw"
+    },
+    "description": {
+      "pl": "Indywidualna wystawa łącząca cztery cykle artysty — „Pamiętnik przetrwania”, „Flashback”, „Labirynt” i „Superpozycja”. Podróż w głąb ludzkiej świadomości i podświadomości: o pamięci, granicach wolności, lękach i pragnieniach. Fotografia jako narzędzie dialogu — z samym sobą, z odbiorcą, ze światem. Kuratorka: Agata Rząsowska-Grabicka.",
+      "en": "Solo exhibition bringing together four of the artist's series — \"Diary of Survival\", \"Flashback\", \"Labyrinth\" and \"Superposition\". A journey into human consciousness and subconsciousness — memory, limits of freedom, fears and desires. Photography as a tool for dialogue — with oneself, the viewer and the world. Curator: Agata Rząsowska-Grabicka."
+    },
+    "links": [],
+    "images": [
+      "images/achievements/w-glowie-sie-nie-miesci-2025/01.webp",
+      "images/achievements/w-glowie-sie-nie-miesci-2025/02.webp",
+      "images/achievements/w-glowie-sie-nie-miesci-2025/03.webp",
+      "images/achievements/w-glowie-sie-nie-miesci-2025/04.webp",
+      "images/achievements/w-glowie-sie-nie-miesci-2025/05.webp"
+    ]
+  },
+  {
+    "id": "fotoartfestival-dias-show-2025",
+    "dateISO": "2025-10-11",
+    "date": {
+      "pl": "10 – 12 października 2025",
+      "en": "10 – 12 October 2025"
+    },
+    "type": {
+      "pl": "Laureat / Pokaz festiwalowy",
+      "en": "Laureate / Festival screening"
+    },
+    "title": {
+      "pl": "DIAS SHOW — laureat XI FotoArtFestival",
+      "en": "DIAS SHOW — XI FotoArtFestival laureate"
+    },
+    "place": {
+      "pl": "Foto Art Festival, Bielsko-Biała",
+      "en": "Foto Art Festival, Bielsko-Biała"
+    },
+    "description": {
+      "pl": "Wyróżnienie w międzynarodowym konkursie multimedialnym DIAS SHOW podczas 11. edycji Foto Art Festival w Bielsku-Białej. Cykl „Labirynt” znalazł się wśród dziewięciu zwycięskich prac. Laureaci otrzymują możliwość zorganizowania wystawy indywidualnej w Galerii Fotografii B&B lub podczas kolejnej edycji festiwalu. DIAS SHOW łączy fotografię z muzyką i narracją, prezentując dynamiczne sekwencje obrazów na dużym ekranie.",
+      "en": "Distinction in the international multimedia competition DIAS SHOW during the 11th edition of Foto Art Festival in Bielsko-Biała. The \"Labirynt\" series was among nine winning works. Laureates receive the opportunity to organise a solo exhibition at the B&B Photography Gallery or during a future festival edition. DIAS SHOW combines photography with music and narration, presenting dynamic image sequences on a large screen."
+    },
+    "links": [
+      {
+        "label": {
+          "pl": "Lista laureatów DIAS SHOW",
+          "en": "DIAS SHOW laureates"
+        },
+        "url": "https://fotoartfestival.com/finalisci-dias-show-2025/"
+      },
+      {
+        "label": {
+          "pl": "Slideshow „Labirynt” na YouTube",
+          "en": "\"Labirynt\" slideshow on YouTube"
+        },
+        "url": "https://www.youtube.com/watch?v=4JCT6mdi9NA"
+      }
+    ],
+    "images": [
+      "images/achievements/fotoartfestival-dias-show-2025/01.webp",
+      "images/achievements/fotoartfestival-dias-show-2025/02.webp",
+      "images/achievements/fotoartfestival-dias-show-2025/03.webp"
+    ]
+  },
+  {
+    "id": "pamietnik-przetrwania-2025",
+    "dateISO": "2025-12-03",
+    "date": {
+      "pl": "3 grudnia 2025 – 10 stycznia 2026",
+      "en": "3 December 2025 – 10 January 2026"
+    },
+    "type": {
+      "pl": "Wystawa indywidualna",
+      "en": "Solo exhibition"
+    },
+    "title": {
+      "pl": "Pamiętnik przetrwania",
+      "en": "Diary of Survival"
+    },
+    "place": {
+      "pl": "Galeria MAL — Terminal Kultury Gocław, Warszawa",
+      "en": "MAL Gallery — Terminal Kultury Gocław, Warsaw"
+    },
+    "description": {
+      "pl": "Osobisty zapis fotograficzny walki z depresją. Projekt powstał z potrzeby przełamania społecznego tabu wokół chorób psychicznych i dotarcia do osób zmagających się z podobnymi doświadczeniami — z myślą, że prośba o pomoc nie jest oznaką słabości, lecz odwagą.",
+      "en": "A personal photographic record of struggle with depression. The project was born from the need to break the social taboo around mental illness and to reach others fighting similar battles — with the conviction that asking for help is not a sign of weakness, but of courage."
+    },
+    "links": [],
+    "images": [
+      "images/achievements/pamietnik-przetrwania-2025/01.webp",
+      "images/achievements/pamietnik-przetrwania-2025/02.webp",
+      "images/achievements/pamietnik-przetrwania-2025/03.webp",
+      "images/achievements/pamietnik-przetrwania-2025/04.webp",
+      "images/achievements/pamietnik-przetrwania-2025/05.webp",
+      "images/achievements/pamietnik-przetrwania-2025/06.webp"
+    ]
+  },
+  {
+    "id": "zpaf-przyjecie-2025",
+    "dateISO": "2025-12-05",
+    "date": {
+      "pl": "5 grudnia 2025",
+      "en": "5 December 2025"
+    },
+    "type": {
+      "pl": "Członkostwo",
+      "en": "Membership"
+    },
+    "title": {
+      "pl": "Przyjęcie do ZPAF — Okręg Warszawski",
+      "en": "Admission to ZPAF — Warsaw Branch"
+    },
+    "place": {
+      "pl": "Związek Polskich Artystów Fotografików, Warszawa",
+      "en": "Union of Polish Art Photographers, Warsaw"
+    },
+    "description": {
+      "pl": "Przyjęcie do Związku Polskich Artystów Fotografików (ZPAF) — najstarszego i najważniejszego stowarzyszenia fotografów artystycznych w Polsce, działającego od 1947 roku. Rada Artystyczna ZPAF przyjęła w grudniu 2025 grono ośmiorga nowych członków, w tym sześcioro do Okręgu Warszawskiego.",
+      "en": "Admission to the Union of Polish Art Photographers (ZPAF) — the oldest and most prestigious association of art photographers in Poland, founded in 1947. In December 2025 the ZPAF Artistic Council admitted a group of eight new members, including six to the Warsaw Branch."
+    },
+    "links": [
+      {
+        "label": {
+          "pl": "Komunikat ZPAF",
+          "en": "ZPAF announcement"
+        },
+        "url": "https://zpaf.pl/aktualnosci/8-nowych-zpaf-12-2025/"
+      }
+    ],
+    "images": [
+      "images/achievements/zpaf-przyjecie-2025/06.webp",
+      "images/achievements/zpaf-przyjecie-2025/01.webp",
+      "images/achievements/zpaf-przyjecie-2025/02.webp",
+      "images/achievements/zpaf-przyjecie-2025/03.webp",
+      "images/achievements/zpaf-przyjecie-2025/04.webp",
+      "images/achievements/zpaf-przyjecie-2025/05.webp"
+    ]
+  }
+]

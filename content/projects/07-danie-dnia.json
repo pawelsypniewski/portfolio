@@ -1,0 +1,53 @@
+{
+  "order": 7,
+  "hidden": false,
+  "slug": "danie-dnia",
+  "no": "07",
+  "title": {
+    "pl": "Danie dnia",
+    "en": "Dish of the Day"
+  },
+  "year": "2025",
+  "category": {
+    "pl": "Studium / Dokument / Ekologia",
+    "en": "Studio / Documentary / Ecology"
+  },
+  "place": {
+    "pl": "Marnowanie żywności",
+    "en": "Food waste"
+  },
+  "works": 20,
+  "flashEffect": false,
+  "book": true,
+  "thumb": "images/danie-dnia/book/19.webp",
+  "caption": {
+    "pl": "Warzywa i owoce przeznaczone przez sklep do wyrzucenia — sfotografowane, potem zjedzone. Projekt dokumentalny o marnowaniu żywności.",
+    "en": "Vegetables and fruit marked for disposal by the shop — photographed, then eaten. A documentary project on food waste."
+  },
+  "description": {
+    "pl": "W Polsce rocznie marnuje się ok. 5 mln ton żywności. Aż 60% tej skali pochodzi z gospodarstw domowych — to ok. 3 mln ton wyrzucanego jedzenia rocznie. 45% Polaków przyznaje się do wyrzucania żywności przynajmniej od czasu do czasu. Najczęściej do kosza trafiają wędliny (36%), warzywa (34%) i owoce (30%).",
+    "en": "In Poland, around 5 million tonnes of food are wasted every year. As much as 60% of this comes from households — about 3 million tonnes of discarded food per year. 45% of Poles admit to throwing food away at least occasionally. The most commonly discarded products are cold cuts (36%), vegetables (34%), and fruit (30%)."
+  },
+  "images": [
+    "images/danie-dnia/book/01.webp",
+    "images/danie-dnia/book/02.webp",
+    "images/danie-dnia/book/03.webp",
+    "images/danie-dnia/book/04.webp",
+    "images/danie-dnia/book/05.webp",
+    "images/danie-dnia/book/06.webp",
+    "images/danie-dnia/book/07.webp",
+    "images/danie-dnia/book/08.webp",
+    "images/danie-dnia/book/09.webp",
+    "images/danie-dnia/book/10.webp",
+    "images/danie-dnia/book/11.webp",
+    "images/danie-dnia/book/12.webp",
+    "images/danie-dnia/book/13.webp",
+    "images/danie-dnia/book/14.webp",
+    "images/danie-dnia/book/15.webp",
+    "images/danie-dnia/book/16.webp",
+    "images/danie-dnia/book/17.webp",
+    "images/danie-dnia/book/18.webp",
+    "images/danie-dnia/book/19.webp",
+    "images/danie-dnia/book/20.webp"
+  ]
+}

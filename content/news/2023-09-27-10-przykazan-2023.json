@@ -1,0 +1,41 @@
+{
+  "id": "10-przykazan-2023",
+  "dateISO": "2023-09-27",
+  "date": {
+    "pl": "27 września – 18 października 2023",
+    "en": "27 September – 18 October 2023"
+  },
+  "type": {
+    "pl": "Wystawa zbiorowa",
+    "en": "Group exhibition"
+  },
+  "title": {
+    "pl": "10 przykazań",
+    "en": "10 Commandments"
+  },
+  "place": {
+    "pl": "Galeria Obok ZPAF, Warszawa",
+    "en": "Galeria Obok ZPAF, Warsaw"
+  },
+  "description": {
+    "pl": "Wystawa zbiorowa będąca owocem rocznej pracy jedenastu słuchaczy Studium Fotografii ZPAF pod kierunkiem Jolanty Rycerskiej. Dekalog — jako temat i wspólny mianownik projektu — skłonił autorów do wizualnych analiz świata wartości, zarówno tych historycznych, wpisanych w naszą kulturę, jak i tych aktualnie przetwarzanych pod wpływem dynamicznych zmian społecznych. Wielogłos pytań, nie odpowiedzi. Kuratorka: Jolanta Rycerska.",
+    "en": "Group exhibition — the fruit of one year's work by eleven students of the ZPAF School of Photography under the guidance of Jolanta Rycerska. The Decalogue — as theme and common denominator — led the authors to visual analyses of values, both historical, embedded in our culture, and those currently being reworked under dynamic social change. A multi-voice of questions rather than answers. Curator: Jolanta Rycerska."
+  },
+  "links": [
+    {
+      "label": {
+        "pl": "Strona wystawy na ZPAF",
+        "en": "Exhibition page at ZPAF"
+      },
+      "url": "https://www.zpaf.pl/aktualnosci/galeria-obok-zpaf/10-przykazan-sluchacze-SF-ZPAF/"
+    }
+  ],
+  "images": [
+    "images/achievements/10-przykazan-2023/01.webp",
+    "images/achievements/10-przykazan-2023/02.webp",
+    "images/achievements/10-przykazan-2023/03.webp",
+    "images/achievements/10-przykazan-2023/04.webp",
+    "images/achievements/10-przykazan-2023/05.webp",
+    "images/achievements/10-przykazan-2023/06.webp"
+  ]
+}

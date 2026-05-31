@@ -1,0 +1,45 @@
+{
+  "order": 3,
+  "hidden": false,
+  "slug": "gra-o-tron",
+  "no": "03",
+  "title": {
+    "pl": "Gra o tron",
+    "en": "Game of Thrones"
+  },
+  "year": "2022",
+  "category": {
+    "pl": "Dokument / Found",
+    "en": "Documentary / Found"
+  },
+  "place": {
+    "pl": "Walka polityczna",
+    "en": "Political fight"
+  },
+  "works": 12,
+  "flashEffect": true,
+  "book": false,
+  "thumb": "",
+  "caption": {
+    "pl": "Polityczna ikonografia polskiej prowincji. Plakaty, ołtarzyki, prowizoryczne pomniki — krajobraz przed wyborami.",
+    "en": "Political iconography of the Polish countryside. Posters, makeshift shrines, monuments — the landscape before an election."
+  },
+  "description": {
+    "pl": "",
+    "en": ""
+  },
+  "images": [
+    "images/gra_o_tron/01.webp",
+    "images/gra_o_tron/02.webp",
+    "images/gra_o_tron/03.webp",
+    "images/gra_o_tron/04.webp",
+    "images/gra_o_tron/05.webp",
+    "images/gra_o_tron/06.webp",
+    "images/gra_o_tron/07.webp",
+    "images/gra_o_tron/08.webp",
+    "images/gra_o_tron/09.webp",
+    "images/gra_o_tron/10.webp",
+    "images/gra_o_tron/11.webp",
+    "images/gra_o_tron/12.webp"
+  ]
+}

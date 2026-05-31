@@ -1,4 +1,11 @@
 {
+  "scripts": {
+    "serve": "npx --yes http-server . -c-1 -p 3000",
+    "migrate": "node tools/migrate-data.js",
+    "build": "node tools/build-content.js",
+    "optimize": "node tools/optimize-images.js",
+    "webp": "node convert-to-webp.js"
+  },
   "devDependencies": {
     "sharp": "^0.34.5"
   }

@@ -1,0 +1,33 @@
+{
+  "id": "pamietnik-przetrwania-2025",
+  "dateISO": "2025-12-03",
+  "date": {
+    "pl": "3 grudnia 2025 – 10 stycznia 2026",
+    "en": "3 December 2025 – 10 January 2026"
+  },
+  "type": {
+    "pl": "Wystawa indywidualna",
+    "en": "Solo exhibition"
+  },
+  "title": {
+    "pl": "Pamiętnik przetrwania",
+    "en": "Diary of Survival"
+  },
+  "place": {
+    "pl": "Galeria MAL — Terminal Kultury Gocław, Warszawa",
+    "en": "MAL Gallery — Terminal Kultury Gocław, Warsaw"
+  },
+  "description": {
+    "pl": "Osobisty zapis fotograficzny walki z depresją. Projekt powstał z potrzeby przełamania społecznego tabu wokół chorób psychicznych i dotarcia do osób zmagających się z podobnymi doświadczeniami — z myślą, że prośba o pomoc nie jest oznaką słabości, lecz odwagą.",
+    "en": "A personal photographic record of struggle with depression. The project was born from the need to break the social taboo around mental illness and to reach others fighting similar battles — with the conviction that asking for help is not a sign of weakness, but of courage."
+  },
+  "links": [],
+  "images": [
+    "images/achievements/pamietnik-przetrwania-2025/01.webp",
+    "images/achievements/pamietnik-przetrwania-2025/02.webp",
+    "images/achievements/pamietnik-przetrwania-2025/03.webp",
+    "images/achievements/pamietnik-przetrwania-2025/04.webp",
+    "images/achievements/pamietnik-przetrwania-2025/05.webp",
+    "images/achievements/pamietnik-przetrwania-2025/06.webp"
+  ]
+}

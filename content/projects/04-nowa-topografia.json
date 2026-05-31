@@ -1,0 +1,47 @@
+{
+  "order": 4,
+  "hidden": false,
+  "slug": "nowa-topografia",
+  "no": "04",
+  "title": {
+    "pl": "Post-Topografia Polski",
+    "en": "Post-Topography of Poland"
+  },
+  "year": "2022",
+  "category": {
+    "pl": "Dokument / Krajobraz",
+    "en": "Documentary / Landscape"
+  },
+  "place": {
+    "pl": "Krajobraz po transformacji",
+    "en": "Landscape after the transition"
+  },
+  "works": 14,
+  "flashEffect": false,
+  "book": false,
+  "thumb": "",
+  "caption": {
+    "pl": "Transformacja · Relikty PRL · Prowizorka lat 90. · Deweloperka",
+    "en": "Transition · Communist-era relics · 1990s makeshift · Property development"
+  },
+  "description": {
+    "pl": "Polski krajobraz po transformacji — przestrzeń ukształtowana przez nawarstwienie epok: reliktów PRL, prowizorki lat 90. i agresywnej deweloperki.",
+    "en": "The Polish landscape after the transition — a space shaped by the layering of eras: relics of the communist era, the makeshift of the 1990s, and aggressive property development."
+  },
+  "images": [
+    "images/topografia/01.webp",
+    "images/topografia/02.webp",
+    "images/topografia/03.webp",
+    "images/topografia/04.webp",
+    "images/topografia/05.webp",
+    "images/topografia/06.webp",
+    "images/topografia/07.webp",
+    "images/topografia/08.webp",
+    "images/topografia/09.webp",
+    "images/topografia/10.webp",
+    "images/topografia/11.webp",
+    "images/topografia/12.webp",
+    "images/topografia/13.webp",
+    "images/topografia/14.webp"
+  ]
+}

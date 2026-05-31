@@ -1,0 +1,41 @@
+{
+  "order": 6,
+  "hidden": false,
+  "slug": "nocne-ptaki",
+  "no": "06",
+  "title": {
+    "pl": "Nocne Ptaki Późno Wracają Do Domu",
+    "en": "Night Birds Come Home Late"
+  },
+  "year": "2025",
+  "category": {
+    "pl": "Dokument / Reportaż / Street",
+    "en": "Documentary / Reportage / Street"
+  },
+  "place": {
+    "pl": "Nocny styl życia",
+    "en": "Nocturnal life"
+  },
+  "works": 8,
+  "flashEffect": true,
+  "book": false,
+  "thumb": "",
+  "caption": {
+    "pl": "Zapis dokumentalny nocnego stylu życia. Refleksja nad normami społecznymi.",
+    "en": "A documentary record of nocturnal life. A reflection on social norms."
+  },
+  "description": {
+    "pl": "",
+    "en": ""
+  },
+  "images": [
+    "images/nocne-ptaki/04.webp",
+    "images/nocne-ptaki/03.webp",
+    "images/nocne-ptaki/01.webp",
+    "images/nocne-ptaki/07.webp",
+    "images/nocne-ptaki/06.webp",
+    "images/nocne-ptaki/08.webp",
+    "images/nocne-ptaki/02.webp",
+    "images/nocne-ptaki/05.webp"
+  ]
+}

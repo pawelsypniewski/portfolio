@@ -1,0 +1,48 @@
+{
+  "order": 5,
+  "hidden": false,
+  "slug": "labirynt",
+  "no": "05",
+  "title": {
+    "pl": "Labirynt",
+    "en": "Labyrinth"
+  },
+  "year": "2024",
+  "category": {
+    "pl": "Dokument / Książka",
+    "en": "Documentary / Book"
+  },
+  "place": {
+    "pl": "Zagubieni",
+    "en": "The Lost"
+  },
+  "works": 15,
+  "flashEffect": true,
+  "book": false,
+  "thumb": "",
+  "caption": {
+    "pl": "Ludzie uwikłani w pułapki małych miasteczek. Cykl o błądzeniu, zawieszeniu i braku perspektyw. ITF Opawa.",
+    "en": "People caught in the traps of small towns. A series on drift, suspension, and dead ends. ITF Opava."
+  },
+  "description": {
+    "pl": "Labirynt od wieków budzi w nas skojarzenia z czymś więcej niż tylko zbiorem korytarzy i zagadek — stał się symbolem życia, w którym łatwo zatracić się w niekończącej się sieci wyborów i pułapek. Dawne mity, jak ten o kreteńskim Labiryncie i Minotaurze, pokazują, jak złożone struktury mogą nie tylko inspirować, ale i przytłaczać. Dziś obraz labiryntu znajduje swoje miejsce w sztuce, literaturze, psychologii czy grach komputerowych, gdzie symbolizuje zarówno proces odkrywania, jak i zagubienie w obliczu życiowych wyzwań.\n\nCykl opowiada o ludziach uwikłanych przez małe miasteczka.\n\ndroga bez wyjścia / pułapka\n\n/ przytłoczenie / alkoholizm / brak perspektyw / reset\n\nbłądzenie / zawieszenie\n\n/ poszukiwanie / konserwatyzm / rodzina\n\ntotalna chujnia / uzależnienie / stagnacja / beznadzieja\n\nbunt / bieda / ocena / irytacja / depresja",
+    "en": "For centuries the labyrinth has evoked more than just a set of corridors and riddles — it has become a symbol of life, in which it is easy to lose oneself in an endless network of choices and traps. Ancient myths, such as that of the Cretan Labyrinth and the Minotaur, show how complex structures can both inspire and overwhelm. Today the image of the labyrinth finds its place in art, literature, psychology, and computer games, where it symbolizes both the process of discovery and disorientation in the face of life's challenges.\n\nThe series tells of people entangled by small towns.\n\ndead end / trap\n\n/ overwhelm / alcoholism / no prospects / reset\n\ndrift / suspension\n\n/ searching / conservatism / family\n\ntotal mess / addiction / stagnation / hopelessness\n\nrebellion / poverty / judgment / irritation / depression"
+  },
+  "images": [
+    "images/labirynt/01.webp",
+    "images/labirynt/02.webp",
+    "images/labirynt/03.webp",
+    "images/labirynt/04.webp",
+    "images/labirynt/05.webp",
+    "images/labirynt/06.webp",
+    "images/labirynt/07.webp",
+    "images/labirynt/08.webp",
+    "images/labirynt/09.webp",
+    "images/labirynt/10.webp",
+    "images/labirynt/11.webp",
+    "images/labirynt/12.webp",
+    "images/labirynt/13.webp",
+    "images/labirynt/14.webp",
+    "images/labirynt/15.webp"
+  ]
+}

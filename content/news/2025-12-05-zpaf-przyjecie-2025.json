@@ -1,0 +1,41 @@
+{
+  "id": "zpaf-przyjecie-2025",
+  "dateISO": "2025-12-05",
+  "date": {
+    "pl": "5 grudnia 2025",
+    "en": "5 December 2025"
+  },
+  "type": {
+    "pl": "Członkostwo",
+    "en": "Membership"
+  },
+  "title": {
+    "pl": "Przyjęcie do ZPAF — Okręg Warszawski",
+    "en": "Admission to ZPAF — Warsaw Branch"
+  },
+  "place": {
+    "pl": "Związek Polskich Artystów Fotografików, Warszawa",
+    "en": "Union of Polish Art Photographers, Warsaw"
+  },
+  "description": {
+    "pl": "Przyjęcie do Związku Polskich Artystów Fotografików (ZPAF) — najstarszego i najważniejszego stowarzyszenia fotografów artystycznych w Polsce, działającego od 1947 roku. Rada Artystyczna ZPAF przyjęła w grudniu 2025 grono ośmiorga nowych członków, w tym sześcioro do Okręgu Warszawskiego.",
+    "en": "Admission to the Union of Polish Art Photographers (ZPAF) — the oldest and most prestigious association of art photographers in Poland, founded in 1947. In December 2025 the ZPAF Artistic Council admitted a group of eight new members, including six to the Warsaw Branch."
+  },
+  "links": [
+    {
+      "label": {
+        "pl": "Komunikat ZPAF",
+        "en": "ZPAF announcement"
+      },
+      "url": "https://zpaf.pl/aktualnosci/8-nowych-zpaf-12-2025/"
+    }
+  ],
+  "images": [
+    "images/achievements/zpaf-przyjecie-2025/06.webp",
+    "images/achievements/zpaf-przyjecie-2025/01.webp",
+    "images/achievements/zpaf-przyjecie-2025/02.webp",
+    "images/achievements/zpaf-przyjecie-2025/03.webp",
+    "images/achievements/zpaf-przyjecie-2025/04.webp",
+    "images/achievements/zpaf-przyjecie-2025/05.webp"
+  ]
+}

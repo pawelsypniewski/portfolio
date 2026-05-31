@@ -1,0 +1,41 @@
+{
+  "order": 2,
+  "hidden": false,
+  "slug": "superpozycja",
+  "no": "02",
+  "title": {
+    "pl": "Superpozycja",
+    "en": "Superposition"
+  },
+  "year": "2023",
+  "category": {
+    "pl": "Kreacja / Portret",
+    "en": "Constructed / Portrait"
+  },
+  "place": {
+    "pl": "Kwantowa wizja",
+    "en": "Quantum vision"
+  },
+  "works": 8,
+  "flashEffect": false,
+  "book": false,
+  "thumb": "",
+  "caption": {
+    "pl": "Fotograficzny zapis kwantowej superpozycji — jednoczesność przeszłości, teraźniejszości i przyszłości. To, co widzimy, zależy od perspektywy obserwatora.",
+    "en": "A photographic record of quantum superposition — the simultaneity of past, present, and future. What we see depends on the observer's perspective."
+  },
+  "description": {
+    "pl": "Superpozycja to fundamentalna zasada fizyki kwantowej, oznaczająca, że cząstki lub obiekty mogą jednocześnie istnieć w wielu wzajemnie wykluczających się stanach. Innymi słowy, mogą znajdować się w dwóch lub więcej miejscach jednocześnie, dopóki nie zostaną zmierzone.\n\nZdjęcia z tego projektu są próbą fotograficznego zapisu, jak wyglądałby świat, gdyby zjawisko superpozycji było dostrzegalne przez przeciętnego obserwatora. Cykl metaforycznie ukazuje jednoczesność przeszłości, teraźniejszości i przyszłości, wskazując, że drobne zmiany mogą wpłynąć na nasz punkt widzenia. To, co widzimy, zależy zawsze od perspektywy obserwatora.",
+    "en": "Superposition is a fundamental principle of quantum physics, meaning that particles or objects can simultaneously exist in several mutually exclusive states. In other words, they can be in two or more places at once, until they are measured.\n\nThe photographs in this project attempt to record what the world would look like if superposition were perceptible to the average observer. The series metaphorically reveals the simultaneity of past, present, and future, showing how small changes can shift our point of view. What we see always depends on the observer's perspective."
+  },
+  "images": [
+    "images/superpozycja/01.webp",
+    "images/superpozycja/02.webp",
+    "images/superpozycja/03.webp",
+    "images/superpozycja/04.webp",
+    "images/superpozycja/05.webp",
+    "images/superpozycja/06.webp",
+    "images/superpozycja/07.webp",
+    "images/superpozycja/08.webp"
+  ]
+}

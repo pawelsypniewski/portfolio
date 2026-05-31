@@ -1,0 +1,187 @@
+# ============================================================
+#  Konfiguracja panelu (Sveltia CMS)
+#  Dokumentacja po polsku: zobacz INSTRUKCJA-PANEL.md w katalogu głównym.
+# ============================================================
+
+backend:
+  name: github
+  repo: pawelsypniewski/portfolio   # właściciel/repozytorium
+  # Gałąź TESTOWA — panel czyta i zapisuje tutaj, żywa strona (main) bez zmian.
+  # Po akceptacji zmienimy z powrotem na: main
+  branch: feature/admin-panel-cms
+  # base_url = adres "pośrednika logowania" (OAuth). USTAW po wdrożeniu —
+  # instrukcja krok po kroku w INSTRUKCJA-PANEL.md (sekcja "Logowanie").
+  # Po postawieniu Cloudflare Workera wstaw tu jego adres, np.:
+  # base_url: https://twoj-worker.twoj-subdomena.workers.dev
+
+# Folder, do którego panel wgrywa nowe zdjęcia.
+media_folder: images/uploads
+public_folder: images/uploads
+
+# Wiadomość commita przy zapisie z panelu (czytelna w historii GitHub).
+site_url: https://pawelsypniewski.pl
+display_url: https://pawelsypniewski.pl
+locale: pl
+
+# ------------------------------------------------------------
+#  KOLEKCJE
+# ------------------------------------------------------------
+collections:
+  # === AKTUALNOŚCI ==========================================
+  - name: news
+    label: Aktualności
+    label_singular: Aktualność
+    identifier_field: id
+    folder: content/news
+    create: true
+    format: json
+    slug: "{{fields.dateISO}}-{{fields.id}}"
+    summary: "{{fields.dateISO}} — {{fields.title.pl}}"
+    sortable_fields: [dateISO]
+    fields:
+      - { label: "Identyfikator (krótki, bez spacji)", name: id, widget: string, hint: "np. itf-opava-start-2025 — używany w nazwie pliku" }
+      - { label: "Data (do sortowania)", name: dateISO, widget: datetime, date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+      - label: "Data (tekst wyświetlany)"
+        name: date
+        widget: object
+        fields:
+          - { label: PL, name: pl, widget: string, hint: "np. 16 czerwca 2025" }
+          - { label: EN, name: en, widget: string }
+      - label: "Typ"
+        name: type
+        widget: object
+        fields:
+          - { label: PL, name: pl, widget: string, hint: "np. Wystawa, Publikacja, Edukacja" }
+          - { label: EN, name: en, widget: string }
+      - label: "Tytuł"
+        name: title
+        widget: object
+        fields:
+          - { label: PL, name: pl, widget: string }
+          - { label: EN, name: en, widget: string }
+      - label: "Miejsce"
+        name: place
+        widget: object
+        fields:
+          - { label: PL, name: pl, widget: string }
+          - { label: EN, name: en, widget: string }
+      - label: "Opis"
+        name: description
+        widget: object
+        fields:
+          - { label: PL, name: pl, widget: text }
+          - { label: EN, name: en, widget: text }
+      - label: "Linki"
+        name: links
+        widget: list
+        required: false
+        fields:
+          - label: "Etykieta"
+            name: label
+            widget: object
+            fields:
+              - { label: PL, name: pl, widget: string }
+              - { label: EN, name: en, widget: string }
+          - { label: URL, name: url, widget: string }
+      - label: "Zdjęcia"
+        name: images
+        widget: list
+        required: false
+        field: { label: Zdjęcie, name: image, widget: image }
+
+  # === PROJEKTY =============================================
+  - name: projects
+    label: Projekty
+    label_singular: Projekt
+    identifier_field: slug
+    folder: content/projects
+    create: true
+    format: json
+    slug: "{{fields.slug}}"
+    summary: "{{fields.order}} — {{fields.title.pl}}"
+    sortable_fields: [order, year]
+    fields:
+      - { label: "Kolejność (1 = pierwszy)", name: order, widget: number, value_type: int, min: 1, hint: "Niższa liczba = wyżej na stronie" }
+      - { label: "Ukryty (nie pokazuj na stronie)", name: hidden, widget: boolean, default: false }
+      - { label: "Identyfikator URL (slug)", name: slug, widget: string, hint: "np. labirynt — używany w adresie i nazwie pliku" }
+      - { label: "Numer (wyświetlany, np. 05)", name: no, widget: string }
+      - label: "Tytuł"
+        name: title
+        widget: object
+        fields:
+          - { label: PL, name: pl, widget: string }
+          - { label: EN, name: en, widget: string }
+      - { label: "Rok", name: year, widget: string }
+      - label: "Kategoria"
+        name: category
+        widget: object
+        fields:
+          - { label: PL, name: pl, widget: string }
+          - { label: EN, name: en, widget: string }
+      - label: "Podtytuł / miejsce"
+        name: place
+        widget: object
+        fields:
+          - { label: PL, name: pl, widget: string }
+          - { label: EN, name: en, widget: string }
+      - { label: "Liczba prac", name: works, widget: number, value_type: int, required: false }
+      - { label: "Efekt flesza (flashEffect)", name: flashEffect, widget: boolean, default: false }
+      - { label: "Książka / flipbook (book)", name: book, widget: boolean, default: false }
+      - { label: "Miniatura (opcjonalnie)", name: thumb, widget: image, required: false, hint: "Jeśli puste — użyte zostanie pierwsze zdjęcie" }
+      - label: "Podpis (krótki)"
+        name: caption
+        widget: object
+        fields:
+          - { label: PL, name: pl, widget: text }
+          - { label: EN, name: en, widget: text }
+      - label: "Opis (długi)"
+        name: description
+        widget: object
+        required: false
+        fields:
+          - { label: PL, name: pl, widget: text, required: false }
+          - { label: EN, name: en, widget: text, required: false }
+      - label: "Zdjęcia (galeria, kolejność = od góry)"
+        name: images
+        widget: list
+        field: { label: Zdjęcie, name: image, widget: image }
+
+  # === TEKSTY STRONY (bio / kontakt) ========================
+  - name: settings
+    label: Teksty strony
+    editor: { preview: false }
+    files:
+      - name: about
+        label: "O autorze (bio)"
+        file: content/settings/about.json
+        format: json
+        fields:
+          - label: "Polski"
+            name: pl
+            widget: object
+            fields:
+              - { label: "Treść główna (HTML)", name: body, widget: text }
+              - { label: "Kolumna boczna (HTML)", name: side, widget: text }
+          - label: "English"
+            name: en
+            widget: object
+            fields:
+              - { label: "Treść główna (HTML)", name: body, widget: text }
+              - { label: "Kolumna boczna (HTML)", name: side, widget: text }
+      - name: contact
+        label: "Kontakt"
+        file: content/settings/contact.json
+        format: json
+        fields:
+          - label: "Polski"
+            name: pl
+            widget: object
+            fields:
+              - { label: "Treść główna (HTML)", name: body, widget: text }
+              - { label: "Kolumna boczna (HTML)", name: side, widget: text }
+          - label: "English"
+            name: en
+            widget: object
+            fields:
+              - { label: "Treść główna (HTML)", name: body, widget: text }
+              - { label: "Kolumna boczna (HTML)", name: side, widget: text }
