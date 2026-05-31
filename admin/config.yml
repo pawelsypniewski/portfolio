@@ -6,9 +6,7 @@
 backend:
   name: github
   repo: pawelsypniewski/portfolio   # właściciel/repozytorium
-  # Gałąź TESTOWA — panel czyta i zapisuje tutaj, żywa strona (main) bez zmian.
-  # Po akceptacji zmienimy z powrotem na: main
-  branch: feature/admin-panel-cms
+  branch: main
   # base_url = adres "pośrednika logowania" (OAuth). USTAW po wdrożeniu —
   # instrukcja krok po kroku w INSTRUKCJA-PANEL.md (sekcja "Logowanie").
   # Po postawieniu Cloudflare Workera wstaw tu jego adres, np.:
