@@ -23,14 +23,32 @@
   // Obsługuje to, co produkuje edytor w panelu: nagłówki (#…), listy (- …),
   // akapity, pogrubienie (**…**), kursywę (*…*/_…_), linki [t](url) i obrazy.
   // Linki http(s) dostają target="_blank" rel="noopener" (jak w oryginale).
+  // Neutralizacja surowego HTML w treści z panelu (ochrona XSS) — treść ma
+  // być markdownem; znaczniki HTML wyświetlą się jako tekst, nie wykonają.
+  function escapeHtml(s) {
+    return String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+  // Dozwolone adresy w linkach/obrazkach: http(s), mailto, tel, kotwice
+  // i ścieżki względne. Blokuje m.in. javascript: (XSS).
+  function safeUrl(u) {
+    u = String(u).trim();
+    if (/^(https?:\/\/|mailto:|tel:)/i.test(u)) return true;  // znane schematy
+    return !u.includes(":");  // reszta tylko bez schematu (ścieżki względne, kotwice)
+  }
   function inlineMd(s) {
-    return s
+    return escapeHtml(s)
       .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_, a, src) =>
-        `<img src="${src}" alt="${a}" loading="lazy" decoding="async">`)
-      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, t, u) =>
-        /^https?:\/\//i.test(u)
+        safeUrl(src) ? `<img src="${src}" alt="${a}" loading="lazy" decoding="async">` : a)
+      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, t, u) => {
+        if (!safeUrl(u)) return t;
+        return /^https?:\/\//i.test(u)
           ? `<a href="${u}" target="_blank" rel="noopener">${t}</a>`
-          : `<a href="${u}">${t}</a>`)
+          : `<a href="${u}">${t}</a>`;
+      })
       .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
       .replace(/(^|[^*])\*([^*\n]+)\*(?!\*)/g, "$1<em>$2</em>")
       .replace(/_([^_\n]+)_/g, "<em>$1</em>");
@@ -65,9 +83,9 @@
     const out = {};
     for (const L of ["pl", "en"]) {
       const lang = about[L] || {};
-      const alt = (about.portraitAlt && about.portraitAlt[L]) || "";
+      const alt = escapeHtml((about.portraitAlt && about.portraitAlt[L]) || "");
       const img = about.portrait
-        ? `<img class="author-portrait" src="${about.portrait}" alt="${alt}" loading="lazy" decoding="async">\n`
+        ? `<img class="author-portrait" src="${escapeHtml(about.portrait)}" alt="${alt}" loading="lazy" decoding="async">\n`
         : "";
       out[L] = { body: img + mdToHtml(lang.body), side: mdToHtml(lang.side) };
     }
@@ -75,10 +93,10 @@
   }
   function buildInstagram(ig, L) {
     if (!ig || !ig.tiles || !ig.tiles.length) return "";
-    const aria = (ig.ariaLabel && ig.ariaLabel[L]) || "";
-    const heading = (ig.heading && ig.heading[L]) || "";
+    const aria = escapeHtml((ig.ariaLabel && ig.ariaLabel[L]) || "");
+    const heading = escapeHtml((ig.heading && ig.heading[L]) || "");
     const tiles = ig.tiles
-      .map((t) => `<a class="ig-tile" href="${t.url}" target="_blank" rel="noopener noreferrer" aria-label="${aria}" style="background-image:url('${t.image}')"></a>`)
+      .map((t) => `<a class="ig-tile" href="${escapeHtml(t.url)}" target="_blank" rel="noopener noreferrer" aria-label="${aria}" style="background-image:url('${escapeHtml(t.image)}')"></a>`)
       .join("");
     return `<div class="ig-section">\n  <div class="ig-heading">${heading}</div>\n  <div class="ig-grid">${tiles}</div>\n  <a class="ig-more" href="${ig.profileUrl}" target="_blank" rel="noopener noreferrer">${ig.profileLabel}</a>\n</div>`;
   }

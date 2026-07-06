@@ -14,6 +14,24 @@
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
+<!-- ============ CONTENT SECURITY POLICY ============
+     GitHub Pages nie pozwala ustawiać nagłówków HTTP, więc CSP jest w meta.
+     Białe listy: własna domena, Google Analytics/Tag Manager, Google Fonts.
+     'unsafe-inline' jest konieczny — strona używa skryptów i stylów inline. -->
+<meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  script-src 'self' 'unsafe-inline' https://www.googletagmanager.com;
+  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+  font-src https://fonts.gstatic.com;
+  img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com;
+  connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com;
+  frame-src 'none';
+  object-src 'none';
+  base-uri 'self';
+  form-action 'self';
+  upgrade-insecure-requests
+">
+
 <!-- ============ PRIMARY META ============ -->
 <title>Paweł Sypniewski — Fotograf i Artysta Wizualny | Warszawa, ZPAF</title>
 <meta name="description" content="Paweł Sypniewski — fotograf i artysta wizualny z Warszawy. Portfolio prac dokumentalnych, reportażowych i kreacyjnych. Autorskie cykle, książki fotograficzne, techniki szlachetne i mixed media. Członek ZPAF, Okręg Warszawski.">
