@@ -23,6 +23,11 @@ function loadPrefs() {
     const lang = localStorage.getItem(LS.lang);
     if (lang === "pl" || lang === "en") state.lang = lang;
   } catch (e) { /* localStorage może być niedostępny — ignoruj */ }
+  // Parametr ?lang= w URL (deklarowany w hreflang) nadpisuje zapamiętany wybór
+  try {
+    const urlLang = new URLSearchParams(location.search).get("lang");
+    if (urlLang === "pl" || urlLang === "en") state.lang = urlLang;
+  } catch (e) {}
 }
 
 function savePref(key, value) {
