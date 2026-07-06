@@ -279,5 +279,45 @@
       "images/achievements/zpaf-przyjecie-2025/04.webp",
       "images/achievements/zpaf-przyjecie-2025/05.webp"
     ]
+  },
+  {
+    "id": "offoto-opole-2026",
+    "dateISO": "2026-07-06",
+    "date": {
+      "pl": "6 lipca 2026",
+      "en": "6 July 2026"
+    },
+    "type": {
+      "pl": "Wystawa",
+      "en": "Exhibition"
+    },
+    "title": {
+      "pl": "„Nocne ptaki” na Opolskim Festiwalu Fotografii",
+      "en": "\"Night Birds\" at the Opole Photography Festival"
+    },
+    "place": {
+      "pl": "Opolski Festiwal Fotografii (OFFoto), Opole",
+      "en": "Opole Photography Festival (OFFoto), Opole, Poland"
+    },
+    "description": {
+      "pl": "Fragment cyklu „Nocne ptaki późno wracają do domu” został zaprezentowany na wystawie Instytutu Fotografii Twórczej (Institut tvůrčí fotografie) podczas Opolskiego Festiwalu Fotografii. Serdeczne podziękowania dla Vladimíra Birgusa za pokazanie prac oraz dla całej ekipy, która podjęła się montażu tej ogromnej wystawy: Vladimír Birgus, Arkadiusz Gola, Michał Szalast, David Macháč, Miroslav Zeman i Lukáš Lamla.\n\nCykl to opowieść o ludziach, którzy od poniedziałku do piątku żyją w rygorze społecznych ról — chodzą do pracy, na studia, zachowują twarz i panują nad emocjami. Kiedy jednak nadchodzi weekendowy wieczór, ulice zamieniają się w scenę, na której opadają wszelkie hamulce. Dokumentując ten cotygodniowy rytuał, zadaję sobie pytanie: czy w nocnym chaosie wreszcie zdejmują codzienne maski i są w pełni sobą? Czy może ulica to tylko kolejna scena, na której wchodzą w nową, weekendową rolę nieokiełznanego imprezowicza?\n\nFotografie z wystawy: Maria Książek i Maks Skrzeczkowski.",
+      "en": "A selection from the series \"Night Birds Come Home Late\" was presented at the Institute of Creative Photography (Institut tvůrčí fotografie) exhibition during the Opole Photography Festival. Warm thanks to Vladimír Birgus for showing the works, and to the whole team that mounted this vast exhibition: Vladimír Birgus, Arkadiusz Gola, Michał Szalast, David Macháč, Miroslav Zeman and Lukáš Lamla.\n\nThe series tells the story of people who, from Monday to Friday, live within the rigour of social roles — going to work or university, keeping face, holding their emotions in check. But when the weekend evening comes, the streets turn into a stage where all inhibitions fall away. Documenting this weekly ritual, I keep asking one essential question about their identity: in the chaos of the night, do they finally drop their everyday masks and become fully themselves? Or is the street just another stage, where they take on a new weekend role — the unbridled reveller?\n\nExhibition photos: Maria Książek and Maks Skrzeczkowski."
+    },
+    "links": [
+      {
+        "label": {
+          "pl": "Strona festiwalu OFFoto",
+          "en": "OFFoto festival website"
+        },
+        "url": "https://offoto.pl/"
+      }
+    ],
+    "images": [
+      "images/achievements/offoto-opole-2026/01.webp",
+      "images/achievements/offoto-opole-2026/02.webp",
+      "images/achievements/offoto-opole-2026/03.webp",
+      "images/achievements/offoto-opole-2026/04.webp",
+      "images/achievements/offoto-opole-2026/05.webp"
+    ]
   }
 ]
