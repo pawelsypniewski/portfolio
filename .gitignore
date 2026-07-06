@@ -14,3 +14,10 @@ desktop.ini
 
 # Claude Code local config (already inside repo, ignored from future tracking)
 .claude/
+
+# Pliki robocze innych zadań (skład książki, certyfikat) — nie publikować
+slowa*.pdf
+slowa*.svg
+make-idml.cjs
+_split_a4.cjs
+certificate-of-authenticity.svg
