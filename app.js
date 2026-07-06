@@ -842,6 +842,10 @@ function setRoute(route, opts = {}) {
     window.scrollTo({ top: 0, behavior: "instant" });
     const main = document.querySelector(".main");
     if (main) main.scrollTop = 0;
+    // Widok projektu przewija się wewnętrznie (opis pod galerią) —
+    // przy zmianie projektu/widoku wracamy na górę
+    const proj = document.querySelector("#view-project .project");
+    if (proj) proj.scrollTop = 0;
   }
 }
 
