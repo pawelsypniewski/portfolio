@@ -325,12 +325,12 @@
   .sidefoot .langs button {
     font: inherit;
     text-transform: uppercase;
-    opacity: 0.4;
+    opacity: 0.55;
     transition: opacity 150ms ease;
   }
   .sidefoot .langs button.active { opacity: 1; text-decoration: underline; text-underline-offset: 3px; }
   .sidefoot .langs button:hover { opacity: 1; }
-  .sidefoot .meta { opacity: 0.55; }
+  .sidefoot .meta { opacity: 0.65; }
   .sidefoot .meta div + div { margin-top: 2px; }
 
   /* ---------- MAIN CONTENT ---------- */
@@ -367,7 +367,7 @@
     background: #fff;
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-weight: 400;
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     opacity: 0.7;
@@ -444,17 +444,18 @@
     font-size: clamp(22px, 2.8vw, 48px);
     word-break: break-word;
     font-weight: 900;
-    line-height: 0.9;
+    /* 0.95 zamiast 0.9 — polskie ogonki (Ą, Ę) nie stykają się z kolejną linią */
+    line-height: 0.95;
     letter-spacing: -0.025em;
     text-transform: uppercase;
   }
   .home-poster .cell .meta {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-weight: 400;
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    opacity: 0.65;
+    opacity: 0.7;
     transition: opacity 240ms ease;
   }
   .home-poster .cell:hover .meta {
@@ -497,11 +498,11 @@
   .proj-top .pj-sub {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-weight: 400;
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     margin-top: 4px;
-    opacity: 0.6;
+    opacity: 0.65;
   }
   .proj-top .pj-meta {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
@@ -595,7 +596,8 @@
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-size: 14px;
     letter-spacing: 0.06em;
-    opacity: 0;
+    /* delikatnie widoczne bez hovera — podpowiedź, że galerię się przewija */
+    opacity: 0.35;
     transition: opacity 180ms ease;
     pointer-events: none;
   }
@@ -930,7 +932,13 @@
     letter-spacing: 0.06em;
     text-transform: uppercase;
   }
-  .proj-bottom .caption { opacity: 0.6; max-width: 50%; }
+  .proj-bottom .caption {
+    opacity: 0.75;
+    max-width: 50%;
+    /* pełne zdania czyta się szybciej normalną wielkością liter */
+    text-transform: none;
+    letter-spacing: 0.02em;
+  }
   .proj-bottom .counter { letter-spacing: 0.1em; }
 
   .proj-description {
@@ -938,7 +946,7 @@
     border-top: 1px solid #000;
     font-family: 'Jost', 'Helvetica Neue', sans-serif;
     font-weight: 400;
-    font-size: 15px;
+    font-size: 16px;
     line-height: 1.55;
     text-wrap: pretty;
     max-width: 760px;
@@ -1022,8 +1030,8 @@
     font-weight: 400;
     font-size: 11px;
     letter-spacing: 0.04em;
-    text-transform: uppercase;
-    opacity: 0.5;
+    text-transform: none;
+    opacity: 0.65;
     margin-top: -8px;
   }
   .achievement-content {
@@ -1048,7 +1056,9 @@
     opacity: 0.65;
   }
   .achievement-desc {
-    font-size: 15px;
+    font-family: 'Jost', 'Helvetica Neue', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
     line-height: 1.55;
     max-width: 720px;
   }
@@ -1291,7 +1301,7 @@
   .text-page h1 {
     font-size: clamp(56px, 7vw, 120px);
     font-weight: 900;
-    line-height: 0.9;
+    line-height: 0.95;
     letter-spacing: -0.03em;
     text-transform: uppercase;
     grid-column: 1 / -1;
@@ -1300,7 +1310,7 @@
   .text-page .body {
     font-family: 'Jost', 'Helvetica Neue', sans-serif;
     font-weight: 400;
-    font-size: 15px;
+    font-size: 16px;
     line-height: 1.55;
     text-wrap: pretty;
   }
@@ -1332,12 +1342,19 @@
   }
   .text-page .side h3 {
     font-weight: 500;
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 0.1em;
     margin-bottom: 8px;
-    opacity: 0.55;
+    opacity: 0.65;
   }
   .text-page .side ul { list-style: none; margin-bottom: 28px; }
+  /* adresy (e-mail, Instagram) — normalna wielkość liter i większy rozmiar,
+     to najważniejsza informacja na stronie kontaktu */
+  .text-page .side a {
+    text-transform: none;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+  }
   .text-page .side a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
   /* ============================================================
@@ -1436,7 +1453,7 @@
     font-size: 10px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    opacity: 0.5;
+    opacity: 0.65;
     margin-bottom: 14px;
   }
   /* PRACE — siatka miniatur */
@@ -1453,27 +1470,27 @@
   }
   .np-item:hover .np-thumb { filter: grayscale(0); }
   .np-text { display: flex; gap: 6px; align-items: baseline; }
-  .np-no { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 9px; opacity: 0.45; }
+  .np-no { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 9px; opacity: 0.6; }
   .np-name { font-size: 12px; line-height: 1.15; font-weight: 600; }
   /* AKTUALNOŚCI — najnowsze wpisy */
   .np-news { padding: 12px 0; border-top: 1px solid rgba(0,0,0,0.12); display: flex; flex-direction: column; gap: 3px; }
   .np-news:first-child { border-top: none; padding-top: 0; }
-  .np-date { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.5; }
+  .np-date { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.65; }
   .np-news-title { font-size: 13px; font-weight: 600; line-height: 1.25; }
-  .np-news-place { font-size: 11px; opacity: 0.6; line-height: 1.3; }
+  .np-news-place { font-size: 11px; opacity: 0.6; line-height: 1.3; font-weight: 400; }
   /* O AUTORZE — portret + bio */
   .np-about { display: flex; gap: 14px; margin-bottom: 14px; }
   .np-portrait { flex: 0 0 74px; width: 74px; height: 92px; background-size: cover; background-position: center top; filter: grayscale(1); }
-  .np-bio { font-size: 12px; line-height: 1.5; }
+  .np-bio { font-size: 12px; line-height: 1.5; font-weight: 400; }
   .np-facts { display: flex; flex-wrap: wrap; gap: 6px; }
   .np-fact { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid rgba(0,0,0,0.25); padding: 4px 7px; }
   /* KONTAKT */
   .np-contact { display: flex; flex-direction: column; gap: 12px; }
   .np-cline { display: flex; flex-direction: column; gap: 3px; }
-  .np-clabel { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.5; }
-  .np-cline a { font-size: 13px; color: #000; text-decoration: none; border-bottom: 1px solid rgba(0,0,0,0.3); width: fit-content; }
+  .np-clabel { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.65; }
+  .np-cline a { font-size: 13px; font-weight: 400; color: #000; text-decoration: none; border-bottom: 1px solid rgba(0,0,0,0.3); width: fit-content; }
   .np-cline a:hover { border-bottom-color: #000; }
-  .np-cnote { font-size: 11px; opacity: 0.6; line-height: 1.4; margin-top: 2px; }
+  .np-cnote { font-size: 11px; font-weight: 400; opacity: 0.65; line-height: 1.4; margin-top: 2px; }
 
   /* ============================================================
      RESPONSIVE — FULL HD / 1920×1080 (1600–2199px)
@@ -1745,7 +1762,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 9px;
+      font-size: 10px;
     }
     .sidefoot .langs { margin-bottom: 0; }
     .sidefoot .langs button { padding: 12px 8px; margin: -12px -8px; }
@@ -1770,7 +1787,7 @@
     .home-topline {
       position: relative;
       padding: 12px 18px;
-      font-size: 9px;
+      font-size: 10px;
       flex-wrap: wrap;
       gap: 8px;
     }
@@ -1815,7 +1832,7 @@
     }
     .proj-top .pj-title { font-size: clamp(28px, 8vw, 40px); }
     .proj-top .pj-meta { text-align: left; }
-    .pj-projnav { font-size: 9px; gap: 10px; margin-top: 8px; }
+    .pj-projnav { font-size: 10px; gap: 10px; margin-top: 8px; }
     .pj-projnav-btn { max-width: 130px; }
     .proj-stage {
       height: 60vh;
@@ -1892,38 +1909,38 @@
     .sidebar .brand .name { font-size: 15px; }
     .sidenav { gap: 10px; }
     .sidenav a { font-size: 11px; }
-    .sidefoot { font-size: 8px; padding-top: 10px; margin-top: 10px; }
+    .sidefoot { font-size: 10px; padding-top: 10px; margin-top: 10px; }
 
-    .home-topline { padding: 10px 14px; font-size: 8px; }
+    .home-topline { padding: 10px 14px; font-size: 10px; }
 
     /* Poster */
     .home-poster { padding: 14px; gap: 6px; }
     .home-poster .cell { padding: 12px; min-height: 90px; gap: 20px; }
     .home-poster .cell .title { font-size: clamp(22px, 7vw, 32px); }
-    .home-poster .cell .num { font-size: 8px; }
+    .home-poster .cell .num { font-size: 9px; }
 
     /* Project view */
     .proj-top { padding: 14px; }
     .proj-top .pj-title { font-size: clamp(22px, 7vw, 30px); }
-    .proj-top .pj-sub, .proj-top .pj-meta { font-size: 9px; }
+    .proj-top .pj-sub, .proj-top .pj-meta { font-size: 10px; }
     .proj-stage { min-height: 280px; }
     .proj-slide { padding: 10px; }
-    .proj-bottom { padding: 10px 14px 14px; font-size: 9px; }
+    .proj-bottom { padding: 10px 14px 14px; font-size: 10px; }
     .proj-mobile-nav { padding: 8px 14px; font-size: 10px; }
     .proj-mobile-nav button { padding: 8px 12px; font-size: 10px; min-width: 76px; }
 
     /* Text pages */
     .text-page { padding: 24px 14px 32px; gap: 24px; }
     .text-page h1 { font-size: clamp(30px, 10vw, 44px); margin-bottom: 12px; }
-    .text-page .body { font-size: 13px; line-height: 1.5; }
-    .proj-description { font-size: 13px; line-height: 1.5; padding: 18px 20px 28px; }
+    .text-page .body { font-size: 14px; line-height: 1.5; }
+    .proj-description { font-size: 14px; line-height: 1.5; padding: 18px 20px 28px; }
     .text-page .side { font-size: 11px; }
     .text-page .side h3 { font-size: 10px; }
 
     /* Lightbox */
     .lightbox { padding: 40px 8px; }
-    .lightbox .lb-close { font-size: 10px; padding: 6px 10px; }
-    .lightbox .lb-counter { font-size: 9px; }
+    .lightbox .lb-close { font-size: 11px; padding: 6px 10px; }
+    .lightbox .lb-counter { font-size: 10px; }
   }
 
   /* ============================================================
@@ -1982,7 +1999,7 @@
 
     /* Home stage */
     .home-stage { height: auto; min-height: calc(100dvh - 48px); }
-    .home-topline { padding: 8px 16px; font-size: 9px; }
+    .home-topline { padding: 8px 16px; font-size: 10px; }
 
     /* Poster w landscape — 4 kolumny żeby coś zobaczyć */
     .home-poster {
@@ -2007,8 +2024,8 @@
       gap: 8px;
     }
     .home-poster .cell .title { font-size: clamp(14px, 2.5vw, 22px); }
-    .home-poster .cell .num { font-size: 8px; }
-    .home-poster .cell .meta { font-size: 8px; }
+    .home-poster .cell .num { font-size: 9px; }
+    .home-poster .cell .meta { font-size: 9px; }
     .home-poster .cell .thumb-frame { display: none !important; }
 
     /* Project gallery — maksymalna wysokość */
@@ -2016,8 +2033,8 @@
     .proj-stage { height: calc(100vh - 100px); min-height: 220px; }
     .proj-top { padding: 8px 16px; flex-direction: row; gap: 10px; }
     .proj-top .pj-title { font-size: clamp(18px, 3vw, 26px); }
-    .proj-top .pj-meta { font-size: 9px; text-align: right; }
-    .proj-bottom { padding: 6px 16px; flex-direction: row; font-size: 9px; gap: 12px; }
+    .proj-top .pj-meta { font-size: 10px; text-align: right; }
+    .proj-bottom { padding: 6px 16px; flex-direction: row; font-size: 10px; gap: 12px; }
     .proj-nav-left, .proj-nav-right { display: block; }
     .proj-nav-arrow { font-size: 11px; }
     .proj-mobile-nav { display: none; }
@@ -2029,8 +2046,8 @@
       padding: 20px 24px; gap: 28px;
     }
     .text-page h1 { font-size: clamp(28px, 5vw, 40px); margin-bottom: 14px; grid-column: 1 / -1; }
-    .text-page .body { font-size: 12px; }
-    .proj-description { font-size: 12px; padding: 16px 16px 24px; }
+    .text-page .body { font-size: 13px; }
+    .proj-description { font-size: 13px; padding: 16px 16px 24px; }
 
     /* Lightbox */
     .lightbox { padding: 30px 12px; }
