@@ -11,6 +11,7 @@
  * Wejście:  index.html (szablon), content/*.json (treść), data.js (teksty UI)
  * Wyjście:  PL — /labirynt/, /o-autorze/, /kontakt/, /aktualnosci/ …
  *           EN — /en/, /en/labirynt/, /en/about/, /en/contact/, /en/news/ …
+ *           każda aktualność osobno: /aktualnosci/offoto-opole-2026/
  *           oraz 404.html i sitemap.xml
  *
  * Adres projektu ma w obu wersjach ten sam slug (/labirynt/ i /en/labirynt/) —
@@ -82,6 +83,10 @@ const PATHS = {
 };
 function pathFor(route, slug, lang) {
   if (route === "project") return (lang === "en" ? "/en/" : "/") + slug + "/";
+  // Pojedyncza aktualność leży POD listą (/aktualnosci/wpis/) — adres pokazuje
+  // przynależność, a wyszukiwarka dostaje czytelną hierarchię zamiast płaskiej
+  // listy adresów w korzeniu witryny.
+  if (route === "newsItem") return PATHS[lang].achievements + (slug ? slug + "/" : "");
   return PATHS[lang][route];
 }
 
@@ -338,12 +343,20 @@ function applyBody(html, page, i18n) {
   if (page.viewId === "view-project") {
     html = replaceOnce(html, /<(?:div|h1) class="pj-title" id="pjTitle">[\s\S]*?<\/(?:div|h1)>/,
       `<h1 class="pj-title" id="pjTitle">${escapeHtml(page.project.title)}</h1>`, "#pjTitle");
-  } else if (HEADING_KEY[page.viewId]) {
+  } else if (HEADING_KEY[page.viewId] && !page.h1InContent) {
     const key = HEADING_KEY[page.viewId].replace(/\./g, "\\.");
     html = replaceOnce(html,
       new RegExp(`<h2 class="page-h" data-i18n="${key}">([^<]*)</h2>`),
       (_m, inner) => `<h1 class="page-h" data-i18n="${HEADING_KEY[page.viewId]}">${inner}</h1>`,
       `nagłówek widoku ${page.viewId}`);
+  }
+
+  // Podstrona wpisu ma nad treścią tylko link powrotny, więc lista dostaje
+  // węższy odstęp. Klasę ustawia też app.js po przerysowaniu widoku.
+  if (page.listSingle) {
+    html = replaceOnce(html, '<div id="achievementsList" class="achievements-list">',
+      '<div id="achievementsList" class="achievements-list single-item">',
+      "#achievementsList");
   }
 
   for (const [id, value] of Object.entries(page.fill || {})) {
@@ -392,6 +405,138 @@ function homeGrid(projects, lang) {
   `;
     })
     .join("");
+}
+
+/* ------------------------------------------------------------------ */
+/* Aktualności — lista i pojedynczy wpis                               */
+/* ------------------------------------------------------------------ */
+
+// Miniatura z podkatalogu thumbs/ — dokładnie tak samo liczy ją app.js.
+function thumbPath(src) {
+  const str = String(src || "");
+  if (!/\/images\/achievements\//.test("/" + str.replace(/^\//, ""))) return str;
+  const i = str.lastIndexOf("/");
+  return i < 0 ? str : str.slice(0, i) + "/thumbs" + str.slice(i);
+}
+
+function newsSorted(news) {
+  return news.slice().sort((a, b) => {
+    const ak = a.dateISO || (a.year ? a.year + "-00-00" : "0000-00-00");
+    const bk = b.dateISO || (b.year ? b.year + "-00-00" : "0000-00-00");
+    return bk.localeCompare(ak);
+  });
+}
+
+// Wystawy i pokazy to wydarzenia wystawiennicze; członkostwo w ZPAF czy studia
+// w Opawie — już nie. Nie nazywamy wszystkiego wystawą, bo dane strukturalne
+// mają opisywać rzeczywistość, a nie ją naciągać.
+function newsEventType(a) {
+  return /wystaw|pokaz/i.test(String(a.type && a.type.pl)) ? "ExhibitionEvent" : "Event";
+}
+
+/* Lista aktualności w kodzie źródłowym — bliźniak renderAchievements() z app.js.
+   Ten sam HTML musi powstać po obu stronach: bez tego robot nieuruchamiający
+   JavaScriptu (Bing, GPTBot, ClaudeBot) zobaczyłby pustą sekcję, a przeglądarka
+   po wczytaniu app.js przerysowałaby stronę na coś innego niż zaindeksowane.
+   Uwaga przy zmianach: poprawkę wprowadza się TU i w app.js jednocześnie. */
+function newsListHtml(items, lang, i18n, single) {
+  const L = lang;
+  const back = single
+    ? `<a class="achievement-back" href="${pathFor("achievements", null, L)}" data-route="achievements">` +
+      `${escapeHtml((i18n[L] && i18n[L]["news.back"]) || "←")}</a>`
+    : "";
+
+  return back + items.map((a, ai) => {
+    const title = escapeHtml(a.title[L]);
+    const photos = (a.images || []).map((src, i) =>
+      `<div class="achievement-photo" data-achievement="${ai}" data-photo="${i}" role="button" tabindex="0" aria-label="${title} — ${i + 1}">` +
+      `<img src="${escapeHtml(thumbPath(abs(src)))}" data-full="${escapeHtml(abs(src))}" alt="" loading="lazy" decoding="async"></div>`
+    ).join("");
+
+    let link = "";
+    if (a.links && a.links.length) {
+      const list = a.links.map((l) =>
+        `<a class="achievement-link" href="${escapeHtml(l.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(l.label[L])} →</a>`
+      ).join("");
+      link = `<div class="achievement-links">${list}</div>`;
+    } else if (a.url) {
+      const fallback = L === "pl" ? "Zobacz więcej →" : "Learn more →";
+      link = `<a class="achievement-link" href="${escapeHtml(a.url)}" target="_blank" rel="noopener noreferrer">${fallback}</a>`;
+    }
+
+    const displayDate = escapeHtml(a.date ? a.date[L] : (a.year || ""));
+    const addressBlock = a.address ? `<div class="achievement-address">${escapeHtml(a.address[L])}</div>` : "";
+
+    const href = a.id ? pathFor("newsItem", a.id, L) : null;
+    const titleTag = single
+      ? `<h1 class="achievement-title" itemprop="name">${title}</h1>`
+      : `<h2 class="achievement-title" itemprop="name">${href ? `<a href="${href}">${title}</a>` : title}</h2>`;
+
+    return `
+      <article class="achievement${single ? " single" : ""}" itemscope itemtype="https://schema.org/Event">
+        <meta itemprop="startDate" content="${escapeHtml(a.dateISO || "")}">
+        ${href ? `<meta itemprop="url" content="${BASE}${href}">` : ""}
+        <div class="achievement-meta">
+          <span class="date">${displayDate}</span>
+          <span class="type">${escapeHtml(a.type[L])}</span>
+        </div>
+        <div class="achievement-content">
+          ${titleTag}
+          <div class="achievement-place" itemprop="location">${escapeHtml(a.place[L])}</div>
+          ${addressBlock}
+          <p class="achievement-desc" itemprop="description">${escapeHtml(a.description[L])}</p>
+          ${photos ? `<div class="achievement-photos">${photos}</div>` : ""}
+          ${link}
+        </div>
+      </article>
+    `;
+  }).join("");
+}
+
+function newsItemPage(a, lang, i18n) {
+  const L = lang;
+  const self = pathFor("newsItem", a.id, L);
+  const descText = String((a.description && a.description[L]) || "").replace(/\s+/g, " ").trim();
+  const images = (a.images || []).map(abs);
+
+  return {
+    route: "newsItem",
+    slug: a.id,
+    lang: L,
+    path: self,
+    viewId: "view-achievements",
+    ogType: "article",
+    // Nagłówkiem głównym jest tytuł wpisu, nie nazwa sekcji — dlatego
+    // „Aktualności” zostaje przy h2 (patrz applyBody).
+    h1InContent: true,
+    listSingle: true,
+    title: `${a.title[L]} — ${a.type[L]} · ${AUTHOR}`,
+    description: shorten(descText),
+    image: images.length
+      ? { url: BASE + images[0], alt: `${a.title[L]} — ${a.place[L]}`, type: "image/webp", hasKnownSize: false }
+      : COVER,
+    fill: { achievementsList: newsListHtml([a], L, i18n, true) },
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@type": newsEventType(a),
+      "@id": `${BASE}${self}#event`,
+      name: a.title[L],
+      url: BASE + self,
+      startDate: a.dateISO,
+      eventStatus: "https://schema.org/EventScheduled",
+      eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+      location: { "@type": "Place", name: a.place[L] },
+      description: descText,
+      inLanguage: INLANG[L],
+      performer: { "@type": "Person", "@id": `${BASE}/#person`, name: AUTHOR },
+      image: images.map((src) => ({
+        "@type": "ImageObject",
+        contentUrl: BASE + src,
+        caption: `${a.title[L]} — ${a.place[L]}`,
+        creditText: AUTHOR,
+      })),
+    },
+  };
 }
 
 function projectPage(p, lang, projects) {
@@ -544,14 +689,14 @@ function newsJsonLd(news, lang) {
     "@id": `${BASE}${pathFor("achievements", null, lang)}#lista`,
     name: lang === "pl" ? "Wystawy i wydarzenia" : "Exhibitions and events",
     inLanguage: INLANG[lang],
-    itemListElement: news
-      .slice()
-      .sort((a, b) => String(b.dateISO).localeCompare(String(a.dateISO)))
+    itemListElement: newsSorted(news)
       .map((n, i) => ({
         "@type": "ListItem",
         position: i + 1,
         item: {
-          "@type": "ExhibitionEvent",
+          "@type": newsEventType(n),
+          "@id": n.id ? `${BASE}${pathFor("newsItem", n.id, lang)}#event` : undefined,
+          url: n.id ? BASE + pathFor("newsItem", n.id, lang) : undefined,
           name: n.title[lang],
           startDate: n.dateISO,
           eventStatus: "https://schema.org/EventScheduled",
@@ -611,9 +756,24 @@ function build() {
     pages.push(
       sectionPage("achievements", lang, "view-achievements", {
         jsonLd: newsJsonLd(news, lang),
-        fill: { homeListPoster: homeGrid(projects, lang) },
+        fill: {
+          homeListPoster: homeGrid(projects, lang),
+          // Lista w kodzie źródłowym — wcześniej ta sekcja była pusta i całą
+          // treść dorysowywał dopiero JavaScript. Teraz są tu też linki do
+          // podstron wpisów, czyli droga, którą robot do nich dojdzie.
+          achievementsList: newsListHtml(newsSorted(news), lang, i18n, false),
+        },
       })
     );
+    for (const a of newsSorted(news)) {
+      if (!a.id) {
+        console.warn(`  ! aktualność „${a.title && a.title.pl}" nie ma pola id — pomijam podstronę`);
+        continue;
+      }
+      const page = newsItemPage(a, lang, i18n);
+      page.fill.homeListPoster = homeGrid(projects, lang);
+      pages.push(page);
+    }
   }
 
   for (const page of pages) {
@@ -623,6 +783,28 @@ function build() {
     fs.mkdirSync(dir, { recursive: true });
     fs.writeFileSync(path.join(dir, "index.html"), html, "utf8");
     console.log("  ✓", page.path);
+  }
+
+  // Podstrony po usuniętych wpisach. Bez tego skasowanie albo przemianowanie
+  // pliku w content/news/ zostawiałoby w repo osieroconą stronę: zniknęłaby
+  // z mapy i z listy, ale dalej odpowiadałaby pod starym adresem i siedziała
+  // w indeksie Google. Usuwamy tylko katalogi, w których nie ma nic poza
+  // wygenerowanym index.html — czegokolwiek innego nie ruszamy.
+  const zyweId = new Set(news.map((a) => a.id).filter(Boolean));
+  for (const lang of LANGS) {
+    const listDir = path.join(ROOT, pathFor("achievements", null, lang));
+    if (!fs.existsSync(listDir)) continue;
+    for (const name of fs.readdirSync(listDir)) {
+      const dir = path.join(listDir, name);
+      if (!fs.statSync(dir).isDirectory() || zyweId.has(name)) continue;
+      const zawartosc = fs.readdirSync(dir);
+      if (zawartosc.length === 1 && zawartosc[0] === "index.html") {
+        fs.rmSync(dir, { recursive: true });
+        console.log("  – usunięto osieroconą podstronę", pathFor("newsItem", name, lang));
+      } else {
+        console.warn(`  ! ${pathFor("newsItem", name, lang)} nie odpowiada żadnemu wpisowi, ale zawiera własne pliki — zostawiam`);
+      }
+    }
   }
 
   // 404 — GitHub Pages podaje ten plik przy nieznanym adresie
@@ -645,6 +827,16 @@ function build() {
       entries.push({ route: "project", slug: p.slug, lang, priority: "0.9", changefreq: "monthly" });
     }
     entries.push({ route: "achievements", slug: null, lang, priority: "0.8", changefreq: "weekly" });
+    // Wpisy: lastmod to data wydarzenia, nie dzisiejsza. Treść wpisu sprzed
+    // dwóch lat się nie zmienia, a podawanie codziennej daty uczy wyszukiwarkę,
+    // że nasze „ostatnio zmienione" nic nie znaczy.
+    for (const a of newsSorted(news)) {
+      if (!a.id) continue;
+      entries.push({
+        route: "newsItem", slug: a.id, lang,
+        priority: "0.7", changefreq: "yearly", lastmod: a.dateISO,
+      });
+    }
     entries.push({ route: "about", slug: null, lang, priority: "0.7", changefreq: "yearly" });
     entries.push({ route: "contact", slug: null, lang, priority: "0.6", changefreq: "yearly" });
   }
@@ -660,7 +852,7 @@ function build() {
           (l) => `    <xhtml:link rel="alternate" hreflang="${l}" href="${BASE + pathFor(e.route, e.slug, l)}"/>`
         ).join("\n");
         return (
-          `  <url>\n    <loc>${loc}</loc>\n${alts}\n    <lastmod>${today}</lastmod>\n` +
+          `  <url>\n    <loc>${loc}</loc>\n${alts}\n    <lastmod>${e.lastmod || today}</lastmod>\n` +
           `    <changefreq>${e.changefreq}</changefreq>\n    <priority>${e.priority}</priority>\n  </url>`
         );
       })

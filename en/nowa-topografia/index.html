@@ -1281,6 +1281,34 @@
     align-self: flex-start;
   }
   .achievement-link:hover { opacity: 1; }
+  /* Tytuł na liście prowadzi do własnej podstrony wpisu. Podkreślenie
+     pojawia się dopiero pod kursorem — nagłówek ma zostać nagłówkiem. */
+  .achievement-title a {
+    color: inherit;
+    text-decoration: none;
+    text-underline-offset: 6px;
+    text-decoration-thickness: 2px;
+  }
+  .achievement-title a:hover,
+  .achievement-title a:focus-visible { text-decoration: underline; }
+  /* Powrót do listy — jedyny element nad pojedynczym wpisem */
+  .achievement-back {
+    display: inline-block;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    opacity: 0.65;
+    align-self: flex-start;
+    transition: opacity 200ms ease;
+  }
+  .achievement-back:hover { opacity: 1; }
+  /* Lista trzyma między wpisami 64 px odstępu; nad pojedynczym wpisem
+     stoi tylko link powrotny, więc tam taka przerwa byłaby dziurą. */
+  .achievements-list.single-item { gap: 24px; }
+  /* Pojedynczy wpis nie potrzebuje kreski oddzielającej go od poprzedniego */
+  .achievement.single { border-top: 0; padding-top: 0; }
   .achievement-links {
     display: flex;
     flex-wrap: wrap;

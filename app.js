@@ -4,12 +4,18 @@
 const state = {
   route: "home",
   projectSlug: null,
+  newsSlug: null,
   slideIndex: 0,
   lang: "pl",
 };
 
 const $  = (s, r=document) => r.querySelector(s);
 const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+
+// Tekst wstawiany do ATRYBUTU w szablonie. Angielskie tytuły aktualności
+// zawierają cudzysłowy („"Night Birds" at…"), które bez tego zamykały
+// atrybut w połowie i psuły znacznik.
+const attr = (s) => String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/"/g, "&quot;");
 
 /* ============================================================
    PREFERENCES — localStorage persistence
@@ -36,6 +42,7 @@ function savePref(key, value) {
      /o-autorze/        → about
      /kontakt/          → contact
      /aktualnosci/      → achievements
+     /aktualnosci/offoto-opole-2026/ → newsItem (jedna aktualność)
      /labirynt/         → projekt „Labirynt”
 
    Każdy z tych adresów to osobny plik wygenerowany przez
@@ -83,12 +90,36 @@ function isProjectSlug(slug) {
   return !!(window.PROJECTS && window.PROJECTS.find(p => p.slug === slug));
 }
 
+// Adres pojedynczej aktualności bierze się z pola `id` w content/news/*.json —
+// to samo, którego używa tools/build-pages.js przy generowaniu podstrony.
+function isNewsSlug(slug) {
+  return !!(window.ACHIEVEMENTS && window.ACHIEVEMENTS.find(a => a.id === slug));
+}
+
+function findNews(slug) {
+  return (window.ACHIEVEMENTS || []).find(a => a.id === slug) || null;
+}
+
+// Slug bieżącego widoku — projekty i aktualności trzymają go w osobnych
+// polach stanu, a adres i przełącznik języka potrzebują tego jednego.
+function currentSlug() {
+  if (state.route === "project") return state.projectSlug;
+  if (state.route === "newsItem") return state.newsSlug;
+  return null;
+}
+
 // Nazwa widoku → adres. Używane i przy zmianie URL-a, i przy canonical/OG.
 // Adresy projektów mają w obu wersjach ten sam slug — to nazwa własna cyklu,
 // a angielskie słowa kluczowe niesie tytuł i opis strony.
 function routeToPath(route, slug, lang) {
   const L = lang || state.lang;
   if (route === "project" && slug) return (L === "en" ? "/en/" : "/") + slug + "/";
+  // Aktualność mieszka POD listą aktualności — adres pokazuje tę zależność
+  // i człowiekowi, i wyszukiwarce (/aktualnosci/ → /aktualnosci/wpis/).
+  if (route === "newsItem") {
+    const list = (PATH_BY_ROUTE[L] || PATH_BY_ROUTE.pl).achievements;
+    return slug ? list + slug + "/" : list;
+  }
   return (PATH_BY_ROUTE[L] || PATH_BY_ROUTE.pl)[route] || (L === "en" ? "/en/" : "/");
 }
 
@@ -98,6 +129,14 @@ function routeFromPath(pathname) {
   const seg = (pathname || "/").replace(/^\/+|\/+$/g, "");
   if (!seg) return { route: "home", lang: "pl" };
   if (ROUTE_BY_PATH[seg]) return Object.assign({}, ROUTE_BY_PATH[seg]);
+  // Pojedyncza aktualność — sprawdzamy PRZED projektami, bo ścieżka jest
+  // dłuższa (dwa człony) i nie ma szans pomylić się ze slugiem cyklu.
+  if (seg.startsWith("aktualnosci/") && isNewsSlug(seg.slice(12))) {
+    return { route: "newsItem", slug: seg.slice(12), lang: "pl" };
+  }
+  if (seg.startsWith("en/news/") && isNewsSlug(seg.slice(8))) {
+    return { route: "newsItem", slug: seg.slice(8), lang: "en" };
+  }
   if (isProjectSlug(seg)) return { route: "project", slug: seg, lang: "pl" };
   if (seg.startsWith("en/") && isProjectSlug(seg.slice(3))) {
     return { route: "project", slug: seg.slice(3), lang: "en" };
@@ -772,7 +811,54 @@ function renderTextPages() {
    ładować leniwie — widok siedzi w DOM z opacity: 0, więc przeglądarka
    uznawała je za widoczne i ściągała komplet od razu. Efekt: samo wejście
    na stronę główną pobierało ~8,5 MB zdjęć, których nikt tam nie widzi. */
-let achievementsDirty = true;
+/* Ten sam widok obsługuje dwa adresy: listę (/aktualnosci/) i pojedynczy
+   wpis (/aktualnosci/wpis/). Zamiast flagi „brudne” trzymamy KLUCZ ostatniego
+   renderu — język + to, co ma być pokazane. Dzięki temu przejście z listy na
+   wpis (i z powrotem) przerysowuje widok, a powrót na tę samą listę nie. */
+let achievementsKey = null;
+
+function achievementsWantedKey() {
+  return state.lang + "|" + (state.route === "newsItem" ? state.newsSlug : "*");
+}
+
+/* Nagłówek sekcji („Aktualności”) ma w wygenerowanym pliku właściwy poziom:
+   na liście jest nagłówkiem głównym (h1), na pozostałych podstronach h2.
+   Przy przejściu w obrębie SPA z listy na wpis trzeba go zdegradować — inaczej
+   strona miałaby dwa h1 naraz: nazwę sekcji i tytuł wpisu. Pierwotny poziom
+   zapamiętujemy, żeby powrót na listę go przywrócił, a nie zgadywał. */
+let homeHeadingDemoted = false;
+
+// Zamienia znacznik elementu, zachowując atrybuty i treść.
+function retag(el, tag) {
+  if (el.tagName.toLowerCase() === tag) return el;
+  const next = document.createElement(tag);
+  for (const at of Array.from(el.attributes)) next.setAttribute(at.name, at.value);
+  next.innerHTML = el.innerHTML;
+  el.replaceWith(next);
+  return next;
+}
+
+function syncNewsHeading(single) {
+  // Ukryty nagłówek strony głównej. Wchodząc na wpis z listy prac mielibyśmy
+  // go w dokumencie obok tytułu wpisu — dwa h1 naraz. Generator rozwiązuje to
+  // tak samo: na podstronach zamienia ten nagłówek na <p>. Przywracamy tylko
+  // to, co sami zdegradowaliśmy — na wygenerowanych plikach ma zostać <p>.
+  if (single) {
+    const home = document.querySelector("h1.sr-only");
+    if (home) { retag(home, "p"); homeHeadingDemoted = true; }
+  } else if (homeHeadingDemoted) {
+    const home = document.querySelector('p.sr-only[data-i18n="home.h1"]');
+    if (home) retag(home, "h1");
+    homeHeadingDemoted = false;
+  }
+
+  const el = document.querySelector(".achievements-page .page-h");
+  if (!el) return;
+  // Wpis ma własny tytuł jako h1, więc nazwa sekcji schodzi do h2. Na liście
+  // nazwa sekcji jest nagłówkiem głównym — chyba że dokument ma już inny h1.
+  const innyH1 = $$("h1").some((h) => h !== el && !h.closest("#achievementsList"));
+  retag(el, single || innyH1 ? "h2" : "h1");
+}
 
 /* Siatka pokazuje kafelki 235 × 235 px, więc bierze miniaturę z podkatalogu
    thumbs/ (600 px, generowane przez tools/build-thumbs.js). Pełny plik
@@ -786,29 +872,47 @@ function thumbPath(src) {
 }
 
 function ensureAchievements() {
-  if (!achievementsDirty) return;
+  const key = achievementsWantedKey();
+  if (achievementsKey === key) return;
   renderAchievements();
-  achievementsDirty = false;
+  achievementsKey = key;
+}
+
+// Aktualności posortowane od najnowszej — używane i przy liście, i przy
+// szukaniu sąsiadów pojedynczego wpisu.
+function sortedAchievements() {
+  return [...(window.ACHIEVEMENTS || [])].sort((a, b) => {
+    const aKey = a.dateISO || (a.year ? a.year + "-00-00" : "0000-00-00");
+    const bKey = b.dateISO || (b.year ? b.year + "-00-00" : "0000-00-00");
+    return bKey.localeCompare(aKey);
+  });
 }
 
 function renderAchievements() {
   const list = $("#achievementsList");
   if (!list || !window.ACHIEVEMENTS) return;
   const L = state.lang;
+  const single = state.route === "newsItem" ? findNews(state.newsSlug) : null;
 
-  // Sortuj malejąco po dateISO. Fallback: legacy `year` field.
-  const sorted = [...window.ACHIEVEMENTS].sort((a, b) => {
-    const aKey = a.dateISO || (a.year ? a.year + "-00-00" : "0000-00-00");
-    const bKey = b.dateISO || (b.year ? b.year + "-00-00" : "0000-00-00");
-    return bKey.localeCompare(aKey);
-  });
+  // Na podstronie wpisu pokazujemy tylko jego — inaczej każdy z ośmiu
+  // adresów miałby tę samą treść i Google uznałby je za duplikaty.
+  const sorted = single ? [single] : sortedAchievements();
 
   // Trzymaj referencję do posortowanej listy dla click handlera
   window._achievementsSorted = sorted;
 
-  list.innerHTML = sorted.map((a, ai) => {
+  const backLink = single
+    ? `<a class="achievement-back" href="${routeToPath("achievements", null, L)}" data-route="achievements">${
+        (window.I18N[L] && window.I18N[L]["news.back"]) || "←"
+      }</a>`
+    : "";
+
+  list.classList.toggle("single-item", !!single);
+  syncNewsHeading(!!single);
+
+  list.innerHTML = backLink + sorted.map((a, ai) => {
     const photos = (a.images || []).map((src, i) =>
-      `<div class="achievement-photo" data-achievement="${ai}" data-photo="${i}" role="button" tabindex="0" aria-label="${a.title[L]} — ${i+1}"><img src="${thumbPath(src)}" data-full="${src}" alt="" loading="lazy" decoding="async"></div>`
+      `<div class="achievement-photo" data-achievement="${ai}" data-photo="${i}" role="button" tabindex="0" aria-label="${attr(a.title[L])} — ${i+1}"><img src="${attr(thumbPath(src))}" data-full="${attr(src)}" alt="" loading="lazy" decoding="async"></div>`
     ).join("");
     // Linki — obsługa zarówno pojedynczego `url` jak i tablicy `links`
     let link = "";
@@ -825,15 +929,26 @@ function renderAchievements() {
     const displayDate = a.date ? a.date[L] : (a.year || "");
     const addressBlock = a.address ? `<div class="achievement-address">${a.address[L]}</div>` : "";
 
+    // Na liście tytuł jest linkiem do własnej podstrony wpisu — to jedyna
+    // droga, którą wyszukiwarka może do niej dojść. Na samej podstronie
+    // tytuł jest nagłówkiem głównym (h1), więc linku już nie ma.
+    const href = a.id ? routeToPath("newsItem", a.id, L) : null;
+    const titleTag = single
+      ? `<h1 class="achievement-title" itemprop="name">${a.title[L]}</h1>`
+      : `<h2 class="achievement-title" itemprop="name">${
+          href ? `<a href="${href}">${a.title[L]}</a>` : a.title[L]
+        }</h2>`;
+
     return `
-      <article class="achievement" itemscope itemtype="https://schema.org/Event">
+      <article class="achievement${single ? " single" : ""}" itemscope itemtype="https://schema.org/Event">
         <meta itemprop="startDate" content="${a.dateISO || ""}">
+        ${href ? `<meta itemprop="url" content="${BASE_URL}${href}">` : ""}
         <div class="achievement-meta">
           <span class="date">${displayDate}</span>
           <span class="type">${a.type[L]}</span>
         </div>
         <div class="achievement-content">
-          <h2 class="achievement-title" itemprop="name">${a.title[L]}</h2>
+          ${titleTag}
           <div class="achievement-place" itemprop="location">${a.place[L]}</div>
           ${addressBlock}
           <p class="achievement-desc" itemprop="description">${a.description[L]}</p>
@@ -898,6 +1013,14 @@ function updateSEO(route) {
       ? "Paweł Sypniewski (ur. 1987) — fotograf i artysta wizualny z Warszawy, członek ZPAF. Edukacja: ITF Opawa, Sputnik Photos."
       : "Paweł Sypniewski (b. 1987) — photographer and visual artist from Warsaw, ZPAF member. Education: ITF Opava, Sputnik Photos.";
     url   = BASE_URL + routeToPath("about");
+  } else if (route === "newsItem" && state.newsSlug) {
+    const a = findNews(state.newsSlug);
+    if (a) {
+      title = `${a.title[L]} — ${a.type[L]} · Paweł Sypniewski`;
+      const src = String((a.description && a.description[L]) || "").replace(/\s+/g, " ").trim();
+      desc = src.length > 160 ? src.substring(0, 157).trimEnd() + "…" : src;
+      url = BASE_URL + routeToPath("newsItem", a.id);
+    }
   } else if (route === "achievements") {
     title = L === "pl"
       ? "Aktualności — Paweł Sypniewski"
@@ -943,8 +1066,8 @@ function updateSEO(route) {
   if (contentLang) contentLang.setAttribute("content", L);
 
   // hreflang — para adresów siostrzanych dla bieżącego widoku
-  const selfPl = BASE_URL + routeToPath(route, state.projectSlug, "pl");
-  const selfEn = BASE_URL + routeToPath(route, state.projectSlug, "en");
+  const selfPl = BASE_URL + routeToPath(route, currentSlug(), "pl");
+  const selfEn = BASE_URL + routeToPath(route, currentSlug(), "en");
   const setAlt = (lang, href) => {
     const el = document.querySelector(`link[rel="alternate"][hreflang="${lang}"]`);
     if (el) el.setAttribute("href", href);
@@ -1029,11 +1152,17 @@ function initPaneScroll() {
   watchPanes();
 }
 
+// Nazwa widoku → id sekcji w HTML. Zwykle to po prostu „view-” + nazwa;
+// wyjątkiem jest pojedyncza aktualność, która mieszka w tej samej sekcji
+// co lista — różni je tylko to, co renderAchievements w niej narysuje.
+const VIEW_BY_ROUTE = { newsItem: "view-achievements" };
+
 function setRoute(route, opts = {}) {
   state.route = route;
-  if (route === "achievements") ensureAchievements();
+  if (route !== "newsItem") state.newsSlug = null;
+  if (route === "achievements" || route === "newsItem") ensureAchievements();
   $$(".view").forEach(v => v.classList.remove("active"));
-  const id = `view-${route}`;
+  const id = VIEW_BY_ROUTE[route] || `view-${route}`;
   const el = document.getElementById(id);
   if (el) el.classList.add("active");
 
@@ -1041,7 +1170,9 @@ function setRoute(route, opts = {}) {
   $$(".sidenav a").forEach(a => {
     const r = a.dataset.route;
     a.classList.toggle("active",
-      r === route || (route === "project" && r === "home"));
+      r === route ||
+      (route === "project" && r === "home") ||
+      (route === "newsItem" && r === "achievements"));
   });
 
   // SEO: dynamic title/description per view
@@ -1050,7 +1181,7 @@ function setRoute(route, opts = {}) {
 
   // URL sync — chyba że woła nas popstate (back/forward)
   if (!opts.skipUrl) {
-    writeUrl(route, state.projectSlug);
+    writeUrl(route, currentSlug());
   }
 
   // Scroll do góry przy zmianie widoku (poprawia UX na mobile po przewinięciu)
@@ -1079,6 +1210,11 @@ function navigateProject(slug, opts = {}) {
   setRoute("project", opts);
 }
 
+function navigateNews(slug, opts = {}) {
+  state.newsSlug = slug;
+  setRoute("newsItem", opts);
+}
+
 // Przerysowanie całej strony w danym języku — bez ruszania adresu.
 function applyLang(lang) {
   state.lang = lang;
@@ -1086,8 +1222,7 @@ function applyLang(lang) {
   applyI18n();
   renderHome();
   renderTextPages();
-  achievementsDirty = true;
-  if (state.route === "achievements") ensureAchievements();
+  if (state.route === "achievements" || state.route === "newsItem") ensureAchievements();
   if (state.route === "project") renderProject();
   savePref(LS.lang, lang);
 }
@@ -1109,7 +1244,7 @@ function setLang(lang) {
 function updateNavLinks() {
   $$("[data-lang]").forEach(el => {
     const l = el.dataset.lang;
-    el.setAttribute("href", routeToPath(state.route, state.projectSlug, l));
+    el.setAttribute("href", routeToPath(state.route, currentSlug(), l));
     el.setAttribute("hreflang", l);
     el.classList.toggle("active", l === state.lang);
   });
@@ -1146,6 +1281,7 @@ function init() {
     // Link może prowadzić do innej wersji językowej (przełącznik PL/EN)
     if (parsed.lang && parsed.lang !== state.lang) applyLang(parsed.lang);
     if (parsed.route === "project") navigateProject(parsed.slug);
+    else if (parsed.route === "newsItem") navigateNews(parsed.slug);
     else setRoute(parsed.route);
   });
 
@@ -1304,6 +1440,9 @@ function init() {
       state.projectSlug = parsed.slug;
       renderProject();
       setRoute("project", { skipUrl: true });
+    } else if (parsed.route === "newsItem" && parsed.slug) {
+      state.newsSlug = parsed.slug;
+      setRoute("newsItem", { skipUrl: true });
     } else {
       setRoute(parsed.route || "home", { skipUrl: true });
     }
@@ -1338,6 +1477,9 @@ function init() {
     state.projectSlug = initial.slug;
     renderProject();
     setRoute("project", { skipUrl: true });
+  } else if (initial.route === "newsItem" && initial.slug) {
+    state.newsSlug = initial.slug;
+    setRoute("newsItem", { skipUrl: true });
   } else {
     setRoute(initial.route || "home", { skipUrl: true });
   }
