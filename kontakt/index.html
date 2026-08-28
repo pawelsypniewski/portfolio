@@ -180,8 +180,14 @@
         {
           "@type": "EducationalOrganization",
           "name": "Studium Fotografii ZPAF"
+        },
+        {
+          "@type": "EducationalOrganization",
+          "name": "Uniwersytet Otwarty Uniwersytetu Warszawskiego",
+          "url": "https://uo.uw.edu.pl/"
         }
       ],
+      "award": "Laureat XI FotoArtFestival — pokaz DIAS SHOW, Bielsko-Biała, 2025",
       "memberOf": {
         "@type": "Organization",
         "name": "Związek Polskich Artystów Fotografików (ZPAF)",
@@ -1591,6 +1597,14 @@
     opacity: 0.65;
   }
   .text-page .side ul { list-style: none; margin-bottom: 28px; }
+  /* Spis wystaw i publikacji ma pozycje łamiące się na dwie–trzy linie.
+     Bez odstępu nie widać, gdzie kończy się jedna, a zaczyna następna;
+     wcięcie wiszące dodatkowo cofa kontynuację pod pierwszą linię. */
+  .text-page .side li {
+    padding-left: 14px;
+    text-indent: -14px;
+  }
+  .text-page .side li + li { margin-top: 7px; }
   /* adresy (e-mail, Instagram) — normalna wielkość liter i większy rozmiar,
      to najważniejsza informacja na stronie kontaktu */
   .text-page .side a {
@@ -2512,8 +2526,16 @@
     <section class="view active" id="view-contact">
       <div class="text-page">
         <h1 class="page-h" data-i18n="contact.h">Kontakt</h1>
-        <div class="body" id="contactBody"></div>
-        <div class="side" id="contactSide"></div>
+        <div class="body" id="contactBody"><p>Odbitki autorskie w limitowanych edycjach są dostępne w sprzedaży. Możesz zapytać o dowolne zdjęcie, które Cię zainteresowało. W sprawie nakładu, formatów i cen — napisz do mnie mailem.</p>
+<div class="ig-section">
+  <div class="ig-heading">Codziennie na Instagramie</div>
+  <div class="ig-grid"><a class="ig-tile" href="https://www.instagram.com/p/C5L33N1IeEz/" target="_blank" rel="noopener noreferrer" aria-label="Zobacz post na Instagramie" style="background-image:url('/images/instagram/01.webp')"></a><a class="ig-tile" href="https://www.instagram.com/p/DDElbqPI8tL/" target="_blank" rel="noopener noreferrer" aria-label="Zobacz post na Instagramie" style="background-image:url('/images/instagram/02.webp')"></a><a class="ig-tile" href="https://www.instagram.com/p/DCMoYLComsI/" target="_blank" rel="noopener noreferrer" aria-label="Zobacz post na Instagramie" style="background-image:url('/images/instagram/03.webp')"></a><a class="ig-tile" href="https://www.instagram.com/p/C__MGoGodx7/" target="_blank" rel="noopener noreferrer" aria-label="Zobacz post na Instagramie" style="background-image:url('/images/instagram/04.webp')"></a><a class="ig-tile" href="https://www.instagram.com/p/DCPeeERoB0_/" target="_blank" rel="noopener noreferrer" aria-label="Zobacz post na Instagramie" style="background-image:url('/images/instagram/05.webp')"></a><a class="ig-tile" href="https://www.instagram.com/p/DGbNquTI_p8/" target="_blank" rel="noopener noreferrer" aria-label="Zobacz post na Instagramie" style="background-image:url('/images/instagram/06.webp')"></a></div>
+  <a class="ig-more" href="https://www.instagram.com/sypniewskistudio/" target="_blank" rel="noopener noreferrer">@sypniewskistudio →</a>
+</div></div>
+        <div class="side" id="contactSide"><h3>E-mail</h3>
+<ul><li><a href="mailto:katedranalogowa@gmail.com">katedranalogowa@gmail.com</a></li></ul>
+<h3>Instagram</h3>
+<ul><li><a href="https://www.instagram.com/sypniewskistudio/" target="_blank" rel="noopener">@sypniewskistudio</a></li></ul></div>
       </div>
     </section>
 

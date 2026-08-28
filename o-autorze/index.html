@@ -180,8 +180,14 @@
         {
           "@type": "EducationalOrganization",
           "name": "Studium Fotografii ZPAF"
+        },
+        {
+          "@type": "EducationalOrganization",
+          "name": "Uniwersytet Otwarty Uniwersytetu Warszawskiego",
+          "url": "https://uo.uw.edu.pl/"
         }
       ],
+      "award": "Laureat XI FotoArtFestival — pokaz DIAS SHOW, Bielsko-Biała, 2025",
       "memberOf": {
         "@type": "Organization",
         "name": "Związek Polskich Artystów Fotografików (ZPAF)",
@@ -1591,6 +1597,14 @@
     opacity: 0.65;
   }
   .text-page .side ul { list-style: none; margin-bottom: 28px; }
+  /* Spis wystaw i publikacji ma pozycje łamiące się na dwie–trzy linie.
+     Bez odstępu nie widać, gdzie kończy się jedna, a zaczyna następna;
+     wcięcie wiszące dodatkowo cofa kontynuację pod pierwszą linię. */
+  .text-page .side li {
+    padding-left: 14px;
+    text-indent: -14px;
+  }
+  .text-page .side li + li { margin-top: 7px; }
   /* adresy (e-mail, Instagram) — normalna wielkość liter i większy rozmiar,
      to najważniejsza informacja na stronie kontaktu */
   .text-page .side a {
@@ -2503,8 +2517,26 @@
     <section class="view active" id="view-about">
       <div class="text-page">
         <h1 class="page-h" data-i18n="about.h">O autorze</h1>
-        <div class="body" id="aboutBody"></div>
-        <div class="side" id="aboutSide"></div>
+        <div class="body" id="aboutBody"><img class="author-portrait" src="/images/about/portrait.webp" alt="Paweł Sypniewski — autoportret" loading="lazy" decoding="async">
+<p>Paweł Sypniewski (ur. 1987 w Warszawie) — artysta wizualny, fotograf i performer. Członek ZPAF, Okręg Warszawski. W swojej twórczości konsekwentnie wychodzi poza tradycyjnie pojmowane ramy fotografii.</p>
+<p>Interesuje go relacja obrazu i tekstu, eksperyment oraz prowokacja, a także łączenie fotografii z innymi środkami wyrazu artystycznego. Jego wszechstronny warsztat sprawia, że trudno sklasyfikować go w obrębie jednego stylu.</p>
+<p>W portfolio znajdują się prace dokumentalne, reporterskie, kreacyjne i studyjne, a także realizacje wykorzystujące techniki szlachetne, mixed media i kolaż. Inspiruje się sztuką konceptualną oraz awangardą, tworząc dzieła wymykające się prostym kategoryzacjom.</p></div>
+        <div class="side" id="aboutSide"><h3>Członkostwo</h3>
+<ul><li>ZPAF — Okręg Warszawski, od 2025</li></ul>
+<h3>Kursy i edukacja</h3>
+<ul><li>Instytut Fotografii Twórczej, Opawa — od 2025</li><li>Program Mentorski Sputnik Photos — 2023/2024, dyplom: Michał Łuczak</li><li>Studium Fotografii ZPAF — 2021/2024, dyplom: Wojciech Klimala</li><li>Oświetlenie w fotografii — Uniwersytet Otwarty UW, pracownia Pawła Żaka, 2023</li><li>Kurs fotografii — Szkoła Karola, 2019/2021</li></ul>
+<h3>Wystawy indywidualne</h3>
+<ul><li>2025.12.03 — „Pamiętnik przetrwania”, Galeria MAL, Terminal Kultury Gocław, Warszawa</li><li>2025.09.05 — „W głowie się nie mieści”, Lokal Bródno, Warszawa</li></ul>
+<h3>Nagrody</h3>
+<ul><li>2025 — laureat XI FotoArtFestival, pokaz DIAS SHOW, Bielsko-Biała</li></ul>
+<h3>Wystawy zbiorowe</h3>
+<ul><li>2026.07.06 — Opolski Festiwal Fotografii, 35 lat Opawskiej Szkoły Fotografii, Opole</li><li>2025.03.28 — „Labirynt”, slideshow, Rybnik Foto Festival</li><li>2024.10.13 — II Wernisaż Choszczówkowski</li><li>2024.09.19 — Dyplomy ZPAF, Stara Galeria ZPAF, Warszawa</li><li>2024.05.18 — „Między kreacją a rzeczywistością”, Centrum Kultury Lublin (kurator i uczestnik)</li><li>2024.04.05 — „Wystaw się w CSW”, CSW Toruń</li><li>2024.01.13 — „Wykluczony”, Dom Plenerowy ASP Dłużew</li><li>2023.10.13 — FotoOpen, Kubiszówka, FotoArtFestival</li><li>2023.09.27 — „10 przykazań”, Galeria Obok ZPAF, Warszawa</li><li>2023.06.29 — 22. Doroczna Wystawa Studium Fotografii ZPAF, Stara Galeria ZPAF</li><li>2022.06.30 — 21. Doroczna Wystawa Studium Fotografii ZPAF, Stara Galeria ZPAF</li><li>2022.05.14 — „...forma jedna treści wiele...”, Miejski Ośrodek Kultury Ząbki</li></ul>
+<h3>Publikacje</h3>
+<ul><li>Katalog 21. Dorocznej Wystawy Studium Fotografii ZPAF</li><li>Katalog 22. Dorocznej Wystawy Studium Fotografii ZPAF</li><li>FotoOpen X FotoArtFestival</li><li>Katalog „Wystaw się w CSW 2024”</li><li>Gazeta „Co słychać?”</li><li>Gazeta „Nasza Choszczówka”</li></ul>
+<h3>Praktyki</h3>
+<ul><li>Dokument</li><li>Portret kreacyjny</li><li>Techniki szlachetne</li><li>Mixed media / kolaż</li><li>Performance</li></ul>
+<h3>Bazy</h3>
+<ul><li>Warszawa, PL</li><li>Opawa, CZ</li></ul></div>
       </div>
     </section>
 

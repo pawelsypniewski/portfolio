@@ -76,6 +76,35 @@ function loadI18n() {
   return i18n;
 }
 
+/* Teksty „O autorze” i „Kontakt” to markdown w content/settings/*.json, który
+   na HTML zamienia loader.js już w przeglądarce. Zamiast przepisywać ten
+   konwerter drugi raz, uruchamiamy tu prawdziwy loader.js — w izolowanym
+   kontekście, gdzie fetch czyta z dysku zamiast z sieci. Dzięki temu w pliku
+   ląduje dokładnie ten HTML, który zobaczy przeglądarka, i nie ma czego
+   rozjechać: jedno źródło prawdy zamiast dwóch bliźniaczych konwerterów. */
+async function loadTexts() {
+  const box = {
+    window: {},
+    console,
+    fetch: async (url) => {
+      const file = path.join(ROOT, String(url).replace(/^\/+/, ""));
+      if (!fs.existsSync(file)) return { ok: false, status: 404, json: async () => null };
+      return { ok: true, status: 200, json: async () => JSON.parse(fs.readFileSync(file, "utf8")) };
+    },
+  };
+  vm.createContext(box);
+  vm.runInContext(fs.readFileSync(path.join(ROOT, "loader.js"), "utf8"), box);
+  await box.window.__DATA_READY;
+  const { ABOUT, CONTACT } = box.window;
+  if (!ABOUT || !ABOUT.pl || !ABOUT.pl.side || !CONTACT || !CONTACT.pl) {
+    throw new Error(
+      "loader.js nie zbudował treści O autorze / Kontaktu — sprawdź, czy plik " +
+      "albo content/settings/*.json się nie zmieniły."
+    );
+  }
+  return { ABOUT, CONTACT };
+}
+
 // Adresy widoków. Musi zgadzać się z PATH_BY_ROUTE / routeToPath w app.js.
 const PATHS = {
   pl: { home: "/", about: "/o-autorze/", contact: "/kontakt/", achievements: "/aktualnosci/" },
@@ -711,8 +740,9 @@ function newsJsonLd(news, lang) {
 
 /* ------------------------------------------------------------------ */
 
-function build() {
+async function build() {
   const i18n = loadI18n();
+  const { ABOUT, CONTACT } = await loadTexts();
   const projects = readJSON("content/projects.json").filter((p) => !p.hidden);
   const news = readJSON("content/news.json");
 
@@ -742,15 +772,28 @@ function build() {
       );
     }
     for (const p of projects) pages.push(projectPage(p, lang, projects));
+    // Biogram, CV i dane kontaktowe w kodzie źródłowym. Wcześniej obie te
+    // sekcje były w pliku puste — treść dorysowywał dopiero JavaScript, więc
+    // spis wystaw i publikacji nie istniał dla robotów, które go nie
+    // uruchamiają (Bing, GPTBot, ClaudeBot). A to najczęściej cytowana część
+    // strony artysty.
     pages.push(
       sectionPage("about", lang, "view-about", {
         ogType: "profile",
-        fill: { homeListPoster: homeGrid(projects, lang) },
+        fill: {
+          homeListPoster: homeGrid(projects, lang),
+          aboutBody: ABOUT[lang].body,
+          aboutSide: ABOUT[lang].side,
+        },
       })
     );
     pages.push(
       sectionPage("contact", lang, "view-contact", {
-        fill: { homeListPoster: homeGrid(projects, lang) },
+        fill: {
+          homeListPoster: homeGrid(projects, lang),
+          contactBody: CONTACT[lang].body,
+          contactSide: CONTACT[lang].side,
+        },
       })
     );
     pages.push(
@@ -862,4 +905,7 @@ function build() {
   console.log("  ✓ /sitemap.xml —", entries.length, "adresów");
 }
 
-build();
+build().catch((err) => {
+  console.error("✗", err.message);
+  process.exit(1);
+});

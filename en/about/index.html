@@ -180,8 +180,14 @@
         {
           "@type": "EducationalOrganization",
           "name": "Studium Fotografii ZPAF"
+        },
+        {
+          "@type": "EducationalOrganization",
+          "name": "Uniwersytet Otwarty Uniwersytetu Warszawskiego",
+          "url": "https://uo.uw.edu.pl/"
         }
       ],
+      "award": "Laureat XI FotoArtFestival — pokaz DIAS SHOW, Bielsko-Biała, 2025",
       "memberOf": {
         "@type": "Organization",
         "name": "Związek Polskich Artystów Fotografików (ZPAF)",
@@ -1591,6 +1597,14 @@
     opacity: 0.65;
   }
   .text-page .side ul { list-style: none; margin-bottom: 28px; }
+  /* Spis wystaw i publikacji ma pozycje łamiące się na dwie–trzy linie.
+     Bez odstępu nie widać, gdzie kończy się jedna, a zaczyna następna;
+     wcięcie wiszące dodatkowo cofa kontynuację pod pierwszą linię. */
+  .text-page .side li {
+    padding-left: 14px;
+    text-indent: -14px;
+  }
+  .text-page .side li + li { margin-top: 7px; }
   /* adresy (e-mail, Instagram) — normalna wielkość liter i większy rozmiar,
      to najważniejsza informacja na stronie kontaktu */
   .text-page .side a {
@@ -2503,8 +2517,26 @@
     <section class="view active" id="view-about">
       <div class="text-page">
         <h1 class="page-h" data-i18n="about.h">About</h1>
-        <div class="body" id="aboutBody"></div>
-        <div class="side" id="aboutSide"></div>
+        <div class="body" id="aboutBody"><img class="author-portrait" src="/images/about/portrait.webp" alt="Paweł Sypniewski — self-portrait" loading="lazy" decoding="async">
+<p>Paweł Sypniewski (born 1987, Warsaw) — visual artist, photographer and performer. Member of ZPAF (Union of Polish Art Photographers), Warsaw Branch. His practice consistently moves beyond the traditional frames of photography.</p>
+<p>He is interested in the relation between image and text, experimentation and provocation, and in combining photography with other artistic media. The breadth of his craft makes it difficult to place him within any single style.</p>
+<p>His portfolio spans documentary, reportage, constructed and studio work, alongside projects employing historical photographic processes, mixed media and collage. Drawing from conceptual art and the avant-garde, he produces works that resist simple categorisation.</p></div>
+        <div class="side" id="aboutSide"><h3>Membership</h3>
+<ul><li>ZPAF — Warsaw Branch, since 2025</li></ul>
+<h3>Courses and education</h3>
+<ul><li>Institute of Creative Photography, Opava — since 2025</li><li>Sputnik Photos Mentor Programme — 2023/2024, diploma supervisor: Michał Łuczak</li><li>ZPAF School of Photography — 2021/2024, diploma supervisor: Wojciech Klimala</li><li>Lighting in photography — Open University of Warsaw, studio of Paweł Żak, 2023</li><li>Photography course — Szkoła Karola, 2019/2021</li></ul>
+<h3>Solo exhibitions</h3>
+<ul><li>2025.12.03 — “Pamiętnik przetrwania” (Diary of Survival), MAL Gallery, Terminal Kultury Gocław, Warsaw</li><li>2025.09.05 — “W głowie się nie mieści”, Lokal Bródno, Warsaw</li></ul>
+<h3>Awards</h3>
+<ul><li>2025 — laureate of the 11th FotoArtFestival, DIAS SHOW screening, Bielsko-Biała</li></ul>
+<h3>Group exhibitions</h3>
+<ul><li>2026.07.06 — Opole Photography Festival, 35 Years of the Opava School of Photography, Opole</li><li>2025.03.28 — “Labirynt” slideshow, Rybnik Foto Festival</li><li>2024.10.13 — 2nd Choszczówka Opening</li><li>2024.09.19 — ZPAF Diplomas, Stara Galeria ZPAF, Warsaw</li><li>2024.05.18 — “Między kreacją a rzeczywistością”, Centrum Kultury Lublin (curator and participant)</li><li>2024.04.05 — “Wystaw się w CSW”, CSW Toruń</li><li>2024.01.13 — “Wykluczony”, ASP Dłużew Plein-air House</li><li>2023.10.13 — FotoOpen, Kubiszówka, FotoArtFestival</li><li>2023.09.27 — “10 przykazań” (10 Commandments), Galeria Obok ZPAF, Warsaw</li><li>2023.06.29 — 22nd Annual Exhibition of the ZPAF School of Photography, Stara Galeria ZPAF</li><li>2022.06.30 — 21st Annual Exhibition of the ZPAF School of Photography, Stara Galeria ZPAF</li><li>2022.05.14 — “...forma jedna treści wiele...”, Municipal Culture Centre, Ząbki</li></ul>
+<h3>Publications</h3>
+<ul><li>Catalogue of the 21st Annual Exhibition of the ZPAF School of Photography</li><li>Catalogue of the 22nd Annual Exhibition of the ZPAF School of Photography</li><li>FotoOpen X FotoArtFestival</li><li>“Wystaw się w CSW 2024” catalogue</li><li>“Co słychać?” newspaper</li><li>“Nasza Choszczówka” newspaper</li></ul>
+<h3>Practices</h3>
+<ul><li>Documentary</li><li>Constructed portrait</li><li>Alternative processes</li><li>Mixed media / collage</li><li>Performance</li></ul>
+<h3>Based in</h3>
+<ul><li>Warsaw, PL</li><li>Opava, CZ</li></ul></div>
       </div>
     </section>
 
