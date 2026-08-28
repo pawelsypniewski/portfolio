@@ -382,6 +382,10 @@ const DanieBook = (function () {
     }
   }
 
+  // Czas obrotu kartki — musi zgadzać się z `transition` na .book-leaf
+  // i z animacją `leaf-shade` w index.html.
+  const TURN_MS = 1200;
+
   function goDesktop(dir) {
     if (animating) return;
     if (dir > 0 && cur >= leaves) return;
@@ -390,12 +394,16 @@ const DanieBook = (function () {
     const idx = dir > 0 ? cur : cur - 1;
     const book = $b();
     const leaf = book.children[idx];
-    if (leaf) leaf.style.zIndex = 1000;
+    if (leaf) { leaf.style.zIndex = 1000; leaf.classList.add("turning"); }
     if (dir > 0) { if (leaf) leaf.classList.add("turned"); cur++; }
     else { if (leaf) leaf.classList.remove("turned"); cur--; }
     setShift(true);
     updateChrome();
-    setTimeout(() => { animating = false; applyZ(); }, 780);
+    setTimeout(() => {
+      animating = false;
+      if (leaf) leaf.classList.remove("turning");
+      applyZ();
+    }, TURN_MS + 40);
   }
 
   /* ---------- MOBILE (pojedyncza strona) ---------- */
@@ -428,20 +436,20 @@ const DanieBook = (function () {
     if (ni < 0 || ni >= mobilePages.length) return;
     animating = true;
     const card = $b().querySelector(".mpage");
-    card.style.transition = "transform 220ms ease-in";
-    card.style.transform = `rotateY(${dir > 0 ? -88 : 88}deg)`;
+    card.style.transition = "transform 340ms cubic-bezier(.45,.05,.25,1)";
+    card.style.transform = `rotateY(${dir > 0 ? -90 : 90}deg)`;
     setTimeout(() => {
       mIndex = ni;
       card.innerHTML = pageHTML(mobilePages[mIndex]);
       card.style.transition = "none";
-      card.style.transform = `rotateY(${dir > 0 ? 88 : -88}deg)`;
+      card.style.transform = `rotateY(${dir > 0 ? 90 : -90}deg)`;
       void card.offsetWidth;
       applyMobileSizing();
-      card.style.transition = "transform 220ms ease-out";
+      card.style.transition = "transform 340ms cubic-bezier(.45,.05,.25,1)";
       card.style.transform = "rotateY(0deg)";
       updateChrome();
-      setTimeout(() => { animating = false; }, 240);
-    }, 220);
+      setTimeout(() => { animating = false; }, 360);
+    }, 340);
   }
 
   /* ---------- wspólne ---------- */

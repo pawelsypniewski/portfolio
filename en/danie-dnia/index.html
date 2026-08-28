@@ -730,8 +730,8 @@
     align-items: center;
     justify-content: center;
     background: #0c0c0c;
-    padding: 40px 72px;
-    min-height: 520px;
+    padding: 24px 72px 34px;
+    min-height: 560px;
     overflow: hidden;
   }
   /* atrybut `hidden` musi naprawdę ukryć książkę — inaczej pusty box
@@ -743,7 +743,17 @@
     max-width: 1040px;
     /* dwie strony 1925x2665 obok siebie → proporcja rozkładówki */
     aspect-ratio: 3850 / 2665;
-    perspective: 2600px;
+    perspective: 1800px;
+  }
+  /* Rozkładówka ma stałe proporcje, więc przy szerokiej i niskiej kolumnie
+     wychodziła poza .proj-book — a tam `overflow: hidden` ucinał górę i dół
+     zdjęć. .proj-book jest kontenerem zapytań (container-type: size), dzięki
+     czemu szerokość liczymy TAKŻE z dostępnej wysokości (100cqh) i bierzemy
+     wartość mniejszą. Strona zawsze mieści się w całości.
+     Tylko desktop — na mobile widać pojedynczą stronę o innych regułach. */
+  @media (min-width: 821px) {
+    .proj-book { container-type: size; }
+    .book-stage { width: min(100%, 1040px, calc(100cqh * 1.4447)); }
   }
   .book {
     position: absolute;
@@ -751,7 +761,7 @@
     transform-style: preserve-3d;
     /* przesunięcie tak, by widoczna była rozkładówka wyśrodkowana;
        w stanie zamkniętym (okładka) JS dosuwa do środka */
-    transition: transform 700ms cubic-bezier(.2,.7,.2,1);
+    transition: transform 1200ms cubic-bezier(.45,.05,.25,1);
   }
   .book-leaf {
     position: absolute;
@@ -761,7 +771,7 @@
     height: 100%;
     transform-origin: left center;
     transform-style: preserve-3d;
-    transition: transform 760ms cubic-bezier(.3,.65,.25,1);
+    transition: transform 1200ms cubic-bezier(.45,.05,.25,1);
   }
   .book-leaf.turned { transform: rotateY(-180deg); }
   .leaf-face {
@@ -782,10 +792,33 @@
     pointer-events: none;
   }
   .leaf-front::after {
-    background: linear-gradient(to left, rgba(0,0,0,0) 88%, rgba(0,0,0,.28) 100%);
+    background: linear-gradient(to left, rgba(0,0,0,0) 82%, rgba(0,0,0,.42) 100%);
   }
   .leaf-back::after {
-    background: linear-gradient(to right, rgba(0,0,0,0) 88%, rgba(0,0,0,.28) 100%);
+    background: linear-gradient(to right, rgba(0,0,0,0) 82%, rgba(0,0,0,.42) 100%);
+  }
+  /* Cień przesuwający się po kartce w trakcie obrotu. Bez niego płaski
+     rotateY jest ledwo czytelny — to on sprawia, że widać ruch papieru.
+     Klasę `turning` zdejmuje JS po zakończeniu animacji. */
+  .leaf-face::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0;
+    background: linear-gradient(to left, rgba(0,0,0,.8), rgba(0,0,0,0) 62%);
+  }
+  .leaf-back::before {
+    background: linear-gradient(to right, rgba(0,0,0,.8), rgba(0,0,0,0) 62%);
+  }
+  .book-leaf.turning .leaf-face::before {
+    animation: leaf-shade 1200ms cubic-bezier(.45,.05,.25,1);
+  }
+  @keyframes leaf-shade {
+    0%   { opacity: 0; }
+    50%  { opacity: 0.9; }
+    100% { opacity: 0; }
   }
 
   /* --- strony książki --- */
