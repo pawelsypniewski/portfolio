@@ -18,17 +18,12 @@ const LS = {
   lang: "ps-portfolio-lang"
 };
 
-function loadPrefs() {
-  try {
-    const lang = localStorage.getItem(LS.lang);
-    if (lang === "pl" || lang === "en") state.lang = lang;
-  } catch (e) { /* localStorage może być niedostępny — ignoruj */ }
-  // Parametr ?lang= w URL (deklarowany w hreflang) nadpisuje zapamiętany wybór
-  try {
-    const urlLang = new URLSearchParams(location.search).get("lang");
-    if (urlLang === "pl" || urlLang === "en") state.lang = urlLang;
-  } catch (e) {}
-}
+// O języku decyduje ADRES (/labirynt/ vs /en/labirynt/), nie zapamiętany
+// wybór — inaczej polska strona potrafiłaby wyświetlić się po angielsku,
+// zaprzeczając własnemu canonical i myląc zarówno Google, jak i człowieka,
+// który kliknął w polski link. Zapamiętany wybór zostaje w localStorage
+// (przełącznik go zapisuje), ale nie nadpisuje tego, co mówi adres.
+function loadPrefs() { /* język ustawia parseRoute() na podstawie adresu */ }
 
 function savePref(key, value) {
   try { localStorage.setItem(key, value); } catch (e) {}
@@ -53,15 +48,28 @@ function savePref(key, value) {
    w pasku adresu na nowy odpowiednik.
    ============================================================ */
 const PATH_BY_ROUTE = {
-  home:         "/",
-  about:        "/o-autorze/",
-  contact:      "/kontakt/",
-  achievements: "/aktualnosci/",
+  pl: {
+    home:         "/",
+    about:        "/o-autorze/",
+    contact:      "/kontakt/",
+    achievements: "/aktualnosci/",
+  },
+  en: {
+    home:         "/en/",
+    about:        "/en/about/",
+    contact:      "/en/contact/",
+    achievements: "/en/news/",
+  },
 };
+// Ścieżka (bez ukośników na brzegach) → widok i język
 const ROUTE_BY_PATH = {
-  "o-autorze":   "about",
-  "kontakt":     "contact",
-  "aktualnosci": "achievements",
+  "o-autorze":   { route: "about",        lang: "pl" },
+  "kontakt":     { route: "contact",      lang: "pl" },
+  "aktualnosci": { route: "achievements", lang: "pl" },
+  "en":          { route: "home",         lang: "en" },
+  "en/about":    { route: "about",        lang: "en" },
+  "en/contact":  { route: "contact",      lang: "en" },
+  "en/news":     { route: "achievements", lang: "en" },
 };
 // Stare hashe → nazwa widoku (PL i EN slug dla osiągnięć — zachowujemy oba)
 const ROUTE_BY_HASH = {
@@ -76,40 +84,66 @@ function isProjectSlug(slug) {
 }
 
 // Nazwa widoku → adres. Używane i przy zmianie URL-a, i przy canonical/OG.
-function routeToPath(route, slug) {
-  if (route === "project" && slug) return "/" + slug + "/";
-  return PATH_BY_ROUTE[route] || "/";
+// Adresy projektów mają w obu wersjach ten sam slug — to nazwa własna cyklu,
+// a angielskie słowa kluczowe niesie tytuł i opis strony.
+function routeToPath(route, slug, lang) {
+  const L = lang || state.lang;
+  if (route === "project" && slug) return (L === "en" ? "/en/" : "/") + slug + "/";
+  return (PATH_BY_ROUTE[L] || PATH_BY_ROUTE.pl)[route] || (L === "en" ? "/en/" : "/");
 }
 
-// Adres → nazwa widoku. Zwraca null dla ścieżek, których nie znamy
+// Adres → widok i język. Zwraca null dla ścieżek, których nie znamy
 // (np. /google98eb…html) — takie linki zostawiamy przeglądarce.
 function routeFromPath(pathname) {
   const seg = (pathname || "/").replace(/^\/+|\/+$/g, "");
-  if (!seg) return { route: "home" };
-  if (ROUTE_BY_PATH[seg]) return { route: ROUTE_BY_PATH[seg] };
-  if (isProjectSlug(seg)) return { route: "project", slug: seg };
+  if (!seg) return { route: "home", lang: "pl" };
+  if (ROUTE_BY_PATH[seg]) return Object.assign({}, ROUTE_BY_PATH[seg]);
+  if (isProjectSlug(seg)) return { route: "project", slug: seg, lang: "pl" };
+  if (seg.startsWith("en/") && isProjectSlug(seg.slice(3))) {
+    return { route: "project", slug: seg.slice(3), lang: "en" };
+  }
   return null;
 }
 
 function parseRoute() {
+  // Stary adres ?lang=en (deklarowany kiedyś w hreflang) — dziś wersja
+  // angielska ma własne ścieżki, więc traktujemy go jak link do podmiany.
+  let paramLang = null;
+  try {
+    const v = new URLSearchParams(window.location.search).get("lang");
+    if (v === "pl" || v === "en") paramLang = v;
+  } catch (e) { /* nietypowy URL — ignoruj */ }
+
+  const withLang = (r) => {
+    // Adres rozstrzyga o języku. Wyjątek: ?lang= na ścieżce bez przedrostka
+    // /en/ — to stary link, więc honorujemy parametr i podmieniamy adres.
+    if (paramLang && paramLang !== r.lang) {
+      return Object.assign({}, r, { lang: paramLang, legacy: true });
+    }
+    return r;
+  };
+
   // 1. Ścieżka — nowy, indeksowalny adres
   const fromPath = routeFromPath(window.location.pathname);
   if (fromPath) {
     // Ktoś wszedł na „/” ze starym hashem — obsłuż go niżej, nie jako home
-    if (!(fromPath.route === "home" && window.location.hash)) return fromPath;
+    if (!(fromPath.route === "home" && window.location.hash)) return withLang(fromPath);
   }
   // 2. Stary hash (#/labirynt) — linki sprzed przejścia na prawdziwe adresy
   const hash = (window.location.hash || "").replace(/^#\/?/, "");
   if (hash) {
-    if (ROUTE_BY_HASH[hash]) return { route: ROUTE_BY_HASH[hash], legacy: true };
-    if (isProjectSlug(hash)) return { route: "project", slug: hash, legacy: true };
+    const lang = paramLang || "pl";
+    if (ROUTE_BY_HASH[hash]) return { route: ROUTE_BY_HASH[hash], lang, legacy: true };
+    if (isProjectSlug(hash)) return { route: "project", slug: hash, lang, legacy: true };
   }
-  return fromPath || { route: "home" };
+  return withLang(fromPath || { route: "home", lang: "pl" });
 }
 
 function writeUrl(route, slug) {
-  const target = routeToPath(route, slug) + window.location.search;
-  if (window.location.pathname + window.location.search !== target || window.location.hash) {
+  // Bez ?lang= — o języku mówi sama ścieżka (/en/…), a duplikat adresu
+  // z parametrem byłby dla wyszukiwarki osobnym, zbędnym URL-em.
+  const target = routeToPath(route, slug);
+  if (window.location.pathname !== target || window.location.search || window.location.hash) {
     history.pushState(null, "", target);
   }
 }
@@ -124,9 +158,8 @@ function applyI18n() {
     const dict = window.I18N[state.lang] || {};
     if (dict[k] != null) el.textContent = dict[k];
   });
-  // sidebar lang buttons
-  $$(".sidefoot .langs button").forEach(b =>
-    b.classList.toggle("active", b.dataset.lang === state.lang));
+  // stan przełącznika PL/EN ustawia updateNavLinks() — zależy od adresu,
+  // nie od samych tekstów interfejsu
 }
 
 /* ============================================================
@@ -842,7 +875,9 @@ function updateSEO(route) {
       : "Limited-edition artist prints available. Get in touch by email for sizes and pricing.";
     url   = BASE_URL + routeToPath("contact");
   } else {
-    title = "Paweł Sypniewski — Fotograf i Artysta Wizualny | Warszawa, ZPAF";
+    title = L === "pl"
+      ? "Paweł Sypniewski — Fotograf i Artysta Wizualny | Warszawa, ZPAF"
+      : "Paweł Sypniewski — Photographer and Visual Artist | Warsaw, ZPAF";
     desc  = L === "pl"
       ? "Paweł Sypniewski — fotograf i artysta wizualny z Warszawy. Portfolio prac dokumentalnych, reportażowych i kreacyjnych. Członek ZPAF, Okręg Warszawski."
       : "Paweł Sypniewski — photographer and visual artist from Warsaw. Documentary, reportage and constructed works. Member of ZPAF, Warsaw Branch.";
@@ -860,6 +895,23 @@ function updateSEO(route) {
   // canonical do bieżącego widoku
   const canonical = document.querySelector('link[rel="canonical"]');
   if (canonical && url) canonical.setAttribute("href", url);
+
+  // Wersja językowa strony — dla Facebooka/LinkedIna i dla wyszukiwarek
+  setMeta('meta[property="og:locale"]', L === "pl" ? "pl_PL" : "en_US");
+  setMeta('meta[property="og:locale:alternate"]', L === "pl" ? "en_US" : "pl_PL");
+  const contentLang = document.querySelector('meta[http-equiv="content-language"]');
+  if (contentLang) contentLang.setAttribute("content", L);
+
+  // hreflang — para adresów siostrzanych dla bieżącego widoku
+  const selfPl = BASE_URL + routeToPath(route, state.projectSlug, "pl");
+  const selfEn = BASE_URL + routeToPath(route, state.projectSlug, "en");
+  const setAlt = (lang, href) => {
+    const el = document.querySelector(`link[rel="alternate"][hreflang="${lang}"]`);
+    if (el) el.setAttribute("href", href);
+  };
+  setAlt("pl", selfPl);
+  setAlt("en", selfEn);
+  setAlt("x-default", selfPl);
 
   // Google Analytics 4 — virtual page_view dla SPA
   if (typeof window.gtag === "function" && url) {
@@ -887,6 +939,7 @@ function setRoute(route, opts = {}) {
 
   // SEO: dynamic title/description per view
   updateSEO(route);
+  updateNavLinks();
 
   // URL sync — chyba że woła nas popstate (back/forward)
   if (!opts.skipUrl) {
@@ -911,18 +964,45 @@ function navigateProject(slug, opts = {}) {
   setRoute("project", opts);
 }
 
-function setLang(lang) {
+// Przerysowanie całej strony w danym języku — bez ruszania adresu.
+function applyLang(lang) {
   state.lang = lang;
+  document.documentElement.lang = lang;
   applyI18n();
   renderHome();
   renderTextPages();
   renderAchievements();
   if (state.route === "project") renderProject();
-  // Update SEO meta when language changes
-  updateSEO(state.route);
-  // Aktualizuj atrybut lang dokumentu dla wyszukiwarek
-  document.documentElement.lang = lang;
   savePref(LS.lang, lang);
+}
+
+// Zmiana języka to przejście pod adres siostrzany (/labirynt/ ↔ /en/labirynt/),
+// a nie przełącznik w miejscu: każda wersja językowa ma własny, indeksowalny
+// adres i własny canonical.
+function setLang(lang) {
+  if (lang !== "pl" && lang !== "en") return;
+  if (lang === state.lang) return;
+  applyLang(lang);
+  setRoute(state.route, { skipScroll: true });
+}
+
+// Menu i przełącznik PL/EN to prawdziwe linki, a ich adresy zależą od tego,
+// gdzie jesteśmy i w jakim języku — odświeżamy je przy każdej zmianie widoku.
+// Bez tego po przełączeniu na angielski menu wciąż prowadziłoby na polskie
+// adresy i jedno kliknięcie cofałoby język z powrotem.
+function updateNavLinks() {
+  $$("[data-lang]").forEach(el => {
+    const l = el.dataset.lang;
+    el.setAttribute("href", routeToPath(state.route, state.projectSlug, l));
+    el.setAttribute("hreflang", l);
+    el.classList.toggle("active", l === state.lang);
+  });
+  $$("a[data-route]").forEach(el => {
+    const r = el.dataset.route;
+    if (PATH_BY_ROUTE[state.lang] && PATH_BY_ROUTE[state.lang][r]) {
+      el.setAttribute("href", routeToPath(r, null, state.lang));
+    }
+  });
 }
 
 /* ============================================================
@@ -947,13 +1027,11 @@ function init() {
     if (!parsed) return;      // nieznana ścieżka — niech przeglądarka zrobi swoje
 
     e.preventDefault();
+    // Link może prowadzić do innej wersji językowej (przełącznik PL/EN)
+    if (parsed.lang && parsed.lang !== state.lang) applyLang(parsed.lang);
     if (parsed.route === "project") navigateProject(parsed.slug);
     else setRoute(parsed.route);
   });
-
-  // langs (sidebar)
-  $$("[data-lang]").forEach(b =>
-    b.addEventListener("click", () => setLang(b.dataset.lang)));
 
   // project nav arrows
   $("#pjPrev").addEventListener("click", navProjectPrev);
@@ -1072,6 +1150,7 @@ function init() {
       return;
     }
     const parsed = parseRoute();
+    if (parsed.lang && parsed.lang !== state.lang) applyLang(parsed.lang);
     if (parsed.route === "project" && parsed.slug) {
       state.projectSlug = parsed.slug;
       renderProject();
@@ -1081,13 +1160,16 @@ function init() {
     }
   });
 
-  // 1. Załaduj zapisane preferencje (język)
+  // 1. Sparsuj URL — co użytkownik chce zobaczyć (odświeżenie / link z zewnątrz)
   loadPrefs();
-
-  // 2. Sparsuj URL — co użytkownik chce zobaczyć (refresh / shared link)
   const initial = parseRoute();
 
-  // 3. Pierwszy render z odpowiednim językiem
+  // 2. Język bierzemy z adresu i ustawiamy PRZED pierwszym rysowaniem,
+  //    inaczej strona mignęłaby po polsku, zanim przełączy się na angielski.
+  state.lang = initial.lang || "pl";
+  document.documentElement.lang = state.lang;
+
+  // 3. Pierwszy render we właściwym języku
   applyI18n();
   renderHome();
   renderTextPages();
@@ -1098,7 +1180,7 @@ function init() {
   if (initial.legacy) {
     history.replaceState(
       null, "",
-      routeToPath(initial.route, initial.slug) + window.location.search
+      routeToPath(initial.route, initial.slug, state.lang)
     );
   }
 
