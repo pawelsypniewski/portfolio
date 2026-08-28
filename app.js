@@ -1329,10 +1329,9 @@ function setCookieConsent(value) {
 function applyConsentToGtag(granted) {
   if (typeof window.gtag !== "function") return;
   const status = granted ? "granted" : "denied";
+  // Zgody reklamowe pozostają odrzucone niezależnie od decyzji w bannerze —
+  // strona ich nie używa (patrz allow_google_signals w index.html).
   window.gtag("consent", "update", {
-    "ad_storage":              status,
-    "ad_user_data":            status,
-    "ad_personalization":      status,
     "analytics_storage":       status,
     "functionality_storage":   status,
     "personalization_storage": status

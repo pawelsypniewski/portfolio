@@ -56,9 +56,12 @@
     var granted = stored === 'granted';
 
     gtag('consent', 'default', {
-      'ad_storage':              granted ? 'granted' : 'denied',
-      'ad_user_data':            granted ? 'granted' : 'denied',
-      'ad_personalization':      granted ? 'granted' : 'denied',
+      // Zgody reklamowe zostają na „denied" na stałe. Strona nie prowadzi
+      // kampanii Google Ads ani remarketingu, a banner obiecuje wyłącznie
+      // analitykę ruchu — nie prosimy więc o nic ponad to, czego używamy.
+      'ad_storage':              'denied',
+      'ad_user_data':            'denied',
+      'ad_personalization':      'denied',
       'analytics_storage':       granted ? 'granted' : 'denied',
       'functionality_storage':   granted ? 'granted' : 'denied',
       'personalization_storage': granted ? 'granted' : 'denied',
@@ -69,7 +72,14 @@
   gtag('js', new Date());
   gtag('config', 'G-H7VWHM3TZZ', {
     send_page_view: false,
-    anonymize_ip: true
+    anonymize_ip: true,
+    // Wyłącza sygnały reklamowe Google (remarketing, śledzenie między
+    // urządzeniami). Bez tego Analytics odpytywał stats.g.doubleclick.net
+    // i google.pl/ads — żądania i tak blokowała polityka bezpieczeństwa
+    // (CSP), zostawiając błędy w konsoli. Statystyki odwiedzin, źródeł
+    // ruchu i najczęściej oglądanych prac działają bez zmian.
+    allow_google_signals: false,
+    allow_ad_personalization_signals: false
   });
 </script>
 <meta name="format-detection" content="telephone=no">
