@@ -216,6 +216,16 @@ function applyHead(html, page) {
       `<meta name="robots" content="noindex, follow">`, "meta robots");
   }
 
+  // Węzeł galerii w grafie witryny wymieniał prace, ale bez adresów — nie
+  // było dokąd z niego pójść. Teraz każda praca wskazuje na swoją podstronę
+  // i swoje zdjęcie. Opisy po polsku są pisane ręcznie w index.html (są
+  // bogatsze niż podpisy w treści), więc zostawiamy je; wersja angielska
+  // bierze nazwę, gatunek i opis z content/projects.json, żeby nie trzymać
+  // angielskich tekstów w drugim miejscu.
+  if (page.gallery) {
+    html = enrichGallery(html, page.gallery, page.lang);
+  }
+
   // Dane strukturalne właściwe dla tej podstrony — dokładane obok
   // istniejącego grafu (Person / WebSite), który opisuje całą witrynę.
   if (page.jsonLd) {
@@ -228,9 +238,56 @@ function applyHead(html, page) {
   return html;
 }
 
+// Wzbogaca węzeł ImageGallery w grafie witryny o adresy podstron i zdjęcia.
+// Prace dopasowujemy po nazwie polskiej; gdy któraś nie pasuje, zostawiamy
+// ją nietkniętą i mówimy o tym głośno, zamiast po cichu psuć dane.
+function enrichGallery(html, projects, lang) {
+  const wgTytulu = new Map(projects.map((p) => [p.title.pl, p]));
+  const blok = /<script type="application\/ld\+json">([\s\S]*?)<\/script>/;
+  const m = blok.exec(html);
+  if (!m) throw new Error("Nie znaleziono w index.html: grafu danych strukturalnych");
+
+  const graf = JSON.parse(m[1]);
+  const galeria = (graf["@graph"] || []).find((n) => n["@type"] === "ImageGallery");
+  if (!galeria) throw new Error("W grafie danych strukturalnych brakuje węzła ImageGallery");
+
+  galeria.url = BASE + pathFor("home", null, lang);
+  galeria.inLanguage = INLANG[lang];
+  galeria.hasPart = (galeria.hasPart || []).map((cz) => {
+    const p = wgTytulu.get(cz.name);
+    if (!p) {
+      console.warn(`  ! praca „${cz.name}" z danych strukturalnych nie ma odpowiednika w content/projects.json — pomijam`);
+      return cz;
+    }
+    const out = Object.assign({}, cz, {
+      "@id": `${BASE}${pathFor("project", p.slug, lang)}#work`,
+      url: BASE + pathFor("project", p.slug, lang),
+      image: absUrl(p.thumb || p.images[0]),
+    });
+    if (lang === "en") {
+      out.name = p.title.en;
+      out.genre = p.category.en;
+      out.description = String((p.description && p.description.en) || p.caption.en)
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+    return out;
+  });
+
+  const nowy = JSON.stringify(graf, null, 2);
+  return html.replace(blok, () => `<script type="application/ld+json">\n${nowy}\n</script>`);
+}
+
 /* ------------------------------------------------------------------ */
 /* Podmiany w <body> — który widok jest widoczny i co w nim jest       */
 /* ------------------------------------------------------------------ */
+
+// Widok → klucz nagłówka sekcji w szablonie
+const HEADING_KEY = {
+  "view-about": "about.h",
+  "view-contact": "contact.h",
+  "view-achievements": "achievements.h",
+};
 
 function applyBody(html, page, i18n) {
   // Teksty interfejsu w języku strony. Bez tego angielskie podstrony miałyby
@@ -270,13 +327,23 @@ function applyBody(html, page, i18n) {
       `<section class="view active" id="${page.viewId}">`, `widok ${page.viewId}`);
   }
 
-  // Dokładnie jeden <h1> z sensowną treścią: na podstronie projektu jest
-  // nim tytuł cyklu, więc ukryty nagłówek strony głównej schodzi do <p>.
+  // Dokładnie JEDEN <h1> na podstronę. Wszystkie widoki żyją w jednym pliku,
+  // więc bez tego każda strona miała ich kilka naraz. Nagłówkiem głównym jest
+  // ten, który należy do widoku tej podstrony; ukryty nagłówek strony głównej
+  // schodzi wtedy do <p> (dalej czyta go czytnik ekranu, ale nie konkuruje).
+  if (page.viewId !== "view-home") {
+    html = replaceOnce(html, /<h1 class="sr-only"([^>]*)>([\s\S]*?)<\/h1>/,
+      (_m, attrs, inner) => `<p class="sr-only"${attrs}>${inner}</p>`, "ukryty h1 strony głównej");
+  }
   if (page.viewId === "view-project") {
-    html = replaceOnce(html, /<h1 class="sr-only">([\s\S]*?)<\/h1>/,
-      (_m, inner) => `<p class="sr-only">${inner}</p>`, "ukryty h1 strony głównej");
     html = replaceOnce(html, /<(?:div|h1) class="pj-title" id="pjTitle">[\s\S]*?<\/(?:div|h1)>/,
       `<h1 class="pj-title" id="pjTitle">${escapeHtml(page.project.title)}</h1>`, "#pjTitle");
+  } else if (HEADING_KEY[page.viewId]) {
+    const key = HEADING_KEY[page.viewId].replace(/\./g, "\\.");
+    html = replaceOnce(html,
+      new RegExp(`<h2 class="page-h" data-i18n="${key}">([^<]*)</h2>`),
+      (_m, inner) => `<h1 class="page-h" data-i18n="${HEADING_KEY[page.viewId]}">${inner}</h1>`,
+      `nagłówek widoku ${page.viewId}`);
   }
 
   for (const [id, value] of Object.entries(page.fill || {})) {
@@ -510,6 +577,7 @@ function build() {
   // skrypt uruchomiono (podmiana jest w kółko taka sama).
   const plHome = sectionPage("home", "pl", "view-home", {
     fill: { homeListPoster: homeGrid(projects, "pl") },
+    gallery: projects,
   });
   const template = applyBody(
     applyHead(fs.readFileSync(path.join(ROOT, "index.html"), "utf8"), plHome),
@@ -549,6 +617,7 @@ function build() {
   }
 
   for (const page of pages) {
+    page.gallery = projects;
     const html = applyBody(applyHead(template, page), page, i18n);
     const dir = path.join(ROOT, page.path);
     fs.mkdirSync(dir, { recursive: true });
@@ -558,6 +627,7 @@ function build() {
 
   // 404 — GitHub Pages podaje ten plik przy nieznanym adresie
   const nf = sectionPage("home", "pl", "view-home", {
+    gallery: projects,
     path: "/404.html",
     title: `Nie znaleziono strony — ${AUTHOR}`,
     description: "Ten adres nie istnieje. Przejdź do portfolio.",
