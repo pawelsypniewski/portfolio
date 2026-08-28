@@ -35,37 +35,82 @@ function savePref(key, value) {
 }
 
 /* ============================================================
-   HASH ROUTING — URL ↔ state synchronization
+   ROUTING — prawdziwe adresy (URL ↔ stan widoku)
    Przykłady URL-i:
-     /              → home
-     /#/about       → about
-     /#/contact     → contact
-     /#/labirynt    → project labirynt
+     /                  → home
+     /o-autorze/        → about
+     /kontakt/          → contact
+     /aktualnosci/      → achievements
+     /labirynt/         → projekt „Labirynt”
+
+   Każdy z tych adresów to osobny plik wygenerowany przez
+   tools/build-pages.js — dzięki temu Google widzi je jako osobne
+   strony (wcześniej wszystko żyło pod „/” za znakiem #, którego
+   wyszukiwarki nie indeksują).
+
+   ZGODNOŚĆ WSTECZNA: stare linki z hashem (/#/labirynt, /#/about)
+   nadal działają — parseRoute() je rozumie, a init() podmienia je
+   w pasku adresu na nowy odpowiednik.
    ============================================================ */
-function parseHash() {
-  const hash = (window.location.hash || "").replace(/^#\/?/, "");
-  if (!hash) return { route: "home" };
-  if (hash === "about" || hash === "contact") return { route: hash };
-  // PL i EN slug dla osiągnięć (zachowujemy oba)
-  if (hash === "achievements" || hash === "osiagniecia") return { route: "achievements" };
-  // Sprawdzamy czy to slug projektu
-  if (window.PROJECTS && window.PROJECTS.find(p => p.slug === hash)) {
-    return { route: "project", slug: hash };
-  }
-  return { route: "home" };
+const PATH_BY_ROUTE = {
+  home:         "/",
+  about:        "/o-autorze/",
+  contact:      "/kontakt/",
+  achievements: "/aktualnosci/",
+};
+const ROUTE_BY_PATH = {
+  "o-autorze":   "about",
+  "kontakt":     "contact",
+  "aktualnosci": "achievements",
+};
+// Stare hashe → nazwa widoku (PL i EN slug dla osiągnięć — zachowujemy oba)
+const ROUTE_BY_HASH = {
+  about:        "about",
+  contact:      "contact",
+  achievements: "achievements",
+  osiagniecia:  "achievements",
+};
+
+function isProjectSlug(slug) {
+  return !!(window.PROJECTS && window.PROJECTS.find(p => p.slug === slug));
 }
 
-function writeHash(route, slug) {
-  let target = "";
-  if (route === "about")             target = "#/about";
-  else if (route === "contact")      target = "#/contact";
-  else if (route === "achievements") target = "#/achievements";
-  else if (route === "project" && slug) target = "#/" + slug;
-  // home → bez hasha
-  const current = window.location.hash;
-  if (current !== target) {
-    if (target) history.pushState(null, "", target);
-    else        history.pushState(null, "", window.location.pathname + window.location.search);
+// Nazwa widoku → adres. Używane i przy zmianie URL-a, i przy canonical/OG.
+function routeToPath(route, slug) {
+  if (route === "project" && slug) return "/" + slug + "/";
+  return PATH_BY_ROUTE[route] || "/";
+}
+
+// Adres → nazwa widoku. Zwraca null dla ścieżek, których nie znamy
+// (np. /google98eb…html) — takie linki zostawiamy przeglądarce.
+function routeFromPath(pathname) {
+  const seg = (pathname || "/").replace(/^\/+|\/+$/g, "");
+  if (!seg) return { route: "home" };
+  if (ROUTE_BY_PATH[seg]) return { route: ROUTE_BY_PATH[seg] };
+  if (isProjectSlug(seg)) return { route: "project", slug: seg };
+  return null;
+}
+
+function parseRoute() {
+  // 1. Ścieżka — nowy, indeksowalny adres
+  const fromPath = routeFromPath(window.location.pathname);
+  if (fromPath) {
+    // Ktoś wszedł na „/” ze starym hashem — obsłuż go niżej, nie jako home
+    if (!(fromPath.route === "home" && window.location.hash)) return fromPath;
+  }
+  // 2. Stary hash (#/labirynt) — linki sprzed przejścia na prawdziwe adresy
+  const hash = (window.location.hash || "").replace(/^#\/?/, "");
+  if (hash) {
+    if (ROUTE_BY_HASH[hash]) return { route: ROUTE_BY_HASH[hash], legacy: true };
+    if (isProjectSlug(hash)) return { route: "project", slug: hash, legacy: true };
+  }
+  return fromPath || { route: "home" };
+}
+
+function writeUrl(route, slug) {
+  const target = routeToPath(route, slug) + window.location.search;
+  if (window.location.pathname + window.location.search !== target || window.location.hash) {
+    history.pushState(null, "", target);
   }
 }
 
@@ -97,7 +142,7 @@ function renderHome() {
     <article class="cell c${i+1}" data-slug="${p.slug}" itemscope itemtype="https://schema.org/CreativeWork">
       <div class="num">${p.no} / ${L==="pl"?"PRACE":"WORKS"}</div>
       <div class="title">
-        <h2 class="title-text" itemprop="name">${p.title[L]}</h2>
+        <h2 class="title-text"><a href="/${p.slug}/" itemprop="url"><span itemprop="name">${p.title[L]}</span></a></h2>
         <div class="thumb-frame" role="img" aria-label="${p.title[L]} — podgląd"></div>
       </div>
       <div class="meta"><span itemprop="dateCreated">${p.year}</span> · <span itemprop="contentLocation">${p.place[L]}</span> · ${p.works} ${L==="pl"?"prac":"works"}</div>
@@ -138,9 +183,15 @@ function renderHome() {
     });
   });
 
-  // Click handlers
+  // Click handlers — kliknięcie w dowolne miejsce kafelka otwiera projekt.
+  // Kliknięcie w sam tytuł jest zwykłym linkiem: obsługuje je globalny
+  // handler linków wewnętrznych (init), więc tutaj je pomijamy, żeby
+  // nawigacja nie wykonała się dwa razy.
   $$(".home-poster .cell").forEach(el => {
-    el.onclick = () => navigateProject(el.dataset.slug);
+    el.onclick = (e) => {
+      if (e.target.closest("a")) return;
+      navigateProject(el.dataset.slug);
+    };
   });
 }
 
@@ -476,10 +527,10 @@ function renderProject() {
   const nextBtn = $("#pjProjNext");
   if (prevBtn && nextBtn) {
     prevBtn.innerHTML = `<span class="pn-arrow">←</span> <span class="pn-label">${prev.no} ${prev.title[L]}</span>`;
-    prevBtn.onclick = () => navigateProject(prev.slug);
+    prevBtn.setAttribute("href", routeToPath("project", prev.slug));
     prevBtn.setAttribute("aria-label", (L==="pl"?"Poprzedni projekt: ":"Previous project: ") + prev.title[L]);
     nextBtn.innerHTML = `<span class="pn-label">${next.no} ${next.title[L]}</span> <span class="pn-arrow">→</span>`;
-    nextBtn.onclick = () => navigateProject(next.slug);
+    nextBtn.setAttribute("href", routeToPath("project", next.slug));
     nextBtn.setAttribute("aria-label", (L==="pl"?"Następny projekt: ":"Next project: ") + next.title[L]);
   }
 
@@ -622,7 +673,7 @@ function openLightbox(images, index, opts = {}) {
   $("#lbCounter").textContent =
     `${String(lbIndex+1).padStart(2,"0")} / ${String(lbImages.length).padStart(2,"0")}`;
   if (!wasOpen) {
-    history.pushState({ lb: true }, "", window.location.hash || window.location.pathname);
+    history.pushState({ lb: true }, "", window.location.href);
     lbHistoryEntry = true;
   }
   lb.classList.add("active");
@@ -764,7 +815,7 @@ function updateSEO(route) {
         ? p.description[L].replace(/\s+/g, " ").trim()
         : p.caption[L];
       desc  = seoSrc.length > 160 ? seoSrc.substring(0, 157).trimEnd() + "…" : seoSrc;
-      url   = `${BASE_URL}/#/${p.slug}`;
+      url   = BASE_URL + routeToPath("project", p.slug);
     }
   } else if (route === "about") {
     title = L === "pl"
@@ -773,7 +824,7 @@ function updateSEO(route) {
     desc  = L === "pl"
       ? "Paweł Sypniewski (ur. 1987) — fotograf i artysta wizualny z Warszawy, członek ZPAF. Edukacja: ITF Opawa, Sputnik Photos."
       : "Paweł Sypniewski (b. 1987) — photographer and visual artist from Warsaw, ZPAF member. Education: ITF Opava, Sputnik Photos.";
-    url   = `${BASE_URL}/#/about`;
+    url   = BASE_URL + routeToPath("about");
   } else if (route === "achievements") {
     title = L === "pl"
       ? "Aktualności — Paweł Sypniewski"
@@ -781,7 +832,7 @@ function updateSEO(route) {
     desc  = L === "pl"
       ? "Aktualne wystawy, pokazy festiwalowe i wydarzenia z udziałem Pawła Sypniewskiego — fotografa i artysty wizualnego z Warszawy."
       : "Current exhibitions, festival screenings and events featuring Paweł Sypniewski — photographer and visual artist based in Warsaw.";
-    url   = `${BASE_URL}/#/achievements`;
+    url   = BASE_URL + routeToPath("achievements");
   } else if (route === "contact") {
     title = L === "pl"
       ? "Kontakt — Paweł Sypniewski"
@@ -789,13 +840,13 @@ function updateSEO(route) {
     desc  = L === "pl"
       ? "Limitowane odbitki autorskie. Skontaktuj się mailowo w sprawie nakładu, formatów i cen."
       : "Limited-edition artist prints available. Get in touch by email for sizes and pricing.";
-    url   = `${BASE_URL}/#/contact`;
+    url   = BASE_URL + routeToPath("contact");
   } else {
     title = "Paweł Sypniewski — Fotograf i Artysta Wizualny | Warszawa, ZPAF";
     desc  = L === "pl"
       ? "Paweł Sypniewski — fotograf i artysta wizualny z Warszawy. Portfolio prac dokumentalnych, reportażowych i kreacyjnych. Członek ZPAF, Okręg Warszawski."
       : "Paweł Sypniewski — photographer and visual artist from Warsaw. Documentary, reportage and constructed works. Member of ZPAF, Warsaw Branch.";
-    url   = `${BASE_URL}/`;
+    url   = BASE_URL + routeToPath("home");
   }
 
   if (title) document.title = title;
@@ -838,8 +889,8 @@ function setRoute(route, opts = {}) {
   updateSEO(route);
 
   // URL sync — chyba że woła nas popstate (back/forward)
-  if (!opts.skipHash) {
-    writeHash(route, state.projectSlug);
+  if (!opts.skipUrl) {
+    writeUrl(route, state.projectSlug);
   }
 
   // Scroll do góry przy zmianie widoku (poprawia UX na mobile po przewinięciu)
@@ -878,13 +929,26 @@ function setLang(lang) {
    INIT + WIRING
    ============================================================ */
 function init() {
-  // sidebar routes
-  $$("[data-route]").forEach(el => {
-    el.addEventListener("click", e => {
-      e.preventDefault();
-      const r = el.dataset.route;
-      if (["home","about","contact","achievements"].includes(r)) setRoute(r);
-    });
+  // Linki wewnętrzne — jeden handler dla całej strony.
+  // Wszystkie odnośniki (menu, kafelki projektów, linki w wygenerowanych
+  // podstronach) są prawdziwymi <a href="/…">, więc Google potrafi po nich
+  // wejść. Dla użytkownika przechwytujemy kliknięcie i przełączamy widok
+  // bez przeładowania strony — tak jak działało to wcześniej na hashu.
+  document.addEventListener("click", (e) => {
+    if (e.defaultPrevented || e.button !== 0) return;
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;  // otwarcie w nowej karcie
+    const a = e.target.closest("a[href]");
+    if (!a || a.target === "_blank" || a.hasAttribute("download")) return;
+
+    const url = new URL(a.getAttribute("href"), window.location.href);
+    if (url.origin !== window.location.origin) return;             // link na zewnątrz
+
+    const parsed = routeFromPath(url.pathname);
+    if (!parsed) return;      // nieznana ścieżka — niech przeglądarka zrobi swoje
+
+    e.preventDefault();
+    if (parsed.route === "project") navigateProject(parsed.slug);
+    else setRoute(parsed.route);
   });
 
   // langs (sidebar)
@@ -1007,13 +1071,13 @@ function init() {
       lbHistoryEntry = false;
       return;
     }
-    const parsed = parseHash();
+    const parsed = parseRoute();
     if (parsed.route === "project" && parsed.slug) {
       state.projectSlug = parsed.slug;
       renderProject();
-      setRoute("project", { skipHash: true });
+      setRoute("project", { skipUrl: true });
     } else {
-      setRoute(parsed.route || "home", { skipHash: true });
+      setRoute(parsed.route || "home", { skipUrl: true });
     }
   });
 
@@ -1021,7 +1085,7 @@ function init() {
   loadPrefs();
 
   // 2. Sparsuj URL — co użytkownik chce zobaczyć (refresh / shared link)
-  const initial = parseHash();
+  const initial = parseRoute();
 
   // 3. Pierwszy render z odpowiednim językiem
   applyI18n();
@@ -1029,13 +1093,22 @@ function init() {
   renderTextPages();
   renderAchievements();
 
+  // 3a. Stary link z hashem (#/labirynt) — podmień adres w pasku na nowy,
+  //     bez dokładania wpisu do historii (replaceState, nie pushState).
+  if (initial.legacy) {
+    history.replaceState(
+      null, "",
+      routeToPath(initial.route, initial.slug) + window.location.search
+    );
+  }
+
   // 4. Skieruj do żądanego widoku
   if (initial.route === "project" && initial.slug) {
     state.projectSlug = initial.slug;
     renderProject();
-    setRoute("project", { skipHash: true });
+    setRoute("project", { skipUrl: true });
   } else {
-    setRoute(initial.route || "home", { skipHash: true });
+    setRoute(initial.route || "home", { skipUrl: true });
   }
 }
 
@@ -1079,7 +1152,7 @@ function buildNavPreview(route, L) {
       : ["ZPAF", "ITF Opava", "Sputnik Photos", "Warsaw / Opava"];
     return `
       <div class="np-about">
-        <span class="np-portrait" style="background-image:url('images/about/portrait.webp')"></span>
+        <span class="np-portrait" style="background-image:url('/images/about/portrait.webp')"></span>
         <p class="np-bio">${intro}</p>
       </div>
       <div class="np-facts">${facts.map(f => `<span class="np-fact">${f}</span>`).join("")}</div>`;

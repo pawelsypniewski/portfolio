@@ -3,7 +3,9 @@ name: Build content
 # Po każdym pushu zmieniającym treść (pliki w content/ lub zdjęcia w uploads/):
 #  1. konwertuje wgrane zdjęcia do WebP i podmienia ścieżki w treści,
 #  2. przebudowuje pliki zbiorcze (content/projects.json, content/news.json),
-#  3. commituje wynik z powrotem do repo → strona aktualizuje się sama.
+#  3. generuje podstrony pod prawdziwymi adresami (/labirynt/, /kontakt/ …),
+#     mapę strony i 404.html — bez tego Google widziałby tylko stronę główną,
+#  4. commituje wynik z powrotem do repo → strona aktualizuje się sama.
 # Panel CMS został usunięty (2026-07-06, kopia w Portfolio-archiwum/cms-panel/);
 # treść edytuje się ręcznie w content/projects/*.json i content/news/*.json.
 #
@@ -16,8 +18,8 @@ on:
     paths:
       - "content/**"
       - "images/uploads/**"
-      - "tools/build-content.js"
-      - "tools/optimize-images.js"
+      - "index.html"
+      - "tools/**"
 
 permissions:
   contents: write
@@ -44,6 +46,9 @@ jobs:
 
       - name: Przebudowa plików zbiorczych
         run: node tools/build-content.js
+
+      - name: Generowanie podstron, mapy strony i 404
+        run: node tools/build-pages.js
 
       - name: Commit wyników (jeśli coś się zmieniło)
         run: |

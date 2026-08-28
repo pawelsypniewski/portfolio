@@ -13,7 +13,7 @@
    realnej książki kucharskiej.
    ============================================================ */
 window.DANIE_BOOK = (function () {
-  const P = n => `images/danie-dnia/book/${String(n).padStart(2, "0")}.webp`;
+  const P = n => `/images/danie-dnia/book/${String(n).padStart(2, "0")}.webp`;
 
   const recipes = [
     {

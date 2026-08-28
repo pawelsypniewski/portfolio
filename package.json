@@ -1,11 +1,15 @@
 {
   "scripts": {
-    "serve": "npx --yes http-server . -c-1 -p 3000",
-    "build": "node tools/build-content.js",
+    "serve": "node tools/dev-server.js",
+    "build": "node tools/build-content.js && node tools/build-pages.js",
+    "pages": "node tools/build-pages.js",
     "optimize": "node tools/optimize-images.js",
     "webp": "node convert-to-webp.js"
   },
   "devDependencies": {
     "sharp": "^0.34.5"
+  },
+  "allowScripts": {
+    "sharp@0.34.5": true
   }
 }

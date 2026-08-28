@@ -113,24 +113,38 @@
     return out;
   }
 
+  // --- Ścieżki bezwzględne ------------------------------------------------
+  // Strona działa również pod adresami typu /labirynt/, gdzie ścieżka względna
+  // "images/…" wskazywałaby na /labirynt/images/… (błąd 404). Normalizujemy raz,
+  // zaraz po wczytaniu JSON-a, żeby reszta kodu nie musiała o tym pamiętać.
+  function absolutize(node) {
+    if (typeof node === "string") return /^images\//.test(node) ? "/" + node : node;
+    if (Array.isArray(node)) return node.map(absolutize);
+    if (node && typeof node === "object") {
+      for (const k of Object.keys(node)) node[k] = absolutize(node[k]);
+      return node;
+    }
+    return node;
+  }
+
   window.__DATA_READY = (async function loadContent() {
     try {
       const [projects, news, about, contact] = await Promise.all([
-        getJSON("content/projects.json"),
-        getJSON("content/news.json"),
-        getJSON("content/settings/about.json"),
-        getJSON("content/settings/contact.json"),
+        getJSON("/content/projects.json"),
+        getJSON("/content/news.json"),
+        getJSON("/content/settings/about.json"),
+        getJSON("/content/settings/contact.json"),
       ]);
 
       // Projekty: pomiń ukryte; zachowaj kolejność z pliku (już po `order`).
-      window.PROJECTS = (projects || []).filter((p) => !p.hidden);
+      window.PROJECTS = absolutize((projects || []).filter((p) => !p.hidden));
 
       // Aktualności: app.js sam sortuje po dateISO.
-      window.ACHIEVEMENTS = news || [];
+      window.ACHIEVEMENTS = absolutize(news || []);
 
       // Teksty: markdown + pola strukturalne → gotowy HTML (jak oczekuje app.js).
-      window.ABOUT = buildAbout(about);
-      window.CONTACT = buildContact(contact);
+      window.ABOUT = buildAbout(absolutize(about));
+      window.CONTACT = buildContact(absolutize(contact));
     } catch (err) {
       console.error("[loader] Nie udało się wczytać treści:", err);
       // Zabezpieczenie: pozwól app.js wystartować bez wywrotki.
