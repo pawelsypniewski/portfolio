@@ -767,6 +767,30 @@ function renderTextPages() {
    ACHIEVEMENTS / AKTUALNOŚCI — render chronologicznej listy
    Auto-sort: malejąco po dateISO (najnowsze u góry)
    ============================================================ */
+/* Aktualności renderujemy dopiero przy pierwszym wejściu w ten widok.
+   Zdjęcia w liście są tłem CSS (background-image), a tła nie da się
+   ładować leniwie — widok siedzi w DOM z opacity: 0, więc przeglądarka
+   uznawała je za widoczne i ściągała komplet od razu. Efekt: samo wejście
+   na stronę główną pobierało ~8,5 MB zdjęć, których nikt tam nie widzi. */
+let achievementsDirty = true;
+
+/* Siatka pokazuje kafelki 235 × 235 px, więc bierze miniaturę z podkatalogu
+   thumbs/ (600 px, generowane przez tools/build-thumbs.js). Pełny plik
+   zostaje dla lightboxa. Gdyby miniatury zabrakło — np. zdjęcie dodane bez
+   przebudowy — obsługa błędu niżej podmienia źródło na oryginał. */
+function thumbPath(src) {
+  const str = String(src || "");
+  if (!/\/images\/achievements\//.test("/" + str.replace(/^\//, ""))) return str;
+  const i = str.lastIndexOf("/");
+  return i < 0 ? str : str.slice(0, i) + "/thumbs" + str.slice(i);
+}
+
+function ensureAchievements() {
+  if (!achievementsDirty) return;
+  renderAchievements();
+  achievementsDirty = false;
+}
+
 function renderAchievements() {
   const list = $("#achievementsList");
   if (!list || !window.ACHIEVEMENTS) return;
@@ -784,7 +808,7 @@ function renderAchievements() {
 
   list.innerHTML = sorted.map((a, ai) => {
     const photos = (a.images || []).map((src, i) =>
-      `<div class="achievement-photo" style="background-image:url('${src}')" data-achievement="${ai}" data-photo="${i}" role="button" tabindex="0" aria-label="${a.title[L]} — ${i+1}"></div>`
+      `<div class="achievement-photo" data-achievement="${ai}" data-photo="${i}" role="button" tabindex="0" aria-label="${a.title[L]} — ${i+1}"><img src="${thumbPath(src)}" data-full="${src}" alt="" loading="lazy" decoding="async"></div>`
     ).join("");
     // Linki — obsługa zarówno pojedynczego `url` jak i tablicy `links`
     let link = "";
@@ -819,6 +843,14 @@ function renderAchievements() {
       </article>
     `;
   }).join("");
+
+  // Brak miniatury (nowe zdjęcie bez przebudowy) — pokaż pełny plik
+  $$(".achievement-photo img").forEach(img => {
+    img.addEventListener("error", () => {
+      const full = img.dataset.full;
+      if (full && img.getAttribute("src") !== full) img.setAttribute("src", full);
+    }, { once: true });
+  });
 
   // Click handlers — otwieranie lightboxa z konkretnym zestawem zdjęć
   $$(".achievement-photo").forEach(el => {
@@ -931,8 +963,75 @@ function updateSEO(route) {
   }
 }
 
+/* ============================================================
+   PRZEWIJANIE PANELU WIDOKU
+   Dokument stoi w miejscu — .main ma overflow: hidden, a przewija się
+   panel wewnątrz aktywnego widoku. Wynikały z tego dwa braki:
+   1) kółko myszy / gest trackpada nad lewą kolumną (300 px, jedna piąta
+      ekranu na 13") albo nad marginesem layoutu nie miały czego
+      przewijać — przekazujemy scroll do panelu;
+   2) panel bez tabindex nie przyjmuje fokusu, więc Spacja i PageDown
+      nic nie robiły — nadajemy tabindex, gdy panel faktycznie przewija
+      (WCAG 2.1.1: obszar przewijalny musi być dostępny z klawiatury).
+   ============================================================ */
+const SCROLL_PANE = ".text-page, .achievements-page, .project";
+
+function activePane() {
+  const view = document.querySelector(".view.active");
+  if (!view) return null;
+  const pane = view.querySelector(SCROLL_PANE);
+  if (!pane) return null;
+  return pane.scrollHeight > pane.clientHeight + 1 ? pane : null;
+}
+
+function syncPaneFocusability() {
+  $$(SCROLL_PANE).forEach(pane => {
+    const view = pane.closest(".view");
+    const scrolls = pane.scrollHeight > pane.clientHeight + 1;
+    if (scrolls && view && view.classList.contains("active")) {
+      pane.setAttribute("tabindex", "0");
+    } else {
+      pane.removeAttribute("tabindex");
+    }
+  });
+}
+
+// Panel zaczyna się przewijać dopiero, gdy dorośnie treść — opis projektu
+// renderuje się po zmianie widoku, a zdjęcia dociągają się jeszcze później.
+// Pojedyncze sprawdzenie po przełączeniu widoku trafiało w moment, gdy panel
+// jeszcze się mieścił, więc pilnujemy tego obserwatorem rozmiaru.
+let paneObserver = null;
+
+function watchPanes() {
+  if (!("ResizeObserver" in window)) return;
+  if (paneObserver) paneObserver.disconnect();
+  else paneObserver = new ResizeObserver(() => syncPaneFocusability());
+  $$(SCROLL_PANE).forEach(pane => {
+    paneObserver.observe(pane);
+    Array.from(pane.children).forEach(child => paneObserver.observe(child));
+  });
+}
+
+function initPaneScroll() {
+  document.addEventListener("wheel", (e) => {
+    if (e.ctrlKey) return;                                    // pinch-zoom
+    if (e.target.closest(SCROLL_PANE)) return;                // panel radzi sobie sam
+    if (e.target.closest(".nav-preview, .lightbox")) return;  // mają własny scroll
+    const pane = activePane();
+    if (!pane) return;
+    // deltaMode 1 = jednostką są linie (część myszy poza macOS)
+    pane.scrollTop += e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY;
+    e.preventDefault();
+  }, { passive: false });
+
+  window.addEventListener("resize", syncPaneFocusability);
+  window.addEventListener("load", syncPaneFocusability);
+  watchPanes();
+}
+
 function setRoute(route, opts = {}) {
   state.route = route;
+  if (route === "achievements") ensureAchievements();
   $$(".view").forEach(v => v.classList.remove("active"));
   const id = `view-${route}`;
   const el = document.getElementById(id);
@@ -959,11 +1058,19 @@ function setRoute(route, opts = {}) {
     window.scrollTo({ top: 0, behavior: "instant" });
     const main = document.querySelector(".main");
     if (main) main.scrollTop = 0;
-    // Widok projektu przewija się wewnętrznie (opis pod galerią) —
-    // przy zmianie projektu/widoku wracamy na górę
-    const proj = document.querySelector("#view-project .project");
-    if (proj) proj.scrollTop = 0;
+    // Widoki przewijają się wewnętrznie (opis pod galerią, długa lista
+    // aktualności) — przy zmianie widoku wracamy na górę każdego panelu
+    $$(SCROLL_PANE).forEach(pane => { pane.scrollTop = 0; });
   }
+
+  // Panel przewijalny musi przyjmować fokus. Synchronicznie, nie w
+  // requestAnimationFrame — rAF nie odpala się w karcie otwartej w tle
+  // (Cmd+klik), więc panel zostawałby bez tabindex aż do zmiany rozmiaru.
+  // Treść widoku jest już wyrenderowana, bo renderProject/ensureAchievements
+  // biegną przed tym miejscem; to, co dorasta później (zdjęcia), łapie
+  // obserwator rozmiaru.
+  watchPanes();
+  syncPaneFocusability();
 }
 
 function navigateProject(slug, opts = {}) {
@@ -979,7 +1086,8 @@ function applyLang(lang) {
   applyI18n();
   renderHome();
   renderTextPages();
-  renderAchievements();
+  achievementsDirty = true;
+  if (state.route === "achievements") ensureAchievements();
   if (state.route === "project") renderProject();
   savePref(LS.lang, lang);
 }
@@ -1076,6 +1184,39 @@ function init() {
         else navProjectPrev();
       }
     });
+  }
+
+  /* Gest dwoma palcami w bok — na trackpadzie MacBooka to najbardziej
+     naturalny ruch przy galerii poziomej, a obsłużony był tylko dotyk
+     (mobile). Gorzej: gestu nikt nie przechwytywał, więc przeglądarka
+     traktowała go jako „wstecz" i potrafiła wyrzucić ze strony projektu.
+     Pion zostawiamy w spokoju — tym przewija się opis pod galerią. */
+  const projectPane = document.querySelector("#view-project .project");
+  if (projectPane) {
+    let swipeBusy = false;      // jedno przewinięcie = jedno zdjęcie
+    let swipeAcc = 0;           // gest trackpada to seria drobnych zdarzeń
+    let swipeReset = null;
+
+    projectPane.addEventListener("wheel", (e) => {
+      if (e.ctrlKey) return;                                 // pinch-zoom
+      if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;  // pion = opis
+      e.preventDefault();                                    // blokuj „wstecz"
+      if (swipeBusy) return;
+
+      swipeAcc += e.deltaX;
+      clearTimeout(swipeReset);
+      swipeReset = setTimeout(() => { swipeAcc = 0; }, 200);
+      if (Math.abs(swipeAcc) < 60) return;                   // próg — bez drgań
+
+      const dir = swipeAcc > 0 ? 1 : -1;
+      swipeAcc = 0;
+      swipeBusy = true;
+      setTimeout(() => { swipeBusy = false; }, 420);
+
+      if (DanieBook.isActive()) DanieBook.go(dir);
+      else if (dir > 0) navProjectNext();
+      else navProjectPrev();
+    }, { passive: false });
   }
 
   // lightbox click — klik w ciemne tło zamyka, klik na strzałki/obrazek/close nie
@@ -1181,7 +1322,7 @@ function init() {
   applyI18n();
   renderHome();
   renderTextPages();
-  renderAchievements();
+  // Aktualności dorenderuje setRoute w kroku 4 — tylko jeśli to ten widok
 
   // 3a. Stary link z hashem (#/labirynt) — podmień adres w pasku na nowy,
   //     bez dokładania wpisu do historii (replaceState, nie pushState).
@@ -1402,4 +1543,5 @@ document.addEventListener("DOMContentLoaded", async () => {
   init();
   initCookieBanner();
   initNavPreview();
+  initPaneScroll();
 });

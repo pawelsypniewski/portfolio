@@ -40,6 +40,10 @@
 <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1">
 <meta name="google-site-verification" content="AJpvQiA3niuDmKpQchC5wnkZz_77YWm4W7Vs8Y0qCL4">
 <meta name="theme-color" content="#ffffff">
+<!-- Strona jest z założenia biała (galeria). Deklaracja pilnuje, żeby
+     przeglądarka w trybie ciemnym macOS nie próbowała przyciemniać
+     formantów ani pasków przewijania na własną rękę. -->
+<meta name="color-scheme" content="light">
 
 <!-- ============ GOOGLE ANALYTICS 4 (Consent Mode v2) ============ -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7VWHM3TZZ"></script>
@@ -466,6 +470,48 @@
   .view.active { opacity: 1; pointer-events: auto; }
 
   /* ============================================================
+     PRZEWIJANIE PANELI — widoczny pasek (macOS chowa własny)
+     Długie widoki przewijają się WEWNĄTRZ .text-page /
+     .achievements-page, a nie w dokumencie (.main ma overflow: hidden).
+     macOS domyślnie pokazuje pasek dopiero w trakcie przewijania, więc
+     na MacBooku nic nie sygnalizowało, że pod zgięciem są jeszcze
+     kolejne ekrany treści — Aktualności to ok. osiem ekranów.
+     Ostylowanie ::-webkit-scrollbar wyłącza tryb nakładkowy i pasek
+     zostaje widoczny na stałe; scrollbar-gutter rezerwuje na niego
+     miejsce z góry, żeby treść nie drgała przy zmianie widoku.
+     Widok projektu celowo pomijamy — tam sygnałem jest opis wystający
+     zza dolnej krawędzi, a biały pasek kłóciłby się z ciemną książką.
+     Tylko desktop — na mobile przewija się normalnie całe body.
+     ============================================================ */
+  @media (min-width: 1025px) {
+    .text-page,
+    .achievements-page {
+      scrollbar-gutter: stable;
+      scrollbar-width: thin;                     /* Firefox */
+      scrollbar-color: #000 #fff;                /* Firefox */
+    }
+    .text-page::-webkit-scrollbar,
+    .achievements-page::-webkit-scrollbar { width: 12px; }
+
+    .text-page::-webkit-scrollbar-track,
+    .achievements-page::-webkit-scrollbar-track {
+      background: #fff;
+      border-left: 1px solid #000;
+    }
+    .text-page::-webkit-scrollbar-thumb,
+    .achievements-page::-webkit-scrollbar-thumb {
+      background: #000;
+      border: 4px solid #fff;   /* białe wcięcie — kreska zamiast belki */
+    }
+
+    /* Panel dostaje tabindex="0" z app.js, gdy faktycznie się przewija —
+       dzięki temu działają Spacja i PageDown. Ramka tylko dla klawiatury. */
+    .text-page:focus-visible,
+    .achievements-page:focus-visible,
+    .project:focus-visible { outline: 2px solid #000; outline-offset: -4px; }
+  }
+
+  /* ============================================================
      HOMEPAGE — 4 LAYOUT VARIANTS
      ============================================================ */
   .home-stage { height: 100%; width: 100%; position: relative; overflow: hidden; display: flex; flex-direction: column; }
@@ -519,10 +565,14 @@
     gap: 14px;
   }
   .home-poster .cell .title-text { flex: 0 1 auto; min-width: 0; }
+  /* Rozmiar liczony z wysokości okna, bo kafel to 1/4 wysokości plakatu.
+     Wcześniejsze 18vh (i sztywne minimum 120px) przerastało wiersz tytułu:
+     na 13" kafel dawał 110 px miejsca, a ramka miała 142 px — dolna część
+     zdjęcia znikała pod krawędzią kafla (overflow: hidden). */
   .home-poster .cell .thumb-frame {
     flex: 0 0 auto;
-    width: clamp(120px, 20vh, 260px);
-    height: clamp(120px, 18vh, 260px);
+    width: clamp(90px, 14vh, 220px);
+    height: clamp(90px, 13vh, 200px);
     max-width: 0;
     align-self: flex-start;
     background-size: contain;
@@ -537,8 +587,8 @@
     filter: grayscale(1);
   }
   .home-poster .cell .thumb-item {
-    flex: 0 0 clamp(100px, 15vh, 200px);
-    height: clamp(100px, 15vh, 200px);
+    flex: 0 0 clamp(80px, 12vh, 170px);
+    height: clamp(80px, 12vh, 170px);
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
@@ -1237,12 +1287,18 @@
   }
   .achievement-photo {
     aspect-ratio: 1 / 1;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    overflow: hidden;
     filter: grayscale(0.4);
     transition: filter 280ms ease, transform 220ms ease;
     cursor: zoom-in;
+  }
+  /* Zdjęcie jako <img>, nie tło CSS — tylko wtedy działa loading="lazy",
+     dzięki czemu pobierają się kafelki widoczne na ekranie, a nie 36 naraz. */
+  .achievement-photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
   .achievement-photo:hover {
     filter: grayscale(0);
@@ -1788,6 +1844,34 @@
     /* strony tekstowe / osiągnięcia: komfortowa miara czytania */
     .text-page { max-width: 1280px; padding: 72px 64px 56px; gap: 72px; }
     .achievements-page { max-width: 1320px; padding: 80px 64px 72px; }
+  }
+
+  /* ============================================================
+     RESPONSIVE — MACBOOK AIR 15" I PRO 16" (1710 / 1728 px @ 2×)
+     Te dwa laptopy wpadały w blok "Full HD" (od 1600 px), pisany pod
+     monitor 1920 × 1080. Efekt był odwrotny do zamierzonego: 3vw liczy
+     się od szerokości OKNA, a plakat ma na 16" tylko 1316 px roboczych
+     (1728 − 300 sidebar − 112 padding) wobec 1508 px na monitorze 1920.
+     Tytuł rósł z 40,8 px na 14" do 51,8 px na 16" i łamał się na 2–3
+     linie tam, gdzie na mniejszym ekranie mieścił się w jednej.
+     Sprowadzamy krok między 14" a 16" do rozsądnej proporcji.
+     Warunek 2dppx celowo: laptop Acer 2880 × 1800 przy skalowaniu
+     Windows 175% ma 1645 px szerokości, ale DPR 1,75 — zostaje przy
+     bloku Full HD, tak jak dotąd.
+     Musi być PO bloku 1600–2199 px, żeby go doprecyzować.
+     ============================================================ */
+  @media (min-resolution: 2dppx)
+     and (min-width: 1600px) and (max-width: 1799px) {
+    .home-poster { padding: 26px 56px; gap: 12px; }
+    .home-poster .cell { padding: 18px; }
+    .home-poster .cell .title { font-size: clamp(28px, 2.65vw, 48px); letter-spacing: -0.03em; }
+    .home-poster .cell .num { font-size: 10px; }
+    .home-poster .cell .meta { font-size: 11px; }
+
+    .proj-top .pj-title { font-size: clamp(30px, 2.8vw, 46px); }
+
+    .text-page { max-width: 1440px; padding: 80px 68px 64px; gap: 80px; }
+    .achievements-page { max-width: 1460px; padding: 84px 68px 72px; }
   }
 
   /* ============================================================

@@ -2,7 +2,8 @@ name: Build content
 
 # Po każdym pushu zmieniającym treść (pliki w content/ lub zdjęcia w uploads/):
 #  1. konwertuje wgrane zdjęcia do WebP i podmienia ścieżki w treści,
-#  2. przebudowuje pliki zbiorcze (content/projects.json, content/news.json),
+#  2. przebudowuje pliki zbiorcze (content/projects.json, content/news.json)
+#     oraz miniatury do siatki zdjęć w Aktualnościach,
 #  3. generuje podstrony pod prawdziwymi adresami (/labirynt/, /kontakt/ …),
 #     mapę strony i 404.html — bez tego Google widziałby tylko stronę główną,
 #  4. commituje wynik z powrotem do repo → strona aktualizuje się sama.
@@ -18,6 +19,7 @@ on:
     paths:
       - "content/**"
       - "images/uploads/**"
+      - "images/achievements/**"
       - "index.html"
       - "tools/**"
 
@@ -46,6 +48,9 @@ jobs:
 
       - name: Przebudowa plików zbiorczych
         run: node tools/build-content.js
+
+      - name: Miniatury do siatki Aktualności
+        run: node tools/build-thumbs.js
 
       - name: Generowanie podstron, mapy strony i 404
         run: node tools/build-pages.js

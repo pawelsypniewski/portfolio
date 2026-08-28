@@ -1,10 +1,11 @@
 {
   "scripts": {
     "serve": "node tools/dev-server.js",
-    "build": "node tools/build-content.js && node tools/build-pages.js",
+    "build": "node tools/build-content.js && node tools/build-thumbs.js && node tools/build-pages.js",
     "pages": "node tools/build-pages.js",
     "optimize": "node tools/optimize-images.js",
-    "webp": "node convert-to-webp.js"
+    "webp": "node convert-to-webp.js",
+    "thumbs": "node tools/build-thumbs.js"
   },
   "devDependencies": {
     "sharp": "^0.34.5"
