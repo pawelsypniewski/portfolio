@@ -262,11 +262,15 @@ function applyHead(html, page) {
 
   // Dane strukturalne właściwe dla tej podstrony — dokładane obok
   // istniejącego grafu (Person / WebSite), który opisuje całą witrynę.
-  if (page.jsonLd) {
-    const ld = JSON.stringify(page.jsonLd, null, 2);
-    html = replaceOnce(html, /<\/head>/,
-      () => `<script type="application/ld+json">\n${ld}\n</script>\n</head>`,
-      "</head>");
+  // Podstrona może mieć ich kilka (np. opis pracy i okruszki nawigacyjne).
+  // Każdy dostaje własny znacznik <script> — czytelniej niż jedna tablica,
+  // gdy trzeba coś sprawdzić w narzędziu Google albo w kodzie strony.
+  const jsonLds = [].concat(page.jsonLd || []).filter(Boolean);
+  if (jsonLds.length) {
+    const bloki = jsonLds
+      .map((ld) => `<script type="application/ld+json">\n${JSON.stringify(ld, null, 2)}\n</script>`)
+      .join("\n");
+    html = replaceOnce(html, /<\/head>/, () => `${bloki}\n</head>`, "</head>");
   }
 
   return html;
@@ -539,6 +543,7 @@ function newsItemPage(a, lang, i18n) {
     // „Aktualności” zostaje przy h2 (patrz applyBody).
     h1InContent: true,
     listSingle: true,
+    crumb: a.title[L],
     title: `${a.title[L]} — ${a.type[L]} · ${AUTHOR}`,
     description: shorten(descText),
     image: images.length
@@ -599,6 +604,7 @@ function projectPage(p, lang, projects) {
     path: pathFor("project", p.slug, L),
     viewId: "view-project",
     ogType: "article",
+    crumb: title,
     title: `${title} — ${p.year} · ${AUTHOR}`,
     description: shorten(descText),
     image: {
@@ -694,6 +700,45 @@ const TEXTS = {
     },
   },
 };
+
+/* Okruszki nawigacyjne. Google pokazuje je w wyniku wyszukiwania ZAMIAST
+   gołego adresu: „Paweł Sypniewski › Aktualności › Nocne ptaki…” zamiast
+   „pawelsypniewski.pl/aktualnosci/offoto-opole-2026/”. Czytelniejsze dla
+   człowieka i pokazuje, że wpis należy do większej całości.
+
+   Ścieżkę bierzemy z tej samej hierarchii, którą widać na stronie: menu boczne
+   podświetla sekcję, a podstrona wpisu ma nad treścią link „← Wszystkie
+   aktualności”. Nazwy sekcji czerpiemy z data.js, żeby nie trzymać tłumaczeń
+   w drugim miejscu. Strona główna okruszków nie dostaje — jest ich korzeniem. */
+const CRUMB_KEY = { about: "nav.about", contact: "nav.contact", achievements: "nav.achievements" };
+
+function breadcrumbJsonLd(page, i18n) {
+  const L = page.lang;
+  const dict = i18n[L] || {};
+  // Liść to tytuł pracy albo wpisu; dla sekcji wystarczy nazwa z menu.
+  const leaf = page.crumb || (CRUMB_KEY[page.route] && dict[CRUMB_KEY[page.route]]);
+  if (!leaf || page.route === "home" || page.noindex) return null;
+  const items = [{ name: AUTHOR, url: BASE + pathFor("home", null, L) }];
+  if (page.route === "newsItem") {
+    items.push({
+      name: dict["nav.achievements"] || "Aktualności",
+      url: BASE + pathFor("achievements", null, L),
+    });
+  }
+  items.push({ name: leaf, url: BASE + page.path });
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "@id": `${BASE}${page.path}#breadcrumb`,
+    itemListElement: items.map((it, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: it.name,
+      item: it.url,
+    })),
+  };
+}
 
 function sectionPage(route, lang, viewId, extra) {
   return Object.assign(
@@ -821,6 +866,7 @@ async function build() {
 
   for (const page of pages) {
     page.gallery = projects;
+    page.jsonLd = [].concat(page.jsonLd || [], breadcrumbJsonLd(page, i18n) || []);
     const html = applyBody(applyHead(template, page), page, i18n);
     const dir = path.join(ROOT, page.path);
     fs.mkdirSync(dir, { recursive: true });
