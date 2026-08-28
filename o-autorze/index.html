@@ -487,10 +487,19 @@
      ============================================================ */
   @media (min-width: 1025px) {
     .text-page,
-    .achievements-page {
-      scrollbar-gutter: stable;
-      scrollbar-width: thin;                     /* Firefox */
-      scrollbar-color: #000 #fff;                /* Firefox */
+    .achievements-page { scrollbar-gutter: stable; }
+
+    /* Firefox. Te dwie właściwości trzymamy z dala od Chrome i Safari:
+       tam obecność scrollbar-width wyłącza reguły ::-webkit-scrollbar,
+       pasek wraca do trybu nakładkowego i znowu znika na macOS.
+       @supports selector(::-webkit-scrollbar) jest prawdziwe wyłącznie
+       w silnikach WebKit/Blink, więc warunek odwrotny trafia w Firefoksa. */
+    @supports not selector(::-webkit-scrollbar) {
+      .text-page,
+      .achievements-page {
+        scrollbar-width: thin;
+        scrollbar-color: #000 #fff;
+      }
     }
     .text-page::-webkit-scrollbar,
     .achievements-page::-webkit-scrollbar { width: 12px; }
