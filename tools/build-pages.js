@@ -431,13 +431,27 @@ function homeGrid(projects, lang) {
       <div class="num">${escapeHtml(p.no)} / ${works}</div>
       <div class="title">
         <h2 class="title-text"><a href="${href}" itemprop="url"><span itemprop="name">${title}</span></a></h2>
-        <div class="thumb-frame" role="img" aria-label="${title} — ${lang === "pl" ? "podgląd" : "preview"}"></div>
+        <div class="thumb-frame" role="img" aria-label="${title} — ${lang === "pl" ? "podgląd" : "preview"}"${thumbStyle(p.thumb || (p.images || [])[0])}></div>
       </div>
       <div class="meta"><span itemprop="dateCreated">${escapeHtml(p.year)}</span> · <span itemprop="contentLocation">${escapeHtml(p.place[lang])}</span> · ${p.works} ${worksLabel}</div>
     </article>
   `;
     })
     .join("");
+}
+
+/* Pole `thumb` ma dziś tylko część cykli, więc gdy go brak — bierzemy
+   pierwsze zdjęcie z cyklu; pusta ramka byłaby gorsza od byle jakiej.
+   Zdjęcie kafla wpisujemy już w plik, a nie dopiero JavaScriptem: na
+   telefonie kafle pokazują zdjęcia (app.js zmienia je potem co 1,5 s), więc
+   bez tego pierwszy ekran byłby pusty do czasu wczytania treści. Na
+   desktopie ramka i tak czeka schowana na najechanie kursorem. */
+function thumbStyle(src) {
+  if (!src) return "";
+  const str = String(src);
+  const i = str.lastIndexOf("/");
+  const thumb = i < 0 ? str : str.slice(0, i) + "/thumbs" + str.slice(i);
+  return ` style="background-image:url('/${escapeHtml(thumb.replace(/^\//, ""))}')"`;
 }
 
 /* ------------------------------------------------------------------ */

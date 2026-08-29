@@ -2166,11 +2166,42 @@
       gap: 32px;
     }
     .home-poster .cell:hover { background: transparent; color: inherit; }
+    /* Tytuł i zdjęcie jedno pod drugim, a nie obok siebie: na szerokość
+       telefonu podgląd z boku ścisnąłby tytuł do pionowego paska liter. */
     .home-poster .cell .title {
+      display: block;
       font-size: clamp(28px, 8vw, 48px);
     }
+    /* Dotyk nie zna najechania kursorem, więc kafel pokazuje zdjęcia sam —
+       co 1,5 s inne, losowo z cyklu (app.js: startHomeRotation). Strona
+       fotografa bez ani jednego zdjęcia na wejściu to najgorsze możliwe
+       pierwsze wrażenie, a dokładnie tak wyglądała dotąd na telefonie. */
     .home-poster .cell .thumb-frame {
-      display: none !important;
+      display: block;
+      width: 100%;
+      max-width: none;
+      height: clamp(150px, 44vw, 260px);
+      margin-top: 14px;
+      align-self: auto;
+      opacity: 1;
+      background-size: cover;
+      background-position: center;
+      /* Bez odbarwienia. Na desktopie podgląd jest szary, bo to tylko
+         zajawka pod czarnym kaflem; tutaj zdjęcia SĄ treścią kafla, a
+         „Nocne ptaki" na czarno-biało to już inna praca niż w rzeczywistości. */
+      filter: none;
+      position: relative;
+    }
+    /* Nowe zdjęcie wchodzi WIERZCHEM na poprzednie. Wygaszanie ramki do zera
+       i podmiana pod spodem dawałyby co 1,5 s białe mrugnięcie — na kaflu
+       ze zdjęciem wygląda to jak błąd wczytywania, a nie jak przejście. */
+    .home-poster .cell .thumb-fade {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 420ms ease;
     }
     .home-poster .cell .meta {
       display: none;
@@ -2566,7 +2597,7 @@
       <div class="num">01 / WORKS</div>
       <div class="title">
         <h2 class="title-text"><a href="/en/ustawienia-domyslne/" itemprop="url"><span itemprop="name">Default Settings</span></a></h2>
-        <div class="thumb-frame" role="img" aria-label="Default Settings — preview"></div>
+        <div class="thumb-frame" role="img" aria-label="Default Settings — preview" style="background-image:url('/images/ustawienia/thumbs/03.webp')"></div>
       </div>
       <div class="meta"><span itemprop="dateCreated">2024</span> · <span itemprop="contentLocation">On artificial intelligence</span> · 17 works</div>
     </article>
@@ -2575,7 +2606,7 @@
       <div class="num">02 / WORKS</div>
       <div class="title">
         <h2 class="title-text"><a href="/en/superpozycja/" itemprop="url"><span itemprop="name">Superposition</span></a></h2>
-        <div class="thumb-frame" role="img" aria-label="Superposition — preview"></div>
+        <div class="thumb-frame" role="img" aria-label="Superposition — preview" style="background-image:url('/images/superpozycja/thumbs/01.webp')"></div>
       </div>
       <div class="meta"><span itemprop="dateCreated">2023</span> · <span itemprop="contentLocation">Quantum vision</span> · 8 works</div>
     </article>
@@ -2584,7 +2615,7 @@
       <div class="num">03 / WORKS</div>
       <div class="title">
         <h2 class="title-text"><a href="/en/gra-o-tron/" itemprop="url"><span itemprop="name">Game of Thrones</span></a></h2>
-        <div class="thumb-frame" role="img" aria-label="Game of Thrones — preview"></div>
+        <div class="thumb-frame" role="img" aria-label="Game of Thrones — preview" style="background-image:url('/images/gra_o_tron/thumbs/01.webp')"></div>
       </div>
       <div class="meta"><span itemprop="dateCreated">2022</span> · <span itemprop="contentLocation">Political fight</span> · 12 works</div>
     </article>
@@ -2593,7 +2624,7 @@
       <div class="num">04 / WORKS</div>
       <div class="title">
         <h2 class="title-text"><a href="/en/nowa-topografia/" itemprop="url"><span itemprop="name">Post-Topography of Poland</span></a></h2>
-        <div class="thumb-frame" role="img" aria-label="Post-Topography of Poland — preview"></div>
+        <div class="thumb-frame" role="img" aria-label="Post-Topography of Poland — preview" style="background-image:url('/images/topografia/thumbs/01.webp')"></div>
       </div>
       <div class="meta"><span itemprop="dateCreated">2022</span> · <span itemprop="contentLocation">Landscape after the transition</span> · 14 works</div>
     </article>
@@ -2602,7 +2633,7 @@
       <div class="num">05 / WORKS</div>
       <div class="title">
         <h2 class="title-text"><a href="/en/labirynt/" itemprop="url"><span itemprop="name">Labyrinth</span></a></h2>
-        <div class="thumb-frame" role="img" aria-label="Labyrinth — preview"></div>
+        <div class="thumb-frame" role="img" aria-label="Labyrinth — preview" style="background-image:url('/images/labirynt/thumbs/01.webp')"></div>
       </div>
       <div class="meta"><span itemprop="dateCreated">2024</span> · <span itemprop="contentLocation">The Lost</span> · 15 works</div>
     </article>
@@ -2611,7 +2642,7 @@
       <div class="num">06 / WORKS</div>
       <div class="title">
         <h2 class="title-text"><a href="/en/nocne-ptaki/" itemprop="url"><span itemprop="name">Night Birds Come Home Late</span></a></h2>
-        <div class="thumb-frame" role="img" aria-label="Night Birds Come Home Late — preview"></div>
+        <div class="thumb-frame" role="img" aria-label="Night Birds Come Home Late — preview" style="background-image:url('/images/nocne-ptaki/thumbs/04.webp')"></div>
       </div>
       <div class="meta"><span itemprop="dateCreated">2025</span> · <span itemprop="contentLocation">Nocturnal life</span> · 8 works</div>
     </article>
@@ -2620,7 +2651,7 @@
       <div class="num">07 / WORKS</div>
       <div class="title">
         <h2 class="title-text"><a href="/en/danie-dnia/" itemprop="url"><span itemprop="name">Dish of the Day</span></a></h2>
-        <div class="thumb-frame" role="img" aria-label="Dish of the Day — preview"></div>
+        <div class="thumb-frame" role="img" aria-label="Dish of the Day — preview" style="background-image:url('/images/danie-dnia/book/thumbs/19.webp')"></div>
       </div>
       <div class="meta"><span itemprop="dateCreated">2025</span> · <span itemprop="contentLocation">Food waste</span> · 20 works</div>
     </article>

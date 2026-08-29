@@ -2166,11 +2166,42 @@
       gap: 32px;
     }
     .home-poster .cell:hover { background: transparent; color: inherit; }
+    /* Tytuł i zdjęcie jedno pod drugim, a nie obok siebie: na szerokość
+       telefonu podgląd z boku ścisnąłby tytuł do pionowego paska liter. */
     .home-poster .cell .title {
+      display: block;
       font-size: clamp(28px, 8vw, 48px);
     }
+    /* Dotyk nie zna najechania kursorem, więc kafel pokazuje zdjęcia sam —
+       co 1,5 s inne, losowo z cyklu (app.js: startHomeRotation). Strona
+       fotografa bez ani jednego zdjęcia na wejściu to najgorsze możliwe
+       pierwsze wrażenie, a dokładnie tak wyglądała dotąd na telefonie. */
     .home-poster .cell .thumb-frame {
-      display: none !important;
+      display: block;
+      width: 100%;
+      max-width: none;
+      height: clamp(150px, 44vw, 260px);
+      margin-top: 14px;
+      align-self: auto;
+      opacity: 1;
+      background-size: cover;
+      background-position: center;
+      /* Bez odbarwienia. Na desktopie podgląd jest szary, bo to tylko
+         zajawka pod czarnym kaflem; tutaj zdjęcia SĄ treścią kafla, a
+         „Nocne ptaki" na czarno-biało to już inna praca niż w rzeczywistości. */
+      filter: none;
+      position: relative;
+    }
+    /* Nowe zdjęcie wchodzi WIERZCHEM na poprzednie. Wygaszanie ramki do zera
+       i podmiana pod spodem dawałyby co 1,5 s białe mrugnięcie — na kaflu
+       ze zdjęciem wygląda to jak błąd wczytywania, a nie jak przejście. */
+    .home-poster .cell .thumb-fade {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 420ms ease;
     }
     .home-poster .cell .meta {
       display: none;
@@ -2670,7 +2701,7 @@
       <div class="num">01 / PRACE</div>
       <div class="title">
         <h2 class="title-text"><a href="/ustawienia-domyslne/" itemprop="url"><span itemprop="name">Ustawienia domyślne</span></a></h2>
-        <div class="thumb-frame" role="img" aria-label="Ustawienia domyślne — podgląd"></div>
+        <div class="thumb-frame" role="img" aria-label="Ustawienia domyślne — podgląd" style="background-image:url('/images/ustawienia/thumbs/03.webp')"></div>
       </div>
       <div class="meta"><span itemprop="dateCreated">2024</span> · <span itemprop="contentLocation">O sztucznej inteligencji</span> · 17 prac</div>
     </article>
@@ -2679,7 +2710,7 @@
       <div class="num">02 / PRACE</div>
       <div class="title">
         <h2 class="title-text"><a href="/superpozycja/" itemprop="url"><span itemprop="name">Superpozycja</span></a></h2>
-        <div class="thumb-frame" role="img" aria-label="Superpozycja — podgląd"></div>
+        <div class="thumb-frame" role="img" aria-label="Superpozycja — podgląd" style="background-image:url('/images/superpozycja/thumbs/01.webp')"></div>
       </div>
       <div class="meta"><span itemprop="dateCreated">2023</span> · <span itemprop="contentLocation">Kwantowa wizja</span> · 8 prac</div>
     </article>
@@ -2688,7 +2719,7 @@
       <div class="num">03 / PRACE</div>
       <div class="title">
         <h2 class="title-text"><a href="/gra-o-tron/" itemprop="url"><span itemprop="name">Gra o tron</span></a></h2>
-        <div class="thumb-frame" role="img" aria-label="Gra o tron — podgląd"></div>
+        <div class="thumb-frame" role="img" aria-label="Gra o tron — podgląd" style="background-image:url('/images/gra_o_tron/thumbs/01.webp')"></div>
       </div>
       <div class="meta"><span itemprop="dateCreated">2022</span> · <span itemprop="contentLocation">Walka polityczna</span> · 12 prac</div>
     </article>
@@ -2697,7 +2728,7 @@
       <div class="num">04 / PRACE</div>
       <div class="title">
         <h2 class="title-text"><a href="/nowa-topografia/" itemprop="url"><span itemprop="name">Post-Topografia Polski</span></a></h2>
-        <div class="thumb-frame" role="img" aria-label="Post-Topografia Polski — podgląd"></div>
+        <div class="thumb-frame" role="img" aria-label="Post-Topografia Polski — podgląd" style="background-image:url('/images/topografia/thumbs/01.webp')"></div>
       </div>
       <div class="meta"><span itemprop="dateCreated">2022</span> · <span itemprop="contentLocation">Krajobraz po transformacji</span> · 14 prac</div>
     </article>
@@ -2706,7 +2737,7 @@
       <div class="num">05 / PRACE</div>
       <div class="title">
         <h2 class="title-text"><a href="/labirynt/" itemprop="url"><span itemprop="name">Labirynt</span></a></h2>
-        <div class="thumb-frame" role="img" aria-label="Labirynt — podgląd"></div>
+        <div class="thumb-frame" role="img" aria-label="Labirynt — podgląd" style="background-image:url('/images/labirynt/thumbs/01.webp')"></div>
       </div>
       <div class="meta"><span itemprop="dateCreated">2024</span> · <span itemprop="contentLocation">Zagubieni</span> · 15 prac</div>
     </article>
@@ -2715,7 +2746,7 @@
       <div class="num">06 / PRACE</div>
       <div class="title">
         <h2 class="title-text"><a href="/nocne-ptaki/" itemprop="url"><span itemprop="name">Nocne Ptaki Późno Wracają Do Domu</span></a></h2>
-        <div class="thumb-frame" role="img" aria-label="Nocne Ptaki Późno Wracają Do Domu — podgląd"></div>
+        <div class="thumb-frame" role="img" aria-label="Nocne Ptaki Późno Wracają Do Domu — podgląd" style="background-image:url('/images/nocne-ptaki/thumbs/04.webp')"></div>
       </div>
       <div class="meta"><span itemprop="dateCreated">2025</span> · <span itemprop="contentLocation">Nocny styl życia</span> · 8 prac</div>
     </article>
@@ -2724,7 +2755,7 @@
       <div class="num">07 / PRACE</div>
       <div class="title">
         <h2 class="title-text"><a href="/danie-dnia/" itemprop="url"><span itemprop="name">Danie dnia</span></a></h2>
-        <div class="thumb-frame" role="img" aria-label="Danie dnia — podgląd"></div>
+        <div class="thumb-frame" role="img" aria-label="Danie dnia — podgląd" style="background-image:url('/images/danie-dnia/book/thumbs/19.webp')"></div>
       </div>
       <div class="meta"><span itemprop="dateCreated">2025</span> · <span itemprop="contentLocation">Marnowanie żywności</span> · 20 prac</div>
     </article>

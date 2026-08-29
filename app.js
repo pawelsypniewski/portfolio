@@ -205,6 +205,12 @@ function applyI18n() {
 /* ============================================================
    HOME — poster grid
    ============================================================ */
+/* Zdjęcie, od którego kafel zaczyna. Pole `thumb` ma dziś tylko część cykli,
+   więc gdy go brak — bierzemy pierwsze zdjęcie z cyklu. */
+function homeCellThumb(p) {
+  return p.thumb || (p.images || [])[0] || "";
+}
+
 function renderHome() {
   const projs = window.PROJECTS;
   const L = state.lang;
@@ -216,7 +222,7 @@ function renderHome() {
       <div class="num">${p.no} / ${L==="pl"?"PRACE":"WORKS"}</div>
       <div class="title">
         <h2 class="title-text"><a href="/${p.slug}/" itemprop="url"><span itemprop="name">${p.title[L]}</span></a></h2>
-        <div class="thumb-frame" role="img" aria-label="${p.title[L]} — podgląd"></div>
+        <div class="thumb-frame" role="img" aria-label="${p.title[L]} — podgląd"${homeCellThumb(p) ? ` style="background-image:url('${thumbPath(homeCellThumb(p))}')"` : ""}></div>
       </div>
       <div class="meta"><span itemprop="dateCreated">${p.year}</span> · <span itemprop="contentLocation">${p.place[L]}</span> · ${p.works} ${L==="pl"?"prac":"works"}</div>
     </article>
@@ -265,6 +271,127 @@ function renderHome() {
       if (e.target.closest("a")) return;
       navigateProject(el.dataset.slug);
     };
+  });
+
+  startHomeRotation();
+}
+
+/* ============================================================
+   STRONA GŁÓWNA — zdjęcia w kaflach na telefonie
+   Na desktopie podgląd wywołuje najechanie kursorem; dotyk najechania nie
+   zna, więc kafle były na telefonie samym tekstem. Tutaj kafel pokazuje
+   zdjęcia sam: co 1,5 s inne, losowo wybrane z cyklu.
+   ============================================================ */
+const HOME_ROTATE_MS = 1500;
+/* Ile zdjęć z cyklu bierze udział w rotacji. Bez limitu telefon ściągnąłby
+   z czasem wszystkie miniatury ze strony głównej (5,4 MB); przy sześciu na
+   cykl to najwyżej ~1,7 MB, a losowanie i tak daje przy każdym wejściu
+   inny zestaw. */
+const HOME_ROTATE_POOL = 6;
+let homeRotateTimers = [];
+
+function stopHomeRotation() {
+  // setTimeout i setInterval dzielą pulę identyfikatorów, więc jedna lista
+  // wystarczy — zbędne wywołanie po prostu nic nie robi.
+  homeRotateTimers.forEach(id => { clearTimeout(id); clearInterval(id); });
+  homeRotateTimers = [];
+  // Warstwa przenikania, która nie zdążyła się dokończyć: przepisujemy jej
+  // zdjęcie do ramki i usuwamy, żeby kafel nie wrócił skokiem do starego.
+  $$(".home-poster .thumb-fade").forEach(layer => {
+    const frame = layer.parentElement;
+    if (frame && layer.style.backgroundImage) frame.style.backgroundImage = layer.style.backgroundImage;
+    layer.remove();
+  });
+}
+
+/* Czy kafel jest na ekranie (z zapasem na jeden ruch kciukiem). Mierzymy
+   położenie zamiast IntersectionObserver, bo widoki przewijają się we
+   własnym panelu, a nie w oknie — obserwator melduje wtedy wszystkie kafle
+   jako widoczne i rotacja ściąga zdjęcia dla całej strony naraz. */
+function cellOnScreen(cell) {
+  const r = cell.getBoundingClientRect();
+  return r.bottom > -150 && r.top < window.innerHeight + 150;
+}
+
+function shuffled(list) {
+  const a = [...list];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function startHomeRotation() {
+  stopHomeRotation();
+  // Ten sam próg co w stylach: powyżej 720 px zdjęcie pokazuje najechanie.
+  if (!window.matchMedia("(max-width: 720px)").matches) return;
+  const cells = $$(".home-poster .cell");
+  if (!cells.length || !window.PROJECTS) return;
+
+  // Kto prosił o mniej ruchu, dostaje jedno zdjęcie na kafel, bez zmian.
+  const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  cells.forEach((cell, ci) => {
+    const p = window.PROJECTS.find(x => x.slug === cell.dataset.slug);
+    const frame = cell.querySelector(".thumb-frame");
+    if (!p || !frame || !(p.images || []).length) return;
+
+    const pool = shuffled(p.images).slice(0, HOME_ROTATE_POOL);
+    let i = 0;
+
+    // Zdjęcie podmieniamy dopiero, gdy jest wczytane — inaczej kafel mrugałby
+    // pustką na wolnym łączu. Gdyby miniatury zabrakło, zostaje oryginał.
+    const setFrame = (full, fade) => {
+      const thumb = thumbPath(full);
+      const apply = (src) => {
+        if (!fade) {
+          frame.style.backgroundImage = `url('${src}')`;
+          return;
+        }
+        // Warstwa z nowym zdjęciem przenika nad starym, a po przejściu
+        // staje się tłem ramki i znika — bez migotania pustym kaflem.
+        const layer = document.createElement("div");
+        layer.className = "thumb-fade";
+        layer.style.backgroundImage = `url('${src}')`;
+        frame.appendChild(layer);
+        // Odczyt offsetWidth wymusza przeliczenie stylu, więc przeglądarka
+        // zapamiętuje stan wyjściowy (opacity 0) i ma co animować. Świadomie
+        // nie ma tu requestAnimationFrame: w karcie w tle klatki nie tykają
+        // i zdjęcie nie zmieniłoby się wcale.
+        void layer.offsetWidth;
+        layer.style.opacity = "1";
+        homeRotateTimers.push(setTimeout(() => {
+          frame.style.backgroundImage = `url('${src}')`;
+          layer.remove();
+        }, 460));
+      };
+      const pre = new Image();
+      pre.onload = () => apply(thumb);
+      pre.onerror = () => apply(full);
+      pre.src = thumb;
+    };
+
+    setFrame(pool[0], false);
+    if (still || pool.length < 2) return;
+
+    // Kafel poza ekranem nie zmienia zdjęcia — nie ma po co ściągać danych
+    // za coś, czego nikt nie widzi (i za co płaci pakietem). Zakładki w tle
+    // przeglądarka dławi sama; jawne sprawdzanie document.hidden potrafiłoby
+    // uciszyć rotację tam, gdzie strona żyje w ramce (webview aplikacji)
+    // i cały czas melduje się jako ukryta.
+    const step = () => {
+      if (!cellOnScreen(cell)) return;
+      i = (i + 1) % pool.length;
+      setFrame(pool[i], true);
+    };
+
+    // Kafle nie przeskakują równo — każdy rusza ułamek sekundy później,
+    // więc na ekranie nie ma jednego wspólnego mrugnięcia.
+    homeRotateTimers.push(setTimeout(() => {
+      step();
+      homeRotateTimers.push(setInterval(step, HOME_ROTATE_MS));
+    }, ci * 220));
   });
 }
 
@@ -1398,6 +1525,12 @@ function init() {
   // przełącznik stykówki
   const sheetBtn = $("#pjSheetBtn");
   if (sheetBtn) sheetBtn.addEventListener("click", () => setSheetMode(!state.sheetOpen));
+
+  // Obrót telefonu albo zmiana szerokości okna przełącza między podglądem
+  // na najechanie a rotacją zdjęć w kaflach — trzeba ją wtedy przeliczyć.
+  const homeMQ = window.matchMedia("(max-width: 720px)");
+  if (homeMQ.addEventListener) homeMQ.addEventListener("change", startHomeRotation);
+  else if (homeMQ.addListener) homeMQ.addListener(startHomeRotation);
 
   // touch swipe on project stage
   const stage = document.querySelector(".proj-stage");
