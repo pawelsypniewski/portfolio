@@ -1,15 +1,17 @@
 /**
- * Miniatury do siatki zdjęć w Aktualnościach.
+ * Miniatury do siatek zdjęć: Aktualności oraz stykówka cyklu.
  *
  *   node tools/build-thumbs.js        (albo: npm run thumbs)
  *
- * Po co: kafelki w Aktualnościach mają na ekranie 235 × 235 px (470 px na
+ * Po co: kafelki w siatce mają na ekranie ok. 235 × 235 px (470 px na
  * Retinie), a wstawiane były pełne pliki po 2000 px i do 620 KB. Samo
- * wejście na /aktualnosci/ ważyło przez to ~8,5 MB. Lightbox nadal
- * otwiera oryginał — miniatura służy wyłącznie siatce.
+ * wejście na /aktualnosci/ ważyło przez to ~8,5 MB, a stykówka piętnastu
+ * zdjęć ciągnęłaby ~3 MB. Lightbox nadal otwiera oryginał — miniatura
+ * służy wyłącznie siatce.
  *
  * Wejście:  images/achievements/<wydarzenie>/NN.webp
- * Wyjście:  images/achievements/<wydarzenie>/thumbs/NN.webp  (600 px)
+ *           images/<cykl>/NN.webp — katalogi zdjęć z content/projects.json
+ * Wyjście:  <ten sam katalog>/thumbs/NN.webp  (600 px)
  *
  * Skrypt pomija pliki, których miniatura jest już aktualna, więc można go
  * uruchamiać wielokrotnie. Jeśli miniatury zabraknie, strona i tak pokaże
@@ -20,7 +22,7 @@ const path = require("path");
 const sharp = require("sharp");
 
 const ROOT = path.join(__dirname, "..");
-const SRC_DIR = path.join(ROOT, "images", "achievements");
+const ACHIEVEMENTS_DIR = path.join(ROOT, "images", "achievements");
 const THUMB_DIR_NAME = "thumbs";
 const WIDTH = 600;   // 235 px kafelka × 2 (Retina) + zapas
 const QUALITY = 78;
@@ -38,15 +40,33 @@ function findSources(dir, out = []) {
   return out;
 }
 
+/* Katalogi ze zdjęciami cykli bierzemy z pliku zbiorczego, a nie z listy
+   katalogów na dysku — dzięki temu miniatury powstają dokładnie dla tych
+   zdjęć, które strona pokazuje w stykówce, i nigdy nie rozjadą się z treścią.
+   images/uploads/ (poczekalnia przed konwersją) i images/about/ (portret,
+   nigdzie nie trafia do siatki) zostają bez miniatur. */
+function projectDirs() {
+  const file = path.join(ROOT, "content", "projects.json");
+  if (!fs.existsSync(file)) return [];
+  const dirs = new Set();
+  for (const project of JSON.parse(fs.readFileSync(file, "utf8"))) {
+    for (const img of project.images || []) {
+      dirs.add(path.join(ROOT, path.dirname(String(img))));
+    }
+  }
+  return [...dirs];
+}
+
 function isFresh(src, thumb) {
   if (!fs.existsSync(thumb)) return false;
   return fs.statSync(thumb).mtimeMs >= fs.statSync(src).mtimeMs;
 }
 
 async function main() {
-  const sources = findSources(SRC_DIR);
+  const dirs = [ACHIEVEMENTS_DIR, ...projectDirs()];
+  const sources = [...new Set(dirs.flatMap((dir) => findSources(dir)))];
   if (sources.length === 0) {
-    console.log("Brak zdjęć w images/achievements — nic do zrobienia.");
+    console.log("Brak zdjęć do przetworzenia — nic do zrobienia.");
     return;
   }
 
@@ -81,7 +101,7 @@ async function main() {
   const mb = (b) => (b / 1024 / 1024).toFixed(1) + " MB";
   console.log(
     `\nMiniatury: ${made} nowych, ${skipped} aktualnych.\n` +
-    `Siatka Aktualności: ${mb(bytesBefore)} → ${mb(bytesAfter)}`
+    `Siatki (Aktualności + stykówki): ${mb(bytesBefore)} → ${mb(bytesAfter)}`
   );
 }
 

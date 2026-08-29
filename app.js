@@ -6,6 +6,7 @@ const state = {
   projectSlug: null,
   newsSlug: null,
   slideIndex: 0,
+  sheetOpen: false,
   lang: "pl",
 };
 
@@ -573,10 +574,17 @@ const DanieBook = (function () {
   return { init, destroy, go, isActive };
 })();
 
+/* Który cykl jest już narysowany. Zamknięcie lightboxa cofa historię, a to
+   przerysowuje widok projektu — bez tej pamięci powrót wyrzucałby zawsze na
+   pierwsze zdjęcie i zamykał stykówkę, choć użytkownik nigdzie nie wyszedł. */
+let renderedProjectSlug = null;
+
 function renderProject() {
   const p = window.PROJECTS.find(x => x.slug === state.projectSlug);
   if (!p) return;
   const L = state.lang;
+  const sameProject = renderedProjectSlug === p.slug;
+  renderedProjectSlug = p.slug;
 
   $("#pjTitle").textContent = p.title[L];
   $("#pjSub").textContent   = `${p.no} / ${p.category[L]}`;
@@ -614,6 +622,10 @@ function renderProject() {
     nextBtn.setAttribute("aria-label", (L==="pl"?"Następny projekt: ":"Next project: ") + next.title[L]);
   }
 
+  // Stykówkę budujemy zawsze — także dla trybu książki, gdzie podejrzenie
+  // wszystkich stron naraz przydaje się najbardziej.
+  buildSheet(p, L);
+
   // --- Tryb KSIĄŻKI (flipbook) dla projektów z flagą `book` ---
   const bookWrap = $("#pjBook");
   const stageEl = document.querySelector(".proj-stage");
@@ -625,6 +637,7 @@ function renderProject() {
     if (bottomCounter) bottomCounter.style.visibility = "hidden";
     if (bookWrap) bookWrap.hidden = false;
     DanieBook.init(window.DANIE_BOOK);
+    setSheetMode(sameProject && state.sheetOpen);
     return;
   } else {
     if (bookWrap) bookWrap.hidden = true;
@@ -653,8 +666,9 @@ function renderProject() {
     img.onclick = () => openLightbox(parseInt(img.dataset.index, 10));
   });
 
-  state.slideIndex = 0;
+  if (!sameProject || state.slideIndex >= p.images.length) state.slideIndex = 0;
   updateSlide();
+  setSheetMode(sameProject && state.sheetOpen);
 }
 
 function updateSlide() {
@@ -688,6 +702,85 @@ function jumpSlideInstant() {
       track.style.transition = orig;
     });
   });
+}
+
+/* ============================================================
+   STYKÓWKA — wszystkie zdjęcia cyklu naraz
+   Widok pojedynczego slajdu pokazuje sekwencję po kolei; stykówka pozwala
+   ogarnąć cały cykl jednym spojrzeniem — tak jak papierowa odbitka stykowa
+   całej rolki. Kliknięcie klatki otwiera ją w lightboxie i zapamiętuje, na
+   której stanął wzrok, więc powrót do widoku pojedynczego trafia w to zdjęcie.
+   ============================================================ */
+function buildSheet(p, L) {
+  const sheet = $("#pjSheet");
+  if (!sheet) return;
+  const imgs = p.images || [];
+  const photoWord = L === "pl" ? "zdjęcie" : "photo";
+  const ofWord = L === "pl" ? "z" : "of";
+
+  sheet.innerHTML = imgs.map((src, i) => {
+    const label = `${attr(p.title[L])} — ${photoWord} ${i + 1} ${ofWord} ${imgs.length}`;
+    return `<button class="sheet-frame" type="button" data-index="${i}" aria-label="${label}">` +
+             `<img src="${attr(thumbPath(src))}" data-full="${attr(src)}" alt="${label}" loading="lazy" decoding="async">` +
+             `<span class="sheet-no" aria-hidden="true">${String(i + 1).padStart(2, "0")}</span>` +
+           `</button>`;
+  }).join("");
+
+  // Brak miniatury (zdjęcie dodane bez przebudowy) — pokaż pełny plik
+  $$("#pjSheet img").forEach(img => {
+    img.addEventListener("error", () => {
+      const full = img.dataset.full;
+      if (full && img.getAttribute("src") !== full) img.setAttribute("src", full);
+    }, { once: true });
+  });
+
+  $$("#pjSheet .sheet-frame").forEach(el => {
+    el.onclick = () => {
+      const i = parseInt(el.dataset.index, 10);
+      state.slideIndex = i;
+      openLightbox(i);
+    };
+  });
+}
+
+function setSheetMode(on) {
+  const p = window.PROJECTS.find(x => x.slug === state.projectSlug);
+  if (!p) return;
+  const L = state.lang;
+  const hasImages = !!(p.images && p.images.length);
+  const isBook = !!(p.book && window.DANIE_BOOK);
+  state.sheetOpen = hasImages && !!on;
+
+  const sheet = $("#pjSheet");
+  if (sheet) sheet.hidden = !state.sheetOpen;
+
+  // Stykówka zajmuje miejsce galerii: w trybie książki chowamy książkę,
+  // w zwykłym — scenę ze slajdem razem z mobilnymi strzałkami.
+  if (isBook) {
+    const book = $("#pjBook");
+    if (book) book.hidden = state.sheetOpen;
+  } else {
+    const stageEl = document.querySelector(".proj-stage");
+    const mobileNav = document.querySelector(".proj-mobile-nav");
+    if (stageEl) stageEl.style.display = state.sheetOpen ? "none" : "";
+    if (mobileNav) mobileNav.style.display = state.sheetOpen ? "none" : "";
+  }
+
+  const btn = $("#pjSheetBtn");
+  if (btn) {
+    btn.hidden = !hasImages;
+    const key = state.sheetOpen ? "proj.single" : "proj.sheet";
+    btn.textContent = (window.I18N[L] && window.I18N[L][key]) || btn.textContent;
+    btn.setAttribute("aria-pressed", state.sheetOpen ? "true" : "false");
+  }
+
+  // Licznik slajdów w stykówce nic nie znaczy — pokazujemy, ile jest zdjęć.
+  const counter = $("#pjCounter");
+  if (counter) {
+    counter.style.visibility = (isBook && !state.sheetOpen) ? "hidden" : "";
+    if (state.sheetOpen) counter.textContent = `${p.images.length} ${L === "pl" ? "prac" : "works"}`;
+    else if (!isBook) updateSlide();
+  }
 }
 
 /* ============================================================
@@ -775,10 +868,18 @@ function closeLightbox() {
     history.back();
   }
 }
+/* Przewijanie w lightboxie przesuwa też slajd pod spodem — po zamknięciu
+   użytkownik zostaje przy zdjęciu, które ostatnio oglądał, a nie wraca
+   na początek cyklu. Aktualności mają własny zestaw zdjęć, więc ich nie dotyczy. */
+function syncSlideToLightbox() {
+  if (state.route === "project") state.slideIndex = lbIndex;
+}
+
 function lbNext() {
   if (!lbImages.length) return;
   if (lbWithFlash) triggerCameraFlash();
   lbIndex = (lbIndex + 1) % lbImages.length;
+  syncSlideToLightbox();
   $("#lbImg").src = lbImages[lbIndex];
   $("#lbCounter").textContent =
     `${String(lbIndex+1).padStart(2,"0")} / ${String(lbImages.length).padStart(2,"0")}`;
@@ -787,6 +888,7 @@ function lbPrev() {
   if (!lbImages.length) return;
   if (lbWithFlash) triggerCameraFlash();
   lbIndex = (lbIndex - 1 + lbImages.length) % lbImages.length;
+  syncSlideToLightbox();
   $("#lbImg").src = lbImages[lbIndex];
   $("#lbCounter").textContent =
     `${String(lbIndex+1).padStart(2,"0")} / ${String(lbImages.length).padStart(2,"0")}`;
@@ -860,13 +962,13 @@ function syncNewsHeading(single) {
   retag(el, single || innyH1 ? "h2" : "h1");
 }
 
-/* Siatka pokazuje kafelki 235 × 235 px, więc bierze miniaturę z podkatalogu
-   thumbs/ (600 px, generowane przez tools/build-thumbs.js). Pełny plik
-   zostaje dla lightboxa. Gdyby miniatury zabrakło — np. zdjęcie dodane bez
-   przebudowy — obsługa błędu niżej podmienia źródło na oryginał. */
+/* Siatki — Aktualności i stykówka cyklu — pokazują kafelki po ok. 235 px,
+   więc biorą miniaturę z podkatalogu thumbs/ (600 px, generowane przez
+   tools/build-thumbs.js). Pełny plik zostaje dla lightboxa. Gdyby miniatury
+   zabrakło — np. zdjęcie dodane bez przebudowy — obsługa błędu przy każdej
+   siatce podmienia źródło na oryginał. */
 function thumbPath(src) {
   const str = String(src || "");
-  if (!/\/images\/achievements\//.test("/" + str.replace(/^\//, ""))) return str;
   const i = str.lastIndexOf("/");
   return i < 0 ? str : str.slice(0, i) + "/thumbs" + str.slice(i);
 }
@@ -1293,6 +1395,10 @@ function init() {
   if (prevMobile) prevMobile.addEventListener("click", navProjectPrev);
   if (nextMobile) nextMobile.addEventListener("click", navProjectNext);
 
+  // przełącznik stykówki
+  const sheetBtn = $("#pjSheetBtn");
+  if (sheetBtn) sheetBtn.addEventListener("click", () => setSheetMode(!state.sheetOpen));
+
   // touch swipe on project stage
   const stage = document.querySelector(".proj-stage");
   if (stage) {
@@ -1413,6 +1519,12 @@ function init() {
       return;
     }
     if (state.route === "project") {
+      // Ze stykówki Escape wraca do widoku pojedynczego, a nie od razu
+      // na stronę główną — najpierw cofamy ostatni krok, nie cały widok.
+      if (state.sheetOpen) {
+        if (e.key === "Escape") setSheetMode(false);
+        return;
+      }
       if (DanieBook.isActive()) {
         if (e.key === "ArrowRight") DanieBook.go(1);
         else if (e.key === "ArrowLeft") DanieBook.go(-1);
