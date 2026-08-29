@@ -1,6 +1,7 @@
 {
   "id": "10-przykazan-2023",
   "dateISO": "2023-09-27",
+  "dateEndISO": "2023-10-18",
   "date": {
     "pl": "27 września – 18 października 2023",
     "en": "27 September – 18 October 2023"
@@ -16,6 +17,17 @@
   "place": {
     "pl": "Galeria Obok ZPAF, Warszawa",
     "en": "Galeria Obok ZPAF, Warsaw"
+  },
+  "venue": {
+    "name": {
+      "pl": "Galeria Obok ZPAF",
+      "en": "Galeria Obok ZPAF"
+    },
+    "locality": {
+      "pl": "Warszawa",
+      "en": "Warsaw"
+    },
+    "country": "PL"
   },
   "description": {
     "pl": "Wystawa zbiorowa będąca owocem rocznej pracy jedenastu słuchaczy Studium Fotografii ZPAF pod kierunkiem Jolanty Rycerskiej. Dekalog — jako temat i wspólny mianownik projektu — skłonił autorów do wizualnych analiz świata wartości, zarówno tych historycznych, wpisanych w naszą kulturę, jak i tych aktualnie przetwarzanych pod wpływem dynamicznych zmian społecznych. Wielogłos pytań, nie odpowiedzi. Kuratorka: Jolanta Rycerska.",

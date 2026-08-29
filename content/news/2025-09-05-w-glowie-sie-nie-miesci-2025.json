@@ -1,6 +1,7 @@
 {
   "id": "w-glowie-sie-nie-miesci-2025",
   "dateISO": "2025-09-05",
+  "dateEndISO": "2025-09-19",
   "date": {
     "pl": "5 – 19 września 2025",
     "en": "5 – 19 September 2025"
@@ -16,6 +17,17 @@
   "place": {
     "pl": "Lokal Bródno, Warszawa",
     "en": "Lokal Bródno, Warsaw"
+  },
+  "venue": {
+    "name": {
+      "pl": "Lokal Bródno",
+      "en": "Lokal Bródno"
+    },
+    "locality": {
+      "pl": "Warszawa",
+      "en": "Warsaw"
+    },
+    "country": "PL"
   },
   "description": {
     "pl": "Indywidualna wystawa łącząca cztery cykle artysty — „Pamiętnik przetrwania”, „Flashback”, „Labirynt” i „Superpozycja”. Podróż w głąb ludzkiej świadomości i podświadomości: o pamięci, granicach wolności, lękach i pragnieniach. Fotografia jako narzędzie dialogu — z samym sobą, z odbiorcą, ze światem. Kuratorka: Agata Rząsowska-Grabicka.",

@@ -1,6 +1,7 @@
 {
   "id": "pamietnik-przetrwania-2025",
   "dateISO": "2025-12-03",
+  "dateEndISO": "2026-01-10",
   "date": {
     "pl": "3 grudnia 2025 – 10 stycznia 2026",
     "en": "3 December 2025 – 10 January 2026"
@@ -16,6 +17,17 @@
   "place": {
     "pl": "Galeria MAL — Terminal Kultury Gocław, Warszawa",
     "en": "MAL Gallery — Terminal Kultury Gocław, Warsaw"
+  },
+  "venue": {
+    "name": {
+      "pl": "Galeria MAL — Terminal Kultury Gocław",
+      "en": "Galeria MAL — Terminal Kultury Gocław"
+    },
+    "locality": {
+      "pl": "Warszawa",
+      "en": "Warsaw"
+    },
+    "country": "PL"
   },
   "description": {
     "pl": "Osobisty zapis fotograficzny walki z depresją. Projekt powstał z potrzeby przełamania społecznego tabu wokół chorób psychicznych i dotarcia do osób zmagających się z podobnymi doświadczeniami — z myślą, że prośba o pomoc nie jest oznaką słabości, lecz odwagą.",

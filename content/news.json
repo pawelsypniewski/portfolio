@@ -2,6 +2,7 @@
   {
     "id": "10-przykazan-2023",
     "dateISO": "2023-09-27",
+    "dateEndISO": "2023-10-18",
     "date": {
       "pl": "27 września – 18 października 2023",
       "en": "27 September – 18 October 2023"
@@ -17,6 +18,17 @@
     "place": {
       "pl": "Galeria Obok ZPAF, Warszawa",
       "en": "Galeria Obok ZPAF, Warsaw"
+    },
+    "venue": {
+      "name": {
+        "pl": "Galeria Obok ZPAF",
+        "en": "Galeria Obok ZPAF"
+      },
+      "locality": {
+        "pl": "Warszawa",
+        "en": "Warsaw"
+      },
+      "country": "PL"
     },
     "description": {
       "pl": "Wystawa zbiorowa będąca owocem rocznej pracy jedenastu słuchaczy Studium Fotografii ZPAF pod kierunkiem Jolanty Rycerskiej. Dekalog — jako temat i wspólny mianownik projektu — skłonił autorów do wizualnych analiz świata wartości, zarówno tych historycznych, wpisanych w naszą kulturę, jak i tych aktualnie przetwarzanych pod wpływem dynamicznych zmian społecznych. Wielogłos pytań, nie odpowiedzi. Kuratorka: Jolanta Rycerska.",
@@ -43,6 +55,7 @@
   {
     "id": "rybnik-foto-festival-2025",
     "dateISO": "2025-03-28",
+    "dateEndISO": "2025-03-28",
     "date": {
       "pl": "28 marca 2025",
       "en": "28 March 2025"
@@ -58,6 +71,17 @@
     "place": {
       "pl": "Galeria Sztuki Rzeczna, Rybnik",
       "en": "Galeria Sztuki Rzeczna, Rybnik"
+    },
+    "venue": {
+      "name": {
+        "pl": "Galeria Sztuki Rzeczna",
+        "en": "Galeria Sztuki Rzeczna"
+      },
+      "locality": {
+        "pl": "Rybnik",
+        "en": "Rybnik"
+      },
+      "country": "PL"
     },
     "description": {
       "pl": "Prezentacja slideshow cyklu „Labirynt” na 22. edycji Rybnik Foto Festival. Opowieść o młodych ludziach uwikłanych przez małe miasteczka. Metafora trudności do pokonania i zawiłości życiowych wyborów: czy widz znajdzie drogę wyjścia?",
@@ -93,6 +117,7 @@
   {
     "id": "itf-opava-start-2025",
     "dateISO": "2025-06-16",
+    "dateEndISO": "2025-06-16",
     "date": {
       "pl": "16 czerwca 2025",
       "en": "16 June 2025"
@@ -108,6 +133,17 @@
     "place": {
       "pl": "Institut tvůrčí fotografie, Uniwersytet Śląski w Opawie, Czechy",
       "en": "Institut tvůrčí fotografie, Silesian University in Opava, Czech Republic"
+    },
+    "venue": {
+      "name": {
+        "pl": "Institut tvůrčí fotografie, Uniwersytet Śląski w Opawie",
+        "en": "Institute of Creative Photography, Silesian University in Opava"
+      },
+      "locality": {
+        "pl": "Opawa",
+        "en": "Opava"
+      },
+      "country": "CZ"
     },
     "description": {
       "pl": "Rozpoczęcie studiów w Instytucie Fotografii Twórczej (Institut tvůrčí fotografie) na Uniwersytecie Śląskim w Opawie — jednej z najbardziej prestiżowych europejskich szkół fotografii artystycznej. Założony w 1990 roku, kształci kolejne pokolenia fotografów z całego regionu Europy Środkowej.",
@@ -132,6 +168,7 @@
   {
     "id": "w-glowie-sie-nie-miesci-2025",
     "dateISO": "2025-09-05",
+    "dateEndISO": "2025-09-19",
     "date": {
       "pl": "5 – 19 września 2025",
       "en": "5 – 19 September 2025"
@@ -147,6 +184,17 @@
     "place": {
       "pl": "Lokal Bródno, Warszawa",
       "en": "Lokal Bródno, Warsaw"
+    },
+    "venue": {
+      "name": {
+        "pl": "Lokal Bródno",
+        "en": "Lokal Bródno"
+      },
+      "locality": {
+        "pl": "Warszawa",
+        "en": "Warsaw"
+      },
+      "country": "PL"
     },
     "description": {
       "pl": "Indywidualna wystawa łącząca cztery cykle artysty — „Pamiętnik przetrwania”, „Flashback”, „Labirynt” i „Superpozycja”. Podróż w głąb ludzkiej świadomości i podświadomości: o pamięci, granicach wolności, lękach i pragnieniach. Fotografia jako narzędzie dialogu — z samym sobą, z odbiorcą, ze światem. Kuratorka: Agata Rząsowska-Grabicka.",
@@ -164,6 +212,7 @@
   {
     "id": "fotoartfestival-dias-show-2025",
     "dateISO": "2025-10-11",
+    "dateEndISO": "2025-10-12",
     "date": {
       "pl": "10 – 12 października 2025",
       "en": "10 – 12 October 2025"
@@ -179,6 +228,17 @@
     "place": {
       "pl": "Foto Art Festival, Bielsko-Biała",
       "en": "Foto Art Festival, Bielsko-Biała"
+    },
+    "venue": {
+      "name": {
+        "pl": "Foto Art Festival",
+        "en": "Foto Art Festival"
+      },
+      "locality": {
+        "pl": "Bielsko-Biała",
+        "en": "Bielsko-Biała"
+      },
+      "country": "PL"
     },
     "description": {
       "pl": "Wyróżnienie w międzynarodowym konkursie multimedialnym DIAS SHOW podczas 11. edycji Foto Art Festival w Bielsku-Białej. Cykl „Labirynt” znalazł się wśród dziewięciu zwycięskich prac. Laureaci otrzymują możliwość zorganizowania wystawy indywidualnej w Galerii Fotografii B&B lub podczas kolejnej edycji festiwalu. DIAS SHOW łączy fotografię z muzyką i narracją, prezentując dynamiczne sekwencje obrazów na dużym ekranie.",
@@ -209,6 +269,7 @@
   {
     "id": "pamietnik-przetrwania-2025",
     "dateISO": "2025-12-03",
+    "dateEndISO": "2026-01-10",
     "date": {
       "pl": "3 grudnia 2025 – 10 stycznia 2026",
       "en": "3 December 2025 – 10 January 2026"
@@ -224,6 +285,17 @@
     "place": {
       "pl": "Galeria MAL — Terminal Kultury Gocław, Warszawa",
       "en": "MAL Gallery — Terminal Kultury Gocław, Warsaw"
+    },
+    "venue": {
+      "name": {
+        "pl": "Galeria MAL — Terminal Kultury Gocław",
+        "en": "Galeria MAL — Terminal Kultury Gocław"
+      },
+      "locality": {
+        "pl": "Warszawa",
+        "en": "Warsaw"
+      },
+      "country": "PL"
     },
     "description": {
       "pl": "Osobisty zapis fotograficzny walki z depresją. Projekt powstał z potrzeby przełamania społecznego tabu wokół chorób psychicznych i dotarcia do osób zmagających się z podobnymi doświadczeniami — z myślą, że prośba o pomoc nie jest oznaką słabości, lecz odwagą.",
@@ -242,6 +314,7 @@
   {
     "id": "zpaf-przyjecie-2025",
     "dateISO": "2025-12-05",
+    "dateEndISO": "2025-12-05",
     "date": {
       "pl": "5 grudnia 2025",
       "en": "5 December 2025"
@@ -257,6 +330,17 @@
     "place": {
       "pl": "Związek Polskich Artystów Fotografików, Warszawa",
       "en": "Union of Polish Art Photographers, Warsaw"
+    },
+    "venue": {
+      "name": {
+        "pl": "Związek Polskich Artystów Fotografików",
+        "en": "Union of Polish Art Photographers"
+      },
+      "locality": {
+        "pl": "Warszawa",
+        "en": "Warsaw"
+      },
+      "country": "PL"
     },
     "description": {
       "pl": "Przyjęcie do Związku Polskich Artystów Fotografików (ZPAF) — najstarszego i najważniejszego stowarzyszenia fotografów artystycznych w Polsce, działającego od 1947 roku. Rada Artystyczna ZPAF przyjęła w grudniu 2025 grono ośmiorga nowych członków, w tym sześcioro do Okręgu Warszawskiego.",
@@ -283,6 +367,7 @@
   {
     "id": "offoto-opole-2026",
     "dateISO": "2026-07-06",
+    "dateEndISO": "2026-07-06",
     "date": {
       "pl": "6 lipca 2026",
       "en": "6 July 2026"
@@ -298,6 +383,17 @@
     "place": {
       "pl": "Opolski Festiwal Fotografii (OFFoto), Opole",
       "en": "Opole Photography Festival (OFFoto), Opole, Poland"
+    },
+    "venue": {
+      "name": {
+        "pl": "Opolski Festiwal Fotografii (OFFoto)",
+        "en": "Opole Photography Festival (OFFoto)"
+      },
+      "locality": {
+        "pl": "Opole",
+        "en": "Opole"
+      },
+      "country": "PL"
     },
     "description": {
       "pl": "Fragment cyklu „Nocne ptaki późno wracają do domu” został zaprezentowany na wystawie Instytutu Fotografii Twórczej (Institut tvůrčí fotografie) podczas Opolskiego Festiwalu Fotografii. Serdeczne podziękowania dla Vladimíra Birgusa za pokazanie prac oraz dla całej ekipy, która podjęła się montażu tej ogromnej wystawy: Vladimír Birgus, Arkadiusz Gola, Michał Szalast, David Macháč, Miroslav Zeman i Lukáš Lamla.\n\nCykl to opowieść o ludziach, którzy od poniedziałku do piątku żyją w rygorze społecznych ról — chodzą do pracy, na studia, zachowują twarz i panują nad emocjami. Kiedy jednak nadchodzi weekendowy wieczór, ulice zamieniają się w scenę, na której opadają wszelkie hamulce. Dokumentując ten cotygodniowy rytuał, zadaję sobie pytanie: czy w nocnym chaosie wreszcie zdejmują codzienne maski i są w pełni sobą? Czy może ulica to tylko kolejna scena, na której wchodzą w nową, weekendową rolę nieokiełznanego imprezowicza?\n\nFotografie z wystawy: Maria Książek i Maks Skrzeczkowski.",

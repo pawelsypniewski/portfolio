@@ -481,6 +481,46 @@ function newsEventType(a) {
   return /wystaw|pokaz/i.test(String(a.type && a.type.pl)) ? "ExhibitionEvent" : "Event";
 }
 
+/* Jeden opis wydarzenia dla obu miejsc, w których go podajemy: na stronie
+   wpisu i na liście aktualności. Google prosi w danych o wydarzeniu o komplet
+   pól — datę końca, adres miejsca, organizatora, wykonawcę i status — więc
+   wszystkie podajemy tutaj, a nie w dwóch osobnych, rozjeżdżających się
+   miejscach. Adres bierzemy z pola `venue` wpisu (content/news/*.json):
+   nazwa instytucji, miasto i kraj — tyle, ile faktycznie wiemy.
+   `full` = wersja na stronę wpisu (pełny opis); bez niej — skrót na listę. */
+function newsEventLd(a, lang, full) {
+  const L = lang;
+  const self = a.id ? pathFor("newsItem", a.id, L) : null;
+  const v = a.venue || {};
+  const venueName = (v.name && v.name[L]) || a.place[L];
+  const locality = v.locality && v.locality[L];
+  const descText = String((a.description && a.description[L]) || "").replace(/\s+/g, " ").trim();
+
+  return {
+    "@type": newsEventType(a),
+    "@id": self ? `${BASE}${self}#event` : undefined,
+    name: a.title[L],
+    url: self ? BASE + self : undefined,
+    startDate: a.dateISO,
+    endDate: a.dateEndISO || a.dateISO,
+    eventStatus: "https://schema.org/EventScheduled",
+    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+    location: {
+      "@type": "Place",
+      name: venueName,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: locality,
+        addressCountry: v.country,
+      },
+    },
+    organizer: { "@type": "Organization", name: venueName },
+    performer: { "@type": "Person", "@id": `${BASE}/#person`, name: AUTHOR },
+    description: full ? descText : shorten(descText, 300),
+    inLanguage: INLANG[L],
+  };
+}
+
 /* Lista aktualności w kodzie źródłowym — bliźniak renderAchievements() z app.js.
    Ten sam HTML musi powstać po obu stronach: bez tego robot nieuruchamiający
    JavaScriptu (Bing, GPTBot, ClaudeBot) zobaczyłby pustą sekcję, a przeglądarka
@@ -516,22 +556,24 @@ function newsListHtml(items, lang, i18n, single) {
 
     const href = a.id ? pathFor("newsItem", a.id, L) : null;
     const titleTag = single
-      ? `<h1 class="achievement-title" itemprop="name">${title}</h1>`
-      : `<h2 class="achievement-title" itemprop="name">${href ? `<a href="${href}">${title}</a>` : title}</h2>`;
+      ? `<h1 class="achievement-title">${title}</h1>`
+      : `<h2 class="achievement-title">${href ? `<a href="${href}">${title}</a>` : title}</h2>`;
 
+    /* Bez znaczników microdata: to samo wydarzenie opisuje już komplet
+       JSON-LD w <head> (patrz newsEventLd). Dwa opisy tego samego zdarzenia
+       Google czyta jako dwa osobne wydarzenia i o brakujące pola w tym
+       uboższym — dopisywał ostrzeżenia w Search Console. */
     return `
-      <article class="achievement${single ? " single" : ""}" itemscope itemtype="https://schema.org/Event">
-        <meta itemprop="startDate" content="${escapeHtml(a.dateISO || "")}">
-        ${href ? `<meta itemprop="url" content="${BASE}${href}">` : ""}
+      <article class="achievement${single ? " single" : ""}">
         <div class="achievement-meta">
           <span class="date">${displayDate}</span>
           <span class="type">${escapeHtml(a.type[L])}</span>
         </div>
         <div class="achievement-content">
           ${titleTag}
-          <div class="achievement-place" itemprop="location">${escapeHtml(a.place[L])}</div>
+          <div class="achievement-place">${escapeHtml(a.place[L])}</div>
           ${addressBlock}
-          <p class="achievement-desc" itemprop="description">${escapeHtml(a.description[L])}</p>
+          <p class="achievement-desc">${escapeHtml(a.description[L])}</p>
           ${photos ? `<div class="achievement-photos">${photos}</div>` : ""}
           ${link}
         </div>
@@ -566,17 +608,7 @@ function newsItemPage(a, lang, i18n) {
     fill: { achievementsList: newsListHtml([a], L, i18n, true) },
     jsonLd: {
       "@context": "https://schema.org",
-      "@type": newsEventType(a),
-      "@id": `${BASE}${self}#event`,
-      name: a.title[L],
-      url: BASE + self,
-      startDate: a.dateISO,
-      eventStatus: "https://schema.org/EventScheduled",
-      eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-      location: { "@type": "Place", name: a.place[L] },
-      description: descText,
-      inLanguage: INLANG[L],
-      performer: { "@type": "Person", "@id": `${BASE}/#person`, name: AUTHOR },
+      ...newsEventLd(a, L, true),
       image: images.map((src) => ({
         "@type": "ImageObject",
         contentUrl: BASE + src,
@@ -781,18 +813,7 @@ function newsJsonLd(news, lang) {
       .map((n, i) => ({
         "@type": "ListItem",
         position: i + 1,
-        item: {
-          "@type": newsEventType(n),
-          "@id": n.id ? `${BASE}${pathFor("newsItem", n.id, lang)}#event` : undefined,
-          url: n.id ? BASE + pathFor("newsItem", n.id, lang) : undefined,
-          name: n.title[lang],
-          startDate: n.dateISO,
-          eventStatus: "https://schema.org/EventScheduled",
-          eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-          location: { "@type": "Place", name: n.place[lang] },
-          description: shorten(n.description && n.description[lang], 300),
-          performer: { "@type": "Person", "@id": `${BASE}/#person`, name: AUTHOR },
-        },
+        item: newsEventLd(n, lang, false),
       })),
   };
 }

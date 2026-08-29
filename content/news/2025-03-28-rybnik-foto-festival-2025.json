@@ -1,6 +1,7 @@
 {
   "id": "rybnik-foto-festival-2025",
   "dateISO": "2025-03-28",
+  "dateEndISO": "2025-03-28",
   "date": {
     "pl": "28 marca 2025",
     "en": "28 March 2025"
@@ -16,6 +17,17 @@
   "place": {
     "pl": "Galeria Sztuki Rzeczna, Rybnik",
     "en": "Galeria Sztuki Rzeczna, Rybnik"
+  },
+  "venue": {
+    "name": {
+      "pl": "Galeria Sztuki Rzeczna",
+      "en": "Galeria Sztuki Rzeczna"
+    },
+    "locality": {
+      "pl": "Rybnik",
+      "en": "Rybnik"
+    },
+    "country": "PL"
   },
   "description": {
     "pl": "Prezentacja slideshow cyklu „Labirynt” na 22. edycji Rybnik Foto Festival. Opowieść o młodych ludziach uwikłanych przez małe miasteczka. Metafora trudności do pokonania i zawiłości życiowych wyborów: czy widz znajdzie drogę wyjścia?",

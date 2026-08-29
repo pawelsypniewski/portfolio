@@ -1,6 +1,7 @@
 {
   "id": "fotoartfestival-dias-show-2025",
   "dateISO": "2025-10-11",
+  "dateEndISO": "2025-10-12",
   "date": {
     "pl": "10 – 12 października 2025",
     "en": "10 – 12 October 2025"
@@ -16,6 +17,17 @@
   "place": {
     "pl": "Foto Art Festival, Bielsko-Biała",
     "en": "Foto Art Festival, Bielsko-Biała"
+  },
+  "venue": {
+    "name": {
+      "pl": "Foto Art Festival",
+      "en": "Foto Art Festival"
+    },
+    "locality": {
+      "pl": "Bielsko-Biała",
+      "en": "Bielsko-Biała"
+    },
+    "country": "PL"
   },
   "description": {
     "pl": "Wyróżnienie w międzynarodowym konkursie multimedialnym DIAS SHOW podczas 11. edycji Foto Art Festival w Bielsku-Białej. Cykl „Labirynt” znalazł się wśród dziewięciu zwycięskich prac. Laureaci otrzymują możliwość zorganizowania wystawy indywidualnej w Galerii Fotografii B&B lub podczas kolejnej edycji festiwalu. DIAS SHOW łączy fotografię z muzyką i narracją, prezentując dynamiczne sekwencje obrazów na dużym ekranie.",

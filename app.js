@@ -1239,24 +1239,25 @@ function renderAchievements() {
     // tytuł jest nagłówkiem głównym (h1), więc linku już nie ma.
     const href = a.id ? routeToPath("newsItem", a.id, L) : null;
     const titleTag = single
-      ? `<h1 class="achievement-title" itemprop="name">${a.title[L]}</h1>`
-      : `<h2 class="achievement-title" itemprop="name">${
+      ? `<h1 class="achievement-title">${a.title[L]}</h1>`
+      : `<h2 class="achievement-title">${
           href ? `<a href="${href}">${a.title[L]}</a>` : a.title[L]
         }</h2>`;
 
+    // Bez znaczników microdata: wydarzenie opisuje komplet JSON-LD wpisany
+    // w <head> przez tools/build-pages.js. Dwa opisy tego samego zdarzenia
+    // Google liczy jako dwa wydarzenia i zgłasza braki w tym uboższym.
     return `
-      <article class="achievement${single ? " single" : ""}" itemscope itemtype="https://schema.org/Event">
-        <meta itemprop="startDate" content="${a.dateISO || ""}">
-        ${href ? `<meta itemprop="url" content="${BASE_URL}${href}">` : ""}
+      <article class="achievement${single ? " single" : ""}">
         <div class="achievement-meta">
           <span class="date">${displayDate}</span>
           <span class="type">${a.type[L]}</span>
         </div>
         <div class="achievement-content">
           ${titleTag}
-          <div class="achievement-place" itemprop="location">${a.place[L]}</div>
+          <div class="achievement-place">${a.place[L]}</div>
           ${addressBlock}
-          <p class="achievement-desc" itemprop="description">${a.description[L]}</p>
+          <p class="achievement-desc">${a.description[L]}</p>
           ${photos ? `<div class="achievement-photos">${photos}</div>` : ""}
           ${link}
         </div>

@@ -1,6 +1,7 @@
 {
   "id": "itf-opava-start-2025",
   "dateISO": "2025-06-16",
+  "dateEndISO": "2025-06-16",
   "date": {
     "pl": "16 czerwca 2025",
     "en": "16 June 2025"
@@ -16,6 +17,17 @@
   "place": {
     "pl": "Institut tvůrčí fotografie, Uniwersytet Śląski w Opawie, Czechy",
     "en": "Institut tvůrčí fotografie, Silesian University in Opava, Czech Republic"
+  },
+  "venue": {
+    "name": {
+      "pl": "Institut tvůrčí fotografie, Uniwersytet Śląski w Opawie",
+      "en": "Institute of Creative Photography, Silesian University in Opava"
+    },
+    "locality": {
+      "pl": "Opawa",
+      "en": "Opava"
+    },
+    "country": "CZ"
   },
   "description": {
     "pl": "Rozpoczęcie studiów w Instytucie Fotografii Twórczej (Institut tvůrčí fotografie) na Uniwersytecie Śląskim w Opawie — jednej z najbardziej prestiżowych europejskich szkół fotografii artystycznej. Założony w 1990 roku, kształci kolejne pokolenia fotografów z całego regionu Europy Środkowej.",
