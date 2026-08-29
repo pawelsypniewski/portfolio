@@ -24,7 +24,7 @@
   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
   font-src https://fonts.gstatic.com;
   img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com;
-  connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://api.web3forms.com;
+  connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://script.google.com https://script.googleusercontent.com;
   frame-src 'none';
   object-src 'none';
   base-uri 'self';
@@ -2882,17 +2882,11 @@
         <div class="side" id="contactSide"></div>
 
         <!-- Formularz startuje ukryty i pokazuje go dopiero JavaScript, gdy
-             w polu access_key jest prawdziwy klucz Web3Forms. Dzięki temu
+             w app.js jest wpisany adres skryptu (KONTAKT_ENDPOINT). Dzięki temu
              nikt nie zobaczy formularza, który nie ma dokąd wysłać. -->
         <form class="contact-form" id="contactForm" hidden>
           <h3 class="cf-h" data-i18n="form.h">Napisz do mnie</h3>
 
-          <!-- Klucz dostępowy Web3Forms. To nie jest hasło ani sekret: pozwala
-               wyłącznie wysłać wiadomość na adres, dla którego został wydany,
-               i z założenia jest widoczny w kodzie strony. -->
-          <input type="hidden" name="access_key" value="WKLEJ-TUTAJ-KLUCZ-WEB3FORMS">
-          <input type="hidden" name="subject" value="Wiadomość z pawelsypniewski.pl">
-          <input type="hidden" name="from_name" value="Portfolio pawelsypniewski.pl">
           <!-- Pułapka na roboty: pole jest poza ekranem i poza kolejnością Tab,
                więc człowiek go nie wypełni, a automat owszem. -->
           <input type="checkbox" name="botcheck" class="cf-botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
@@ -2919,7 +2913,7 @@
             <textarea name="message" required rows="7" maxlength="4000"></textarea>
           </label>
 
-          <p class="cf-note" data-i18n="form.note">Odpowiadam z adresu katedranalogowa@gmail.com. Dane z formularza służą wyłącznie odpowiedzi na Twoją wiadomość — nie trafiają na żadną listę wysyłkową. Wiadomość przekazuje na moją skrzynkę usługa Web3Forms.</p>
+          <p class="cf-note" data-i18n="form.note">Odpowiadam z adresu katedranalogowa@gmail.com. Dane z formularza służą wyłącznie odpowiedzi na Twoją wiadomość — nie trafiają na żadną listę wysyłkową. Wiadomość idzie prosto na moją skrzynkę — bez pośredników.</p>
           <button type="submit" class="cf-submit" data-i18n="form.send">Wyślij wiadomość</button>
           <p class="cf-status" id="cfStatus" role="status" aria-live="polite"></p>
         </form>

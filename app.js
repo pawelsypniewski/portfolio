@@ -1292,25 +1292,33 @@ function renderAchievements() {
 
 /* ============================================================
    FORMULARZ KONTAKTOWY
-   Strona jest statyczna (GitHub Pages), więc wiadomość wysyła pośrednik —
-   Web3Forms — i przekazuje ją mailem na adres, dla którego wydano klucz.
-   Wysyłamy fetchem, a nie zwykłym submitem: użytkownik zostaje na stronie
-   i widzi potwierdzenie w miejscu, w którym pisał, a reguła CSP form-action
-   może zostać zawężona do 'self'.
+   Strona jest statyczna (GitHub Pages), więc sama nie wyśle maila —
+   przeglądarka tego nie potrafi. Robi to skrypt Google Apps Script na koncie
+   autora: odbiera zgłoszenie i wysyła je na jego własną skrzynkę Gmail.
+   Żaden nowy podmiot nie wchodzi w grę — Google i tak obsługuje tę pocztę —
+   i nic nie jest przechowywane poza samą skrzynką. Kod skryptu wraz
+   z instrukcją wdrożenia leży w tools/kontakt-apps-script.gs.
+
+   Wysyłamy fetchem, a nie zwykłym submitem: piszący zostaje na stronie
+   i widzi potwierdzenie tam, gdzie pisał, a reguła CSP form-action zostaje
+   zawężona do 'self'.
    ============================================================ */
-const WEB3FORMS_URL = "https://api.web3forms.com/submit";
-const WEB3FORMS_PLACEHOLDER = "WKLEJ-TUTAJ-KLUCZ-WEB3FORMS";
+/* ▼▼▼ TUTAJ WKLEJ ADRES SWOJEGO SKRYPTU ▼▼▼
+   Adres kończący się na /exec, ze wdrożenia Google Apps Script — instrukcja
+   krok po kroku jest w pliku tools/kontakt-apps-script.gs. Dopóki stoi tu
+   napis zastępczy, formularz w ogóle się nie pokazuje. */
+const KONTAKT_ENDPOINT = "WKLEJ-TUTAJ-ADRES-APPS-SCRIPT";
+/* ▲▲▲ powyżej ▲▲▲ */
 
 function initContactForm() {
   const form = $("#contactForm");
   if (!form) return;
 
-  const key = (form.elements.access_key.value || "").trim();
-  if (!key || key === WEB3FORMS_PLACEHOLDER) {
-    // Lepiej nie pokazać formularza wcale, niż pokazać taki, który nie ma
-    // dokąd wysłać. Adres e-mail obok działa niezależnie.
+  // Lepiej nie pokazać formularza wcale, niż pokazać taki, który nie ma dokąd
+  // wysłać. Adres e-mail obok działa niezależnie od tego.
+  if (!/^https:\/\/script\.google\.com\//.test(KONTAKT_ENDPOINT)) {
     form.hidden = true;
-    console.warn("Formularz kontaktowy ukryty: w polu access_key nie ma klucza Web3Forms.");
+    console.warn("Formularz kontaktowy ukryty: w app.js nie ma jeszcze adresu Apps Script (KONTAKT_ENDPOINT).");
     return;
   }
   form.hidden = false;
@@ -1338,11 +1346,17 @@ function initContactForm() {
     const data = Object.fromEntries(new FormData(form).entries());
     // Wiadomo, w jakim języku ktoś pisał — po polsku czy po angielsku.
     data.language = state.lang;
+    // Skrypt odrzuca zgłoszenia spoza znanych adresów, gdyby ktoś podpiął
+    // nasz punkt końcowy pod własny formularz.
+    data.origin = window.location.origin;
 
     try {
-      const res = await fetch(WEB3FORMS_URL, {
+      const res = await fetch(KONTAKT_ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        // Celowo text/plain, a nie application/json: przy JSON przeglądarka
+        // wysyła najpierw zapytanie OPTIONS, którego Apps Script nie obsługuje
+        // i wysyłka kończy się błędem CORS. Treścią i tak jest JSON.
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify(data)
       });
       const out = await res.json().catch(() => ({}));
