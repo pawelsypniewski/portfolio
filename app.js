@@ -1291,6 +1291,77 @@ function renderAchievements() {
 }
 
 /* ============================================================
+   FORMULARZ KONTAKTOWY
+   Strona jest statyczna (GitHub Pages), więc wiadomość wysyła pośrednik —
+   Web3Forms — i przekazuje ją mailem na adres, dla którego wydano klucz.
+   Wysyłamy fetchem, a nie zwykłym submitem: użytkownik zostaje na stronie
+   i widzi potwierdzenie w miejscu, w którym pisał, a reguła CSP form-action
+   może zostać zawężona do 'self'.
+   ============================================================ */
+const WEB3FORMS_URL = "https://api.web3forms.com/submit";
+const WEB3FORMS_PLACEHOLDER = "WKLEJ-TUTAJ-KLUCZ-WEB3FORMS";
+
+function initContactForm() {
+  const form = $("#contactForm");
+  if (!form) return;
+
+  const key = (form.elements.access_key.value || "").trim();
+  if (!key || key === WEB3FORMS_PLACEHOLDER) {
+    // Lepiej nie pokazać formularza wcale, niż pokazać taki, który nie ma
+    // dokąd wysłać. Adres e-mail obok działa niezależnie.
+    form.hidden = true;
+    console.warn("Formularz kontaktowy ukryty: w polu access_key nie ma klucza Web3Forms.");
+    return;
+  }
+  form.hidden = false;
+
+  const status = $("#cfStatus");
+  const submit = form.querySelector(".cf-submit");
+  const say = (cls, key) => {
+    status.className = "cf-status" + (cls ? " " + cls : "");
+    status.textContent = (window.I18N[state.lang] && window.I18N[state.lang][key]) || "";
+  };
+
+  // Gdy walidacja natywna nie przechodzi, zdarzenie "submit" nie leci wcale —
+  // leci "invalid", i tylko tu można zapalić czerwone ramki. Nie bąbelkuje,
+  // więc słuchamy w fazie przechwytywania.
+  form.addEventListener("invalid", () => form.classList.add("tried"), true);
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    form.classList.add("tried");
+    if (!form.reportValidity()) return;
+
+    submit.disabled = true;
+    say("", "form.sending");
+
+    const data = Object.fromEntries(new FormData(form).entries());
+    // Wiadomo, w jakim języku ktoś pisał — po polsku czy po angielsku.
+    data.language = state.lang;
+
+    try {
+      const res = await fetch(WEB3FORMS_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify(data)
+      });
+      const out = await res.json().catch(() => ({}));
+      if (!res.ok || !out.success) throw new Error(out.message || ("HTTP " + res.status));
+      // Czyścimy dopiero po sukcesie — przy błędzie nikt nie traci tekstu,
+      // który przed chwilą napisał.
+      form.reset();
+      form.classList.remove("tried");
+      say("ok", "form.ok");
+    } catch (err) {
+      console.warn("Formularz kontaktowy:", err);
+      say("err", "form.err");
+    } finally {
+      submit.disabled = false;
+    }
+  });
+}
+
+/* ============================================================
    ROUTING + DYNAMIC SEO META
    ============================================================ */
 const BASE_URL = "https://pawelsypniewski.pl";
@@ -1601,6 +1672,8 @@ function init() {
   const nextMobile = $("#pjNextMobile");
   if (prevMobile) prevMobile.addEventListener("click", navProjectPrev);
   if (nextMobile) nextMobile.addEventListener("click", navProjectNext);
+
+  initContactForm();
 
   // przełącznik stykówki
   const sheetBtn = $("#pjSheetBtn");

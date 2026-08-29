@@ -24,7 +24,7 @@
   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
   font-src https://fonts.gstatic.com;
   img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com;
-  connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com;
+  connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://api.web3forms.com;
   frame-src 'none';
   object-src 'none';
   base-uri 'self';
@@ -1654,6 +1654,118 @@
     border: 0;
     display: block;
   }
+  /* ============================================================
+     FORMULARZ KONTAKTOWY
+     ============================================================ */
+  /* Formularz idzie do prawej kolumny, pod krótki blok z adresem — w lewej
+     wylądowałby pod wstępem i siatką Instagrama, czyli poniżej zgięcia.
+     Wiersze rozpisujemy jawnie, bo inaczej auto-układ wstawiłby go dopiero
+     pod najwyższą kolumną. */
+  #view-contact .text-page { grid-template-rows: auto auto 1fr; align-items: start; }
+  #view-contact .text-page .body { grid-column: 1; grid-row: 2 / span 2; }
+  #view-contact .text-page .side { grid-column: 2; grid-row: 2; }
+  .contact-form {
+    grid-column: 2;
+    grid-row: 3;
+    margin-top: 36px;
+    max-width: 520px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .contact-form[hidden] { display: none; }
+  .cf-h {
+    font-size: 13px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0 0 2px;
+  }
+  .cf-field { display: flex; flex-direction: column; gap: 6px; }
+  .cf-label {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 400;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.65;
+  }
+  .contact-form input[type="text"],
+  .contact-form input[type="email"],
+  .contact-form select,
+  .contact-form textarea {
+    font-family: 'Jost', 'Helvetica Neue', sans-serif;
+    font-size: 16px;   /* poniżej 16px iOS przybliża stronę przy wejściu w pole */
+    line-height: 1.4;
+    color: #000;
+    background: #fff;
+    border: 1px solid #000;
+    border-radius: 0;
+    padding: 11px 12px;
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .contact-form textarea { resize: vertical; min-height: 140px; }
+  .contact-form select {
+    /* Własna strzałka — natywna różni się w każdej przeglądarce i psuje rytm. */
+    background-image: linear-gradient(45deg, transparent 50%, #000 50%), linear-gradient(135deg, #000 50%, transparent 50%);
+    background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%;
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+    padding-right: 34px;
+  }
+  .contact-form :is(input, select, textarea):focus-visible {
+    outline: 2px solid #000;
+    outline-offset: 1px;
+  }
+  /* Podświetlamy błąd dopiero po próbie wysłania — czerwona ramka przy polu,
+     w którym ktoś dopiero zaczyna pisać, to karcenie za nieskończone zdanie. */
+  .contact-form.tried :is(input, select, textarea):invalid { border-color: #c00; }
+  .cf-botcheck {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+  .cf-note {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 10px;
+    line-height: 1.6;
+    letter-spacing: 0.03em;
+    opacity: 0.55;
+    margin: 0;
+  }
+  .cf-submit {
+    align-self: flex-start;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #fff;
+    background: #000;
+    border: 1px solid #000;
+    padding: 13px 22px;
+    cursor: pointer;
+    transition: background 140ms ease, color 140ms ease;
+  }
+  .cf-submit:hover { background: #fff; color: #000; }
+  .cf-submit:disabled { opacity: 0.45; cursor: default; }
+  .cf-submit:disabled:hover { background: #000; color: #fff; }
+  .cf-status {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    line-height: 1.6;
+    letter-spacing: 0.03em;
+    margin: 0;
+  }
+  .cf-status:empty { display: none; }
+  .cf-status.ok { padding: 10px 12px; border: 1px solid #000; }
+  .cf-status.err { padding: 10px 12px; border: 1px solid #c00; color: #c00; }
+
   .text-page .side {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-weight: 400;
@@ -2294,6 +2406,15 @@
       margin-bottom: 16px;
     }
     .text-page .body { font-size: 14px; }
+    /* W jednej kolumnie formularz ma iść zaraz po wstępie, a adres i Instagram
+       na koniec — inaczej trzeba przewijać przez nie, żeby dojść do pól. */
+    /* Jedna kolumna — jawne wiersze z desktopu przestają obowiązywać. */
+    #view-contact .text-page { grid-template-rows: none; }
+    #view-contact .text-page .body,
+    #view-contact .text-page .side,
+    .contact-form { grid-column: 1; grid-row: auto; }
+    .contact-form { max-width: none; margin-top: 0; }
+    #view-contact .text-page .side { order: 1; }
 
     /* --- LIGHTBOX --- */
     .lightbox { padding: 50px 12px; }
@@ -2850,6 +2971,49 @@
         <h2 class="page-h" data-i18n="contact.h">Contact</h2>
         <div class="body" id="contactBody"></div>
         <div class="side" id="contactSide"></div>
+
+        <!-- Formularz startuje ukryty i pokazuje go dopiero JavaScript, gdy
+             w polu access_key jest prawdziwy klucz Web3Forms. Dzięki temu
+             nikt nie zobaczy formularza, który nie ma dokąd wysłać. -->
+        <form class="contact-form" id="contactForm" hidden>
+          <h3 class="cf-h" data-i18n="form.h">Write to me</h3>
+
+          <!-- Klucz dostępowy Web3Forms. To nie jest hasło ani sekret: pozwala
+               wyłącznie wysłać wiadomość na adres, dla którego został wydany,
+               i z założenia jest widoczny w kodzie strony. -->
+          <input type="hidden" name="access_key" value="WKLEJ-TUTAJ-KLUCZ-WEB3FORMS">
+          <input type="hidden" name="subject" value="Wiadomość z pawelsypniewski.pl">
+          <input type="hidden" name="from_name" value="Portfolio pawelsypniewski.pl">
+          <!-- Pułapka na roboty: pole jest poza ekranem i poza kolejnością Tab,
+               więc człowiek go nie wypełni, a automat owszem. -->
+          <input type="checkbox" name="botcheck" class="cf-botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+          <label class="cf-field">
+            <span class="cf-label" data-i18n="form.name">Name</span>
+            <input type="text" name="name" required maxlength="120" autocomplete="name">
+          </label>
+          <label class="cf-field">
+            <span class="cf-label" data-i18n="form.email">Your email</span>
+            <input type="email" name="email" required maxlength="160" autocomplete="email">
+          </label>
+          <label class="cf-field">
+            <span class="cf-label" data-i18n="form.topic">Subject</span>
+            <select name="topic">
+              <option value="Zakup odbitki" data-i18n="form.topic.print">Buying a print</option>
+              <option value="Wystawa / współpraca" data-i18n="form.topic.exhibition">Exhibition / collaboration</option>
+              <option value="Media / publikacja" data-i18n="form.topic.press">Press / publication</option>
+              <option value="Inne" data-i18n="form.topic.other">Other</option>
+            </select>
+          </label>
+          <label class="cf-field">
+            <span class="cf-label" data-i18n="form.message">Message</span>
+            <textarea name="message" required rows="7" maxlength="4000"></textarea>
+          </label>
+
+          <p class="cf-note" data-i18n="form.note">I reply from katedranalogowa@gmail.com. The details you enter are used only to answer your message — they go on no mailing list.</p>
+          <button type="submit" class="cf-submit" data-i18n="form.send">Send message</button>
+          <p class="cf-status" id="cfStatus" role="status" aria-live="polite"></p>
+        </form>
       </div>
     </section>
 
