@@ -1600,6 +1600,7 @@
   .proj-track.flash-mode { transition: none !important; }
   /* zmniejszamy intensywność animacji jeśli użytkownik prefers-reduced-motion */
   @media (prefers-reduced-motion: reduce) {
+    .proj-stage { transition: none; }
     .camera-flash.flash-active {
       animation: cameraFlashReduced 180ms ease-out;
     }
@@ -2225,12 +2226,16 @@
     .proj-top .pj-meta { text-align: left; }
     .pj-projnav { font-size: 10px; gap: 10px; margin-top: 8px; }
     .pj-projnav-btn { max-width: 130px; }
+    /* Wysokość sceny ustawia JS pod bieżące zdjęcie (app.js: fitProjectStage).
+       Sztywne 60vh sprawiało, że kadr poziomy — a takich jest większość —
+       pływał na telefonie w ~220 px bieli, przez co wyglądał na mniejszy niż
+       jest, a podpis i opis lądowały poza ekranem. */
     .proj-stage {
-      height: 60vh;
-      min-height: 360px;
+      min-height: 0;
       touch-action: pan-y pinch-zoom;
+      transition: height 240ms cubic-bezier(0.4, 0.1, 0.2, 1);
     }
-    .proj-slide { padding: 16px 14px; }
+    .proj-slide { padding: 10px 12px; }
     .proj-slide img { cursor: pointer; }
     .proj-nav-left, .proj-nav-right { display: none; }
     .proj-bottom {

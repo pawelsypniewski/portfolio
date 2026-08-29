@@ -807,10 +807,28 @@ function updateSlide() {
   if (state.slideIndex < 0) state.slideIndex = total - 1;
   if (state.slideIndex >= total) state.slideIndex = 0;
   track.style.transform = `translateX(-${state.slideIndex * 100}%)`;
+  fitProjectStage();
+  preloadNeighbourSlides();
   const counterStr = `${String(state.slideIndex+1).padStart(2,"0")} / ${String(total).padStart(2,"0")}`;
   $("#pjCounter").textContent = counterStr;
   const cm = $("#pjCounterMobile");
   if (cm) cm.textContent = counterStr;
+}
+
+/* Sąsiednie zdjęcia ściągamy z wyprzedzeniem. Slajdy poza ekranem mają
+   loading="lazy", więc kolejny kadr zaczynał się wczytywać dopiero w chwili
+   kliknięcia — przez moment było widać pustą scenę, a że jej wysokość zależy
+   teraz od wymiarów zdjęcia, tym bardziej nie ma na co czekać. Pobieramy
+   tylko jeden w przód i jeden w tył: tyle, ile realnie zaraz zobaczy. */
+function preloadNeighbourSlides() {
+  const imgs = $$("#pjTrack img");
+  if (imgs.length < 2) return;
+  [state.slideIndex + 1, state.slideIndex - 1].forEach(n => {
+    const img = imgs[(n + imgs.length) % imgs.length];
+    if (!img || img.complete) return;
+    const pre = new Image();
+    pre.src = img.currentSrc || img.src;
+  });
 }
 
 // Pomocnik: gdy slajd wraca do skrajnego (8→1 lub 1→8) — wykonaj instant jump
@@ -829,6 +847,64 @@ function jumpSlideInstant() {
       track.style.transition = orig;
     });
   });
+}
+
+/* ============================================================
+   WYSOKOŚĆ SCENY — ile miejsca dostaje zdjęcie
+   Dwa różne problemy, więc dwa różne rozwiązania.
+
+   Desktop: zdjęcie ograniczała wysokość. Opis cyklu wchodził na pierwszy
+   ekran i zabierał go zdjęciu (na 900 px okna: 122 px opisu, 518 px zdjęcia).
+   Teraz pierwszy ekran to tytuł + zdjęcie + podpis, a opis zaczyna się pod
+   linią zgięcia — zdjęcie rośnie o jedną czwartą.
+
+   Telefon: zdjęcie ograniczała szerokość ekranu, a scena i tak rezerwowała
+   60vh, więc kadr poziomy pływał w ~220 px bieli. Teraz scena jest dokładnie
+   tak wysoka jak bieżące zdjęcie — pionowe dostaje więcej miejsca, poziome
+   nie zostawia pustki, a podpis i opis podchodzą od razu pod zdjęcie.
+   ============================================================ */
+function fitProjectStage() {
+  const stage = document.querySelector(".proj-stage");
+  const project = document.querySelector(".project");
+  const top = document.querySelector(".proj-top");
+  const bottom = document.querySelector(".proj-bottom");
+  if (!stage || !project || !top || !bottom) return;
+  // Ukryty widok nie ma czego mierzyć (a przeliczanie na zerach ustawiłoby
+  // scenę na zero i tak by została). Zerowa szerokość mówi to pewniej niż
+  // stan trasy: renderProject biegnie, zanim setRoute ustawi state.route.
+  if (!stage.clientWidth) return;
+
+  if (!window.matchMedia("(max-width: 720px)").matches) {
+    stage.style.height = "";
+    // Jeden piksel zapasu: offsetHeight zaokrągla w górę, więc suma potrafi
+    // przekroczyć okno o ułamek i zepchnąć podpis pod krawędź ekranu.
+    const free = project.clientHeight - top.offsetHeight - bottom.offsetHeight - 1;
+    // Poniżej 320 px oddajemy pole arkuszowi stylów (min-height: 62dvh) —
+    // na bardzo niskim oknie sztywne dopasowanie zgniotłoby zdjęcie.
+    stage.style.minHeight = free > 320 ? free + "px" : "";
+    return;
+  }
+
+  stage.style.minHeight = "0px";
+  const img = $$("#pjTrack img")[state.slideIndex];
+  if (!img) { stage.style.height = ""; return; }
+
+  // Bez wymiarów własnych zdjęcia nie ma czego liczyć — mierzymy ponownie,
+  // gdy się wczyta (slajdy poza ekranem mają loading="lazy").
+  if (!img.naturalWidth) {
+    img.addEventListener("load", fitProjectStage, { once: true });
+    return;
+  }
+
+  const slide = img.closest(".proj-slide");
+  const cs = getComputedStyle(slide);
+  const padX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
+  const padY = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+  const availW = stage.clientWidth - padX;
+  // Zdjęcie pionowe potrafi być wyższe niż ekran — przycinamy je do 78%
+  // wysokości okna, żeby podpis został w zasięgu wzroku bez przewijania.
+  const h = Math.min(img.naturalHeight * (availW / img.naturalWidth), window.innerHeight * 0.78);
+  stage.style.height = Math.round(h + padY) + "px";
 }
 
 /* ============================================================
@@ -1357,7 +1433,7 @@ let paneObserver = null;
 function watchPanes() {
   if (!("ResizeObserver" in window)) return;
   if (paneObserver) paneObserver.disconnect();
-  else paneObserver = new ResizeObserver(() => syncPaneFocusability());
+  else paneObserver = new ResizeObserver(() => { syncPaneFocusability(); fitProjectStage(); });
   $$(SCROLL_PANE).forEach(pane => {
     paneObserver.observe(pane);
     Array.from(pane.children).forEach(child => paneObserver.observe(child));
@@ -1431,6 +1507,10 @@ function setRoute(route, opts = {}) {
   // obserwator rozmiaru.
   watchPanes();
   syncPaneFocusability();
+
+  // Dopiero tutaj widok jest widoczny i ma zmierzone wysokości — wcześniej,
+  // w renderProject, scena bywa jeszcze schowana i nie da się jej dopasować.
+  if (route === "project") fitProjectStage();
 }
 
 function navigateProject(slug, opts = {}) {
@@ -1529,8 +1609,17 @@ function init() {
   // Obrót telefonu albo zmiana szerokości okna przełącza między podglądem
   // na najechanie a rotacją zdjęć w kaflach — trzeba ją wtedy przeliczyć.
   const homeMQ = window.matchMedia("(max-width: 720px)");
-  if (homeMQ.addEventListener) homeMQ.addEventListener("change", startHomeRotation);
-  else if (homeMQ.addListener) homeMQ.addListener(startHomeRotation);
+  const onBreakpoint = () => { startHomeRotation(); fitProjectStage(); };
+  if (homeMQ.addEventListener) homeMQ.addEventListener("change", onBreakpoint);
+  else if (homeMQ.addListener) homeMQ.addListener(onBreakpoint);
+
+  // Zmiana rozmiaru okna albo obrót telefonu zmienia i wolne miejsce,
+  // i szerokość, od której zależy wysokość zdjęcia — przeliczamy scenę.
+  let fitTimer = null;
+  window.addEventListener("resize", () => {
+    clearTimeout(fitTimer);
+    fitTimer = setTimeout(fitProjectStage, 120);
+  });
 
   // touch swipe on project stage
   const stage = document.querySelector(".proj-stage");
