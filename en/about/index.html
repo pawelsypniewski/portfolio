@@ -1532,8 +1532,8 @@
     font-size: 11px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    margin-bottom: 16px;
-    opacity: 0.7;
+    margin-bottom: 14px;
+    opacity: 0.65;
   }
   .ig-grid {
     display: grid;
@@ -1575,7 +1575,7 @@
     .ig-grid { gap: 6px; }
   }
   @media (max-width: 380px) {
-    .ig-grid { grid-template-columns: repeat(2, 1fr); gap: 4px; }
+    .ig-grid { gap: 4px; }
   }
 
   /* ============================================================
@@ -1733,26 +1733,37 @@
      wylądowałby pod wstępem i siatką Instagrama, czyli poniżej zgięcia.
      Wiersze rozpisujemy jawnie, bo inaczej auto-układ wstawiłby go dopiero
      pod najwyższą kolumną. */
-  #view-contact .text-page { grid-template-rows: auto auto 1fr; align-items: start; }
+  /* Odstęp między wierszami siatki (80 px) wchodził między adres e-mail
+     a formularz w prawej kolumnie. Zerujemy go, a odstęp pod nagłówkiem
+     odtwarzamy marginesem, żeby układ nagłówek→treść został jak w „O autorze". */
+  #view-contact .text-page { grid-template-rows: auto auto 1fr; align-items: start; row-gap: 0; }
+  #view-contact .text-page .page-h { margin-bottom: 120px; }
   #view-contact .text-page .body { grid-column: 1; grid-row: 2 / span 2; }
   #view-contact .text-page .side { grid-column: 2; grid-row: 2; }
   .contact-form {
     grid-column: 2;
     grid-row: 3;
     margin-top: 36px;
-    max-width: 520px;
+    max-width: 560px;
     display: flex;
     flex-direction: column;
     gap: 18px;
+    /* Ramka jak w kafelkach na stronie głównej — formularz jest osobnym
+       blokiem, a nie luźnym zestawem pól pod adresem e-mail. */
+    border: 1px solid #000;
+    padding: 28px;
   }
   .contact-form[hidden] { display: none; }
+  /* Nagłówek formularza w tym samym stylu, co „E-mail" i „Codziennie na
+     Instagramie" obok — jedna rodzina etykiet na całej stronie Kontakt. */
   .cf-h {
-    font-size: 13px;
+    font-size: 11px;
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-weight: 500;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    margin: 0 0 2px;
+    opacity: 0.65;
+    margin: 0 0 6px;
   }
   .cf-field { display: flex; flex-direction: column; gap: 6px; }
   .cf-label {
@@ -1802,16 +1813,21 @@
     height: 1px;
     opacity: 0;
   }
+  /* Drobny druk idzie pod przycisk (order), żeby nie rozdzielał pól od
+     „Wyślij" — kolejność w HTML zostaje, bo czytnik ekranu i tak czyta
+     go w tym miejscu, gdzie stoi w kodzie. */
   .cf-note {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-size: 10px;
     line-height: 1.6;
     letter-spacing: 0.03em;
-    opacity: 0.55;
+    opacity: 0.6;
     margin: 0;
+    order: 2;
   }
   .cf-submit {
-    align-self: flex-start;
+    align-self: stretch;
+    text-align: center;
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-weight: 500;
     font-size: 11px;
@@ -1820,7 +1836,7 @@
     color: #fff;
     background: #000;
     border: 1px solid #000;
-    padding: 13px 22px;
+    padding: 15px 22px;
     cursor: pointer;
     transition: background 140ms ease, color 140ms ease;
   }
@@ -1833,6 +1849,7 @@
     line-height: 1.6;
     letter-spacing: 0.03em;
     margin: 0;
+    order: 1;
   }
   .cf-status:empty { display: none; }
   .cf-status.ok { padding: 10px 12px; border: 1px solid #000; }
@@ -1870,6 +1887,7 @@
     letter-spacing: 0.02em;
   }
   .text-page .side a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  #view-contact .text-page .side a { font-size: 15px; }
 
   /* ============================================================
      LIGHTBOX
@@ -2486,12 +2504,20 @@
     /* W jednej kolumnie formularz ma iść zaraz po wstępie, a adres i Instagram
        na koniec — inaczej trzeba przewijać przez nie, żeby dojść do pól. */
     /* Jedna kolumna — jawne wiersze z desktopu przestają obowiązywać. */
-    #view-contact .text-page { grid-template-rows: none; }
-    #view-contact .text-page .body,
+    #view-contact .text-page { grid-template-rows: none; gap: 28px; }
+    #view-contact .text-page .page-h { margin-bottom: 0; }
+    /* Lewa kolumna „rozpuszcza się" w siatce (display: contents), żeby jej
+       dzieci — wstęp i galerię Instagrama — dało się ułożyć osobno:
+       wstęp → formularz → adresy → galeria. Bez tego formularz lądował
+       pod sześcioma kafelkami, trzy ekrany niżej. */
+    #view-contact .text-page .body { display: contents; }
+    #view-contact .text-page .body > * { grid-column: 1; }
     #view-contact .text-page .side,
     .contact-form { grid-column: 1; grid-row: auto; }
-    .contact-form { max-width: none; margin-top: 0; }
-    #view-contact .text-page .side { order: 1; }
+    .contact-form { max-width: none; margin-top: 0; padding: 22px 16px; order: 1; }
+    #view-contact .text-page .side { order: 2; }
+    #view-contact .text-page .side ul:last-child { margin-bottom: 0; }
+    #view-contact .ig-section { order: 3; margin-top: 0; }
 
     /* --- LIGHTBOX --- */
     .lightbox { padding: 50px 12px; }
