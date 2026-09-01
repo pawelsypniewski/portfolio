@@ -29,6 +29,7 @@
 const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
+const { execFileSync } = require("child_process");
 
 const ROOT = path.join(__dirname, "..");
 const BASE = "https://pawelsypniewski.pl";
@@ -117,6 +118,20 @@ function pathFor(route, slug, lang) {
   // listy adresów w korzeniu witryny.
   if (route === "newsItem") return PATHS[lang].achievements + (slug ? slug + "/" : "");
   return PATHS[lang][route];
+}
+
+// Dzień ostatniej zmiany podanych plików/katalogów według git (RRRR-MM-DD).
+// Zwraca null, gdy git nie ma historii (np. płytki checkout) albo nic nie
+// znajdzie — wtedy mapa strony dostaje dzisiejszą datę, jak dawniej.
+function gitDate(paths) {
+  if (!paths || !paths.length) return null;
+  try {
+    const out = execFileSync("git", ["log", "-1", "--format=%cs", "--", ...paths],
+      { cwd: ROOT, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).trim();
+    return /^\d{4}-\d{2}-\d{2}$/.test(out) ? out : null;
+  } catch (e) {
+    return null;
+  }
 }
 
 // Podmiana z kontrolą: jeśli wzorca nie ma w szablonie, przerywamy build.
@@ -942,27 +957,46 @@ async function build() {
   fs.writeFileSync(path.join(ROOT, "404.html"), applyBody(applyHead(template, nf), nf, i18n), "utf8");
   console.log("  ✓ /404.html");
 
-  // Mapa strony — obie wersje językowe, każda z odsyłaczem do siostrzanej
+  // Mapa strony — obie wersje językowe, każda z odsyłaczem do siostrzanej.
+  //
+  // lastmod = dzień, w którym ostatnio zmienił się PLIK Z TREŚCIĄ danej
+  // podstrony (z historii git), a nie dzień uruchomienia generatora. Wcześniej
+  // każda przebudowa stemplowała wszystkie adresy dzisiejszą datą, więc Google
+  // co chwilę widział „wszystko zmienione" i przestawał tej dacie ufać.
+  // Zmiany wyglądu (index.html) celowo nie liczą się jako zmiana treści.
   const today = new Date().toISOString().slice(0, 10);
+  const projectSources = fs.readdirSync(path.join(ROOT, "content/projects"))
+    .filter((f) => f.endsWith(".json"))
+    .map((f) => ({ file: "content/projects/" + f, slug: readJSON("content/projects/" + f).slug }));
+  const newsSources = fs.readdirSync(path.join(ROOT, "content/news"))
+    .filter((f) => f.endsWith(".json"))
+    .map((f) => ({ file: "content/news/" + f, id: readJSON("content/news/" + f).id }));
+  const srcOfProject = (slug) => projectSources.filter((s) => s.slug === slug).map((s) => s.file);
+  const srcOfNews = (id) => newsSources.filter((s) => s.id === id).map((s) => s.file);
+
   const entries = [];
   for (const lang of LANGS) {
-    entries.push({ route: "home", slug: null, lang, priority: "1.0", changefreq: "monthly" });
+    entries.push({ route: "home", slug: null, lang, priority: "1.0", changefreq: "monthly",
+      lastmod: gitDate(["content/projects"]) });
     for (const p of projects) {
-      entries.push({ route: "project", slug: p.slug, lang, priority: "0.9", changefreq: "monthly" });
+      entries.push({ route: "project", slug: p.slug, lang, priority: "0.9", changefreq: "monthly",
+        lastmod: gitDate(srcOfProject(p.slug)) });
     }
-    entries.push({ route: "achievements", slug: null, lang, priority: "0.8", changefreq: "weekly" });
-    // Wpisy: lastmod to data wydarzenia, nie dzisiejsza. Treść wpisu sprzed
-    // dwóch lat się nie zmienia, a podawanie codziennej daty uczy wyszukiwarkę,
-    // że nasze „ostatnio zmienione" nic nie znaczy.
+    entries.push({ route: "achievements", slug: null, lang, priority: "0.8", changefreq: "weekly",
+      lastmod: gitDate(["content/news"]) });
+    // Wpisy: data ostatniej edycji pliku wpisu, a gdy git jej nie zna —
+    // data wydarzenia. Treść wpisu sprzed dwóch lat zwykle się nie zmienia.
     for (const a of newsSorted(news)) {
       if (!a.id) continue;
       entries.push({
         route: "newsItem", slug: a.id, lang,
-        priority: "0.7", changefreq: "yearly", lastmod: a.dateISO,
+        priority: "0.7", changefreq: "yearly", lastmod: gitDate(srcOfNews(a.id)) || a.dateISO,
       });
     }
-    entries.push({ route: "about", slug: null, lang, priority: "0.7", changefreq: "yearly" });
-    entries.push({ route: "contact", slug: null, lang, priority: "0.6", changefreq: "yearly" });
+    entries.push({ route: "about", slug: null, lang, priority: "0.7", changefreq: "yearly",
+      lastmod: gitDate(["content/settings/about.json"]) });
+    entries.push({ route: "contact", slug: null, lang, priority: "0.6", changefreq: "yearly",
+      lastmod: gitDate(["content/settings/contact.json"]) });
   }
   const sitemap =
     `<?xml version="1.0" encoding="UTF-8"?>\n` +

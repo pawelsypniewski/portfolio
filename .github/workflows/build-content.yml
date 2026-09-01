@@ -35,6 +35,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Pełna historia — generator mapy strony czyta z git, kiedy
+          # ostatnio zmienił się plik z treścią każdej podstrony (lastmod).
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
