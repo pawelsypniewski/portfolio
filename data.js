@@ -170,7 +170,11 @@ window.I18N = {
     "cookie.text": "Ta strona używa plików cookies do analizy ruchu (Google Analytics). Pomaga to zrozumieć, jak korzystasz z portfolio. Twoje dane są anonimizowane.",
     "cookie.accept": "Akceptuj",
     "cookie.reject": "Odrzuć",
-    "cookie.manage": "Cookies"
+    "cookie.manage": "Cookies",
+    "notfound.title": "Nie znaleziono strony — Paweł Sypniewski",
+    "notfound.desc": "Ten adres nie istnieje. Przejdź do portfolio.",
+    "notfound.h": "Nie znaleziono strony.",
+    "notfound.text": "Ten adres nie istnieje — poniżej wybrane prace."
   },
   en: {
     "role": "Visual artist / Photographer",
@@ -206,6 +210,10 @@ window.I18N = {
     "cookie.text": "This site uses cookies for traffic analysis (Google Analytics) — to help understand how you interact with the portfolio. Your data is anonymized.",
     "cookie.accept": "Accept",
     "cookie.reject": "Reject",
-    "cookie.manage": "Cookies"
+    "cookie.manage": "Cookies",
+    "notfound.title": "Page not found — Paweł Sypniewski",
+    "notfound.desc": "This address does not exist. Go to the portfolio.",
+    "notfound.h": "Page not found.",
+    "notfound.text": "This address does not exist — selected works are below."
   }
 };

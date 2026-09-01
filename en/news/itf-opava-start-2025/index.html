@@ -459,6 +459,16 @@
   .sidefoot .langs a:hover { opacity: 1; }
   .sidefoot .meta { opacity: 0.65; }
   .sidefoot .meta div + div { margin-top: 2px; }
+  .sidefoot .meta-cookies { margin-top: 10px; }
+  /* Przycisk wygląda jak dotychczasowy link, ale da się do niego dojść
+     klawiszem Tab i uruchomić Enterem — div tego nie potrafił. */
+  .cookie-reopen {
+    font: inherit; letter-spacing: inherit; text-transform: inherit; color: inherit;
+    background: none; border: 0; padding: 0; margin: 0;
+    cursor: pointer; text-decoration: underline; text-underline-offset: 3px; opacity: 0.65;
+  }
+  .cookie-reopen:hover, .cookie-reopen:focus-visible { opacity: 1; }
+  .cookie-reopen:focus-visible { outline: 2px solid #000; outline-offset: 3px; }
 
   /* ---------- MAIN CONTENT ---------- */
   .main {
@@ -552,6 +562,22 @@
     z-index: 2;
   }
   .home-variant { flex: 1 1 auto; min-height: 0; }
+
+  /* pasek 404 — nad siatką prac, w stylu bannera cookies */
+  .home-notfound {
+    flex: 0 0 auto;
+    display: block;
+    padding: 14px 28px;
+    background: #000;
+    color: #fff;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.5;
+  }
+  .home-notfound[hidden] { display: none; }
+  .home-notfound strong { font-weight: 500; margin-right: 8px; }
 
   /* ---- HOME — GRID POSTER ---- */
   .home-poster {
@@ -1823,6 +1849,10 @@
     position: absolute;
     top: 24px;
     right: 28px;
+    background: none;
+    border: 0;
+    padding: 0;
+    color: inherit;
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-size: 12px;
     letter-spacing: 0.08em;
@@ -1866,7 +1896,8 @@
   .lightbox .lb-nav:active { transform: translateY(-50%) scale(0.96); }
   .lightbox .lb-nav-prev { left: 24px; }
   .lightbox .lb-nav-next { right: 24px; }
-  .lightbox .lb-nav:focus-visible {
+  .lightbox .lb-nav:focus-visible,
+  .lightbox .lb-close:focus-visible {
     outline: 2px solid #000;
     outline-offset: 3px;
   }
@@ -2701,7 +2732,7 @@
       <div class="meta">
         <div>© 2017–2026<br>Paweł Sypniewski</div>
         <div>Warszawa / Opava</div>
-        <div style="margin-top:10px; cursor:pointer; text-decoration:underline; text-underline-offset:3px; opacity:0.65;" id="cookieReopen" data-i18n="cookie.manage">Cookies</div>
+        <div class="meta-cookies"><button type="button" class="cookie-reopen" id="cookieReopen" data-i18n="cookie.manage">Cookies</button></div>
       </div>
     </div>
   </aside>
@@ -2716,6 +2747,13 @@
     <section class="view" id="view-home">
       <p class="sr-only" data-i18n="home.h1">Paweł Sypniewski — Photographer and Visual Artist, Warsaw</p>
       <div class="home-stage">
+        <!-- Komunikat strony 404. GitHub Pages przy nieznanym adresie podaje
+             404.html (kopię strony głównej); app.js odsłania ten pasek, gdy
+             adres w przeglądarce nie pasuje do żadnego widoku. -->
+        <div class="home-notfound" id="notFoundNote" role="status" hidden>
+          <strong data-i18n="notfound.h">Page not found.</strong>
+          <span data-i18n="notfound.text">This address does not exist — selected works are below.</span>
+        </div>
         <div class="home-topline">
           <span data-i18n="home.label">Works / Selected projects</span>
         </div>
@@ -2921,7 +2959,7 @@
 
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">
-  <div class="lb-close" data-i18n="lb.close">Close ✕</div>
+  <button type="button" class="lb-close" data-i18n="lb.close">Close ✕</button>
   <button class="lb-nav lb-nav-prev" id="lbNavPrev" type="button" aria-label="Poprzednie zdjęcie">←</button>
   <img id="lbImg" alt="">
   <button class="lb-nav lb-nav-next" id="lbNavNext" type="button" aria-label="Następne zdjęcie">→</button>

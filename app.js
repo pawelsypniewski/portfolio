@@ -8,6 +8,8 @@ const state = {
   slideIndex: 0,
   sheetOpen: false,
   lang: "pl",
+  // Adres w przeglądarce nie pasował do żadnego widoku (strona 404).
+  notFound: false,
 };
 
 const $  = (s, r=document) => r.querySelector(s);
@@ -127,7 +129,9 @@ function routeToPath(route, slug, lang) {
 // Adres → widok i język. Zwraca null dla ścieżek, których nie znamy
 // (np. /google98eb…html) — takie linki zostawiamy przeglądarce.
 function routeFromPath(pathname) {
-  const seg = (pathname || "/").replace(/^\/+|\/+$/g, "");
+  // „/index.html” to ten sam widok co „/” — GitHub Pages podaje go pod
+  // obiema nazwami, a nie chcemy pokazywać przy nim komunikatu 404.
+  const seg = (pathname || "/").replace(/^\/+|\/+$/g, "").replace(/\/?index\.html$/, "");
   if (!seg) return { route: "home", lang: "pl" };
   if (ROUTE_BY_PATH[seg]) return Object.assign({}, ROUTE_BY_PATH[seg]);
   // Pojedyncza aktualność — sprawdzamy PRZED projektami, bo ścieżka jest
@@ -176,7 +180,13 @@ function parseRoute() {
     if (ROUTE_BY_HASH[hash]) return { route: ROUTE_BY_HASH[hash], lang, legacy: true };
     if (isProjectSlug(hash)) return { route: "project", slug: hash, lang, legacy: true };
   }
-  return withLang(fromPath || { route: "home", lang: "pl" });
+  // 3. Adres nie pasuje do niczego — GitHub Pages podał 404.html. Pokazujemy
+  //    stronę główną z komunikatem, w języku, na który wskazuje przedrostek /en/.
+  if (!fromPath) {
+    const en = /^\/en(\/|$)/.test(window.location.pathname);
+    return withLang({ route: "home", lang: en ? "en" : "pl", notFound: true });
+  }
+  return withLang(fromPath);
 }
 
 function writeUrl(route, slug) {
@@ -1381,6 +1391,16 @@ function initContactForm() {
    ============================================================ */
 const BASE_URL = "https://pawelsypniewski.pl";
 
+/* Komunikat „nie znaleziono strony”. GitHub Pages przy nieznanym adresie
+   podaje 404.html, czyli kopię strony głównej — bez tego odwiedzający
+   widział listę prac i nie wiedział, że link był zepsuty. Pasek siedzi
+   w szablonie ukryty; odsłaniamy go tylko na stronie głównej, gdy adres
+   w przeglądarce nie pasuje do żadnego widoku. */
+function renderNotFound() {
+  const note = $("#notFoundNote");
+  if (note) note.hidden = !(state.notFound && state.route === "home");
+}
+
 function updateSEO(route) {
   const L = state.lang;
   let title, desc, url;
@@ -1428,6 +1448,12 @@ function updateSEO(route) {
       ? "Limitowane odbitki autorskie. Skontaktuj się mailowo w sprawie nakładu, formatów i cen."
       : "Limited-edition artist prints available. Get in touch by email for sizes and pricing.";
     url   = BASE_URL + routeToPath("contact");
+  } else if (state.notFound) {
+    // Strona 404: tytuł mówi, co się stało, zamiast udawać stronę główną.
+    const dict = window.I18N[L] || {};
+    title = dict["notfound.title"] || document.title;
+    desc  = dict["notfound.desc"] || "";
+    url   = BASE_URL + routeToPath("home");
   } else {
     title = L === "pl"
       ? "Paweł Sypniewski — Fotograf i Artysta Wizualny | Warszawa, ZPAF"
@@ -1565,6 +1591,11 @@ function setRoute(route, opts = {}) {
       (route === "project" && r === "home") ||
       (route === "newsItem" && r === "achievements"));
   });
+
+  // Nawigacja z poziomu strony (klik w menu) kończy stan „nie znaleziono” —
+  // pierwsze wejście i popstate (skipUrl) ustawiają go same, z adresu.
+  if (!opts.skipUrl) state.notFound = false;
+  renderNotFound();
 
   // SEO: dynamic title/description per view
   updateSEO(route);
@@ -1857,6 +1888,7 @@ function init() {
       return;
     }
     const parsed = parseRoute();
+    state.notFound = !!parsed.notFound;
     if (parsed.lang && parsed.lang !== state.lang) applyLang(parsed.lang);
     if (parsed.route === "project" && parsed.slug) {
       state.projectSlug = parsed.slug;
@@ -1873,6 +1905,7 @@ function init() {
   // 1. Sparsuj URL — co użytkownik chce zobaczyć (odświeżenie / link z zewnątrz)
   loadPrefs();
   const initial = parseRoute();
+  state.notFound = !!initial.notFound;
 
   // 2. Język bierzemy z adresu i ustawiamy PRZED pierwszym rysowaniem,
   //    inaczej strona mignęłaby po polsku, zanim przełączy się na angielski.
