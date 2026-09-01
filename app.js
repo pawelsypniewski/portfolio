@@ -1318,7 +1318,7 @@ function renderAchievements() {
    Adres kończący się na /exec, ze wdrożenia Google Apps Script — instrukcja
    krok po kroku jest w pliku tools/kontakt-apps-script.gs. Dopóki stoi tu
    napis zastępczy, formularz w ogóle się nie pokazuje. */
-const KONTAKT_ENDPOINT = "WKLEJ-TUTAJ-ADRES-APPS-SCRIPT";
+const KONTAKT_ENDPOINT = "https://script.google.com/macros/s/AKfycby_yA-T26QhJX86XLTkw5WjKpk9dFPQ-MWm3a2iarryY4sLjKzjjwXlcquaw9Lr0m1r1Q/exec";
 /* ▲▲▲ powyżej ▲▲▲ */
 
 function initContactForm() {
