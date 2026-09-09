@@ -33,6 +33,14 @@
     "pl": "Wyróżnienie w międzynarodowym konkursie multimedialnym DIAS SHOW podczas 11. edycji Foto Art Festival w Bielsku-Białej. Cykl „Labirynt” znalazł się wśród dziewięciu zwycięskich prac. Laureaci otrzymują możliwość zorganizowania wystawy indywidualnej w Galerii Fotografii B&B lub podczas kolejnej edycji festiwalu. DIAS SHOW łączy fotografię z muzyką i narracją, prezentując dynamiczne sekwencje obrazów na dużym ekranie.",
     "en": "Distinction in the international multimedia competition DIAS SHOW during the 11th edition of Foto Art Festival in Bielsko-Biała. The \"Labirynt\" series was among nine winning works. Laureates receive the opportunity to organise a solo exhibition at the B&B Photography Gallery or during a future festival edition. DIAS SHOW combines photography with music and narration, presenting dynamic image sequences on a large screen."
   },
+  "seo": {
+    "pl": {
+      "description": "Cykl „Labirynt” wśród dziewięciu zwycięskich prac konkursu DIAS SHOW na 11. FotoArtFestival w Bielsku-Białej. Wyróżnienie w konkursie multimedialnym."
+    },
+    "en": {
+      "description": "The “Labirynt” series among nine winning works of the DIAS SHOW competition at the 11th FotoArtFestival in Bielsko-Biała, Poland."
+    }
+  },
   "links": [
     {
       "label": {

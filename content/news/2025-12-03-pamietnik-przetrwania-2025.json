@@ -33,6 +33,14 @@
     "pl": "Osobisty zapis fotograficzny walki z depresją. Projekt powstał z potrzeby przełamania społecznego tabu wokół chorób psychicznych i dotarcia do osób zmagających się z podobnymi doświadczeniami — z myślą, że prośba o pomoc nie jest oznaką słabości, lecz odwagą.",
     "en": "A personal photographic record of struggle with depression. The project was born from the need to break the social taboo around mental illness and to reach others fighting similar battles — with the conviction that asking for help is not a sign of weakness, but of courage."
   },
+  "seo": {
+    "pl": {
+      "description": "„Pamiętnik przetrwania” — wystawa indywidualna w Galerii MAL, Terminal Kultury Gocław w Warszawie. Osobisty zapis fotograficzny walki z depresją."
+    },
+    "en": {
+      "description": "“Diary of Survival” — a solo exhibition at Galeria MAL, Terminal Kultury Gocław in Warsaw. A personal photographic record of a struggle with depression."
+    }
+  },
   "links": [],
   "images": [
     "images/achievements/pamietnik-przetrwania-2025/01.webp",

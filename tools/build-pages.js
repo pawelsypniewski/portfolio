@@ -59,10 +59,19 @@ const abs = (p) => (/^images\//.test(String(p)) ? "/" + p : String(p));
 const medium = (p) => { const s = abs(p); const i = s.lastIndexOf("/"); return s.slice(0, i) + "/m" + s.slice(i); };
 const absUrl = (p) => BASE + abs(p);
 
-// Skrót opisu do meta description (Google i tak ucina ~160 znaków)
+// Skrót opisu do meta description. Google pokazuje ok. 160 znaków, ale liczy
+// się nie sama długość: urwany w pół słowa fragment wygląda w wynikach jak
+// błąd. Najpierw więc próbujemy skończyć na kropce, a dopiero potem na
+// granicy słowa. Najlepiej i tak wpisać opis wprost w treść (pole `seo`).
 function shorten(text, limit = 160) {
   const t = String(text || "").replace(/\s+/g, " ").trim();
-  return t.length > limit ? t.slice(0, limit - 3).trimEnd() + "…" : t;
+  if (t.length <= limit) return t;
+  const cut = t.slice(0, limit - 1);
+  const koniecZdania = Math.max(cut.lastIndexOf(". "), cut.lastIndexOf("! "), cut.lastIndexOf("? "));
+  if (koniecZdania >= limit * 0.55) return cut.slice(0, koniecZdania + 1);
+  const spacja = cut.lastIndexOf(" ");
+  const kadr = spacja > 0 ? cut.slice(0, spacja) : cut;
+  return kadr.replace(/[\s,;:–—-]+$/, "") + "…";
 }
 
 // Teksty interfejsu mieszkają w data.js jako window.I18N. Uruchamiamy ten
@@ -567,10 +576,17 @@ function newsListHtml(items, lang, i18n, single) {
 
   return back + items.map((a, ai) => {
     const title = escapeHtml(a.title[L]);
-    const photos = (a.images || []).map((src, i) =>
-      `<div class="achievement-photo" data-achievement="${ai}" data-photo="${i}" role="button" tabindex="0" aria-label="${title} — ${i + 1}">` +
-      `<img src="${escapeHtml(thumbPath(abs(src)))}" data-full="${escapeHtml(abs(src))}" alt="" loading="lazy" decoding="async"></div>`
-    ).join("");
+    // Zdjęcia z wydarzeń miały puste alt, więc dla wyszukiwarki grafiki nie
+    // znaczyły nic. Opis niesie tytuł wydarzenia, miejsce i numer zdjęcia.
+    const photoWord = L === "pl" ? "zdjęcie" : "photo";
+    const ofWord = L === "pl" ? "z" : "of";
+    const photos = (a.images || []).map((src, i) => {
+      const opis = escapeHtml(
+        `${a.title[L]}, ${a.place[L]} — ${photoWord} ${i + 1} ${ofWord} ${(a.images || []).length}`
+      );
+      return `<div class="achievement-photo" data-achievement="${ai}" data-photo="${i}" role="button" tabindex="0" aria-label="${title} — ${i + 1}">` +
+      `<img src="${escapeHtml(thumbPath(abs(src)))}" data-full="${escapeHtml(abs(src))}" alt="${opis}" loading="lazy" decoding="async"></div>`;
+    }).join("");
 
     let link = "";
     if (a.links && a.links.length) {
@@ -617,6 +633,9 @@ function newsListHtml(items, lang, i18n, single) {
 function newsItemPage(a, lang, i18n) {
   const L = lang;
   const self = pathFor("newsItem", a.id, L);
+  // Opis dla wyszukiwarki bierzemy z pola `seo` w pliku wpisu. Bez niego
+  // zostaje skrót właściwego opisu, który potrafi urwać się w środku myśli.
+  const seoDesc = a.seo && a.seo[L] && a.seo[L].description;
   const descText = String((a.description && a.description[L]) || "").replace(/\s+/g, " ").trim();
   const images = (a.images || []).map(abs);
 
@@ -633,7 +652,7 @@ function newsItemPage(a, lang, i18n) {
     listSingle: true,
     crumb: a.title[L],
     title: `${a.title[L]} — ${a.type[L]} · ${AUTHOR}`,
-    description: shorten(descText),
+    description: shorten(seoDesc || descText),
     image: images.length
       ? { url: BASE + images[0], alt: `${a.title[L]} — ${a.place[L]}`, type: "image/webp", hasKnownSize: false }
       : COVER,

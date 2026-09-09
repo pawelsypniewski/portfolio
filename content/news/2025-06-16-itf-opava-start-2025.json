@@ -33,6 +33,14 @@
     "pl": "Rozpoczęcie studiów w Instytucie Fotografii Twórczej (Institut tvůrčí fotografie) na Uniwersytecie Śląskim w Opawie — jednej z najbardziej prestiżowych europejskich szkół fotografii artystycznej. Założony w 1990 roku, kształci kolejne pokolenia fotografów z całego regionu Europy Środkowej.",
     "en": "Beginning studies at the Institute of Creative Photography (Institut tvůrčí fotografie) at Silesian University in Opava — one of Europe's most prestigious schools of art photography. Founded in 1990, it has shaped generations of photographers across Central Europe."
   },
+  "seo": {
+    "pl": {
+      "description": "Rozpoczęcie studiów w Instytucie Fotografii Twórczej na Uniwersytecie Śląskim w Opawie, jednej z najważniejszych europejskich szkół fotografii artystycznej."
+    },
+    "en": {
+      "description": "Start of studies at the Institute of Creative Photography, Silesian University in Opava, one of Europe’s leading schools of art photography."
+    }
+  },
   "links": [
     {
       "label": {

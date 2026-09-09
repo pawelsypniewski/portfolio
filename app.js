@@ -1089,6 +1089,7 @@ function navProjectNext() {
    LIGHTBOX — generyczny, przyjmuje dowolny zestaw obrazów
    ============================================================ */
 let lbImages = [];          // aktualny zestaw obrazów w lightboxie
+let lbAlts = [];            // opisy tych obrazów (alt), równolegle do lbImages
 let lbIndex = 0;
 let lbHistoryEntry = false; // czy dodaliśmy wpis do history przy otwarciu
 let lbWithFlash = false;    // czy nawigacja w tym lightboxie ma triggerować flash
@@ -1098,7 +1099,14 @@ function openLightbox(images, index, opts = {}) {
   if (typeof images === "number") {
     const p = window.PROJECTS.find(x => x.slug === state.projectSlug);
     if (!p) return;
-    opts = { flash: !!p.flashEffect };
+    const L0 = state.lang;
+    const ile = p.images.length;
+    opts = {
+      flash: !!p.flashEffect,
+      alts: p.images.map((_, i) => L0 === "pl"
+        ? `${p.title[L0]} — zdjęcie ${i + 1} z ${ile}, ${p.year}, ${p.category[L0]}`
+        : `${p.title[L0]} — photo ${i + 1} of ${ile}, ${p.year}, ${p.category[L0]}`),
+    };
     index = images;
     images = p.images;
   }
@@ -1106,6 +1114,7 @@ function openLightbox(images, index, opts = {}) {
   const lb = $("#lightbox");
   const wasOpen = lb.classList.contains("active");
   lbImages = images;
+  lbAlts = Array.isArray(opts.alts) ? opts.alts : [];
   lbIndex = Math.max(0, Math.min(index || 0, images.length - 1));
   lbWithFlash = !!opts.flash;
   setLightboxImage();
@@ -1233,6 +1242,16 @@ function syncNewsHeading(single) {
    tools/build-thumbs.js). Pełny plik zostaje dla lightboxa. Gdyby miniatury
    zabrakło — np. zdjęcie dodane bez przebudowy — obsługa błędu przy każdej
    siatce podmienia źródło na oryginał. */
+/* Opis zdjęcia z wydarzenia. Wcześniej te obrazy miały puste alt, więc dla
+   wyszukiwarki grafiki nie znaczyły nic, a przy nieudanym wczytaniu zostawało
+   puste miejsce. Ten sam tekst wpisuje generator do gotowych plików. */
+function newsPhotoAlt(a, i, L) {
+  const ile = (a.images || []).length;
+  return L === "pl"
+    ? `${a.title[L]}, ${a.place[L]} — zdjęcie ${i + 1} z ${ile}`
+    : `${a.title[L]}, ${a.place[L]} — photo ${i + 1} of ${ile}`;
+}
+
 function thumbPath(src) {
   const str = String(src || "");
   const i = str.lastIndexOf("/");
@@ -1257,6 +1276,9 @@ function setLightboxImage() {
   const mobile = window.matchMedia(MOBILE_MQ).matches;
   img.onerror = mobile ? () => { img.onerror = null; img.src = full; } : null;
   img.src = mobile ? mediumPath(full) : full;
+  // Powiększone zdjęcie też potrzebuje opisu — bez niego czytnik ekranu
+  // mówi w tym miejscu tylko „obraz”.
+  img.alt = lbAlts[lbIndex] || "";
 }
 
 function ensureAchievements() {
@@ -1300,7 +1322,7 @@ function renderAchievements() {
 
   list.innerHTML = backLink + sorted.map((a, ai) => {
     const photos = (a.images || []).map((src, i) =>
-      `<div class="achievement-photo" data-achievement="${ai}" data-photo="${i}" role="button" tabindex="0" aria-label="${attr(a.title[L])} — ${i+1}"><img src="${attr(thumbPath(src))}" data-full="${attr(src)}" alt="" loading="lazy" decoding="async"></div>`
+      `<div class="achievement-photo" data-achievement="${ai}" data-photo="${i}" role="button" tabindex="0" aria-label="${attr(a.title[L])} — ${i+1}"><img src="${attr(thumbPath(src))}" data-full="${attr(src)}" alt="${attr(newsPhotoAlt(a, i, L))}" loading="lazy" decoding="async"></div>`
     ).join("");
     // Linki — obsługa zarówno pojedynczego `url` jak i tablicy `links`
     let link = "";
@@ -1363,7 +1385,10 @@ function renderAchievements() {
       const pi = parseInt(el.dataset.photo, 10);
       const a = (window._achievementsSorted || window.ACHIEVEMENTS)[ai];
       if (!a) return;
-      openLightbox(a.images, pi, { flash: false });
+      openLightbox(a.images, pi, {
+        flash: false,
+        alts: (a.images || []).map((_, i) => newsPhotoAlt(a, i, state.lang)),
+      });
     };
     el.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " ") {
@@ -1508,7 +1533,9 @@ function updateSEO(route) {
     const a = findNews(state.newsSlug);
     if (a) {
       title = `${a.title[L]} — ${a.type[L]} · Paweł Sypniewski`;
-      const src = String((a.description && a.description[L]) || "").replace(/\s+/g, " ").trim();
+      const src = String(
+        (a.seo && a.seo[L] && a.seo[L].description) || (a.description && a.description[L]) || ""
+      ).replace(/\s+/g, " ").trim();
       desc = src.length > 160 ? src.substring(0, 157).trimEnd() + "…" : src;
       url = BASE_URL + routeToPath("newsItem", a.id);
     }

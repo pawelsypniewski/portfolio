@@ -33,6 +33,14 @@
     "pl": "Prezentacja slideshow cyklu „Labirynt” na 22. edycji Rybnik Foto Festival. Opowieść o młodych ludziach uwikłanych przez małe miasteczka. Metafora trudności do pokonania i zawiłości życiowych wyborów: czy widz znajdzie drogę wyjścia?",
     "en": "Slideshow presentation of the \"Labirynt\" series at the 22nd edition of Rybnik Foto Festival. A story of young people entangled in small towns. A metaphor for difficulties to overcome and the tangled nature of life choices: will the viewer find a way out?"
   },
+  "seo": {
+    "pl": {
+      "description": "Pokaz slideshow cyklu „Labirynt” na 22. Rybnik Foto Festival. Opowieść o młodych ludziach uwikłanych przez małe miasteczka i o zawiłości życiowych wyborów."
+    },
+    "en": {
+      "description": "Slideshow of the “Labirynt” series at the 22nd Rybnik Foto Festival. A story of young people entangled in small towns and the tangle of life’s choices."
+    }
+  },
   "links": [
     {
       "label": {
