@@ -656,6 +656,7 @@ function projectPage(p, lang, projects) {
   const title = p.title[L];
   const images = p.images.map(abs);
   const descText = (p.description && p.description[L]) || p.caption[L];
+  const seo = (p.seo && p.seo[L]) || {};
   const photoWord = L === "pl" ? "zdjęcie" : "photo";
   const ofWord = L === "pl" ? "z" : "of";
 
@@ -683,8 +684,11 @@ function projectPage(p, lang, projects) {
     viewId: "view-project",
     ogType: "article",
     crumb: title,
-    title: `${title} — ${p.year} · ${AUTHOR}`,
-    description: shorten(descText),
+    // Tytuł i opis dla wyszukiwarki biorą się z pola `seo` w pliku cyklu.
+    // Bez niego zostaje stary schemat „Tytuł — rok", a opis to początek eseju,
+    // który potrafi zacząć się od zdania niemówiącego nic o samej pracy.
+    title: seo.title ? `${seo.title} · ${AUTHOR}` : `${title} — ${p.year} · ${AUTHOR}`,
+    description: shorten(seo.description || descText),
     image: {
       url: absUrl(p.thumb || p.images[0]),
       alt: `${title} — ${p.category[L]}, ${p.year}`,

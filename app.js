@@ -1481,11 +1481,18 @@ function updateSEO(route) {
   if (route === "project" && state.projectSlug) {
     const p = window.PROJECTS.find(x => x.slug === state.projectSlug);
     if (p) {
-      title = `${p.title[L]} — ${p.year} · Paweł Sypniewski`;
-      // Prefer richer `description` for snippet; fall back to short `caption`.
-      const seoSrc = (p.description && p.description[L])
-        ? p.description[L].replace(/\s+/g, " ").trim()
-        : p.caption[L];
+      // Te same teksty, co w wygenerowanym pliku (pole `seo` w treści cyklu) —
+      // inaczej po przejściu między widokami tytuł strony różniłby się od tego,
+      // który widzi wyszukiwarka w kodzie źródłowym.
+      const seo = (p.seo && p.seo[L]) || {};
+      title = seo.title
+        ? `${seo.title} · Paweł Sypniewski`
+        : `${p.title[L]} — ${p.year} · Paweł Sypniewski`;
+      const seoSrc = seo.description
+        ? seo.description
+        : ((p.description && p.description[L])
+            ? p.description[L].replace(/\s+/g, " ").trim()
+            : p.caption[L]);
       desc  = seoSrc.length > 160 ? seoSrc.substring(0, 157).trimEnd() + "…" : seoSrc;
       url   = BASE_URL + routeToPath("project", p.slug);
     }

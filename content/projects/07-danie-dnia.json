@@ -24,6 +24,16 @@
     "pl": "Warzywa i owoce przeznaczone przez sklep do wyrzucenia — sfotografowane, potem zjedzone. Projekt dokumentalny o marnowaniu żywności.",
     "en": "Vegetables and fruit marked for disposal by the shop — photographed, then eaten. A documentary project on food waste."
   },
+  "seo": {
+    "pl": {
+      "title": "Danie dnia — książka fotograficzna o marnowaniu żywności",
+      "description": "Danie dnia — autorska książka fotograficzna Pawła Sypniewskiego. Marnowanie żywności w dwudziestu pracach do przeglądania jak kartki w książce."
+    },
+    "en": {
+      "title": "Dish of the Day — photobook on food waste",
+      "description": "Dish of the Day — an artist's photobook by Paweł Sypniewski on food waste. Twenty works to leaf through like the pages of a book."
+    }
+  },
   "description": {
     "pl": "W Polsce rocznie marnuje się ok. 5 mln ton żywności. Aż 60% tej skali pochodzi z gospodarstw domowych — to ok. 3 mln ton wyrzucanego jedzenia rocznie. 45% Polaków przyznaje się do wyrzucania żywności przynajmniej od czasu do czasu. Najczęściej do kosza trafiają wędliny (36%), warzywa (34%) i owoce (30%).",
     "en": "In Poland, around 5 million tonnes of food are wasted every year. As much as 60% of this comes from households — about 3 million tonnes of discarded food per year. 45% of Poles admit to throwing food away at least occasionally. The most commonly discarded products are cold cuts (36%), vegetables (34%), and fruit (30%)."

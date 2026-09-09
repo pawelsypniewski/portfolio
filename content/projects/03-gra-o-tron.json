@@ -24,6 +24,16 @@
     "pl": "Polityczna ikonografia polskiej prowincji. Plakaty, ołtarzyki, prowizoryczne pomniki — krajobraz przed wyborami.",
     "en": "Political iconography of the Polish countryside. Posters, makeshift shrines, monuments — the landscape before an election."
   },
+  "seo": {
+    "pl": {
+      "title": "Gra o tron — cykl fotograficzny, fotografia polityczna",
+      "description": "Gra o tron — cykl fotograficzny Pawła Sypniewskiego o ikonografii politycznej polskiej prowincji. Plakaty wyborcze, ołtarzyki, prowizoryczne pomniki."
+    },
+    "en": {
+      "title": "Game of Thrones — political photo series, Poland",
+      "description": "Game of Thrones — a photo series by Paweł Sypniewski on the political iconography of provincial Poland. Election posters, shrines, makeshift monuments."
+    }
+  },
   "description": {
     "pl": "",
     "en": ""
