@@ -55,6 +55,8 @@ function escapeHtml(s) {
 // Ścieżki w JSON są względne ("images/…"); strona działa pod adresami
 // typu /labirynt/, więc muszą być bezwzględne — tak samo jak w loader.js.
 const abs = (p) => (/^images\//.test(String(p)) ? "/" + p : String(p));
+// Wersja 1200 px dla telefonu (katalog m/, jak mediumPath w app.js).
+const medium = (p) => { const s = abs(p); const i = s.lastIndexOf("/"); return s.slice(0, i) + "/m" + s.slice(i); };
 const absUrl = (p) => BASE + abs(p);
 
 // Skrót opisu do meta description (Google i tak ucina ~160 znaków)
@@ -212,6 +214,15 @@ function applyHead(html, page) {
   // do indeksu — mówiła Google „jestem duplikatem tamtej".
   html = replaceOnce(html, /<link rel="canonical" href="[^"]*">/,
     `<link rel="canonical" href="${url}">`, "link rel=canonical");
+
+  // Zapowiedź zdjęcia pierwszego kafla — tylko na stronie głównej, bo tylko
+  // tam ten kafel jest widoczny od razu. Na pozostałych podstronach wiersz
+  // znika w całości, żeby telefon nie ściągał zdjęcia, którego nie pokaże.
+  html = replaceOnce(html, /\n<link rel="preload" as="image"[^>]*data-lcp-preload>/,
+    page.lcpImage
+      ? `\n<link rel="preload" as="image" media="(max-width: 720px)" fetchpriority="high" href="${escapeHtml(page.lcpImage)}" data-lcp-preload>`
+      : "",
+    "zapowiedź pierwszego kafla");
 
   // hreflang — para adresów siostrzanych; x-default kieruje na wersję polską
   html = replaceOnce(html,
@@ -463,10 +474,16 @@ function homeGrid(projects, lang) {
    desktopie ramka i tak czeka schowana na najechanie kursorem. */
 function thumbStyle(src) {
   if (!src) return "";
-  const str = String(src);
+  return ` style="background-image:url('${escapeHtml(homeThumbUrl(src))}')"`;
+}
+
+// Adres miniatury kafla — jeden zapis dla siatki i dla zapowiedzi w nagłówku.
+function homeThumbUrl(src) {
+  const str = String(src || "");
+  if (!str) return "";
   const i = str.lastIndexOf("/");
   const thumb = i < 0 ? str : str.slice(0, i) + "/thumbs" + str.slice(i);
-  return ` style="background-image:url('/${escapeHtml(thumb.replace(/^\//, ""))}')"`;
+  return "/" + thumb.replace(/^\//, "");
 }
 
 /* ------------------------------------------------------------------ */
@@ -644,11 +661,11 @@ function projectPage(p, lang, projects) {
 
   const slides = images
     .map((src, i) =>
-      `<div class="proj-slide"><img src="${escapeHtml(src)}" alt="${escapeHtml(
+      `<div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="${escapeHtml(medium(src))}"><img src="${escapeHtml(src)}" alt="${escapeHtml(
         `${title} — ${photoWord} ${i + 1} ${ofWord} ${images.length}, ${p.year}, ${p.category[L]}`
       )}" data-index="${i}" loading="${i === 0 ? "eager" : "lazy"}" fetchpriority="${
         i === 0 ? "high" : "auto"
-      }" decoding="async"></div>`
+      }" decoding="async"></picture></div>`
     )
     .join("");
 
@@ -845,9 +862,15 @@ async function build() {
   // służy za szablon dla pozostałych podstron. Dzięki temu każda podstrona ma
   // w kodzie komplet linków do projektów, a wynik nie zależy od tego, ile razy
   // skrypt uruchomiono (podmiana jest w kółko taka sama).
+  // Zdjęcie pierwszego kafla — na telefonie to ono jest największym
+  // elementem pierwszego ekranu, więc zapowiadamy je w nagłówku.
+  const first = projects[0] || {};
+  const lcpImage = homeThumbUrl(first.thumb || (first.images || [])[0] || "");
+
   const plHome = sectionPage("home", "pl", "view-home", {
     fill: { homeListPoster: homeGrid(projects, "pl") },
     gallery: projects,
+    lcpImage,
   });
   const template = applyBody(
     applyHead(fs.readFileSync(path.join(ROOT, "index.html"), "utf8"), plHome),
@@ -863,6 +886,7 @@ async function build() {
       pages.push(
         sectionPage("home", "en", "view-home", {
           fill: { homeListPoster: homeGrid(projects, "en") },
+          lcpImage,
         })
       );
     }

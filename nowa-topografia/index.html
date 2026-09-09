@@ -46,8 +46,14 @@
      formantów ani pasków przewijania na własną rękę. -->
 <meta name="color-scheme" content="light">
 
-<!-- ============ GOOGLE ANALYTICS 4 (Consent Mode v2) ============ -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-H7VWHM3TZZ"></script>
+<!-- ============ GOOGLE ANALYTICS 4 (Consent Mode v2) ============
+     Sam skrypt Google (172 KB, ~165 ms pracy procesora na telefonie) NIE jest
+     tu wczytywany. Ściąga go dopiero funkcja loadAnalytics(), wołana wtedy,
+     gdy ktoś kliknie „Akceptuj" albo ma zapamiętaną zgodę z poprzedniej
+     wizyty. Banner obiecuje analitykę dopiero po zgodzie, więc teraz obietnica
+     jest dotrzymana co do joty: przed kliknięciem nie leci do Google nic.
+     Polecenia gtag() wywołane wcześniej czekają w kolejce dataLayer i wykonają
+     się w komplecie w chwili wczytania biblioteki. -->
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -55,11 +61,11 @@
   // Consent Mode v2 — domyślnie wszystko ZABLOKOWANE
   // Tracking aktywuje się dopiero po kliknięciu „Akceptuj" w bannerze.
   // Zapamiętany wybór w localStorage = automatycznie zaaplikowany.
-  (function() {
-    var stored = null;
-    try { stored = localStorage.getItem('ps-cookie-consent'); } catch(e) {}
-    var granted = stored === 'granted';
+  var stored = null;
+  try { stored = localStorage.getItem('ps-cookie-consent'); } catch(e) {}
+  var granted = stored === 'granted';
 
+  (function() {
     gtag('consent', 'default', {
       // Zgody reklamowe zostają na „denied" na stałe. Strona nie prowadzi
       // kampanii Google Ads ani remarketingu, a banner obiecuje wyłącznie
@@ -74,6 +80,17 @@
     });
   })();
 
+  // Wczytuje bibliotekę Google. Wołana z app.js po zgodzie; drugie wywołanie
+  // nic nie robi, więc można jej użyć bez sprawdzania stanu.
+  window.loadAnalytics = function () {
+    if (window.__analyticsLoaded) return;
+    window.__analyticsLoaded = true;
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-H7VWHM3TZZ';
+    document.head.appendChild(s);
+  };
+
   gtag('js', new Date());
   gtag('config', 'G-H7VWHM3TZZ', {
     send_page_view: false,
@@ -86,6 +103,9 @@
     allow_google_signals: false,
     allow_ad_personalization_signals: false
   });
+
+  // Zgoda zapamiętana z poprzedniej wizyty — wczytujemy od razu.
+  if (granted) window.loadAnalytics();
 </script>
 <meta name="format-detection" content="telephone=no">
 <meta name="referrer" content="strict-origin-when-cross-origin">
@@ -138,6 +158,15 @@
      Podzbiory: latin (angielski) + latin-ext (polskie znaki: ą, ę, ł…). -->
 <link rel="preload" href="/fonts/jost-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/jost-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+
+<!-- ============ ZAPOWIEDŹ PIERWSZEGO KAFLA ============
+     Zdjęcia kafli są tłem w atrybucie style, a tła przeglądarka odkrywa
+     dopiero po przeliczeniu stylów — pierwsze zdjęcie startowało z dużym
+     opóźnieniem i to ono decyduje o mierzonym czasie wyświetlenia strony.
+     Zapowiedź rusza pobieranie już przy czytaniu nagłówka.
+     Tylko telefon: na szerokim ekranie kafel czeka schowany na najechanie.
+     Adres wpisuje generator (tools/build-pages.js); na podstronach innych
+     niż strona główna cały ten wiersz znika. -->
 <style>
   @font-face {
     font-family: 'JetBrains Mono';
@@ -471,15 +500,20 @@
     position: relative;
     padding-right: 2px;
   }
+  /* Kreska pod pozycją menu rozjeżdża się przekształceniem, nie szerokością.
+     Zmiana szerokości każe przeglądarce przeliczać układ w każdej klatce;
+     przekształcenie robi za nią karta graficzna. Efekt jest ten sam. */
   .sidenav a::after {
     content: "";
     display: block;
     height: 1px;
     background: #000;
-    width: 0;
-    transition: width 180ms ease;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 180ms ease;
   }
-  .sidenav a:hover::after, .sidenav a.active::after { width: 100%; }
+  .sidenav a:hover::after, .sidenav a.active::after { transform: scaleX(1); }
   .sidenav a.active { font-weight: 900; }
 
   .sidefoot {
@@ -500,7 +534,11 @@
   }
   .sidefoot .langs a.active { opacity: 1; text-decoration: underline; text-underline-offset: 3px; }
   .sidefoot .langs a:hover { opacity: 1; }
-  .sidefoot .meta { opacity: 0.65; }
+  /* Kolor zamiast opacity: przezroczystość dotyczy całej grupy i dziecko nie
+     umie jej cofnąć, więc przycisk „Cookies" dostawał ją drugi raz i schodził
+     do szarości nieczytelnej przy tak małym tekście. #595959 wygląda tak samo
+     jak czerń przy 0,65, a przycisk może się od niej odbić przy najechaniu. */
+  .sidefoot .meta { color: #595959; }
   .sidefoot .meta div + div { margin-top: 2px; }
   .sidefoot .meta-cookies { margin-top: 10px; }
   /* Przycisk wygląda jak dotychczasowy link, ale da się do niego dojść
@@ -508,9 +546,9 @@
   .cookie-reopen {
     font: inherit; letter-spacing: inherit; text-transform: inherit; color: inherit;
     background: none; border: 0; padding: 0; margin: 0;
-    cursor: pointer; text-decoration: underline; text-underline-offset: 3px; opacity: 0.65;
+    cursor: pointer; text-decoration: underline; text-underline-offset: 3px;
   }
-  .cookie-reopen:hover, .cookie-reopen:focus-visible { opacity: 1; }
+  .cookie-reopen:hover, .cookie-reopen:focus-visible { color: #000; }
   .cookie-reopen:focus-visible { outline: 2px solid #000; outline-offset: 3px; }
 
   /* ---------- MAIN CONTENT ---------- */
@@ -529,6 +567,17 @@
     transition: opacity 280ms ease;
   }
   .view.active { opacity: 1; pointer-events: auto; }
+
+  /* Widok poza ekranem ma się NIE RYSOWAĆ. Wszystkie widoki żyją w jednym
+     pliku, a sama przezroczystość ich nie wyłącza: strona główna ściągała
+     przez to portret z „O autorze" i sześć kafelków Instagrama, czyli ponad
+     300 KB obrazów, których nikt na niej nie widzi. Widok projektu zostaje
+     poza tą regułą, bo przy pokazaniu mierzy wysokość sceny pod zdjęcie.
+     Na telefonie nieaktywne widoki i tak mają display: none. */
+  #view-home:not(.active),
+  #view-about:not(.active),
+  #view-contact:not(.active),
+  #view-achievements:not(.active) { content-visibility: hidden; }
 
   /* ============================================================
      PRZEWIJANIE PANELI — widoczny pasek (macOS chowa własny)
@@ -822,6 +871,8 @@
     justify-content: center;
     padding: 32px 32px;
   }
+  /* <picture> owija zdjęcie tylko po to, by wybrać plik; układem rządzi img */
+  .proj-slide picture { display: contents; }
   .proj-slide img {
     max-width: 100%;
     max-height: 100%;
@@ -3005,15 +3056,18 @@
             <h1 class="pj-title" id="pjTitle">Post-Topografia Polski</h1>
             <div class="pj-sub" id="pjSub">04 / Dokument / Krajobraz</div>
             <div class="pj-projnav">
-              <a class="pj-projnav-btn" id="pjProjPrev" href="/"></a>
+              <!-- Strzałki do sąsiednich cykli wypełnia app.js. Do tego czasu
+                   są puste, a pusty odsyłacz to dla czytnika ekranu link bez
+                   nazwy — na stronie głównej zostawały takie na zawsze. -->
+              <a class="pj-projnav-btn" id="pjProjPrev" href="/" aria-hidden="true" tabindex="-1"></a>
               <span class="pj-projnav-sep" aria-hidden="true">/</span>
-              <a class="pj-projnav-btn" id="pjProjNext" href="/"></a>
+              <a class="pj-projnav-btn" id="pjProjNext" href="/" aria-hidden="true" tabindex="-1"></a>
             </div>
           </div>
           <div class="pj-meta" id="pjMeta">2022<br>Krajobraz po transformacji<br>14 prac</div>
         </div>
         <div class="proj-stage">
-          <div class="proj-track" id="pjTrack"><div class="proj-slide"><img src="/images/topografia/01.webp" alt="Post-Topografia Polski — zdjęcie 1 z 14, 2022, Dokument / Krajobraz" data-index="0" loading="eager" fetchpriority="high" decoding="async"></div><div class="proj-slide"><img src="/images/topografia/02.webp" alt="Post-Topografia Polski — zdjęcie 2 z 14, 2022, Dokument / Krajobraz" data-index="1" loading="lazy" fetchpriority="auto" decoding="async"></div><div class="proj-slide"><img src="/images/topografia/03.webp" alt="Post-Topografia Polski — zdjęcie 3 z 14, 2022, Dokument / Krajobraz" data-index="2" loading="lazy" fetchpriority="auto" decoding="async"></div><div class="proj-slide"><img src="/images/topografia/04.webp" alt="Post-Topografia Polski — zdjęcie 4 z 14, 2022, Dokument / Krajobraz" data-index="3" loading="lazy" fetchpriority="auto" decoding="async"></div><div class="proj-slide"><img src="/images/topografia/05.webp" alt="Post-Topografia Polski — zdjęcie 5 z 14, 2022, Dokument / Krajobraz" data-index="4" loading="lazy" fetchpriority="auto" decoding="async"></div><div class="proj-slide"><img src="/images/topografia/06.webp" alt="Post-Topografia Polski — zdjęcie 6 z 14, 2022, Dokument / Krajobraz" data-index="5" loading="lazy" fetchpriority="auto" decoding="async"></div><div class="proj-slide"><img src="/images/topografia/07.webp" alt="Post-Topografia Polski — zdjęcie 7 z 14, 2022, Dokument / Krajobraz" data-index="6" loading="lazy" fetchpriority="auto" decoding="async"></div><div class="proj-slide"><img src="/images/topografia/08.webp" alt="Post-Topografia Polski — zdjęcie 8 z 14, 2022, Dokument / Krajobraz" data-index="7" loading="lazy" fetchpriority="auto" decoding="async"></div><div class="proj-slide"><img src="/images/topografia/09.webp" alt="Post-Topografia Polski — zdjęcie 9 z 14, 2022, Dokument / Krajobraz" data-index="8" loading="lazy" fetchpriority="auto" decoding="async"></div><div class="proj-slide"><img src="/images/topografia/10.webp" alt="Post-Topografia Polski — zdjęcie 10 z 14, 2022, Dokument / Krajobraz" data-index="9" loading="lazy" fetchpriority="auto" decoding="async"></div><div class="proj-slide"><img src="/images/topografia/11.webp" alt="Post-Topografia Polski — zdjęcie 11 z 14, 2022, Dokument / Krajobraz" data-index="10" loading="lazy" fetchpriority="auto" decoding="async"></div><div class="proj-slide"><img src="/images/topografia/12.webp" alt="Post-Topografia Polski — zdjęcie 12 z 14, 2022, Dokument / Krajobraz" data-index="11" loading="lazy" fetchpriority="auto" decoding="async"></div><div class="proj-slide"><img src="/images/topografia/13.webp" alt="Post-Topografia Polski — zdjęcie 13 z 14, 2022, Dokument / Krajobraz" data-index="12" loading="lazy" fetchpriority="auto" decoding="async"></div><div class="proj-slide"><img src="/images/topografia/14.webp" alt="Post-Topografia Polski — zdjęcie 14 z 14, 2022, Dokument / Krajobraz" data-index="13" loading="lazy" fetchpriority="auto" decoding="async"></div></div>
+          <div class="proj-track" id="pjTrack"><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/topografia/m/01.webp"><img src="/images/topografia/01.webp" alt="Post-Topografia Polski — zdjęcie 1 z 14, 2022, Dokument / Krajobraz" data-index="0" loading="eager" fetchpriority="high" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/topografia/m/02.webp"><img src="/images/topografia/02.webp" alt="Post-Topografia Polski — zdjęcie 2 z 14, 2022, Dokument / Krajobraz" data-index="1" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/topografia/m/03.webp"><img src="/images/topografia/03.webp" alt="Post-Topografia Polski — zdjęcie 3 z 14, 2022, Dokument / Krajobraz" data-index="2" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/topografia/m/04.webp"><img src="/images/topografia/04.webp" alt="Post-Topografia Polski — zdjęcie 4 z 14, 2022, Dokument / Krajobraz" data-index="3" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/topografia/m/05.webp"><img src="/images/topografia/05.webp" alt="Post-Topografia Polski — zdjęcie 5 z 14, 2022, Dokument / Krajobraz" data-index="4" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/topografia/m/06.webp"><img src="/images/topografia/06.webp" alt="Post-Topografia Polski — zdjęcie 6 z 14, 2022, Dokument / Krajobraz" data-index="5" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/topografia/m/07.webp"><img src="/images/topografia/07.webp" alt="Post-Topografia Polski — zdjęcie 7 z 14, 2022, Dokument / Krajobraz" data-index="6" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/topografia/m/08.webp"><img src="/images/topografia/08.webp" alt="Post-Topografia Polski — zdjęcie 8 z 14, 2022, Dokument / Krajobraz" data-index="7" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/topografia/m/09.webp"><img src="/images/topografia/09.webp" alt="Post-Topografia Polski — zdjęcie 9 z 14, 2022, Dokument / Krajobraz" data-index="8" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/topografia/m/10.webp"><img src="/images/topografia/10.webp" alt="Post-Topografia Polski — zdjęcie 10 z 14, 2022, Dokument / Krajobraz" data-index="9" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/topografia/m/11.webp"><img src="/images/topografia/11.webp" alt="Post-Topografia Polski — zdjęcie 11 z 14, 2022, Dokument / Krajobraz" data-index="10" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/topografia/m/12.webp"><img src="/images/topografia/12.webp" alt="Post-Topografia Polski — zdjęcie 12 z 14, 2022, Dokument / Krajobraz" data-index="11" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/topografia/m/13.webp"><img src="/images/topografia/13.webp" alt="Post-Topografia Polski — zdjęcie 13 z 14, 2022, Dokument / Krajobraz" data-index="12" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/topografia/m/14.webp"><img src="/images/topografia/14.webp" alt="Post-Topografia Polski — zdjęcie 14 z 14, 2022, Dokument / Krajobraz" data-index="13" loading="lazy" fetchpriority="auto" decoding="async"></picture></div></div>
           <div class="proj-nav-left"  id="pjPrev"><span class="proj-nav-arrow">← <span data-i18n="proj.prev">poprzednie</span></span></div>
           <div class="proj-nav-right" id="pjNext"><span class="proj-nav-arrow"><span data-i18n="proj.next">następne</span> →</span></div>
         </div>
@@ -3134,8 +3188,12 @@
   </div>
 </div>
 
-<script src="/data.js"></script>
-<script src="/loader.js"></script>
-<script src="/app.js"></script>
+<!-- defer: przeglądarka pobiera skrypty równolegle z czytaniem strony
+     i uruchamia je dopiero po jej wczytaniu, zachowując kolejność.
+     Bez tego data.js wstrzymywał rysowanie strony (na telefonie o 450 ms).
+     Zdarzenie DOMContentLoaded, na które czeka app.js, leci później. -->
+<script src="/data.js" defer></script>
+<script src="/loader.js" defer></script>
+<script src="/app.js" defer></script>
 </body>
 </html>

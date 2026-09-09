@@ -291,6 +291,12 @@ function renderHome() {
    Na desktopie podgląd wywołuje najechanie kursorem; dotyk najechania nie
    zna, więc kafle były na telefonie samym tekstem. Tutaj kafel pokazuje
    zdjęcia sam: co 1,5 s inne, losowo wybrane z cyklu.
+
+   Rotacja rusza dopiero po pierwszym geście odwiedzającego (dotyk, przewinięcie).
+   Powód: podmiana tła jest dla przeglądarki nowym „największym elementem"
+   strony, więc rotacja chodząca od pierwszej sekundy przesuwała mierzony
+   czas wyświetlenia treści z ~1 s na 3,5 s. Po pierwszym geście pomiar jest
+   już zamknięty, a zdjęcia zmieniają się dokładnie tak jak dotąd.
    ============================================================ */
 const HOME_ROTATE_MS = 1500;
 /* Ile zdjęć z cyklu bierze udział w rotacji. Bez limitu telefon ściągnąłby
@@ -299,12 +305,15 @@ const HOME_ROTATE_MS = 1500;
    inny zestaw. */
 const HOME_ROTATE_POOL = 6;
 let homeRotateTimers = [];
+// Zdejmuje nasłuch pierwszego gestu, gdy rotacja jeszcze nie ruszyła.
+let homeRotateDisarm = null;
 
 function stopHomeRotation() {
   // setTimeout i setInterval dzielą pulę identyfikatorów, więc jedna lista
   // wystarczy — zbędne wywołanie po prostu nic nie robi.
   homeRotateTimers.forEach(id => { clearTimeout(id); clearInterval(id); });
   homeRotateTimers = [];
+  if (homeRotateDisarm) { homeRotateDisarm(); homeRotateDisarm = null; }
   // Warstwa przenikania, która nie zdążyła się dokończyć: przepisujemy jej
   // zdjęcie do ramki i usuwamy, żeby kafel nie wrócił skokiem do starego.
   $$(".home-poster .thumb-fade").forEach(layer => {
@@ -340,14 +349,25 @@ function startHomeRotation() {
   if (!cells.length || !window.PROJECTS) return;
 
   // Kto prosił o mniej ruchu, dostaje jedno zdjęcie na kafel, bez zmian.
-  const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // Kafel pokazuje już zdjęcie wpisane w kod strony, więc nie ma czego
+  // podmieniać — wystarczy nie zaczynać rotacji.
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  // Zaplanowane starty rotacji; odpalamy je po pierwszym geście.
+  const starts = [];
 
   cells.forEach((cell, ci) => {
     const p = window.PROJECTS.find(x => x.slug === cell.dataset.slug);
     const frame = cell.querySelector(".thumb-frame");
     if (!p || !frame || !(p.images || []).length) return;
 
-    const pool = shuffled(p.images).slice(0, HOME_ROTATE_POOL);
+    // Pierwsze zdjęcie rotacji to TO, KTÓRE KAFEL JUŻ POKAZUJE. Wcześniej
+    // rotacja od razu podmieniała je na losowe: telefon ściągał dwa zdjęcia
+    // zamiast jednego (siedem kafli, siedem zbędnych pobrań), a to drugie
+    // stawało się największym elementem strony i psuło pomiar czasu.
+    const current = homeCellThumb(p);
+    const rest = shuffled((p.images || []).filter((src) => src !== current));
+    const pool = [current, ...rest].filter(Boolean).slice(0, HOME_ROTATE_POOL);
     let i = 0;
 
     // Zdjęcie podmieniamy dopiero, gdy jest wczytane — inaczej kafel mrugałby
@@ -382,8 +402,7 @@ function startHomeRotation() {
       pre.src = thumb;
     };
 
-    setFrame(pool[0], false);
-    if (still || pool.length < 2) return;
+    if (pool.length < 2) return;
 
     // Kafel poza ekranem nie zmienia zdjęcia — nie ma po co ściągać danych
     // za coś, czego nikt nie widzi (i za co płaci pakietem). Zakładki w tle
@@ -398,11 +417,26 @@ function startHomeRotation() {
 
     // Kafle nie przeskakują równo — każdy rusza ułamek sekundy później,
     // więc na ekranie nie ma jednego wspólnego mrugnięcia.
-    homeRotateTimers.push(setTimeout(() => {
-      step();
-      homeRotateTimers.push(setInterval(step, HOME_ROTATE_MS));
-    }, ci * 220));
+    starts.push(() => {
+      homeRotateTimers.push(setTimeout(() => {
+        step();
+        homeRotateTimers.push(setInterval(step, HOME_ROTATE_MS));
+      }, ci * 220));
+    });
   });
+
+  if (!starts.length) return;
+
+  // Pierwszy gest: dotyk, przewinięcie, kółko myszy albo klawisz. Nasłuch
+  // w fazie przechwytywania, bo przewijanie nie bąbelkuje z paneli w górę.
+  const EVENTS = ["pointerdown", "touchstart", "scroll", "wheel", "keydown"];
+  const opts = { passive: true, capture: true };
+  const begin = () => {
+    if (homeRotateDisarm) { homeRotateDisarm(); homeRotateDisarm = null; }
+    starts.forEach((run) => run());
+  };
+  homeRotateDisarm = () => EVENTS.forEach((ev) => window.removeEventListener(ev, begin, opts));
+  EVENTS.forEach((ev) => window.addEventListener(ev, begin, opts));
 }
 
 /* ============================================================
@@ -751,6 +785,11 @@ function renderProject() {
   const prevBtn = $("#pjProjPrev");
   const nextBtn = $("#pjProjNext");
   if (prevBtn && nextBtn) {
+    // Mają już nazwę, więc wracają do drzewa dostępności i pod klawisz Tab.
+    [prevBtn, nextBtn].forEach((el) => {
+      el.removeAttribute("aria-hidden");
+      el.removeAttribute("tabindex");
+    });
     prevBtn.innerHTML = `<span class="pn-arrow">←</span> <span class="pn-label">${prev.no} ${prev.title[L]}</span>`;
     prevBtn.setAttribute("href", routeToPath("project", prev.slug));
     prevBtn.setAttribute("aria-label", (L==="pl"?"Poprzedni projekt: ":"Previous project: ") + prev.title[L]);
@@ -784,11 +823,23 @@ function renderProject() {
     DanieBook.destroy();
   }
 
-  // Build track — semantyczny alt + lazy loading dla wydajności / SEO
+  // Build track — semantyczny alt + lazy loading dla wydajności / SEO.
+  // Telefon dostaje wersję 1200 px (katalog m/), komputer — pełny plik.
+  // <picture> z zapytaniem o szerokość ekranu wybiera plik PRZED pobraniem,
+  // więc telefon nigdy nie ściąga 2000-pikselowego oryginału.
   const track = $("#pjTrack");
   track.innerHTML = p.images.map((src, i) =>
-    `<div class="proj-slide"><img src="${src}" alt="${p.title[L]} — zdjęcie ${i+1} z ${p.images.length}, ${p.year}, ${p.category[L]}" data-index="${i}" loading="${i === 0 ? 'eager' : 'lazy'}" fetchpriority="${i === 0 ? 'high' : 'auto'}" decoding="async"></div>`
+    `<div class="proj-slide"><picture><source media="${MOBILE_MQ}" srcset="${mediumPath(src)}"><img src="${src}" alt="${p.title[L]} — zdjęcie ${i+1} z ${p.images.length}, ${p.year}, ${p.category[L]}" data-index="${i}" loading="${i === 0 ? 'eager' : 'lazy'}" fetchpriority="${i === 0 ? 'high' : 'auto'}" decoding="async"></picture></div>`
   ).join("");
+
+  // Brak wersji 1200 px (zdjęcie dodane bez przebudowy) — po usunięciu
+  // <source> przeglądarka sama sięga po pełny plik z atrybutu src.
+  $$("#pjTrack picture").forEach(pic => {
+    pic.querySelector("img").addEventListener("error", () => {
+      const source = pic.querySelector("source");
+      if (source) source.remove();
+    }, { once: true });
+  });
 
   // Flash mode — wyłącz płynne przesuwanie slajdów dla projektów z lampą błyskową.
   // Slajd ma się PRZEŁĄCZYĆ natychmiast (pod białym mignięciem), nie ślizgać.
@@ -836,8 +887,10 @@ function preloadNeighbourSlides() {
   [state.slideIndex + 1, state.slideIndex - 1].forEach(n => {
     const img = imgs[(n + imgs.length) % imgs.length];
     if (!img || img.complete) return;
+    // Slajd poza ekranem (loading="lazy") nie ma jeszcze currentSrc, więc
+    // wybieramy plik sami — na telefonie wersję 1200 px, nie oryginał.
     const pre = new Image();
-    pre.src = img.currentSrc || img.src;
+    pre.src = img.currentSrc || (window.matchMedia(MOBILE_MQ).matches ? mediumPath(img.src) : img.src);
   });
 }
 
@@ -1055,7 +1108,7 @@ function openLightbox(images, index, opts = {}) {
   lbImages = images;
   lbIndex = Math.max(0, Math.min(index || 0, images.length - 1));
   lbWithFlash = !!opts.flash;
-  $("#lbImg").src = lbImages[lbIndex];
+  setLightboxImage();
   $("#lbCounter").textContent =
     `${String(lbIndex+1).padStart(2,"0")} / ${String(lbImages.length).padStart(2,"0")}`;
   if (!wasOpen) {
@@ -1093,7 +1146,7 @@ function lbNext() {
   if (lbWithFlash) triggerCameraFlash();
   lbIndex = (lbIndex + 1) % lbImages.length;
   syncSlideToLightbox();
-  $("#lbImg").src = lbImages[lbIndex];
+  setLightboxImage();
   $("#lbCounter").textContent =
     `${String(lbIndex+1).padStart(2,"0")} / ${String(lbImages.length).padStart(2,"0")}`;
 }
@@ -1102,7 +1155,7 @@ function lbPrev() {
   if (lbWithFlash) triggerCameraFlash();
   lbIndex = (lbIndex - 1 + lbImages.length) % lbImages.length;
   syncSlideToLightbox();
-  $("#lbImg").src = lbImages[lbIndex];
+  setLightboxImage();
   $("#lbCounter").textContent =
     `${String(lbIndex+1).padStart(2,"0")} / ${String(lbImages.length).padStart(2,"0")}`;
 }
@@ -1184,6 +1237,26 @@ function thumbPath(src) {
   const str = String(src || "");
   const i = str.lastIndexOf("/");
   return i < 0 ? str : str.slice(0, i) + "/thumbs" + str.slice(i);
+}
+
+// Wersja 1200 px (katalog m/, robi ją tools/build-thumbs.js) — dla telefonu.
+// Ten sam próg co w arkuszu stylów: poniżej 720 px strona jest jednokolumnowa.
+const MOBILE_MQ = "(max-width: 720px)";
+function mediumPath(src) {
+  const str = String(src || "");
+  const i = str.lastIndexOf("/");
+  return i < 0 ? str : str.slice(0, i) + "/m" + str.slice(i);
+}
+
+// Lightbox na telefonie też dostaje wersję 1200 px — ekran ma 375–430 px
+// szerokości, oryginał 2000 px byłby trzykrotnie za duży. Gdy tej wersji
+// brakuje (zdjęcie dodane bez przebudowy), wracamy do pełnego pliku.
+function setLightboxImage() {
+  const img = $("#lbImg");
+  const full = lbImages[lbIndex];
+  const mobile = window.matchMedia(MOBILE_MQ).matches;
+  img.onerror = mobile ? () => { img.onerror = null; img.src = full; } : null;
+  img.src = mobile ? mediumPath(full) : full;
 }
 
 function ensureAchievements() {
@@ -1980,7 +2053,7 @@ function buildNavPreview(route, L) {
       : ["ZPAF", "ITF Opava", "Sputnik Photos", "Warsaw / Opava"];
     return `
       <div class="np-about">
-        <span class="np-portrait" style="background-image:url('/images/about/portrait.webp')"></span>
+        <span class="np-portrait" style="background-image:url('/images/about/portrait-web.webp')"></span>
         <p class="np-bio">${intro}</p>
       </div>
       <div class="np-facts">${facts.map(f => `<span class="np-fact">${f}</span>`).join("")}</div>`;
@@ -2074,6 +2147,8 @@ function setCookieConsent(value) {
 }
 function applyConsentToGtag(granted) {
   if (typeof window.gtag !== "function") return;
+  // Biblioteki Google nie ma na stronie, dopóki nikt nie wyrazi zgody.
+  if (granted && typeof window.loadAnalytics === "function") window.loadAnalytics();
   const status = granted ? "granted" : "denied";
   // Zgody reklamowe pozostają odrzucone niezależnie od decyzji w bannerze —
   // strona ich nie używa (patrz allow_google_signals w index.html).

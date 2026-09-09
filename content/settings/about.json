@@ -1,5 +1,7 @@
 {
-  "portrait": "images/about/portrait.webp",
+  "portrait": "images/about/portrait-web.webp",
+  "portraitWidth": 900,
+  "portraitHeight": 675,
   "portraitAlt": {
     "pl": "Paweł Sypniewski — autoportret",
     "en": "Paweł Sypniewski — self-portrait"

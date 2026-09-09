@@ -84,8 +84,13 @@
     for (const L of ["pl", "en"]) {
       const lang = about[L] || {};
       const alt = escapeHtml((about.portraitAlt && about.portraitAlt[L]) || "");
+      // Wymiary w kodzie rezerwują miejsce, zanim zdjęcie się wczyta —
+      // bez nich tekst pod spodem podskakuje w chwili pojawienia się portretu.
+      const size = about.portraitWidth && about.portraitHeight
+        ? ` width="${Number(about.portraitWidth)}" height="${Number(about.portraitHeight)}"`
+        : "";
       const img = about.portrait
-        ? `<img class="author-portrait" src="${escapeHtml(about.portrait)}" alt="${alt}" loading="lazy" decoding="async">\n`
+        ? `<img class="author-portrait" src="${escapeHtml(about.portrait)}"${size} alt="${alt}" loading="lazy" decoding="async">\n`
         : "";
       out[L] = { body: img + mdToHtml(lang.body), side: mdToHtml(lang.side) };
     }
