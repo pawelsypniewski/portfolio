@@ -2243,11 +2243,13 @@ function initCookieBanner() {
 document.addEventListener("DOMContentLoaded", async () => {
   // Treść (PROJECTS/ACHIEVEMENTS/ABOUT/CONTACT) jest wczytywana asynchronicznie
   // przez loader.js z plików content/*.json. Poczekaj, aż będzie gotowa.
+  // Banner zgody jest już na ekranie (odsłania go wiersz w index.html), więc
+  // przyciski muszą działać od razu — przed czekaniem na treść, nie po nim.
+  initCookieBanner();
   if (window.__DATA_READY) {
     try { await window.__DATA_READY; } catch (e) { console.error(e); }
   }
   init();
-  initCookieBanner();
   initNavPreview();
   initPaneScroll();
 });

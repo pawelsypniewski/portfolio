@@ -3127,6 +3127,20 @@
     </div>
   </div>
 </div>
+<script>
+  /* Banner zgody nie potrzebuje niczego z plików z treścią, a zasłania ćwierć
+     ekranu telefonu. Odsłaniany dopiero przez app.js pojawiał się po pobraniu
+     czterech plików JSON, czyli o sekundy za późno — i to on decydował
+     o mierzonym czasie zapełniania ekranu. Ten wiersz odsłania go już przy
+     czytaniu strony; obsługę przycisków podpina app.js chwilę później.
+     Kto już zdecydował, nie zobaczy nawet mignięcia: warunek jest tu, a nie
+     w arkuszu stylów. */
+  (function () {
+    var d = null;
+    try { d = localStorage.getItem('ps-cookie-consent'); } catch (e) {}
+    if (d !== 'granted' && d !== 'denied') document.getElementById('cookieBanner').hidden = false;
+  })();
+</script>
 
 <!-- defer: przeglądarka pobiera skrypty równolegle z czytaniem strony
      i uruchamia je dopiero po jej wczytaniu, zachowując kolejność.
