@@ -1566,7 +1566,7 @@ function updateSEO(route) {
       ? "Paweł Sypniewski — Fotograf i Artysta Wizualny | Warszawa, ZPAF"
       : "Paweł Sypniewski — Photographer and Visual Artist | Warsaw, ZPAF";
     desc  = L === "pl"
-      ? "Paweł Sypniewski — fotograf i artysta wizualny z Warszawy. Portfolio prac dokumentalnych, reportażowych i kreacyjnych. Członek ZPAF, Okręg Warszawski."
+      ? "Paweł Sypniewski — fotograf i artysta wizualny z Warszawy, członek ZPAF. Fotografia dokumentalna i kreacyjna, zdjęcia z cykli autorskich, techniki szlachetne."
       : "Paweł Sypniewski — photographer and visual artist from Warsaw. Documentary, reportage and constructed works. Member of ZPAF, Warsaw Branch.";
     url   = BASE_URL + routeToPath("home");
   }

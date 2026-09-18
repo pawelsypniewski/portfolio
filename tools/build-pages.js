@@ -756,7 +756,7 @@ const TEXTS = {
     pl: {
       title: `${AUTHOR} — Fotograf i Artysta Wizualny | Warszawa, ZPAF`,
       description:
-        "Paweł Sypniewski — fotograf i artysta wizualny z Warszawy. Portfolio prac dokumentalnych, reportażowych i kreacyjnych. Członek ZPAF, Okręg Warszawski.",
+        "Paweł Sypniewski — fotograf i artysta wizualny z Warszawy, członek ZPAF. Fotografia dokumentalna i kreacyjna, zdjęcia z cykli autorskich, techniki szlachetne.",
     },
     en: {
       title: `${AUTHOR} — Photographer and Visual Artist | Warsaw, ZPAF`,
