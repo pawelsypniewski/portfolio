@@ -1,0 +1,3089 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<!-- ============ PRZEKIEROWANIE Z GITHUB PAGES NA DOMENĘ DOCELOWĄ ============
+     Jeśli ktoś wejdzie na *.github.io, natychmiast (przed renderem) kieruj
+     na pawelsypniewski.pl, zachowując ścieżkę hash routingu (#/...). -->
+<script>
+  (function () {
+    if (location.hostname.endsWith("github.io")) {
+      location.replace("https://pawelsypniewski.pl/" + location.search + location.hash);
+    }
+  })();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+<!-- ============ CONTENT SECURITY POLICY ============
+     GitHub Pages nie pozwala ustawiać nagłówków HTTP, więc CSP jest w meta.
+     Białe listy: własna domena, Google Analytics/Tag Manager. Czcionki są
+     własne (/fonts/), więc Google Fonts nie ma już na liście.
+     'unsafe-inline' jest konieczny — strona używa skryptów i stylów inline. -->
+<meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  script-src 'self' 'unsafe-inline' https://www.googletagmanager.com;
+  style-src 'self' 'unsafe-inline';
+  font-src 'self';
+  img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com;
+  connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://script.google.com https://script.googleusercontent.com;
+  frame-src 'none';
+  object-src 'none';
+  base-uri 'self';
+  form-action 'self'
+">
+
+<!-- ============ PRIMARY META ============ -->
+<title>O autorovi — Paweł Sypniewski, fotograf a vizuální umělec</title>
+<meta name="description" content="Paweł Sypniewski (nar. 1987) — fotograf a vizuální umělec z Varšavy, člen ZPAF, student ITF v Opavě. Výstavy, ocenění a publikace.">
+<meta name="author" content="Paweł Sypniewski">
+<meta name="publisher" content="Paweł Sypniewski">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="google-site-verification" content="AJpvQiA3niuDmKpQchC5wnkZz_77YWm4W7Vs8Y0qCL4">
+<meta name="theme-color" content="#ffffff">
+<!-- Strona jest z założenia biała (galeria). Deklaracja pilnuje, żeby
+     przeglądarka w trybie ciemnym macOS nie próbowała przyciemniać
+     formantów ani pasków przewijania na własną rękę. -->
+<meta name="color-scheme" content="light">
+
+<!-- ============ GOOGLE ANALYTICS 4 (Consent Mode v2) ============
+     Sam skrypt Google (172 KB, ~165 ms pracy procesora na telefonie) NIE jest
+     tu wczytywany. Ściąga go dopiero funkcja loadAnalytics(), wołana wtedy,
+     gdy ktoś kliknie „Akceptuj" albo ma zapamiętaną zgodę z poprzedniej
+     wizyty. Banner obiecuje analitykę dopiero po zgodzie, więc teraz obietnica
+     jest dotrzymana co do joty: przed kliknięciem nie leci do Google nic.
+     Polecenia gtag() wywołane wcześniej czekają w kolejce dataLayer i wykonają
+     się w komplecie w chwili wczytania biblioteki. -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+
+  // Consent Mode v2 — domyślnie wszystko ZABLOKOWANE
+  // Tracking aktywuje się dopiero po kliknięciu „Akceptuj" w bannerze.
+  // Zapamiętany wybór w localStorage = automatycznie zaaplikowany.
+  var stored = null;
+  try { stored = localStorage.getItem('ps-cookie-consent'); } catch(e) {}
+  var granted = stored === 'granted';
+
+  (function() {
+    gtag('consent', 'default', {
+      // Zgody reklamowe zostają na „denied" na stałe. Strona nie prowadzi
+      // kampanii Google Ads ani remarketingu, a banner obiecuje wyłącznie
+      // analitykę ruchu — nie prosimy więc o nic ponad to, czego używamy.
+      'ad_storage':              'denied',
+      'ad_user_data':            'denied',
+      'ad_personalization':      'denied',
+      'analytics_storage':       granted ? 'granted' : 'denied',
+      'functionality_storage':   granted ? 'granted' : 'denied',
+      'personalization_storage': granted ? 'granted' : 'denied',
+      'security_storage':        'granted'
+    });
+  })();
+
+  // Wczytuje bibliotekę Google. Wołana z app.js po zgodzie; drugie wywołanie
+  // nic nie robi, więc można jej użyć bez sprawdzania stanu.
+  window.loadAnalytics = function () {
+    if (window.__analyticsLoaded) return;
+    window.__analyticsLoaded = true;
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-H7VWHM3TZZ';
+    document.head.appendChild(s);
+  };
+
+  gtag('js', new Date());
+  gtag('config', 'G-H7VWHM3TZZ', {
+    send_page_view: false,
+    anonymize_ip: true,
+    // Wyłącza sygnały reklamowe Google (remarketing, śledzenie między
+    // urządzeniami). Bez tego Analytics odpytywał stats.g.doubleclick.net
+    // i google.pl/ads — żądania i tak blokowała polityka bezpieczeństwa
+    // (CSP), zostawiając błędy w konsoli. Statystyki odwiedzin, źródeł
+    // ruchu i najczęściej oglądanych prac działają bez zmian.
+    allow_google_signals: false,
+    allow_ad_personalization_signals: false
+  });
+
+  // Zgoda zapamiętana z poprzedniej wizyty — wczytujemy od razu.
+  if (granted) window.loadAnalytics();
+</script>
+<meta name="format-detection" content="telephone=no">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="content-language" content="cs">
+
+<!-- ============ CANONICAL + HREFLANG ============ -->
+<link rel="canonical" href="https://pawelsypniewski.pl/cs/o-autorovi/">
+<link rel="alternate" href="https://pawelsypniewski.pl/o-autorze/" hreflang="pl">
+<link rel="alternate" href="https://pawelsypniewski.pl/en/about/" hreflang="en">
+<link rel="alternate" href="https://pawelsypniewski.pl/cs/o-autorovi/" hreflang="cs">
+<link rel="alternate" href="https://pawelsypniewski.pl/o-autorze/" hreflang="x-default">
+
+<!-- ============ OPEN GRAPH ============ -->
+<meta property="og:type" content="profile">
+<meta property="og:site_name" content="Paweł Sypniewski">
+<meta property="og:title" content="O autorovi — Paweł Sypniewski, fotograf a vizuální umělec">
+<meta property="og:description" content="Paweł Sypniewski (nar. 1987) — fotograf a vizuální umělec z Varšavy, člen ZPAF, student ITF v Opavě. Výstavy, ocenění a publikace.">
+<meta property="og:url" content="https://pawelsypniewski.pl/cs/o-autorovi/">
+<meta property="og:image" content="https://pawelsypniewski.pl/images/og-cover.jpg">
+<meta property="og:image:secure_url" content="https://pawelsypniewski.pl/images/og-cover.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Paweł Sypniewski — fragment cyklu Superpozycja">
+<meta property="og:locale" content="cs_CZ">
+<meta property="og:locale:alternate" content="pl_PL">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="article:author" content="Paweł Sypniewski">
+
+<!-- ============ TWITTER CARD ============ -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="O autorovi — Paweł Sypniewski, fotograf a vizuální umělec">
+<meta name="twitter:description" content="Paweł Sypniewski (nar. 1987) — fotograf a vizuální umělec z Varšavy, člen ZPAF, student ITF v Opavě. Výstavy, ocenění a publikace.">
+<meta name="twitter:image" content="https://pawelsypniewski.pl/images/og-cover.jpg">
+<meta name="twitter:image:alt" content="Paweł Sypniewski — fragment cyklu Superpozycja">
+
+<!-- ============ FAVICON / PWA ============ -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="alternate icon" type="image/png" sizes="48x48" href="/favicon-48.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+
+<!-- ============ PERFORMANCE HINTS ============ -->
+<link rel="dns-prefetch" href="https://www.google-analytics.com">
+
+<!-- ============ CZCIONKI — z własnej domeny ============
+     Wcześniej Jost i JetBrains Mono szły z serwerów Google. Każdy odwiedzający
+     łączył się wtedy z Google jeszcze przed decyzją w bannerze cookies (Google
+     widziało jego adres IP), a arkusz z czcionkami blokował pierwsze
+     wyświetlenie strony. Teraz pliki .woff2 leżą w /fonts/ — bez połączeń
+     z Google i bez czekania na obcy serwer. Obie czcionki są na licencji
+     SIL Open Font License, która pozwala na takie użycie (fonts/README.md).
+     Google serwuje je jako czcionki zmienne: jeden plik = wszystkie grubości.
+     Podzbiory: latin (angielski) + latin-ext (polskie znaki: ą, ę, ł…). -->
+<link rel="preload" href="/fonts/jost-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/jost-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+
+<!-- ============ ZAPOWIEDŹ PIERWSZEGO KAFLA ============
+     Zdjęcia kafli są tłem w atrybucie style, a tła przeglądarka odkrywa
+     dopiero po przeliczeniu stylów — pierwsze zdjęcie startowało z dużym
+     opóźnieniem i to ono decyduje o mierzonym czasie wyświetlenia strony.
+     Zapowiedź rusza pobieranie już przy czytaniu nagłówka.
+     Tylko telefon: na szerokim ekranie kafel czeka schowany na najechanie.
+     Adres wpisuje generator (tools/build-pages.js); na podstronach innych
+     niż strona główna cały ten wiersz znika. -->
+<style>
+  @font-face {
+    font-family: 'JetBrains Mono';
+    font-style: normal;
+    font-weight: 400 500;
+    font-display: swap;
+    src: url('/fonts/jetbrains-mono-latin-ext.woff2') format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  @font-face {
+    font-family: 'JetBrains Mono';
+    font-style: normal;
+    font-weight: 400 500;
+    font-display: swap;
+    src: url('/fonts/jetbrains-mono-latin.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  @font-face {
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 400 900;
+    font-display: swap;
+    src: url('/fonts/jost-latin-ext.woff2') format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  @font-face {
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 400 900;
+    font-display: swap;
+    src: url('/fonts/jost-latin.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+</style>
+
+<!-- ============ STRUCTURED DATA (JSON-LD) ============ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://pawelsypniewski.pl/#person",
+      "name": "Paweł Sypniewski",
+      "alternateName": [
+        "Sypniewski Studio",
+        "Paweł Sypniewski fotograf"
+      ],
+      "givenName": "Paweł",
+      "familyName": "Sypniewski",
+      "url": "https://pawelsypniewski.pl/",
+      "image": "https://pawelsypniewski.pl/images/about/portrait.webp",
+      "jobTitle": "Fotograf, Artysta Wizualny",
+      "description": "Fotograf i artysta wizualny z Warszawy. Członek ZPAF, Okręg Warszawski. Twórca cykli dokumentalnych, książek fotograficznych i prac w technikach szlachetnych.",
+      "birthDate": "1987",
+      "birthPlace": {
+        "@type": "Place",
+        "name": "Warszawa, Polska"
+      },
+      "nationality": "Polish",
+      "knowsLanguage": [
+        "pl",
+        "en"
+      ],
+      "knowsAbout": [
+        "Fotografia dokumentalna",
+        "Fotografia artystyczna",
+        "Portret kreacyjny",
+        "Techniki szlachetne",
+        "Mixed media",
+        "Kolaż",
+        "Sztuka konceptualna",
+        "Książka fotograficzna"
+      ],
+      "alumniOf": [
+        {
+          "@type": "EducationalOrganization",
+          "name": "Instytut Fotografii Twórczej w Opawie",
+          "url": "https://itf.fpf.slu.cz/"
+        },
+        {
+          "@type": "Organization",
+          "name": "Sputnik Photos — Program Mentorski"
+        },
+        {
+          "@type": "EducationalOrganization",
+          "name": "Studium Fotografii ZPAF"
+        },
+        {
+          "@type": "EducationalOrganization",
+          "name": "Uniwersytet Otwarty Uniwersytetu Warszawskiego",
+          "url": "https://uo.uw.edu.pl/"
+        }
+      ],
+      "award": "Laureat XI FotoArtFestival — pokaz DIAS SHOW, Bielsko-Biała, 2025",
+      "memberOf": {
+        "@type": "Organization",
+        "name": "Związek Polskich Artystów Fotografików (ZPAF)",
+        "alternateName": "ZPAF — Okręg Warszawski",
+        "url": "https://zpaf.pl/"
+      },
+      "address": [
+        {
+          "@type": "PostalAddress",
+          "addressLocality": "Warszawa",
+          "addressCountry": "PL"
+        },
+        {
+          "@type": "PostalAddress",
+          "addressLocality": "Opawa",
+          "addressCountry": "CZ"
+        }
+      ],
+      "email": "mailto:katedranalogowa@gmail.com",
+      "sameAs": [
+        "https://www.instagram.com/sypniewskistudio/",
+        "https://www.facebook.com/syppus/",
+        "https://itf-new.slu.cz/sprava-studentu/detail/1245"
+      ],
+      "subjectOf": [
+        {
+          "@type": "WebPage",
+          "name": "Witamy ośmioro artystów, przyjętych w grudniu 2025 do związkowego grona",
+          "url": "https://zpaf.pl/aktualnosci/8-nowych-zpaf-12-2025/"
+        },
+        {
+          "@type": "WebPage",
+          "name": "Dyplomy 2024 — Studium Fotografii ZPAF",
+          "url": "https://studiumzpaf.pl/dyplomy-2024/"
+        }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://pawelsypniewski.pl/#website",
+      "url": "https://pawelsypniewski.pl/",
+      "name": "Paweł Sypniewski — Portfolio",
+      "description": "Oficjalne portfolio fotografa i artysty wizualnego Pawła Sypniewskiego.",
+      "publisher": {
+        "@id": "https://pawelsypniewski.pl/#person"
+      },
+      "inLanguage": [
+        "pl-PL",
+        "en-US",
+        "cs-CZ"
+      ]
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": "https://pawelsypniewski.pl/#profilepage",
+      "url": "https://pawelsypniewski.pl/cs/",
+      "name": "Paweł Sypniewski — Portfolio",
+      "about": {
+        "@id": "https://pawelsypniewski.pl/#person"
+      },
+      "mainEntity": {
+        "@id": "https://pawelsypniewski.pl/#person"
+      },
+      "inLanguage": "cs-CZ"
+    },
+    {
+      "@type": "ImageGallery",
+      "@id": "https://pawelsypniewski.pl/#gallery",
+      "name": "Portfolio — Wybrane realizacje",
+      "creator": {
+        "@id": "https://pawelsypniewski.pl/#person"
+      },
+      "url": "https://pawelsypniewski.pl/cs/",
+      "hasPart": [
+        {
+          "@type": "CreativeWork",
+          "name": "Výchozí nastavení",
+          "dateCreated": "2024",
+          "genre": "Dokument",
+          "description": "Výchozí nastavení jsou předem definované hodnoty nebo konfigurace, které se automaticky přiřazují různým volbám v softwaru, elektronických zařízeních či operačních systémech, pokud uživatel nic nezmění. Při generování obrazů pomocí umělé inteligence se mohou objevit různé artefakty, glitche a chyby. Typické problémy: vysokofrekvenční artefakty, rozmazané obrazy, posuny a geometrická zkreslení, opakující se vzory, náhodné prvky. Výchozí nastavení otevírají také otázku, která existuje od vynálezu fotografie v roce 1826: ukazuje fotografie pravdu? Obrazy generované umělou inteligencí vycházejí z fotografií převzatých z internetu, které často prošly výraznou postprodukcí, úpravami a digitálními zásahy. Model se učí na zpracovaných datech a „nepravdivých“ vizích, a proto vytváří vlastní interpretaci skutečnosti. Technika: snímky pořízené na černobílý středoformátový negativ a pod zvětšovacím přístrojem přenesené na mokrou kolodiovou desku.",
+          "creator": {
+            "@id": "https://pawelsypniewski.pl/#person"
+          },
+          "@id": "https://pawelsypniewski.pl/cs/ustawienia-domyslne/#work",
+          "url": "https://pawelsypniewski.pl/cs/ustawienia-domyslne/",
+          "image": "https://pawelsypniewski.pl/images/ustawienia/03.webp"
+        },
+        {
+          "@type": "CreativeWork",
+          "name": "Superpozice",
+          "dateCreated": "2023",
+          "genre": "Inscenovaná fotografie / Portrét",
+          "description": "Superpozice je základní princip kvantové fyziky, podle něhož mohou částice nebo objekty existovat současně v několika vzájemně se vylučujících stavech. Jinými slovy, mohou se nacházet na dvou či více místech zároveň, dokud nejsou změřeny. Snímky z tohoto projektu jsou pokusem o fotografický záznam toho, jak by vypadal svět, kdyby byl jev superpozice postřehnutelný běžným pozorovatelem. Cyklus metaforicky zobrazuje současnost minulosti, přítomnosti a budoucnosti a naznačuje, že drobné změny mohou ovlivnit náš úhel pohledu. To, co vidíme, vždy závisí na perspektivě pozorovatele.",
+          "creator": {
+            "@id": "https://pawelsypniewski.pl/#person"
+          },
+          "@id": "https://pawelsypniewski.pl/cs/superpozycja/#work",
+          "url": "https://pawelsypniewski.pl/cs/superpozycja/",
+          "image": "https://pawelsypniewski.pl/images/superpozycja/01.webp"
+        },
+        {
+          "@type": "CreativeWork",
+          "name": "Hra o trůny",
+          "dateCreated": "2022",
+          "genre": "Dokument / Found",
+          "description": "Politická ikonografie polského venkova. Plakáty, oltáříky, provizorní pomníky — krajina před volbami.",
+          "creator": {
+            "@id": "https://pawelsypniewski.pl/#person"
+          },
+          "@id": "https://pawelsypniewski.pl/cs/gra-o-tron/#work",
+          "url": "https://pawelsypniewski.pl/cs/gra-o-tron/",
+          "image": "https://pawelsypniewski.pl/images/gra_o_tron/01.webp"
+        },
+        {
+          "@type": "CreativeWork",
+          "name": "Post-topografie Polska",
+          "dateCreated": "2022",
+          "genre": "Dokument / Krajina",
+          "description": "„Post-topografie. Krajina po transformaci“ je autorský černobílý fotografický cyklus, který zkoumá polskou krajinu po transformaci — prostor utvářený vrstvením epoch: relikty Polské lidové republiky, provizoria 90. let a agresivní developerské výstavby. Hlavním zkušebním polem je varšavská aglomerace a její předměstí — reprezentativní mikrokosmos celopolského nedostatku prostorového řádu. Projekt vědomě navazuje na směr „New Topographics“ (1975), přidává však rozměr času: ukazuje, jak provizorní stavby rychle mizí a jak se i zdánlivě trvalé relikty nakonec ukazují jako pomíjivé.",
+          "creator": {
+            "@id": "https://pawelsypniewski.pl/#person"
+          },
+          "@id": "https://pawelsypniewski.pl/cs/nowa-topografia/#work",
+          "url": "https://pawelsypniewski.pl/cs/nowa-topografia/",
+          "image": "https://pawelsypniewski.pl/images/topografia/01.webp"
+        },
+        {
+          "@type": "Book",
+          "name": "Labyrint",
+          "dateCreated": "2024",
+          "genre": "Dokument / Kniha",
+          "description": "Labyrint v nás odedávna vyvolává asociace s něčím víc než jen se soustavou chodeb a hádanek — stal se symbolem života, v němž se lze snadno ztratit v nekonečné síti voleb a pastí. Staré mýty, jako ten o krétském Labyrintu a Mínótaurovi, ukazují, jak složité struktury mohou nejen inspirovat, ale i drtit. Dnes nachází obraz labyrintu místo v umění, literatuře, psychologii i počítačových hrách, kde symbolizuje jak proces objevování, tak ztracenost tváří v tvář životním výzvám. Cyklus vypráví o lidech, které do svých sítí zapletla malá města. cesta bez východu / past / zahlcení / alkoholismus / žádné vyhlídky / reset bloudění / strnulost / hledání / konzervatismus / rodina totální průser / závislost / stagnace / beznaděj vzdor / chudoba / soudy / podrážděnost / deprese",
+          "publisher": "Instytut Fotografii Twórczej, Opawa",
+          "creator": {
+            "@id": "https://pawelsypniewski.pl/#person"
+          },
+          "@id": "https://pawelsypniewski.pl/cs/labirynt/#work",
+          "url": "https://pawelsypniewski.pl/cs/labirynt/",
+          "image": "https://pawelsypniewski.pl/images/labirynt/01.webp"
+        },
+        {
+          "@type": "CreativeWork",
+          "name": "Noční ptáci se vracejí domů pozdě",
+          "dateCreated": "2025",
+          "genre": "Dokument / Reportáž / Street",
+          "description": "Od pondělí do pátku žijí v přísném společenském režimu. Chodí do práce, na vysokou školu, drží tvář a ovládají emoce. Jakmile však nastane víkendový večer, promění se ulice v jeviště, na kterém padají všechny zábrany. Unavení celým týdnem, hnaní touhou zbavit se stresu a posilnění omamnými látkami se stávají součástí nočního představení. Při dokumentování tohoto týdenního rituálu si kladu jednu zásadní otázku týkající se jejich identity. Odkládají tito lidé v nočním chaosu konečně své každodenní masky a jsou stoprocentně sami sebou? Nebo je ulice jen další scénou, na níž vstupují do nové, víkendové role nespoutaného pařana?",
+          "creator": {
+            "@id": "https://pawelsypniewski.pl/#person"
+          },
+          "@id": "https://pawelsypniewski.pl/cs/nocne-ptaki/#work",
+          "url": "https://pawelsypniewski.pl/cs/nocne-ptaki/",
+          "image": "https://pawelsypniewski.pl/images/nocne-ptaki/04.webp"
+        },
+        {
+          "@type": "CreativeWork",
+          "name": "Jídlo dne",
+          "dateCreated": "2025",
+          "genre": "Studio / Dokument / Ekologie",
+          "description": "V Polsku se ročně vyplýtvá přibližně 5 milionů tun potravin. Až 60 % tohoto objemu pochází z domácností — to jsou zhruba 3 miliony tun vyhozeného jídla ročně. 45 % Poláků přiznává, že alespoň občas vyhazuje potraviny. Nejčastěji končí v koši uzeniny (36 %), zelenina (34 %) a ovoce (30 %).",
+          "creator": {
+            "@id": "https://pawelsypniewski.pl/#person"
+          },
+          "@id": "https://pawelsypniewski.pl/cs/danie-dnia/#work",
+          "url": "https://pawelsypniewski.pl/cs/danie-dnia/",
+          "image": "https://pawelsypniewski.pl/images/danie-dnia/book/19.webp"
+        }
+      ],
+      "inLanguage": "cs-CZ"
+    }
+  ]
+}
+</script>
+<style>
+  /* ---------- RESET / BASE ---------- */
+  *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Futura', 'Futura PT', 'Jost', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 900;
+    background: #ffffff;
+    color: #000000;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; background: none; border: none; color: inherit; cursor: pointer; padding: 0; }
+  img { display: block; max-width: 100%; }
+
+  /* visually-hidden but accessible to screen readers and search engines */
+  .sr-only {
+    position: absolute !important;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+  /* Normalizacja heading'ów wewnątrz wariantów home — semantyka SEO bez zmiany wyglądu */
+  .home-variant h2, .home-variant h3,
+  .home-poster .cell h2, .home-poster .cell h3 {
+    font-size: inherit; font-weight: inherit; line-height: inherit;
+    color: inherit; letter-spacing: inherit; text-transform: inherit;
+    margin: 0; padding: 0;
+  }
+
+  /* ---------- LAYOUT SHELL ---------- */
+  .shell {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    height: 100vh;
+    /* 100% zamiast 100vw — 100vw obejmuje pasek przewijania, co przy
+       przewijalnym body (mobile/landscape) dawało 15px poziomego scrolla */
+    width: 100%;
+  }
+
+  /* ---------- SIDEBAR ---------- */
+  .sidebar {
+    border-right: 1px solid #000;
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+    position: relative;
+  }
+  .sidebar .brand {
+    font-size: 38px;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+  .sidebar .brand a { display: block; }
+  .sidebar .brand .name { font-weight: 900; }
+  .sidebar .brand .role {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    margin-top: 10px;
+    text-transform: uppercase;
+  }
+
+  .sidenav { display: flex; flex-direction: column; gap: 2px; margin-top: 44px; }
+  .sidenav a {
+    font-size: 17px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    line-height: 1.6;
+    display: inline-block;
+    width: fit-content;
+    position: relative;
+    padding-right: 2px;
+  }
+  /* Kreska pod pozycją menu rozjeżdża się przekształceniem, nie szerokością.
+     Zmiana szerokości każe przeglądarce przeliczać układ w każdej klatce;
+     przekształcenie robi za nią karta graficzna. Efekt jest ten sam. */
+  .sidenav a::after {
+    content: "";
+    display: block;
+    height: 1px;
+    background: #000;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 180ms ease;
+  }
+  .sidenav a:hover::after, .sidenav a.active::after { transform: scaleX(1); }
+  .sidenav a.active { font-weight: 900; }
+
+  .sidefoot {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.6;
+  }
+  .sidefoot .langs { display: flex; gap: 8px; margin-bottom: 14px; }
+  .sidefoot .langs a {
+    font: inherit;
+    cursor: pointer;
+    text-transform: uppercase;
+    opacity: 0.55;
+    transition: opacity 150ms ease;
+  }
+  .sidefoot .langs a.active { opacity: 1; text-decoration: underline; text-underline-offset: 3px; }
+  .sidefoot .langs a:hover { opacity: 1; }
+  /* Kolor zamiast opacity: przezroczystość dotyczy całej grupy i dziecko nie
+     umie jej cofnąć, więc przycisk „Cookies" dostawał ją drugi raz i schodził
+     do szarości nieczytelnej przy tak małym tekście. #595959 wygląda tak samo
+     jak czerń przy 0,65, a przycisk może się od niej odbić przy najechaniu. */
+  .sidefoot .meta { color: #595959; }
+  .sidefoot .meta div + div { margin-top: 2px; }
+  .sidefoot .meta-cookies { margin-top: 10px; }
+  /* Przycisk wygląda jak dotychczasowy link, ale da się do niego dojść
+     klawiszem Tab i uruchomić Enterem — div tego nie potrafił. */
+  .cookie-reopen {
+    font: inherit; letter-spacing: inherit; text-transform: inherit; color: inherit;
+    background: none; border: 0; padding: 0; margin: 0;
+    cursor: pointer; text-decoration: underline; text-underline-offset: 3px;
+  }
+  .cookie-reopen:hover, .cookie-reopen:focus-visible { color: #000; }
+  .cookie-reopen:focus-visible { outline: 2px solid #000; outline-offset: 3px; }
+
+  /* ---------- MAIN CONTENT ---------- */
+  .main {
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+  }
+  .view {
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    transition: opacity 280ms ease;
+  }
+  .view.active { opacity: 1; pointer-events: auto; }
+
+  /* Widok poza ekranem ma się NIE RYSOWAĆ. Wszystkie widoki żyją w jednym
+     pliku, a sama przezroczystość ich nie wyłącza: strona główna ściągała
+     przez to portret z „O autorze" i sześć kafelków Instagrama, czyli ponad
+     300 KB obrazów, których nikt na niej nie widzi. Widok projektu zostaje
+     poza tą regułą, bo przy pokazaniu mierzy wysokość sceny pod zdjęcie.
+     Na telefonie nieaktywne widoki i tak mają display: none. */
+  #view-home:not(.active),
+  #view-about:not(.active),
+  #view-contact:not(.active),
+  #view-achievements:not(.active) { content-visibility: hidden; }
+
+  /* ============================================================
+     PRZEWIJANIE PANELI — widoczny pasek (macOS chowa własny)
+     Długie widoki przewijają się WEWNĄTRZ .text-page /
+     .achievements-page, a nie w dokumencie (.main ma overflow: hidden).
+     macOS domyślnie pokazuje pasek dopiero w trakcie przewijania, więc
+     na MacBooku nic nie sygnalizowało, że pod zgięciem są jeszcze
+     kolejne ekrany treści — Aktualności to ok. osiem ekranów.
+     Ostylowanie ::-webkit-scrollbar wyłącza tryb nakładkowy i pasek
+     zostaje widoczny na stałe; scrollbar-gutter rezerwuje na niego
+     miejsce z góry, żeby treść nie drgała przy zmianie widoku.
+     Widok projektu celowo pomijamy — tam sygnałem jest opis wystający
+     zza dolnej krawędzi, a biały pasek kłóciłby się z ciemną książką.
+     Tylko desktop — na mobile przewija się normalnie całe body.
+     ============================================================ */
+  @media (min-width: 1025px) {
+    .text-page,
+    .achievements-page { scrollbar-gutter: stable; }
+
+    /* Firefox. Te dwie właściwości trzymamy z dala od Chrome i Safari:
+       tam obecność scrollbar-width wyłącza reguły ::-webkit-scrollbar,
+       pasek wraca do trybu nakładkowego i znowu znika na macOS.
+       @supports selector(::-webkit-scrollbar) jest prawdziwe wyłącznie
+       w silnikach WebKit/Blink, więc warunek odwrotny trafia w Firefoksa. */
+    @supports not selector(::-webkit-scrollbar) {
+      .text-page,
+      .achievements-page {
+        scrollbar-width: thin;
+        scrollbar-color: #000 #fff;
+      }
+    }
+    .text-page::-webkit-scrollbar,
+    .achievements-page::-webkit-scrollbar { width: 12px; }
+
+    .text-page::-webkit-scrollbar-track,
+    .achievements-page::-webkit-scrollbar-track {
+      background: #fff;
+      border-left: 1px solid #000;
+    }
+    .text-page::-webkit-scrollbar-thumb,
+    .achievements-page::-webkit-scrollbar-thumb {
+      background: #000;
+      border: 4px solid #fff;   /* białe wcięcie — kreska zamiast belki */
+    }
+
+    /* Panel dostaje tabindex="0" z app.js, gdy faktycznie się przewija —
+       dzięki temu działają Spacja i PageDown. Ramka tylko dla klawiatury. */
+    .text-page:focus-visible,
+    .achievements-page:focus-visible,
+    .project:focus-visible { outline: 2px solid #000; outline-offset: -4px; }
+  }
+
+  /* ============================================================
+     HOMEPAGE — 4 LAYOUT VARIANTS
+     ============================================================ */
+  .home-stage { height: 100%; width: 100%; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+
+  /* shared topline — sits as a normal-flow strip at the bottom */
+  .home-topline {
+    order: 99;
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 28px;
+    border-top: 1px solid #000;
+    background: #fff;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    z-index: 2;
+  }
+  .home-variant { flex: 1 1 auto; min-height: 0; }
+
+  /* pasek 404 — nad siatką prac, w stylu bannera cookies */
+  .home-notfound {
+    flex: 0 0 auto;
+    display: block;
+    padding: 14px 28px;
+    background: #000;
+    color: #fff;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.5;
+  }
+  .home-notfound[hidden] { display: none; }
+  .home-notfound strong { font-weight: 500; margin-right: 8px; }
+
+  /* ---- HOME — GRID POSTER ---- */
+  .home-poster {
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    padding: 24px 32px 24px;
+    gap: 12px;
+  }
+  .home-poster .cell {
+    border: 1px solid #000;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 16px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: background 220ms ease, color 220ms ease;
+    position: relative;
+    isolation: isolate;
+  }
+  .home-poster .cell > .num   { grid-row: 1; align-self: start; }
+  .home-poster .cell > .title { grid-row: 2; align-self: center; }
+  .home-poster .cell > .meta  { grid-row: 3; align-self: end; }
+  .home-poster .cell .title {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .home-poster .cell .title-text { flex: 0 1 auto; min-width: 0; }
+  /* Rozmiar liczony z wysokości okna, bo kafel to 1/4 wysokości plakatu.
+     Wcześniejsze 18vh (i sztywne minimum 120px) przerastało wiersz tytułu:
+     na 13" kafel dawał 110 px miejsca, a ramka miała 142 px — dolna część
+     zdjęcia znikała pod krawędzią kafla (overflow: hidden). */
+  .home-poster .cell .thumb-frame {
+    flex: 0 0 auto;
+    width: clamp(90px, 14vh, 220px);
+    height: clamp(90px, 13vh, 200px);
+    max-width: 0;
+    align-self: flex-start;
+    background-size: contain;
+    background-position: left top;
+    background-repeat: no-repeat;
+    opacity: 0;
+    overflow: visible;
+    display: flex;
+    gap: 14px;
+    transition: opacity 240ms ease, max-width 420ms cubic-bezier(0.2, 0.7, 0.2, 1);
+    pointer-events: none;
+    filter: grayscale(1);
+  }
+  .home-poster .cell .thumb-item {
+    flex: 0 0 clamp(80px, 12vh, 170px);
+    height: clamp(80px, 12vh, 170px);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  .home-poster .cell:hover { background: #000; color: #fff; }
+  .home-poster .cell:hover .thumb-frame {
+    opacity: 1;
+    max-width: 900px;
+  }
+  .home-poster .cell .num {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .home-poster .cell .title {
+    font-size: clamp(22px, 2.8vw, 48px);
+    word-break: break-word;
+    font-weight: 900;
+    /* 0.95 zamiast 0.9 — polskie ogonki (Ą, Ę) nie stykają się z kolejną linią */
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
+  }
+  .home-poster .cell .meta {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    transition: opacity 240ms ease;
+  }
+  .home-poster .cell:hover .meta {
+    opacity: 0;
+  }
+  .home-poster .c1 { grid-column: 1 / span 7;  grid-row: 1; }
+  .home-poster .c2 { grid-column: 8 / span 5;  grid-row: 1; }
+  .home-poster .c3 { grid-column: 1 / span 5;  grid-row: 2; }
+  .home-poster .c4 { grid-column: 6 / span 7;  grid-row: 2; }
+  .home-poster .c5 { grid-column: 1 / span 6;  grid-row: 3; }
+  .home-poster .c6 { grid-column: 7 / span 6;  grid-row: 3; }
+  .home-poster .c7 { grid-column: 1 / span 12; grid-row: 4; }
+
+  /* ============================================================
+     PROJECT VIEW — horizontal gallery
+     ============================================================ */
+  .project {
+    height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    /* Opis projektu (implicit row pod proj-bottom) nie może zgniatać
+       galerii na niskich ekranach laptopów — przy braku miejsca strona
+       projektu przewija się w pionie, a opis ląduje pod linią zgięcia. */
+    overflow-y: auto;
+  }
+  .proj-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 24px 32px 18px;
+    border-bottom: 1px solid #000;
+  }
+  .proj-top .pj-title {
+    font-size: clamp(28px, 3.2vw, 48px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+  .proj-top .pj-sub {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-top: 4px;
+    opacity: 0.65;
+  }
+  .proj-top .pj-meta {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-align: right;
+    line-height: 1.5;
+  }
+
+  /* ---- PROJECT NAV — przejście do poprzedniego/następnego projektu ---- */
+  .proj-titleblock { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .pj-projnav {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 12px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 400;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0.55;
+    transition: opacity 220ms ease;
+  }
+  .pj-projnav:hover { opacity: 0.95; }
+  .pj-projnav-btn {
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 280px;
+    transition: transform 200ms ease;
+  }
+  .pj-projnav-btn:hover { transform: translateY(-1px); }
+  .pj-projnav-btn:focus-visible {
+    outline: 1px solid #000;
+    outline-offset: 4px;
+  }
+  .pj-projnav-sep { opacity: 0.35; }
+  .pj-projnav .pn-arrow { font-weight: 500; }
+  .pj-projnav .pn-label { padding: 0 4px; }
+  .proj-stage {
+    position: relative;
+    overflow: hidden;
+    background: #fff;
+    /* Gwarantowana wysokość galerii: na niskich ekranach (laptopy 1366×768,
+       1536×864) zdjęcie dominuje pierwszy ekran, a opis się przewija.
+       Na wysokich monitorach wiersz 1fr i tak daje więcej niż to minimum,
+       więc wszystko mieści się bez scrolla jak dotychczas. */
+    min-height: 62dvh;
+  }
+  .proj-track {
+    display: flex;
+    height: 100%;
+    transition: transform 380ms cubic-bezier(0.4, 0.1, 0.2, 1);
+    will-change: transform;
+  }
+  .proj-slide {
+    flex: 0 0 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 32px;
+  }
+  /* <picture> owija zdjęcie tylko po to, by wybrać plik; układem rządzi img */
+  .proj-slide picture { display: contents; }
+  .proj-slide img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    cursor: zoom-in;
+  }
+  .proj-nav-left, .proj-nav-right {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 33%;
+    z-index: 4;
+    cursor: pointer;
+  }
+  .proj-nav-left { left: 0; }
+  .proj-nav-right { right: 0; }
+  .proj-nav-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    /* delikatnie widoczne bez hovera — podpowiedź, że galerię się przewija */
+    opacity: 0.35;
+    transition: opacity 180ms ease;
+    pointer-events: none;
+  }
+  .proj-nav-left:hover .proj-nav-arrow,
+  .proj-nav-right:hover .proj-nav-arrow { opacity: 1; }
+  .proj-nav-left .proj-nav-arrow { left: 28px; }
+  .proj-nav-right .proj-nav-arrow { right: 28px; }
+
+  /* ============================================================
+     DANIE DNIA — flipbook (efekt przewracania kartek 3D)
+     ============================================================ */
+  .proj-book {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0c0c0c;
+    padding: 24px 72px 34px;
+    min-height: 560px;
+    overflow: hidden;
+  }
+  /* atrybut `hidden` musi naprawdę ukryć książkę — inaczej pusty box
+     kradnie wiersz 1fr siatki i zgniata pokaz slajdów innych projektów */
+  .proj-book[hidden] { display: none; }
+  .book-stage {
+    position: relative;
+    width: 100%;
+    max-width: 1040px;
+    /* dwie strony 1925x2665 obok siebie → proporcja rozkładówki */
+    aspect-ratio: 3850 / 2665;
+    perspective: 1800px;
+  }
+  /* Rozkładówka ma stałe proporcje, więc przy szerokiej i niskiej kolumnie
+     wychodziła poza .proj-book — a tam `overflow: hidden` ucinał górę i dół
+     zdjęć. .proj-book jest kontenerem zapytań (container-type: size), dzięki
+     czemu szerokość liczymy TAKŻE z dostępnej wysokości (100cqh) i bierzemy
+     wartość mniejszą. Strona zawsze mieści się w całości.
+     Tylko desktop — na mobile widać pojedynczą stronę o innych regułach. */
+  @media (min-width: 821px) {
+    .proj-book { container-type: size; }
+    .book-stage { width: min(100%, 1040px, calc(100cqh * 1.4447)); }
+  }
+  .book {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+    /* przesunięcie tak, by widoczna była rozkładówka wyśrodkowana;
+       w stanie zamkniętym (okładka) JS dosuwa do środka */
+    transition: transform 1200ms cubic-bezier(.45,.05,.25,1);
+  }
+  .book-leaf {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    transform-origin: left center;
+    transform-style: preserve-3d;
+    transition: transform 1200ms cubic-bezier(.45,.05,.25,1);
+  }
+  .book-leaf.turned { transform: rotateY(-180deg); }
+  .leaf-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    overflow: hidden;
+    background: #111;
+  }
+  .leaf-front { transform: rotateY(0deg); }
+  .leaf-back  { transform: rotateY(180deg); }
+  /* delikatny cień przy grzbiecie + miękkie krawędzie */
+  .leaf-face::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .leaf-front::after {
+    background: linear-gradient(to left, rgba(0,0,0,0) 82%, rgba(0,0,0,.42) 100%);
+  }
+  .leaf-back::after {
+    background: linear-gradient(to right, rgba(0,0,0,0) 82%, rgba(0,0,0,.42) 100%);
+  }
+  /* Cień przesuwający się po kartce w trakcie obrotu. Bez niego płaski
+     rotateY jest ledwo czytelny — to on sprawia, że widać ruch papieru.
+     Klasę `turning` zdejmuje JS po zakończeniu animacji. */
+  .leaf-face::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0;
+    background: linear-gradient(to left, rgba(0,0,0,.8), rgba(0,0,0,0) 62%);
+  }
+  .leaf-back::before {
+    background: linear-gradient(to right, rgba(0,0,0,.8), rgba(0,0,0,0) 62%);
+  }
+  .book-leaf.turning .leaf-face::before {
+    animation: leaf-shade 1200ms cubic-bezier(.45,.05,.25,1);
+  }
+  @keyframes leaf-shade {
+    0%   { opacity: 0; }
+    50%  { opacity: 0.9; }
+    100% { opacity: 0; }
+  }
+
+  /* --- strony książki --- */
+  .bpage {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    background: #0c0c0c;
+    color: #f4f1ea;
+  }
+  .bpage-photo {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #000;
+  }
+  .bpage-blank { background: #0c0c0c; }
+
+  /* okładka / strona tytułowa / zakończenie — typografia jak na stronie */
+  .bpage-text {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 7% 9%;
+  }
+  .bp-kicker {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: clamp(8px, 1vw, 12px);
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    opacity: 0.55;
+    margin-bottom: 1.6em;
+  }
+  .bp-covertitle {
+    font-family: 'Futura','Futura PT','Jost',sans-serif;
+    font-weight: 800;
+    font-size: clamp(34px, 7vw, 82px);
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+  .bp-author {
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    font-size: clamp(11px, 1.5vw, 17px);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-top: 2em;
+    opacity: 0.85;
+  }
+  .bp-year {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: clamp(9px, 1.1vw, 13px);
+    letter-spacing: 0.3em;
+    opacity: 0.5;
+    margin-top: 2.4em;
+  }
+  .bp-colophon {
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    font-size: clamp(10px, 1.25vw, 14px);
+    line-height: 1.85;
+    text-align: left;
+    width: 100%;
+    max-width: 78%;
+    opacity: 0.82;
+  }
+  .bp-colophon .bp-cl-label {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.78em;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.55;
+    display: block;
+  }
+  .bp-colophon .bp-cl-row { margin-bottom: 1.1em; }
+  .bp-closing {
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(13px, 1.7vw, 21px);
+    line-height: 1.65;
+    max-width: 80%;
+    text-wrap: pretty;
+  }
+  .bp-backcover { gap: 1.4em; }
+  .bp-mark {
+    font-family: 'Futura','Futura PT','Jost',sans-serif;
+    font-weight: 800;
+    font-size: clamp(18px, 2.4vw, 30px);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* strona przepisu */
+  .bpage-recipe {
+    padding: 0;
+    justify-content: flex-start;
+    overflow: hidden;
+  }
+  .bp-fit {
+    width: 100%;
+    padding: 8% 9% 7%;
+    transform-origin: top center;
+  }
+  .bp-section {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: clamp(8px, 0.95vw, 11px);
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    opacity: 0.5;
+    margin-bottom: 0.9em;
+  }
+  .bp-recipe-title {
+    font-family: 'Futura','Futura PT','Jost',sans-serif;
+    font-weight: 700;
+    font-size: clamp(17px, 2.6vw, 32px);
+    line-height: 1.02;
+    letter-spacing: -0.005em;
+    margin-bottom: 1.1em;
+  }
+  .bp-rule {
+    width: 38px;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.4;
+    margin-bottom: 1.2em;
+  }
+  .bp-ing-h, .bp-steps-h {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: clamp(7px, 0.85vw, 10px);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    opacity: 0.55;
+    margin-bottom: 0.7em;
+  }
+  .bp-ing {
+    list-style: none;
+    margin: 0 0 1.4em;
+    padding: 0;
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    font-size: clamp(9px, 1.15vw, 13.5px);
+    line-height: 1.6;
+  }
+  .bp-ing li { opacity: 0.9; }
+  .bp-ing li.bp-ing-sub {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.82em;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.55;
+    margin-top: 0.8em;
+  }
+  .bp-steps {
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    font-size: clamp(9px, 1.12vw, 13px);
+    line-height: 1.62;
+    opacity: 0.82;
+    text-wrap: pretty;
+    margin: 0;
+  }
+
+  /* nawigacja flipbooka */
+  .book-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 6;
+    width: 46px;
+    height: 46px;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(0,0,0,0.35);
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 160ms ease, border-color 160ms ease, opacity 160ms ease;
+  }
+  .book-nav:hover { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.6); }
+  .book-nav:disabled { opacity: 0.2; cursor: default; }
+  .book-nav-prev { left: 16px; }
+  .book-nav-next { right: 16px; }
+  .book-counter {
+    position: absolute;
+    bottom: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: rgba(255,255,255,0.6);
+  }
+
+  /* --- flipbook: tryb mobilny (pojedyncza strona) --- */
+  .book-stage.single {
+    aspect-ratio: 1925 / 2665;
+    max-width: min(360px, 78vw);
+    perspective: 1600px;
+  }
+  .book.book-mobile {
+    transform: none !important;
+    transition: none;
+  }
+  .book.book-mobile .mpage {
+    position: absolute;
+    inset: 0;
+    transform-origin: center;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  /* strony tekstowe na mobile rosną w pionie (pełny przepis bez przycięcia) */
+  .book-stage.single.flow {
+    aspect-ratio: auto;
+    height: auto;
+  }
+  .book-stage.single.flow .book.book-mobile,
+  .book-stage.single.flow .mpage {
+    position: relative;
+    inset: auto;
+    height: auto;
+  }
+  .book-stage.single.flow .bpage {
+    position: relative;
+    inset: auto;
+  }
+  .book-stage.single.flow .bpage-recipe { overflow: visible; }
+
+  @media (max-width: 820px) {
+    .proj-book { padding: 26px 16px 44px; min-height: 60vh; }
+    .book-nav { width: 40px; height: 40px; }
+    .book-nav-prev { left: 8px; }
+    .book-nav-next { right: 8px; }
+    /* większa, czytelna typografia przepisu na małych ekranach */
+    .book.book-mobile .bp-recipe-title { font-size: 26px; }
+    .book.book-mobile .bp-ing { font-size: 14px; line-height: 1.65; }
+    .book.book-mobile .bp-steps { font-size: 13.5px; line-height: 1.7; }
+    .book.book-mobile .bp-section { font-size: 10px; }
+    .book.book-mobile .bp-ing-h, .book.book-mobile .bp-steps-h { font-size: 10px; }
+    .book.book-mobile .bp-fit { padding: 30px 26px 34px; transform: none !important; }
+    .book.book-mobile .bp-colophon { max-width: 100%; font-size: 14px; }
+  }
+
+  .proj-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 32px 22px;
+    border-top: 1px solid #000;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .proj-bottom .caption {
+    opacity: 0.75;
+    max-width: 50%;
+    /* pełne zdania czyta się szybciej normalną wielkością liter */
+    text-transform: none;
+    letter-spacing: 0.02em;
+  }
+  .proj-bottom .counter { letter-spacing: 0.1em; }
+
+  /* ============================================================
+     STYKÓWKA — siatka wszystkich zdjęć cyklu
+     ============================================================ */
+  .proj-bottom-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex: 0 0 auto;
+  }
+  .sheet-toggle {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #000;
+    background: none;
+    border: 1px solid #000;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: background 140ms ease, color 140ms ease;
+  }
+  .sheet-toggle:hover { background: #000; color: #fff; }
+  /* Wciśnięty = jesteśmy w stykówce; przycisk mówi wtedy „pojedynczo”. */
+  .sheet-toggle[aria-pressed="true"] { background: #000; color: #fff; }
+  .sheet-toggle[hidden] { display: none; }
+
+  .proj-sheet {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    border-top: 1px solid #000;
+    /* Linie rysują same klatki (border), a nie tło pod siatką — inaczej
+       niezapełniona reszta ostatniego wiersza świeciłaby czarną plamą.
+       Ujemny margines wsuwa dolną kreskę pod kreskę paska z podpisem,
+       żeby nie zrobiła się z nich podwójna linia. */
+    margin-bottom: -1px;
+  }
+  .proj-sheet[hidden] { display: none; }
+  .proj-sheet .sheet-frame {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+    padding: 16px;
+    background: #fff;
+    border: 0;
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+    font: inherit;
+    cursor: zoom-in;
+  }
+  .proj-sheet .sheet-frame img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    transition: opacity 160ms ease;
+  }
+  .proj-sheet .sheet-frame:hover img { opacity: 0.66; }
+  .proj-sheet .sheet-frame:focus-visible { outline: 2px solid #000; outline-offset: -3px; }
+  .sheet-no {
+    position: absolute;
+    left: 8px;
+    bottom: 6px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    opacity: 0.45;
+  }
+
+  .proj-description {
+    padding: 28px 32px 40px;
+    border-top: 1px solid #000;
+    font-family: 'Jost', 'Helvetica Neue', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.55;
+    text-wrap: pretty;
+    max-width: 760px;
+  }
+  .proj-description p { margin: 0; }
+  .proj-description p + p { margin-top: 1em; }
+  .proj-description p.kw { text-align: center; }
+
+  /* Mobile nav controls — domyślnie ukryte na desktopie,
+     widoczne tylko w mobile media queries poniżej */
+  .proj-mobile-nav { display: none; }
+
+  /* ============================================================
+     AUTHOR PORTRAIT — autoportret na stronie O autorze
+     ============================================================ */
+  .author-portrait {
+    display: block;
+    width: 100%;
+    max-width: 380px;
+    height: auto;
+    margin: 0 0 32px;
+    filter: grayscale(0.1);
+    transition: filter 380ms ease;
+  }
+  .author-portrait:hover { filter: grayscale(0); }
+  @media (max-width: 720px) {
+    .author-portrait { max-width: 280px; margin-bottom: 24px; }
+  }
+
+  /* ============================================================
+     ACHIEVEMENTS — chronologiczna lista wystaw/publikacji/edukacji
+     ============================================================ */
+  .achievements-page {
+    height: 100%;
+    overflow: auto;
+    padding: 88px 60px 80px;
+    max-width: 1400px;
+  }
+  .achievements-page .page-h {
+    font-size: clamp(56px, 6vw, 96px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
+    margin-bottom: 56px;
+  }
+  .achievements-list {
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+  }
+  .achievement {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 48px;
+    padding-top: 36px;
+    border-top: 1px solid #000;
+  }
+  .achievement-meta {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.6;
+  }
+  .achievement-meta .date {
+    display: block;
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 12px;
+    letter-spacing: 0.02em;
+    color: #000;
+  }
+  .achievement-meta .type {
+    opacity: 0.6;
+    display: block;
+  }
+  .achievement-address {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    opacity: 0.65;
+    margin-top: -8px;
+  }
+  .achievement-content {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+  }
+  .achievement-title {
+    font-size: clamp(24px, 2.8vw, 44px);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    line-height: 0.95;
+  }
+  .achievement-place {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0.65;
+  }
+  .achievement-desc {
+    font-family: 'Jost', 'Helvetica Neue', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.55;
+    max-width: 720px;
+  }
+  .achievement-link {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    opacity: 0.8;
+    transition: opacity 200ms ease;
+    align-self: flex-start;
+  }
+  .achievement-link:hover { opacity: 1; }
+  /* Tytuł na liście prowadzi do własnej podstrony wpisu. Podkreślenie
+     pojawia się dopiero pod kursorem — nagłówek ma zostać nagłówkiem. */
+  .achievement-title a {
+    color: inherit;
+    text-decoration: none;
+    text-underline-offset: 6px;
+    text-decoration-thickness: 2px;
+  }
+  .achievement-title a:hover,
+  .achievement-title a:focus-visible { text-decoration: underline; }
+  /* Powrót do listy — jedyny element nad pojedynczym wpisem */
+  .achievement-back {
+    display: inline-block;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    opacity: 0.65;
+    align-self: flex-start;
+    transition: opacity 200ms ease;
+  }
+  .achievement-back:hover { opacity: 1; }
+  /* Lista trzyma między wpisami 64 px odstępu; nad pojedynczym wpisem
+     stoi tylko link powrotny, więc tam taka przerwa byłaby dziurą. */
+  .achievements-list.single-item { gap: 24px; }
+  /* Pojedynczy wpis nie potrzebuje kreski oddzielającej go od poprzedniego */
+  .achievement.single { border-top: 0; padding-top: 0; }
+  .achievement-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-self: flex-start;
+  }
+  .achievement-photos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 10px;
+    max-width: 720px;
+  }
+  .achievement-photo {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    filter: grayscale(0.4);
+    transition: filter 280ms ease, transform 220ms ease;
+    cursor: zoom-in;
+  }
+  /* Zdjęcie jako <img>, nie tło CSS — tylko wtedy działa loading="lazy",
+     dzięki czemu pobierają się kafelki widoczne na ekranie, a nie 36 naraz. */
+  .achievement-photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .achievement-photo:hover {
+    filter: grayscale(0);
+    transform: translateY(-2px);
+  }
+
+  /* Tablet portrait */
+  @media (max-width: 1024px) {
+    .achievements-page { padding: 72px 36px 60px; }
+    .achievement { grid-template-columns: 150px 1fr; gap: 28px; }
+    .achievement-photos { grid-template-columns: repeat(4, 1fr); }
+  }
+  /* Mobile */
+  @media (max-width: 720px) {
+    .achievements-page { padding: 28px 18px 40px; }
+    .achievements-page .page-h { font-size: clamp(42px, 11vw, 64px); margin-bottom: 32px; }
+    .achievements-list { gap: 44px; }
+    .achievement {
+      grid-template-columns: 1fr;
+      gap: 14px;
+      padding-top: 24px;
+    }
+    .achievement-meta { display: block; }
+    .achievement-meta .date { font-size: 13px; margin-bottom: 6px; }
+    .achievement-address { font-size: 10px; margin-top: -4px; }
+    .achievement-photos { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+    .achievement-desc { font-size: 14px; }
+  }
+  @media (max-width: 380px) {
+    .achievement-photos { grid-template-columns: repeat(3, 1fr); gap: 4px; }
+  }
+
+  /* ============================================================
+     INSTAGRAM GRID — sekcja na stronie Kontakt
+     6 zdjęć w gridzie 3×2 (desktop), 3×2 (mobile), 2×3 (small mobile)
+     Greyscale → color on hover, klikalne → profil IG
+     ============================================================ */
+  .ig-section { margin-top: 48px; }
+  .ig-heading {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    opacity: 0.65;
+  }
+  .ig-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 22px;
+    max-width: 720px;
+  }
+  .ig-tile {
+    display: block;
+    aspect-ratio: 1 / 1;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: grayscale(1);
+    transition: filter 280ms ease, transform 280ms ease;
+    cursor: pointer;
+  }
+  .ig-tile:hover {
+    filter: grayscale(0);
+    transform: scale(1.02);
+  }
+  .ig-more {
+    display: inline-block;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    opacity: 0.8;
+    transition: opacity 200ms ease;
+  }
+  .ig-more:hover { opacity: 1; }
+
+  @media (max-width: 720px) {
+    .ig-section { margin-top: 32px; }
+    .ig-grid { gap: 6px; }
+  }
+  @media (max-width: 380px) {
+    .ig-grid { gap: 4px; }
+  }
+
+  /* ============================================================
+     COOKIE BANNER — RODO consent prompt
+     ============================================================ */
+  .cookie-banner {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: #000;
+    color: #fff;
+    padding: 18px 28px;
+    z-index: 9000;
+    box-shadow: 0 -2px 20px rgba(0,0,0,0.15);
+    animation: cookieSlideUp 320ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .cookie-banner[hidden] { display: none; }
+  @keyframes cookieSlideUp {
+    from { transform: translateY(100%); }
+    to   { transform: translateY(0); }
+  }
+  .cb-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    justify-content: space-between;
+  }
+  .cb-text {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 1.55;
+    letter-spacing: 0.02em;
+    margin: 0;
+    max-width: 780px;
+  }
+  .cb-buttons {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  .cb-btn {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 12px 22px;
+    cursor: pointer;
+    border: 1px solid #fff;
+    background: transparent;
+    color: #fff;
+    transition: background 200ms ease, color 200ms ease;
+  }
+  .cb-btn-primary { background: #fff; color: #000; }
+  .cb-btn-primary:hover { background: transparent; color: #fff; }
+  .cb-btn-secondary:hover { background: #fff; color: #000; }
+
+  @media (max-width: 720px) {
+    .cookie-banner { padding: 14px 18px; }
+    .cb-inner { flex-direction: column; align-items: stretch; gap: 14px; }
+    .cb-text { font-size: 11px; }
+    .cb-buttons { gap: 8px; }
+    .cb-btn { flex: 1; padding: 12px 14px; font-size: 10px; min-height: 44px; }
+  }
+
+  /* ============================================================
+     CAMERA FLASH — efekt lampy błyskowej przy przewijaniu zdjęć
+     Aktywowany tylko dla projektów z flashEffect: true (data.js)
+     ============================================================ */
+  .camera-flash {
+    position: fixed;
+    inset: 0;
+    background: #ffffff;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9999;
+    will-change: opacity;
+  }
+  .camera-flash.flash-active {
+    animation: cameraFlash 280ms cubic-bezier(0.2, 0, 0.4, 1);
+  }
+  @keyframes cameraFlash {
+    0%   { opacity: 0; }
+    8%   { opacity: 1; }    /* błyskawiczne mignięcie do bieli */
+    18%  { opacity: 0.95; } /* przytrzymanie peaku */
+    100% { opacity: 0; }    /* powolne wygaszanie */
+  }
+  /* dla projektów z efektem flash, slajd nie przesuwa się płynnie,
+     tylko podmienia się natychmiast (jak prawdziwa lampa) */
+  .proj-track.flash-mode { transition: none !important; }
+  /* zmniejszamy intensywność animacji jeśli użytkownik prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    .proj-stage { transition: none; }
+    .camera-flash.flash-active {
+      animation: cameraFlashReduced 180ms ease-out;
+    }
+    @keyframes cameraFlashReduced {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 0.4; }
+    }
+  }
+
+  /* ============================================================
+     ABOUT / CONTACT
+     ============================================================ */
+  .text-page {
+    height: 100%;
+    overflow: auto;
+    padding: 88px 60px 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    max-width: 1400px;
+  }
+  .text-page .page-h {
+    font-size: clamp(56px, 7vw, 120px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    grid-column: 1 / -1;
+    margin-bottom: 40px;
+  }
+  .text-page .body {
+    font-family: 'Jost', 'Helvetica Neue', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.55;
+    text-wrap: pretty;
+  }
+  .text-page .body p + p { margin-top: 1em; }
+  .text-page .body .video-embed {
+    margin-top: 28px;
+    width: 100%;
+    max-width: 280px;
+    aspect-ratio: 9 / 16;
+    border: 1px solid #000;
+    background: #000;
+    position: relative;
+  }
+  .text-page .body .video-embed iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+  /* ============================================================
+     FORMULARZ KONTAKTOWY
+     ============================================================ */
+  /* Formularz idzie do prawej kolumny, pod krótki blok z adresem — w lewej
+     wylądowałby pod wstępem i siatką Instagrama, czyli poniżej zgięcia.
+     Wiersze rozpisujemy jawnie, bo inaczej auto-układ wstawiłby go dopiero
+     pod najwyższą kolumną. */
+  /* Odstęp między wierszami siatki (80 px) wchodził między adres e-mail
+     a formularz w prawej kolumnie. Zerujemy go, a odstęp pod nagłówkiem
+     odtwarzamy marginesem, żeby układ nagłówek→treść został jak w „O autorze". */
+  #view-contact .text-page { grid-template-rows: auto auto 1fr; align-items: start; row-gap: 0; }
+  #view-contact .text-page .page-h { margin-bottom: 120px; }
+  #view-contact .text-page .body { grid-column: 1; grid-row: 2 / span 2; }
+  #view-contact .text-page .side { grid-column: 2; grid-row: 2; }
+  .contact-form {
+    grid-column: 2;
+    grid-row: 3;
+    margin-top: 36px;
+    max-width: 560px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    /* Ramka jak w kafelkach na stronie głównej — formularz jest osobnym
+       blokiem, a nie luźnym zestawem pól pod adresem e-mail. */
+    border: 1px solid #000;
+    padding: 28px;
+  }
+  .contact-form[hidden] { display: none; }
+  /* Nagłówek formularza w tym samym stylu, co „E-mail" i „Codziennie na
+     Instagramie" obok — jedna rodzina etykiet na całej stronie Kontakt. */
+  .cf-h {
+    font-size: 11px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.65;
+    margin: 0 0 6px;
+  }
+  .cf-field { display: flex; flex-direction: column; gap: 6px; }
+  .cf-label {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 400;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.65;
+  }
+  .contact-form input[type="text"],
+  .contact-form input[type="email"],
+  .contact-form select,
+  .contact-form textarea {
+    font-family: 'Jost', 'Helvetica Neue', sans-serif;
+    font-size: 16px;   /* poniżej 16px iOS przybliża stronę przy wejściu w pole */
+    line-height: 1.4;
+    color: #000;
+    background: #fff;
+    border: 1px solid #000;
+    border-radius: 0;
+    padding: 11px 12px;
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .contact-form textarea { resize: vertical; min-height: 140px; }
+  .contact-form select {
+    /* Własna strzałka — natywna różni się w każdej przeglądarce i psuje rytm. */
+    background-image: linear-gradient(45deg, transparent 50%, #000 50%), linear-gradient(135deg, #000 50%, transparent 50%);
+    background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%;
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+    padding-right: 34px;
+  }
+  .contact-form :is(input, select, textarea):focus-visible {
+    outline: 2px solid #000;
+    outline-offset: 1px;
+  }
+  /* Podświetlamy błąd dopiero po próbie wysłania — czerwona ramka przy polu,
+     w którym ktoś dopiero zaczyna pisać, to karcenie za nieskończone zdanie. */
+  .contact-form.tried :is(input, select, textarea):invalid { border-color: #c00; }
+  .cf-botcheck {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+  /* Drobny druk idzie pod przycisk (order), żeby nie rozdzielał pól od
+     „Wyślij" — kolejność w HTML zostaje, bo czytnik ekranu i tak czyta
+     go w tym miejscu, gdzie stoi w kodzie. */
+  .cf-note {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 10px;
+    line-height: 1.6;
+    letter-spacing: 0.03em;
+    opacity: 0.6;
+    margin: 0;
+    order: 2;
+  }
+  .cf-submit {
+    align-self: stretch;
+    text-align: center;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #fff;
+    background: #000;
+    border: 1px solid #000;
+    padding: 15px 22px;
+    cursor: pointer;
+    transition: background 140ms ease, color 140ms ease;
+  }
+  .cf-submit:hover { background: #fff; color: #000; }
+  .cf-submit:disabled { opacity: 0.45; cursor: default; }
+  .cf-submit:disabled:hover { background: #000; color: #fff; }
+  .cf-status {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    line-height: 1.6;
+    letter-spacing: 0.03em;
+    margin: 0;
+    order: 1;
+  }
+  .cf-status:empty { display: none; }
+  .cf-status.ok { padding: 10px 12px; border: 1px solid #000; }
+  .cf-status.err { padding: 10px 12px; border: 1px solid #c00; color: #c00; }
+
+  .text-page .side {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.7;
+  }
+  .text-page .side h3 {
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+    opacity: 0.65;
+  }
+  .text-page .side ul { list-style: none; margin-bottom: 28px; }
+  /* Spis wystaw i publikacji ma pozycje łamiące się na dwie–trzy linie.
+     Bez odstępu nie widać, gdzie kończy się jedna, a zaczyna następna;
+     wcięcie wiszące dodatkowo cofa kontynuację pod pierwszą linię. */
+  .text-page .side li {
+    padding-left: 14px;
+    text-indent: -14px;
+  }
+  .text-page .side li + li { margin-top: 7px; }
+  /* adresy (e-mail, Instagram) — normalna wielkość liter i większy rozmiar,
+     to najważniejsza informacja na stronie kontaktu */
+  .text-page .side a {
+    text-transform: none;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+  }
+  .text-page .side a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  #view-contact .text-page .side a { font-size: 15px; }
+
+  /* ============================================================
+     LIGHTBOX
+     ============================================================ */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: #fff;
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 60px;
+  }
+  .lightbox.active { display: flex; }
+  .lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    cursor: zoom-out;
+  }
+  .lightbox .lb-close {
+    position: absolute;
+    top: 24px;
+    right: 28px;
+    background: none;
+    border: 0;
+    padding: 0;
+    color: inherit;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .lightbox .lb-counter {
+    position: absolute;
+    bottom: 24px;
+    left: 28px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  /* ---- Strzałki nawigacji w lightboxie ---- */
+  .lightbox .lb-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 56px;
+    height: 56px;
+    background: rgba(0,0,0,0.04);
+    border: 1px solid #000;
+    color: #000;
+    font-family: 'Futura', 'Jost', sans-serif;
+    font-size: 22px;
+    font-weight: 500;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 200ms ease, transform 200ms ease;
+    user-select: none;
+  }
+  .lightbox .lb-nav:hover {
+    background: #000;
+    color: #fff;
+  }
+  .lightbox .lb-nav:active { transform: translateY(-50%) scale(0.96); }
+  .lightbox .lb-nav-prev { left: 24px; }
+  .lightbox .lb-nav-next { right: 24px; }
+  .lightbox .lb-nav:focus-visible,
+  .lightbox .lb-close:focus-visible {
+    outline: 2px solid #000;
+    outline-offset: 3px;
+  }
+
+  /* ============================================================
+     NAV PREVIEW — flyout peek on hovering sidebar links
+     ============================================================ */
+  .nav-preview {
+    position: fixed;
+    z-index: 150;
+    width: 320px;
+    max-height: calc(100dvh - 32px);
+    overflow-y: auto;
+    background: #fff;
+    border: 1px solid #000;
+    padding: 18px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-8px);
+    transition: opacity 140ms ease, transform 140ms ease, visibility 140ms;
+    box-shadow: 10px 10px 0 rgba(0,0,0,0.06);
+  }
+  .nav-preview.active { opacity: 1; visibility: visible; transform: translateX(0); }
+  .np-head {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.65;
+    margin-bottom: 14px;
+  }
+  /* PRACE — siatka miniatur */
+  .np-works { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 10px; }
+  .np-item {
+    display: flex; flex-direction: column; gap: 6px;
+    text-align: left; border: none; background: none; cursor: pointer; padding: 0;
+    font: inherit; color: inherit;
+  }
+  .np-thumb {
+    width: 100%; aspect-ratio: 4 / 3;
+    background-size: cover; background-position: center;
+    filter: grayscale(1); transition: filter 180ms ease;
+  }
+  .np-item:hover .np-thumb { filter: grayscale(0); }
+  .np-text { display: flex; gap: 6px; align-items: baseline; }
+  .np-no { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 9px; opacity: 0.6; }
+  .np-name { font-size: 12px; line-height: 1.15; font-weight: 600; }
+  /* AKTUALNOŚCI — najnowsze wpisy */
+  .np-news { padding: 12px 0; border-top: 1px solid rgba(0,0,0,0.12); display: flex; flex-direction: column; gap: 3px; }
+  .np-news:first-child { border-top: none; padding-top: 0; }
+  .np-date { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.65; }
+  .np-news-title { font-size: 13px; font-weight: 600; line-height: 1.25; }
+  .np-news-place { font-size: 11px; opacity: 0.6; line-height: 1.3; font-weight: 400; }
+  /* O AUTORZE — portret + bio */
+  .np-about { display: flex; gap: 14px; margin-bottom: 14px; }
+  .np-portrait { flex: 0 0 74px; width: 74px; height: 92px; background-size: cover; background-position: center top; filter: grayscale(1); }
+  .np-bio { font-size: 12px; line-height: 1.5; font-weight: 400; }
+  .np-facts { display: flex; flex-wrap: wrap; gap: 6px; }
+  .np-fact { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid rgba(0,0,0,0.25); padding: 4px 7px; }
+  /* KONTAKT */
+  .np-contact { display: flex; flex-direction: column; gap: 12px; }
+  .np-cline { display: flex; flex-direction: column; gap: 3px; }
+  .np-clabel { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.65; }
+  .np-cline a { font-size: 13px; font-weight: 400; color: #000; text-decoration: none; border-bottom: 1px solid rgba(0,0,0,0.3); width: fit-content; }
+  .np-cline a:hover { border-bottom-color: #000; }
+  .np-cnote { font-size: 11px; font-weight: 400; opacity: 0.65; line-height: 1.4; margin-top: 2px; }
+
+  /* ============================================================
+     RESPONSIVE — FULL HD / 1920×1080 (1600–2199px)
+     Najpopularniejszy desktop. Baza projektowana pod ~1440px
+     zostawiała tu ciasne kafle i nadmiar bieli — pośredni stopień
+     między bazą a QHD: większe kafle, więcej oddechu.
+     Dolna granica 1600 obejmuje też laptop Acer 2880×1800 przy
+     skalowaniu Windows 175% (≈1645×1029) i 150% (1920×1200).
+     ============================================================ */
+  @media (min-width: 1600px) and (max-width: 2199px) {
+    .home-poster { padding: 28px 56px; }
+    .home-poster .cell { padding: 20px; }
+    .home-poster .cell .title { font-size: clamp(32px, 3vw, 56px); }
+    .proj-top, .proj-bottom { padding-left: 40px; padding-right: 40px; }
+    .text-page { max-width: 1600px; padding: 92px 72px 72px; gap: 88px; }
+    .achievements-page { max-width: 1560px; padding: 88px 72px 80px; }
+    .home-topline { padding: 13px 36px; }
+  }
+
+  /* ============================================================
+     RESPONSIVE — LARGE DISPLAYS (>=2200px, 4K/5K monitors)
+     ============================================================ */
+  @media (min-width: 2200px) {
+    .shell { grid-template-columns: 400px 1fr; }
+    .sidebar { padding: 44px 36px; }
+    .sidebar .brand .name { font-size: 49px; }
+    .sidenav a { font-size: 20px; }
+    .home-poster { padding: 32px 48px; }
+    .home-poster .cell { padding: 24px; }
+    .home-poster .cell .title { font-size: clamp(40px, 3.2vw, 64px); }
+    .proj-top, .proj-bottom { padding-left: 48px; padding-right: 48px; }
+    .text-page { padding: 96px 80px 80px; max-width: 1800px; gap: 96px; }
+    .home-topline { padding: 14px 40px; font-size: 11px; }
+  }
+
+  /* ============================================================
+     RESPONSIVE — RETINA / 16" MACBOOK PRO (2880x1800)
+     Larger than the 2200px tier — bigger type, more air.
+     Must come AFTER the 2200px block to override it.
+     ============================================================ */
+  @media (min-width: 2800px) {
+    .shell { grid-template-columns: 460px 1fr; }
+    .sidebar { padding: 56px 44px; }
+    .sidebar .brand .name { font-size: 56px; }
+    .sidenav a { font-size: 22px; line-height: 1.7; }
+    .sidefoot { font-size: 14px; }
+
+    .home-poster { padding: 40px 56px; gap: 16px; }
+    .home-poster .cell { padding: 28px; }
+    .home-poster .cell .num { font-size: 12px; }
+    .home-poster .cell .title { font-size: clamp(48px, 3.6vw, 80px); }
+    .home-poster .cell .meta { font-size: 12px; }
+
+    .proj-top { padding: 32px 56px 22px; }
+    .proj-top .pj-title { font-size: clamp(40px, 3.6vw, 64px); }
+    .proj-top .pj-meta { font-size: 13px; }
+    .proj-top .pj-sub { font-size: 12px; }
+    .proj-bottom { padding: 18px 56px 28px; font-size: 13px; }
+    .proj-slide { padding: 48px 56px; }
+
+    .text-page { padding: 120px 96px 96px; max-width: 2200px; gap: 120px; }
+    .text-page .page-h { font-size: clamp(96px, 7vw, 168px); margin-bottom: 56px; }
+    .text-page .body { font-size: 18px; line-height: 1.55; }
+    .proj-description { font-size: 18px; line-height: 1.55; }
+    .text-page .side { font-size: 13px; }
+    .text-page .side h3 { font-size: 12px; }
+
+    .home-topline { padding: 18px 56px; font-size: 13px; }
+  }
+
+  /* ============================================================
+     RESPONSIVE — ULTRAWIDE (2880x1800, 5K, etc)
+     Even larger padding and spacing for extremely wide screens
+     ============================================================ */
+  @media (min-width: 2880px) {
+    .shell { grid-template-columns: 540px 1fr; }
+    .sidebar { padding: 72px 56px; }
+    .sidebar .brand .name { font-size: 64px; }
+
+    .home-poster { padding: 60px 120px; gap: 24px; }
+    .home-poster .cell { padding: 40px; }
+    .home-poster .cell .num { font-size: 14px; }
+    .home-poster .cell .title { font-size: clamp(56px, 3.8vw, 96px); }
+    .home-poster .cell .meta { font-size: 13px; }
+    .home-poster .cell .thumb-frame {
+      width: clamp(140px, 22vh, 300px);
+      height: clamp(140px, 20vh, 300px);
+    }
+
+    .proj-top { padding: 48px 120px 32px; }
+    .proj-top .pj-title { font-size: clamp(48px, 4vw, 72px); }
+    .proj-top .pj-meta { font-size: 14px; }
+
+    .text-page { padding: 140px 120px 120px; max-width: 2400px; gap: 140px; }
+    .text-page .page-h { font-size: clamp(100px, 7.5vw, 180px); }
+    .text-page .body { font-size: 20px; }
+    .proj-description { font-size: 20px; }
+  }
+
+  /* ============================================================
+     RESPONSIVE — SHORT LAPTOP SCREENS (1366x768, 1440x900, 1280x800)
+     Tighten vertical rhythm so the homepage fits without scroll.
+     ============================================================ */
+  @media (min-width: 1025px) and (max-height: 900px) {
+    .sidebar { padding: 20px 24px; }
+    .home-poster { padding: 20px 32px; }
+    .home-poster .cell { padding: 14px; }
+    .home-poster .cell .title { font-size: clamp(22px, 2.6vw, 44px); }
+    .text-page { padding: 56px 60px 40px; }
+    .text-page .page-h { font-size: clamp(44px, 5.4vw, 88px); margin-bottom: 24px; }
+    /* Projekt: ciaśniejszy nagłówek i stopka — więcej pionu dla zdjęcia */
+    .proj-top { padding: 16px 32px 12px; }
+    .pj-projnav { margin-top: 6px; }
+    .proj-bottom { padding: 10px 32px 14px; }
+    .proj-slide { padding: 20px 32px; }
+  }
+
+  /* Even shorter screens (1366x768 / 1280x720) */
+  @media (min-width: 1025px) and (max-height: 780px) {
+    .text-page { padding: 36px 60px 32px; }
+    .text-page .page-h { font-size: clamp(36px, 4.4vw, 64px); margin-bottom: 16px; }
+  }
+
+  /* ============================================================
+     RESPONSIVE — 2880×1800 @ skalowanie 200% (np. laptop Acer / MacBook)
+     2880×1800 to fizyczne piksele. Przy skalowaniu systemu 200% (domyślne
+     w Windows dla takich gęstych paneli 14″) przeglądarka widzi logiczne
+     1440×900, DPR = 2. Ekran SZEROKI, ale NISKI i bardzo OSTRY.
+     Bez ograniczeń wysokości — zmaksymalizowane okno ma viewport ~1440×780
+     (pasek zadań + UI przeglądarki), więc warunek wysokości tylko by to psuł.
+     Tylko HiDPI (2dppx): zwykły monitor 1440-szeroki @1× tu NIE wpada.
+     Inne skalowania Acera (150% → 1920×1200, 125% → 2304×1440, 100% →
+     2880×1800) obsługują kolejno bloki Full HD / 2200px / 2880px.
+     Musi być PO blokach max-height, żeby je doprecyzować.
+     ============================================================ */
+  @media (min-resolution: 2dppx)
+     and (min-width: 1390px) and (max-width: 1560px) {
+    /* poster: pełne wykorzystanie szerokości, kompaktowo w pionie,
+       mieści się bez przewijania na 900px */
+    .sidebar { padding: 24px 26px; }
+    .home-poster { padding: 22px 48px; gap: 12px; }
+    .home-poster .cell { padding: 16px; }
+    .home-poster .cell .title { font-size: clamp(26px, 2.7vw, 46px); letter-spacing: -0.03em; }
+    .home-poster .cell .num { font-size: 10px; }
+    .home-poster .cell .meta { font-size: 10px; }
+
+    /* strony tekstowe / osiągnięcia: komfortowa miara czytania */
+    .text-page { max-width: 1280px; padding: 72px 64px 56px; gap: 72px; }
+    .achievements-page { max-width: 1320px; padding: 80px 64px 72px; }
+  }
+
+  /* ============================================================
+     RESPONSIVE — MACBOOK AIR 15" I PRO 16" (1710 / 1728 px @ 2×)
+     Te dwa laptopy wpadały w blok "Full HD" (od 1600 px), pisany pod
+     monitor 1920 × 1080. Efekt był odwrotny do zamierzonego: 3vw liczy
+     się od szerokości OKNA, a plakat ma na 16" tylko 1316 px roboczych
+     (1728 − 300 sidebar − 112 padding) wobec 1508 px na monitorze 1920.
+     Tytuł rósł z 40,8 px na 14" do 51,8 px na 16" i łamał się na 2–3
+     linie tam, gdzie na mniejszym ekranie mieścił się w jednej.
+     Sprowadzamy krok między 14" a 16" do rozsądnej proporcji.
+     Warunek 2dppx celowo: laptop Acer 2880 × 1800 przy skalowaniu
+     Windows 175% ma 1645 px szerokości, ale DPR 1,75 — zostaje przy
+     bloku Full HD, tak jak dotąd.
+     Musi być PO bloku 1600–2199 px, żeby go doprecyzować.
+     ============================================================ */
+  @media (min-resolution: 2dppx)
+     and (min-width: 1600px) and (max-width: 1799px) {
+    .home-poster { padding: 26px 56px; gap: 12px; }
+    .home-poster .cell { padding: 18px; }
+    .home-poster .cell .title { font-size: clamp(28px, 2.65vw, 48px); letter-spacing: -0.03em; }
+    .home-poster .cell .num { font-size: 10px; }
+    .home-poster .cell .meta { font-size: 11px; }
+
+    .proj-top .pj-title { font-size: clamp(30px, 2.8vw, 46px); }
+
+    .text-page { max-width: 1440px; padding: 80px 68px 64px; gap: 80px; }
+    .achievements-page { max-width: 1460px; padding: 84px 68px 72px; }
+  }
+
+  /* ============================================================
+     RESPONSIVE — TABLET (<=1024px)
+     ============================================================ */
+  @media (max-width: 1024px) {
+    .shell { grid-template-columns: 240px 1fr; }
+    .home-poster { padding: 56px 20px 20px; gap: 8px; }
+    .proj-top, .proj-bottom { padding-left: 24px; padding-right: 24px; }
+    .proj-description { padding: 22px 24px 32px; font-size: 14px; line-height: 1.55; }
+    .text-page { padding: 72px 36px 40px; gap: 48px; }
+  }
+
+  /* ============================================================
+     RESPONSIVE — TABLET PORTRAIT (721px-900px)
+     iPad portrait (768/810px), Galaxy Tab portrait — sidebar musi być
+     węższy, a poster grid przeskalowany z 12-kol landscape na 2-kol portrait.
+     Musi być PO bloku max-width:1024px, żeby go nadpisać.
+     ============================================================ */
+  @media (min-width: 721px) and (max-width: 900px) {
+    .proj-sheet { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+    .shell { grid-template-columns: 200px 1fr; }
+    .sidebar { padding: 24px 20px; }
+    .sidebar .brand .name { font-size: 24px; line-height: 1.05; }
+    .sidebar .brand .role { font-size: 11px; }
+    .sidenav { margin-top: 32px; }
+    .sidenav a { font-size: 15px; }
+    .sidefoot { font-size: 10px; }
+
+    /* Poster — przebudowa na 2-kolumnowy layout */
+    .home-poster {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: repeat(4, 1fr);
+      padding: 16px;
+      gap: 8px;
+    }
+    .home-poster .c1 { grid-column: 1 / -1; grid-row: 1; }
+    .home-poster .c2 { grid-column: 1; grid-row: 2; }
+    .home-poster .c3 { grid-column: 2; grid-row: 2; }
+    .home-poster .c4 { grid-column: 1; grid-row: 3; }
+    .home-poster .c5 { grid-column: 2; grid-row: 3; }
+    .home-poster .c6 { grid-column: 1; grid-row: 4; }
+    .home-poster .c7 { grid-column: 2; grid-row: 4; }
+    .home-poster .cell { padding: 14px; }
+    .home-poster .cell .title { font-size: clamp(20px, 3.2vw, 32px); }
+    .home-poster .cell .thumb-frame {
+      width: clamp(70px, 12vh, 130px);
+      height: clamp(70px, 11vh, 130px);
+    }
+    .home-poster .cell .num { font-size: 9px; }
+    .home-poster .cell .meta { font-size: 9px; }
+
+    /* Project view */
+    .proj-top { padding: 18px 24px 14px; }
+    .proj-top .pj-title { font-size: clamp(24px, 4.5vw, 40px); }
+    .proj-bottom { padding: 14px 24px 18px; }
+    .proj-slide { padding: 20px 24px; }
+
+    /* Text pages */
+    .text-page { padding: 56px 28px 32px; gap: 32px; }
+    .text-page .page-h { font-size: clamp(40px, 7vw, 72px); margin-bottom: 28px; }
+    .text-page .body { font-size: 14px; }
+    .text-page .side { font-size: 11px; }
+  }
+
+  /* ============================================================
+     RESPONSIVE — MOBILE (<=720px)
+     ============================================================ */
+  @media (max-width: 720px) {
+    body { overflow: auto; }
+    html, body { height: auto; min-height: 100%; }
+
+    /* shell -> single column with top header */
+    .shell {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr;
+      height: auto;
+      min-height: 100dvh;
+    }
+
+    /* --- SIDEBAR becomes a top header --- */
+    .sidebar {
+      height: auto;
+      width: 100%;
+      border-right: none;
+      border-bottom: 1px solid #000;
+      padding: 14px 18px;
+      display: block;
+      position: sticky;
+      top: 0;
+      background: #fff;
+      z-index: 50;
+    }
+    .sidebar > div:first-child {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .sidebar .brand .name {
+      font-size: 17px;
+      line-height: 1.05;
+    }
+    .sidebar .brand .role { display: none; }
+
+    .sidenav {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 0;
+      justify-content: flex-end;
+    }
+    /* Większy obszar dotyku (WCAG): padding powiększa cel do ~36px,
+       ujemny margines neutralizuje wpływ na układ */
+    .sidenav a { font-size: 12px; line-height: 1.2; padding: 12px 5px; margin: -12px -5px; }
+
+    .sidefoot {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 10px;
+    }
+    .sidefoot .langs { margin-bottom: 0; }
+    .sidefoot .langs a { padding: 12px 8px; margin: -12px -8px; }
+    .sidefoot .langs { gap: 14px; }
+    .sidefoot .meta { text-align: right; }
+    .sidefoot .meta > div:not(:last-child) { display: none; }
+    .sidefoot .meta > div:last-child { margin-top: 0 !important; }
+
+    /* --- MAIN --- */
+    .main { height: auto; min-height: calc(100dvh - 110px); overflow: visible; }
+    .view {
+      position: relative;
+      height: auto;
+      opacity: 1;
+      pointer-events: auto;
+      display: none;
+    }
+    .view.active { display: block; }
+
+    /* --- HOMEPAGE variants --- */
+    .home-stage { height: auto; min-height: calc(100dvh - 110px); }
+    .home-topline {
+      position: relative;
+      padding: 12px 18px;
+      font-size: 10px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* POSTER on mobile — single column */
+    .home-poster {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+      padding: 18px;
+      gap: 8px;
+      height: auto;
+    }
+    .home-poster .cell {
+      grid-column: 1 / -1 !important;
+      grid-row: auto !important;
+      min-height: 120px;
+      padding: 16px;
+      gap: 32px;
+    }
+    .home-poster .cell:hover { background: transparent; color: inherit; }
+    /* Tytuł i zdjęcie jedno pod drugim, a nie obok siebie: na szerokość
+       telefonu podgląd z boku ścisnąłby tytuł do pionowego paska liter. */
+    .home-poster .cell .title {
+      display: block;
+      font-size: clamp(28px, 8vw, 48px);
+    }
+    /* Dotyk nie zna najechania kursorem, więc kafel pokazuje zdjęcia sam —
+       co 1,5 s inne, losowo z cyklu (app.js: startHomeRotation). Strona
+       fotografa bez ani jednego zdjęcia na wejściu to najgorsze możliwe
+       pierwsze wrażenie, a dokładnie tak wyglądała dotąd na telefonie. */
+    .home-poster .cell .thumb-frame {
+      display: block;
+      width: 100%;
+      max-width: none;
+      height: clamp(150px, 44vw, 260px);
+      margin-top: 14px;
+      align-self: auto;
+      opacity: 1;
+      background-size: cover;
+      background-position: center;
+      /* Bez odbarwienia. Na desktopie podgląd jest szary, bo to tylko
+         zajawka pod czarnym kaflem; tutaj zdjęcia SĄ treścią kafla, a
+         „Nocne ptaki" na czarno-biało to już inna praca niż w rzeczywistości. */
+      filter: none;
+      position: relative;
+    }
+    /* Nowe zdjęcie wchodzi WIERZCHEM na poprzednie. Wygaszanie ramki do zera
+       i podmiana pod spodem dawałyby co 1,5 s białe mrugnięcie — na kaflu
+       ze zdjęciem wygląda to jak błąd wczytywania, a nie jak przejście. */
+    .home-poster .cell .thumb-fade {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 420ms ease;
+    }
+    .home-poster .cell .meta {
+      display: none;
+    }
+
+    /* --- PROJECT VIEW --- */
+    .project {
+      height: auto;
+      min-height: calc(100dvh - 110px);
+      grid-template-rows: auto auto auto;
+    }
+    .proj-top {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 16px 18px;
+    }
+    .proj-top .pj-title { font-size: clamp(28px, 8vw, 40px); }
+    .proj-top .pj-meta { text-align: left; }
+    .pj-projnav { font-size: 10px; gap: 10px; margin-top: 8px; }
+    .pj-projnav-btn { max-width: 130px; }
+    /* Wysokość sceny ustawia JS pod bieżące zdjęcie (app.js: fitProjectStage).
+       Sztywne 60vh sprawiało, że kadr poziomy — a takich jest większość —
+       pływał na telefonie w ~220 px bieli, przez co wyglądał na mniejszy niż
+       jest, a podpis i opis lądowały poza ekranem. */
+    .proj-stage {
+      min-height: 0;
+      touch-action: pan-y pinch-zoom;
+      transition: height 240ms cubic-bezier(0.4, 0.1, 0.2, 1);
+    }
+    .proj-slide { padding: 10px 12px; }
+    .proj-slide img { cursor: pointer; }
+    .proj-nav-left, .proj-nav-right { display: none; }
+    .proj-bottom {
+      padding: 12px 18px 16px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+      font-size: 10px;
+    }
+    .proj-bottom .caption { max-width: 100%; }
+    .proj-bottom-right {
+      width: 100%;
+      justify-content: space-between;
+    }
+    .sheet-toggle {
+      padding: 11px 16px;
+      min-height: 44px;   /* wygodny cel dla palca */
+    }
+    .proj-sheet {
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    }
+    .proj-sheet .sheet-frame { padding: 9px; }
+
+    /* mobile nav controls under gallery */
+    .proj-mobile-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 18px;
+      border-top: 1px solid #000;
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .proj-mobile-nav button {
+      padding: 10px 16px;
+      border: 1px solid #000;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      min-height: 44px;
+      min-width: 88px;
+    }
+    .proj-mobile-nav button:active { background: #000; color: #fff; }
+
+    /* --- TEXT PAGES --- */
+    .text-page {
+      grid-template-columns: 1fr;
+      padding: 28px 18px 40px;
+      gap: 32px;
+      height: auto;
+      overflow: visible;
+    }
+    .text-page .page-h {
+      font-size: clamp(42px, 11vw, 72px);
+      margin-bottom: 16px;
+    }
+    .text-page .body { font-size: 14px; }
+    /* W jednej kolumnie formularz ma iść zaraz po wstępie, a adres i Instagram
+       na koniec — inaczej trzeba przewijać przez nie, żeby dojść do pól. */
+    /* Jedna kolumna — jawne wiersze z desktopu przestają obowiązywać. */
+    #view-contact .text-page { grid-template-rows: none; gap: 28px; }
+    #view-contact .text-page .page-h { margin-bottom: 0; }
+    /* Lewa kolumna „rozpuszcza się" w siatce (display: contents), żeby jej
+       dzieci — wstęp i galerię Instagrama — dało się ułożyć osobno:
+       wstęp → formularz → adresy → galeria. Bez tego formularz lądował
+       pod sześcioma kafelkami, trzy ekrany niżej. */
+    #view-contact .text-page .body { display: contents; }
+    #view-contact .text-page .body > * { grid-column: 1; }
+    #view-contact .text-page .side,
+    .contact-form { grid-column: 1; grid-row: auto; }
+    .contact-form { max-width: none; margin-top: 0; padding: 22px 16px; order: 1; }
+    #view-contact .text-page .side { order: 2; }
+    #view-contact .text-page .side ul:last-child { margin-bottom: 0; }
+    #view-contact .ig-section { order: 3; margin-top: 0; }
+
+    /* --- LIGHTBOX --- */
+    .lightbox { padding: 50px 12px; }
+    .lightbox .lb-close { top: 14px; right: 16px; font-size: 11px; padding: 6px; }
+    .lightbox .lb-counter { bottom: 14px; left: 16px; font-size: 11px; }
+    .lightbox .lb-nav { width: 44px; height: 44px; font-size: 18px; }
+    .lightbox .lb-nav-prev { left: 10px; }
+    .lightbox .lb-nav-next { right: 10px; }
+
+  }
+
+  /* ============================================================
+     RESPONSIVE — SMALL MOBILE (<=380px)
+     iPhone SE (320), Galaxy Fold zamknięty (344), małe Androidy (360)
+     Musi być PO max-width:720px, żeby go nadpisać.
+     ============================================================ */
+  @media (max-width: 380px) {
+    .sidebar { padding: 10px 14px; }
+    .sidebar .brand .name { font-size: 15px; }
+    .sidenav { gap: 10px; }
+    .sidenav a { font-size: 11px; }
+    .sidefoot { font-size: 10px; padding-top: 10px; margin-top: 10px; }
+
+    .home-topline { padding: 10px 14px; font-size: 10px; }
+
+    /* Poster */
+    .home-poster { padding: 14px; gap: 6px; }
+    .home-poster .cell { padding: 12px; min-height: 90px; gap: 20px; }
+    .home-poster .cell .title { font-size: clamp(22px, 7vw, 32px); }
+    .home-poster .cell .num { font-size: 9px; }
+
+    /* Project view */
+    .proj-top { padding: 14px; }
+    .proj-top .pj-title { font-size: clamp(22px, 7vw, 30px); }
+    .proj-top .pj-sub, .proj-top .pj-meta { font-size: 10px; }
+    .proj-stage { min-height: 280px; }
+    .proj-slide { padding: 10px; }
+    .proj-bottom { padding: 10px 14px 14px; font-size: 10px; }
+    .proj-mobile-nav { padding: 8px 14px; font-size: 10px; }
+    .proj-mobile-nav button { padding: 8px 12px; font-size: 10px; min-width: 76px; }
+
+    /* Text pages */
+    .text-page { padding: 24px 14px 32px; gap: 24px; }
+    .text-page .page-h { font-size: clamp(30px, 10vw, 44px); margin-bottom: 12px; }
+    .text-page .body { font-size: 14px; line-height: 1.5; }
+    .proj-description { font-size: 14px; line-height: 1.5; padding: 18px 20px 28px; }
+    .text-page .side { font-size: 11px; }
+    .text-page .side h3 { font-size: 10px; }
+
+    /* Lightbox */
+    .lightbox { padding: 40px 8px; }
+    .lightbox .lb-close { font-size: 11px; padding: 6px 10px; }
+    .lightbox .lb-counter { font-size: 10px; }
+  }
+
+  /* ============================================================
+     RESPONSIVE — MOBILE LANDSCAPE
+     Telefon trzymany poziomo (np. iPhone 14: 844x390, iPhone Pro Max: 932x430)
+     Wysokość znika — galeria projektu musi się zmieścić,
+     sidebar w kompaktowej formie u góry.
+     Sprawdzamy max-width:950px żeby nie łapać desktopów z małym oknem.
+     ============================================================ */
+  @media (max-height: 500px) and (orientation: landscape) and (max-width: 950px) {
+    body { overflow: auto; }
+    html, body { height: auto; min-height: 100%; }
+
+    .shell {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr;
+      height: auto;
+      min-height: 100dvh;
+    }
+
+    /* Sidebar jako pełny header u góry */
+    .sidebar {
+      height: auto; width: 100%;
+      border-right: none; border-bottom: 1px solid #000;
+      padding: 8px 16px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky; top: 0; background: #fff; z-index: 50;
+      gap: 16px;
+    }
+    .sidebar > div:first-child {
+      display: flex; align-items: center; gap: 18px; flex: 1;
+    }
+    .sidebar .brand .name { font-size: 15px; line-height: 1; }
+    .sidebar .brand .role { display: none; }
+    .sidenav {
+      flex-direction: row; gap: 14px;
+      margin-top: 0;
+      flex-wrap: wrap;
+    }
+    .sidenav a { font-size: 11px; line-height: 1; }
+    .sidefoot {
+      margin-top: 0; padding-top: 0; border-top: none;
+      display: flex; gap: 12px; align-items: center;
+      font-size: 9px;
+    }
+    .sidefoot .meta > div:not(:last-child) { display: none; }
+    .sidefoot .meta > div:last-child { margin-top: 0 !important; }
+
+    /* Main */
+    .main { height: auto; min-height: calc(100dvh - 48px); }
+    .view { position: relative; height: auto; opacity: 1; pointer-events: auto; display: none; }
+    .view.active { display: block; }
+
+    /* Home stage */
+    .home-stage { height: auto; min-height: calc(100dvh - 48px); }
+    .home-topline { padding: 8px 16px; font-size: 10px; }
+
+    /* Poster w landscape — 4 kolumny żeby coś zobaczyć */
+    .home-poster {
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      padding: 10px;
+      gap: 6px;
+      height: auto;
+      min-height: calc(100dvh - 60px);
+    }
+    .home-poster .c1 { grid-column: 1 / span 2; grid-row: 1; }
+    .home-poster .c2 { grid-column: 3 / span 2; grid-row: 1; }
+    .home-poster .c3 { grid-column: 1; grid-row: 2; }
+    .home-poster .c4 { grid-column: 2; grid-row: 2; }
+    .home-poster .c5 { grid-column: 3; grid-row: 2; }
+    .home-poster .c6 { grid-column: 4; grid-row: 2; }
+    .home-poster .c7 { display: none; } /* za mało miejsca, ukrywamy ostatni */
+    .home-poster .cell {
+      grid-column: auto !important; grid-row: auto !important;
+      min-height: auto;
+      padding: 8px;
+      gap: 8px;
+    }
+    .home-poster .cell .title { font-size: clamp(14px, 2.5vw, 22px); }
+    .home-poster .cell .num { font-size: 9px; }
+    .home-poster .cell .meta { font-size: 9px; }
+    .home-poster .cell .thumb-frame { display: none !important; }
+
+    /* Project gallery — maksymalna wysokość */
+    .project { height: auto; }
+    .proj-stage { height: calc(100vh - 100px); min-height: 220px; }
+    .proj-top { padding: 8px 16px; flex-direction: row; gap: 10px; }
+    .proj-top .pj-title { font-size: clamp(18px, 3vw, 26px); }
+    .proj-top .pj-meta { font-size: 10px; text-align: right; }
+    .proj-bottom { padding: 6px 16px; flex-direction: row; font-size: 10px; gap: 12px; }
+    .proj-nav-left, .proj-nav-right { display: block; }
+    .proj-nav-arrow { font-size: 11px; }
+    .proj-mobile-nav { display: none; }
+    .proj-slide { padding: 10px 16px; }
+
+    /* Text pages */
+    .text-page {
+      grid-template-columns: 1fr 1fr;
+      padding: 20px 24px; gap: 28px;
+    }
+    .text-page .page-h { font-size: clamp(28px, 5vw, 40px); margin-bottom: 14px; grid-column: 1 / -1; }
+    .text-page .body { font-size: 13px; }
+    .proj-description { font-size: 13px; padding: 16px 16px 24px; }
+
+    /* Lightbox */
+    .lightbox { padding: 30px 12px; }
+  }
+
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "@id": "https://pawelsypniewski.pl/cs/o-autorovi/#breadcrumb",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Paweł Sypniewski",
+      "item": "https://pawelsypniewski.pl/cs/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "O autorovi",
+      "item": "https://pawelsypniewski.pl/cs/o-autorovi/"
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+
+
+<div class="shell">
+
+  <!-- ============== SIDEBAR ============== -->
+  <aside class="sidebar">
+    <div>
+      <div class="brand">
+        <a href="/cs/" data-route="home">
+          <div class="name">Paweł<br>Sypniewski</div>
+          <div class="role" data-i18n="role">Vizuální umělec / Fotograf</div>
+        </a>
+      </div>
+
+      <nav class="sidenav">
+        <a href="/cs/" data-route="home" data-i18n="nav.works">Práce</a>
+        <a href="/cs/aktuality/" data-route="achievements" data-i18n="nav.achievements">Aktuality</a>
+        <a href="/cs/o-autorovi/" data-route="about" data-i18n="nav.about">O autorovi</a>
+        <a href="/cs/kontakt/" data-route="contact" data-i18n="nav.contact">Kontakt</a>
+      </nav>
+    </div>
+
+    <div class="sidefoot">
+      <div class="langs">
+        <a data-lang="pl" href="/o-autorze/" hreflang="pl">PL</a>
+        <span>/</span>
+        <a data-lang="en" href="/en/about/" hreflang="en">EN</a>
+        <span>/</span>
+        <a data-lang="cs" href="/cs/o-autorovi/" hreflang="cs" class="active">CS</a>
+      </div>
+      <div class="meta">
+        <div>© 2017–2026<br>Paweł Sypniewski</div>
+        <div>Warszawa / Opava</div>
+        <div class="meta-cookies"><button type="button" class="cookie-reopen" id="cookieReopen" data-i18n="cookie.manage">Cookies</button></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Nav preview flyout — peek into a section on hover (desktop only) -->
+  <div class="nav-preview" id="navPreview" aria-hidden="true"></div>
+
+  <!-- ============== MAIN ============== -->
+  <main class="main">
+
+    <!-- ===== HOME ===== -->
+    <section class="view" id="view-home">
+      <p class="sr-only" data-i18n="home.h1">Paweł Sypniewski — fotograf a vizuální umělec, Varšava a Opava</p>
+      <div class="home-stage">
+        <!-- Komunikat strony 404. GitHub Pages przy nieznanym adresie podaje
+             404.html (kopię strony głównej); app.js odsłania ten pasek, gdy
+             adres w przeglądarce nie pasuje do żadnego widoku. -->
+        <div class="home-notfound" id="notFoundNote" role="status" hidden>
+          <strong data-i18n="notfound.h">Stránka nenalezena.</strong>
+          <span data-i18n="notfound.text">Tato adresa neexistuje — níže jsou vybrané práce.</span>
+        </div>
+        <div class="home-topline">
+          <span data-i18n="home.label">Práce / Vybrané projekty</span>
+        </div>
+
+        <!-- POSTER GRID -->
+        <div class="home-poster home-variant">
+          <div id="homeListPoster" style="display:contents">
+    <article class="cell c1" data-slug="ustawienia-domyslne" itemscope itemtype="https://schema.org/CreativeWork">
+      <div class="num">01 / PRÁCE</div>
+      <div class="title">
+        <h2 class="title-text"><a href="/cs/ustawienia-domyslne/" itemprop="url"><span itemprop="name">Výchozí nastavení</span></a></h2>
+        <div class="thumb-frame" role="img" aria-label="Výchozí nastavení — náhled" style="background-image:url('/images/ustawienia/thumbs/03.webp')"></div>
+      </div>
+      <div class="meta"><span itemprop="dateCreated">2024</span> · <span itemprop="contentLocation">O umělé inteligenci</span> · 17 prací</div>
+    </article>
+  
+    <article class="cell c2" data-slug="superpozycja" itemscope itemtype="https://schema.org/CreativeWork">
+      <div class="num">02 / PRÁCE</div>
+      <div class="title">
+        <h2 class="title-text"><a href="/cs/superpozycja/" itemprop="url"><span itemprop="name">Superpozice</span></a></h2>
+        <div class="thumb-frame" role="img" aria-label="Superpozice — náhled" style="background-image:url('/images/superpozycja/thumbs/01.webp')"></div>
+      </div>
+      <div class="meta"><span itemprop="dateCreated">2023</span> · <span itemprop="contentLocation">Kvantová vize</span> · 8 prací</div>
+    </article>
+  
+    <article class="cell c3" data-slug="gra-o-tron" itemscope itemtype="https://schema.org/CreativeWork">
+      <div class="num">03 / PRÁCE</div>
+      <div class="title">
+        <h2 class="title-text"><a href="/cs/gra-o-tron/" itemprop="url"><span itemprop="name">Hra o trůny</span></a></h2>
+        <div class="thumb-frame" role="img" aria-label="Hra o trůny — náhled" style="background-image:url('/images/gra_o_tron/thumbs/01.webp')"></div>
+      </div>
+      <div class="meta"><span itemprop="dateCreated">2022</span> · <span itemprop="contentLocation">Politický boj</span> · 12 prací</div>
+    </article>
+  
+    <article class="cell c4" data-slug="nowa-topografia" itemscope itemtype="https://schema.org/CreativeWork">
+      <div class="num">04 / PRÁCE</div>
+      <div class="title">
+        <h2 class="title-text"><a href="/cs/nowa-topografia/" itemprop="url"><span itemprop="name">Post-topografie Polska</span></a></h2>
+        <div class="thumb-frame" role="img" aria-label="Post-topografie Polska — náhled" style="background-image:url('/images/topografia/thumbs/01.webp')"></div>
+      </div>
+      <div class="meta"><span itemprop="dateCreated">2022</span> · <span itemprop="contentLocation">Krajina po transformaci</span> · 14 prací</div>
+    </article>
+  
+    <article class="cell c5" data-slug="labirynt" itemscope itemtype="https://schema.org/CreativeWork">
+      <div class="num">05 / PRÁCE</div>
+      <div class="title">
+        <h2 class="title-text"><a href="/cs/labirynt/" itemprop="url"><span itemprop="name">Labyrint</span></a></h2>
+        <div class="thumb-frame" role="img" aria-label="Labyrint — náhled" style="background-image:url('/images/labirynt/thumbs/01.webp')"></div>
+      </div>
+      <div class="meta"><span itemprop="dateCreated">2024</span> · <span itemprop="contentLocation">Ztracení</span> · 15 prací</div>
+    </article>
+  
+    <article class="cell c6" data-slug="nocne-ptaki" itemscope itemtype="https://schema.org/CreativeWork">
+      <div class="num">06 / PRÁCE</div>
+      <div class="title">
+        <h2 class="title-text"><a href="/cs/nocne-ptaki/" itemprop="url"><span itemprop="name">Noční ptáci se vracejí domů pozdě</span></a></h2>
+        <div class="thumb-frame" role="img" aria-label="Noční ptáci se vracejí domů pozdě — náhled" style="background-image:url('/images/nocne-ptaki/thumbs/04.webp')"></div>
+      </div>
+      <div class="meta"><span itemprop="dateCreated">2025</span> · <span itemprop="contentLocation">Noční život</span> · 8 prací</div>
+    </article>
+  
+    <article class="cell c7" data-slug="danie-dnia" itemscope itemtype="https://schema.org/CreativeWork">
+      <div class="num">07 / PRÁCE</div>
+      <div class="title">
+        <h2 class="title-text"><a href="/cs/danie-dnia/" itemprop="url"><span itemprop="name">Jídlo dne</span></a></h2>
+        <div class="thumb-frame" role="img" aria-label="Jídlo dne — náhled" style="background-image:url('/images/danie-dnia/book/thumbs/19.webp')"></div>
+      </div>
+      <div class="meta"><span itemprop="dateCreated">2025</span> · <span itemprop="contentLocation">Plýtvání potravinami</span> · 20 prací</div>
+    </article>
+  </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PROJECT ===== -->
+    <section class="view" id="view-project">
+      <div class="project">
+        <div class="proj-top">
+          <div class="proj-titleblock">
+            <div class="pj-title" id="pjTitle">—</div>
+            <div class="pj-sub" id="pjSub">—</div>
+            <div class="pj-projnav">
+              <!-- Strzałki do sąsiednich cykli wypełnia app.js. Do tego czasu
+                   są puste, a pusty odsyłacz to dla czytnika ekranu link bez
+                   nazwy — na stronie głównej zostawały takie na zawsze. -->
+              <a class="pj-projnav-btn" id="pjProjPrev" href="/" aria-hidden="true" tabindex="-1"></a>
+              <span class="pj-projnav-sep" aria-hidden="true">/</span>
+              <a class="pj-projnav-btn" id="pjProjNext" href="/" aria-hidden="true" tabindex="-1"></a>
+            </div>
+          </div>
+          <div class="pj-meta" id="pjMeta">—</div>
+        </div>
+        <div class="proj-stage">
+          <div class="proj-track" id="pjTrack"></div>
+          <div class="proj-nav-left"  id="pjPrev"><span class="proj-nav-arrow">← <span data-i18n="proj.prev">předchozí</span></span></div>
+          <div class="proj-nav-right" id="pjNext"><span class="proj-nav-arrow"><span data-i18n="proj.next">další</span> →</span></div>
+        </div>
+
+        <!-- ===== KSIĄŻKA (flipbook) — tryb dla projektu „Danie dnia” ===== -->
+        <div class="proj-book" id="pjBook" hidden>
+          <button class="book-nav book-nav-prev" id="bookPrev" type="button" aria-label="Poprzednia strona">←</button>
+          <div class="book-stage">
+            <div class="book" id="bookEl"></div>
+          </div>
+          <button class="book-nav book-nav-next" id="bookNext" type="button" aria-label="Następna strona">→</button>
+          <div class="book-counter" id="bookCounter">01 / 01</div>
+        </div>
+        <!-- ===== STYKÓWKA — wszystkie zdjęcia cyklu naraz ===== -->
+        <div class="proj-sheet" id="pjSheet" hidden></div>
+        <div class="proj-bottom">
+          <div class="caption" id="pjCaption">—</div>
+          <div class="proj-bottom-right">
+            <button class="sheet-toggle" id="pjSheetBtn" type="button" aria-pressed="false" aria-controls="pjSheet" data-i18n="proj.sheet">kontaktní arch</button>
+            <div class="counter" id="pjCounter">01/01</div>
+          </div>
+        </div>
+        <div class="proj-description" id="pjDescription" hidden></div>
+        <div class="proj-mobile-nav">
+          <button id="pjPrevMobile" type="button" data-i18n="proj.prev">poprzednie</button>
+          <span id="pjCounterMobile">01/01</span>
+          <button id="pjNextMobile" type="button" data-i18n="proj.next">następne</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ACHIEVEMENTS ===== -->
+    <section class="view" id="view-achievements">
+      <div class="achievements-page">
+        <h2 class="page-h" data-i18n="achievements.h">Aktuality</h2>
+        <div id="achievementsList" class="achievements-list"></div>
+      </div>
+    </section>
+
+    <!-- ===== ABOUT ===== -->
+    <section class="view active" id="view-about">
+      <div class="text-page">
+        <h1 class="page-h" data-i18n="about.h">O autorovi</h1>
+        <div class="body" id="aboutBody"><img class="author-portrait" src="/images/about/portrait-web.webp" width="900" height="675" alt="Paweł Sypniewski — autoportrét" loading="lazy" decoding="async">
+<p>Paweł Sypniewski (nar. 1987 ve Varšavě) — vizuální umělec, fotograf a performer. Člen ZPAF (Svaz polských umělců fotografů), varšavská pobočka. Studuje na Institutu tvůrčí fotografie Slezské univerzity v Opavě. Ve své tvorbě soustavně překračuje tradičně chápané hranice fotografie.</p>
+<p>Zajímá ho vztah obrazu a textu, experiment a provokace a také propojování fotografie s dalšími uměleckými prostředky. Díky všestrannosti jeho řemesla je těžké zařadit ho do jediného stylu.</p>
+<p>Portfolio zahrnuje dokumentární, reportážní, inscenovanou i ateliérovou tvorbu a také práce využívající historické fotografické techniky, mixed media a koláž. Inspiruje se konceptuálním uměním a avantgardou a vytváří díla, která se vymykají jednoduchým kategoriím.</p></div>
+        <div class="side" id="aboutSide"><h3>Členství</h3>
+<ul><li>ZPAF — varšavská pobočka, od roku 2025</li></ul>
+<h3>Kurzy a vzdělání</h3>
+<ul><li>Institut tvůrčí fotografie, Slezská univerzita v Opavě — od roku 2025</li><li>Mentorský program Sputnik Photos — 2023/2024, vedoucí diplomové práce: Michał Łuczak</li><li>Studium fotografie ZPAF — 2021/2024, vedoucí diplomové práce: Wojciech Klimala</li><li>Osvětlení ve fotografii — Otevřená univerzita Varšavské univerzity, ateliér Pawła Żaka, 2023</li><li>Kurz fotografie — Szkoła Karola, 2019/2021</li></ul>
+<h3>Samostatné výstavy</h3>
+<ul><li>2025.12.03 — „Pamiętnik przetrwania“ (Deník přežití), Galeria MAL, Terminal Kultury Gocław, Varšava</li><li>2025.09.05 — „W głowie się nie mieści“, Lokal Bródno, Varšava</li></ul>
+<h3>Ocenění</h3>
+<ul><li>2025 — laureát 11. FotoArtFestivalu, projekce DIAS SHOW, Bílsko-Bělá</li></ul>
+<h3>Kolektivní výstavy</h3>
+<ul><li>2026.07.06 — Opolský festival fotografie, 35 let opavské školy fotografie, Opolí</li><li>2025.03.28 — „Labirynt“ (Labyrint), slideshow, Rybnik Foto Festival</li><li>2024.10.13 — 2. vernisáž v Choszczówce</li><li>2024.09.19 — Diplomové práce ZPAF, Stara Galeria ZPAF, Varšava</li><li>2024.05.18 — „Między kreacją a rzeczywistością“, Centrum Kultury Lublin (kurátor a účastník)</li><li>2024.04.05 — „Wystaw się w CSW“, CSW Toruň</li><li>2024.01.13 — „Wykluczony“, plenérový dům ASP Dłużew</li><li>2023.10.13 — FotoOpen, Kubiszówka, FotoArtFestival</li><li>2023.09.27 — „10 przykazań“ (10 přikázání), Galeria Obok ZPAF, Varšava</li><li>2023.06.29 — 22. výroční výstava Studia fotografie ZPAF, Stara Galeria ZPAF</li><li>2022.06.30 — 21. výroční výstava Studia fotografie ZPAF, Stara Galeria ZPAF</li><li>2022.05.14 — „...forma jedna treści wiele...“, Městské kulturní středisko Ząbki</li></ul>
+<h3>Publikace</h3>
+<ul><li>Katalog 21. výroční výstavy Studia fotografie ZPAF</li><li>Katalog 22. výroční výstavy Studia fotografie ZPAF</li><li>FotoOpen X FotoArtFestival</li><li>Katalog „Wystaw się w CSW 2024“</li><li>Noviny „Co słychać?“</li><li>Noviny „Nasza Choszczówka“</li></ul>
+<h3>Oblasti tvorby</h3>
+<ul><li>Dokument</li><li>Inscenovaný portrét</li><li>Historické fotografické techniky</li><li>Mixed media / koláž</li><li>Performance</li></ul>
+<h3>Působiště</h3>
+<ul><li>Varšava, PL</li><li>Opava, CZ</li></ul></div>
+      </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section class="view" id="view-contact">
+      <div class="text-page">
+        <h2 class="page-h" data-i18n="contact.h">Kontakt</h2>
+        <div class="body" id="contactBody"></div>
+        <div class="side" id="contactSide"></div>
+
+        <!-- Formularz startuje ukryty i pokazuje go dopiero JavaScript, gdy
+             w app.js jest wpisany adres skryptu (KONTAKT_ENDPOINT). Dzięki temu
+             nikt nie zobaczy formularza, który nie ma dokąd wysłać. -->
+        <form class="contact-form" id="contactForm" hidden>
+          <h3 class="cf-h" data-i18n="form.h">Napište mi</h3>
+
+          <!-- Pułapka na roboty: pole jest poza ekranem i poza kolejnością Tab,
+               więc człowiek go nie wypełni, a automat owszem. -->
+          <input type="checkbox" name="botcheck" class="cf-botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+          <label class="cf-field">
+            <span class="cf-label" data-i18n="form.name">Jméno a příjmení</span>
+            <input type="text" name="name" required maxlength="120" autocomplete="name">
+          </label>
+          <label class="cf-field">
+            <span class="cf-label" data-i18n="form.email">Váš e-mail</span>
+            <input type="email" name="email" required maxlength="160" autocomplete="email">
+          </label>
+          <label class="cf-field">
+            <span class="cf-label" data-i18n="form.topic">Téma</span>
+            <select name="topic">
+              <option value="Zakup odbitki" data-i18n="form.topic.print">Koupě tisku</option>
+              <option value="Wystawa / współpraca" data-i18n="form.topic.exhibition">Výstava / spolupráce</option>
+              <option value="Media / publikacja" data-i18n="form.topic.press">Média / publikace</option>
+              <option value="Inne" data-i18n="form.topic.other">Jiné</option>
+            </select>
+          </label>
+          <label class="cf-field">
+            <span class="cf-label" data-i18n="form.message">Zpráva</span>
+            <textarea name="message" required rows="7" maxlength="4000"></textarea>
+          </label>
+
+          <p class="cf-note" data-i18n="form.note">Odpovídám z adresy katedranalogowa@gmail.com. Údaje z formuláře slouží výhradně k odpovědi na vaši zprávu — nedostanou se na žádný seznam adresátů. Zpráva jde přímo do mé schránky — bez prostředníků.</p>
+          <button type="submit" class="cf-submit" data-i18n="form.send">Odeslat zprávu</button>
+          <p class="cf-status" id="cfStatus" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button type="button" class="lb-close" data-i18n="lb.close">Zavřít ✕</button>
+  <button class="lb-nav lb-nav-prev" id="lbNavPrev" type="button" aria-label="Poprzednie zdjęcie">←</button>
+  <img id="lbImg" alt="">
+  <button class="lb-nav lb-nav-next" id="lbNavNext" type="button" aria-label="Następne zdjęcie">→</button>
+  <div class="lb-counter" id="lbCounter">01/01</div>
+</div>
+
+<!-- Camera flash overlay — aktywowany przez app.js dla projektów z flashEffect -->
+<div class="camera-flash" id="cameraFlash" aria-hidden="true"></div>
+
+<!-- ============ COOKIE BANNER RODO ============ -->
+<div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Cookie consent" hidden>
+  <div class="cb-inner">
+    <p class="cb-text" data-i18n="cookie.text">Tento web používá soubory cookies k analýze návštěvnosti (Google Analytics). Pomáhá to pochopit, jak portfolio procházíte. Vaše údaje jsou anonymizované.</p>
+    <div class="cb-buttons">
+      <button id="cbReject" class="cb-btn cb-btn-secondary" type="button" data-i18n="cookie.reject">Odmítnout</button>
+      <button id="cbAccept" class="cb-btn cb-btn-primary" type="button" data-i18n="cookie.accept">Přijmout</button>
+    </div>
+  </div>
+</div>
+<script>
+  /* Banner zgody nie potrzebuje niczego z plików z treścią, a zasłania ćwierć
+     ekranu telefonu. Odsłaniany dopiero przez app.js pojawiał się po pobraniu
+     czterech plików JSON, czyli o sekundy za późno — i to on decydował
+     o mierzonym czasie zapełniania ekranu. Ten wiersz odsłania go już przy
+     czytaniu strony; obsługę przycisków podpina app.js chwilę później.
+     Kto już zdecydował, nie zobaczy nawet mignięcia: warunek jest tu, a nie
+     w arkuszu stylów. */
+  (function () {
+    var d = null;
+    try { d = localStorage.getItem('ps-cookie-consent'); } catch (e) {}
+    if (d !== 'granted' && d !== 'denied') document.getElementById('cookieBanner').hidden = false;
+  })();
+</script>
+
+<!-- defer: przeglądarka pobiera skrypty równolegle z czytaniem strony
+     i uruchamia je dopiero po jej wczytaniu, zachowując kolejność.
+     Bez tego data.js wstrzymywał rysowanie strony (na telefonie o 450 ms).
+     Zdarzenie DOMContentLoaded, na które czeka app.js, leci później. -->
+<script src="/data.js" defer></script>
+<script src="/loader.js" defer></script>
+<script src="/app.js" defer></script>
+</body>
+</html>

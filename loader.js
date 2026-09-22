@@ -78,10 +78,33 @@
     return blocks.join("\n");
   }
 
+  // Wersje językowe strony. Kolejność ma znaczenie tylko dla czytelności —
+  // język zapasowy dla brakujących tłumaczeń wskazuje FALLBACK_LANG.
+  const LANGS = ["pl", "en", "cs"];
+  const FALLBACK_LANG = { cs: "en" };
+
+  // Wpis dodany bez czeskiego tłumaczenia nie może wywrócić strony ani
+  // generatora: brakujące pole `cs` dostaje tekst angielski (bliższy
+  // czeskiemu odbiorcy niż polski). Uzupełniamy tylko obiekty, które już
+  // mają wersje językowe (klucz `pl`), więc nic innego nie jest ruszane.
+  function fillMissingLangs(node) {
+    if (Array.isArray(node)) { node.forEach(fillMissingLangs); return node; }
+    if (node && typeof node === "object") {
+      if ("pl" in node) {
+        for (const [L, from] of Object.entries(FALLBACK_LANG)) {
+          if (node[L] == null && node[from] != null) node[L] = node[from];
+        }
+      }
+      for (const k of Object.keys(node)) fillMissingLangs(node[k]);
+    }
+    return node;
+  }
+  window.fillMissingLangs = fillMissingLangs;
+
   // --- Składanie sekcji ABOUT / CONTACT z pól strukturalnych --------------
   function buildAbout(about) {
     const out = {};
-    for (const L of ["pl", "en"]) {
+    for (const L of LANGS) {
       const lang = about[L] || {};
       const alt = escapeHtml((about.portraitAlt && about.portraitAlt[L]) || "");
       // Wymiary w kodzie rezerwują miejsce, zanim zdjęcie się wczyta —
@@ -107,7 +130,7 @@
   }
   function buildContact(contact) {
     const out = {};
-    for (const L of ["pl", "en"]) {
+    for (const L of LANGS) {
       const lang = contact[L] || {};
       const ig = buildInstagram(contact.instagram, L);
       out[L] = {
@@ -142,21 +165,22 @@
       ]);
 
       // Projekty: pomiń ukryte; zachowaj kolejność z pliku (już po `order`).
-      window.PROJECTS = absolutize((projects || []).filter((p) => !p.hidden));
+      window.PROJECTS = fillMissingLangs(absolutize((projects || []).filter((p) => !p.hidden)));
 
       // Aktualności: app.js sam sortuje po dateISO.
-      window.ACHIEVEMENTS = absolutize(news || []);
+      window.ACHIEVEMENTS = fillMissingLangs(absolutize(news || []));
 
       // Teksty: markdown + pola strukturalne → gotowy HTML (jak oczekuje app.js).
-      window.ABOUT = buildAbout(absolutize(about));
-      window.CONTACT = buildContact(absolutize(contact));
+      window.ABOUT = buildAbout(fillMissingLangs(absolutize(about)));
+      window.CONTACT = buildContact(fillMissingLangs(absolutize(contact)));
     } catch (err) {
       console.error("[loader] Nie udało się wczytać treści:", err);
       // Zabezpieczenie: pozwól app.js wystartować bez wywrotki.
       window.PROJECTS = window.PROJECTS || [];
       window.ACHIEVEMENTS = window.ACHIEVEMENTS || [];
-      window.ABOUT = window.ABOUT || { pl: { body: "", side: "" }, en: { body: "", side: "" } };
-      window.CONTACT = window.CONTACT || { pl: { body: "", side: "" }, en: { body: "", side: "" } };
+      const empty = () => ({ pl: { body: "", side: "" }, en: { body: "", side: "" }, cs: { body: "", side: "" } });
+      window.ABOUT = window.ABOUT || empty();
+      window.CONTACT = window.CONTACT || empty();
     }
   })();
 })();

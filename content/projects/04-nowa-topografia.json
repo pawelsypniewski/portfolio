@@ -5,16 +5,19 @@
   "no": "04",
   "title": {
     "pl": "Post-Topografia Polski",
-    "en": "Post-Topography of Poland"
+    "en": "Post-Topography of Poland",
+    "cs": "Post-topografie Polska"
   },
   "year": "2022",
   "category": {
     "pl": "Dokument / Krajobraz",
-    "en": "Documentary / Landscape"
+    "en": "Documentary / Landscape",
+    "cs": "Dokument / Krajina"
   },
   "place": {
     "pl": "Krajobraz po transformacji",
-    "en": "Landscape after the transition"
+    "en": "Landscape after the transition",
+    "cs": "Krajina po transformaci"
   },
   "works": 14,
   "flashEffect": false,
@@ -22,7 +25,8 @@
   "thumb": "",
   "caption": {
     "pl": "Transformacja · Relikty PRL · Prowizorka lat 90. · Deweloperka",
-    "en": "Transition · Communist-era relics · 1990s makeshift · Property development"
+    "en": "Transition · Communist-era relics · 1990s makeshift · Property development",
+    "cs": "Transformace · Relikty komunismu · Provizoria 90. let · Developerská výstavba"
   },
   "seo": {
     "pl": {
@@ -32,11 +36,16 @@
     "en": {
       "title": "Post-Topography of Poland — landscape after 1989",
       "description": "Post-Topography of Poland — a black-and-white photo series on the Polish landscape after the transition, in the spirit of New Topographics."
+    },
+    "cs": {
+      "title": "Post-topografie Polska — krajina po transformaci",
+      "description": "Post-topografie Polska — černobílý fotografický cyklus o krajině po roce 1989. Předměstí Varšavy v duchu New Topographics. Autor: Paweł Sypniewski."
     }
   },
   "description": {
     "pl": "„Post-Topografia. Krajobraz po transformacji” to autorski, czarno-biały cykl fotograficzny badający polski krajobraz po transformacji — przestrzeń ukształtowaną przez nawarstwienie epok: reliktów PRL, prowizorki lat 90. i agresywnej deweloperki. Głównym poligonem jest aglomeracja warszawska i jej przedmieścia — reprezentatywny mikrokosmos ogólnopolskiego braku ładu przestrzennego. Projekt świadomie czerpie z nurtu „New Topographics” (1975), ale dokłada wymiar czasu: pokazuje, jak prowizoryczne struktury szybko znikają, a pozornie trwałe relikty również okazują się przejściowe.",
-    "en": "“Post-Topography. Landscape After the Transition” is an original black-and-white photographic series examining the Polish landscape after the political transformation — a space shaped by the layering of eras: relics of the communist era, the makeshift solutions of the 1990s and aggressive property development. Its main proving ground is the Warsaw metropolitan area and its suburbs — a representative microcosm of the nationwide lack of spatial order. The project consciously draws on the “New Topographics” movement (1975), but adds the dimension of time: it shows how makeshift structures quickly vanish, while seemingly permanent relics also turn out to be transient."
+    "en": "“Post-Topography. Landscape After the Transition” is an original black-and-white photographic series examining the Polish landscape after the political transformation — a space shaped by the layering of eras: relics of the communist era, the makeshift solutions of the 1990s and aggressive property development. Its main proving ground is the Warsaw metropolitan area and its suburbs — a representative microcosm of the nationwide lack of spatial order. The project consciously draws on the “New Topographics” movement (1975), but adds the dimension of time: it shows how makeshift structures quickly vanish, while seemingly permanent relics also turn out to be transient.",
+    "cs": "„Post-topografie. Krajina po transformaci“ je autorský černobílý fotografický cyklus, který zkoumá polskou krajinu po transformaci — prostor utvářený vrstvením epoch: relikty Polské lidové republiky, provizoria 90. let a agresivní developerské výstavby. Hlavním zkušebním polem je varšavská aglomerace a její předměstí — reprezentativní mikrokosmos celopolského nedostatku prostorového řádu. Projekt vědomě navazuje na směr „New Topographics“ (1975), přidává však rozměr času: ukazuje, jak provizorní stavby rychle mizí a jak se i zdánlivě trvalé relikty nakonec ukazují jako pomíjivé."
   },
   "images": [
     "images/topografia/01.webp",

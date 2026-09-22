@@ -2,11 +2,13 @@
   "instagram": {
     "heading": {
       "pl": "Codziennie na Instagramie",
-      "en": "Daily on Instagram"
+      "en": "Daily on Instagram",
+      "cs": "Denně na Instagramu"
     },
     "ariaLabel": {
       "pl": "Zobacz post na Instagramie",
-      "en": "View on Instagram"
+      "en": "View on Instagram",
+      "cs": "Zobrazit příspěvek na Instagramu"
     },
     "profileUrl": "https://www.instagram.com/sypniewskistudio/",
     "profileLabel": "@sypniewskistudio →",
@@ -43,6 +45,10 @@
   },
   "en": {
     "intro": "Limited edition prints are available for sale. Please ask for any picture you like. For details — amounts, sizes, pricing — send me an email.",
+    "side": "### E-mail\n- [katedranalogowa@gmail.com](mailto:katedranalogowa@gmail.com)\n\n### Instagram\n- [@sypniewskistudio](https://www.instagram.com/sypniewskistudio/)"
+  },
+  "cs": {
+    "intro": "Autorské tisky v limitovaných edicích jsou k prodeji. Můžete se zeptat na kterýkoli snímek, který vás zaujal. Ohledně nákladu, formátů a cen mi napište e-mail.",
     "side": "### E-mail\n- [katedranalogowa@gmail.com](mailto:katedranalogowa@gmail.com)\n\n### Instagram\n- [@sypniewskistudio](https://www.instagram.com/sypniewskistudio/)"
   }
 }

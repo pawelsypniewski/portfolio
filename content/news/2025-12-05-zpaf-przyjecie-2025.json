@@ -4,34 +4,41 @@
   "dateEndISO": "2025-12-05",
   "date": {
     "pl": "5 grudnia 2025",
-    "en": "5 December 2025"
+    "en": "5 December 2025",
+    "cs": "5. prosince 2025"
   },
   "type": {
     "pl": "Członkostwo",
-    "en": "Membership"
+    "en": "Membership",
+    "cs": "Členství"
   },
   "title": {
     "pl": "Przyjęcie do ZPAF — Okręg Warszawski",
-    "en": "Admission to ZPAF — Warsaw Branch"
+    "en": "Admission to ZPAF — Warsaw Branch",
+    "cs": "Přijetí do ZPAF — varšavská pobočka"
   },
   "place": {
     "pl": "Związek Polskich Artystów Fotografików, Warszawa",
-    "en": "Union of Polish Art Photographers, Warsaw"
+    "en": "Union of Polish Art Photographers, Warsaw",
+    "cs": "Svaz polských umělců fotografů (ZPAF), Varšava"
   },
   "venue": {
     "name": {
       "pl": "Związek Polskich Artystów Fotografików",
-      "en": "Union of Polish Art Photographers"
+      "en": "Union of Polish Art Photographers",
+      "cs": "Svaz polských umělců fotografů (ZPAF)"
     },
     "locality": {
       "pl": "Warszawa",
-      "en": "Warsaw"
+      "en": "Warsaw",
+      "cs": "Varšava"
     },
     "country": "PL"
   },
   "description": {
     "pl": "Przyjęcie do Związku Polskich Artystów Fotografików (ZPAF) — najstarszego i najważniejszego stowarzyszenia fotografów artystycznych w Polsce, działającego od 1947 roku. Rada Artystyczna ZPAF przyjęła w grudniu 2025 grono ośmiorga nowych członków, w tym sześcioro do Okręgu Warszawskiego.",
-    "en": "Admission to the Union of Polish Art Photographers (ZPAF) — the oldest and most prestigious association of art photographers in Poland, founded in 1947. In December 2025 the ZPAF Artistic Council admitted a group of eight new members, including six to the Warsaw Branch."
+    "en": "Admission to the Union of Polish Art Photographers (ZPAF) — the oldest and most prestigious association of art photographers in Poland, founded in 1947. In December 2025 the ZPAF Artistic Council admitted a group of eight new members, including six to the Warsaw Branch.",
+    "cs": "Přijetí do Svazu polských umělců fotografů (ZPAF) — nejstaršího a nejvýznamnějšího sdružení uměleckých fotografů v Polsku, které působí od roku 1947. Umělecká rada ZPAF přijala v prosinci 2025 osm nových členů, z toho šest do varšavské pobočky."
   },
   "seo": {
     "pl": {
@@ -39,13 +46,17 @@
     },
     "en": {
       "description": "Admission to the Union of Polish Art Photographers, Warsaw Branch. Founded in 1947, ZPAF is the oldest association of art photographers in Poland."
+    },
+    "cs": {
+      "description": "Přijetí do Svazu polských umělců fotografů, varšavská pobočka. ZPAF působí od roku 1947 a je nejstarším sdružením fotografů v Polsku."
     }
   },
   "links": [
     {
       "label": {
         "pl": "Komunikat ZPAF",
-        "en": "ZPAF announcement"
+        "en": "ZPAF announcement",
+        "cs": "Oznámení ZPAF"
       },
       "url": "https://zpaf.pl/aktualnosci/8-nowych-zpaf-12-2025/"
     }

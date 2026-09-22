@@ -4,34 +4,41 @@
   "dateEndISO": "2023-10-18",
   "date": {
     "pl": "27 września – 18 października 2023",
-    "en": "27 September – 18 October 2023"
+    "en": "27 September – 18 October 2023",
+    "cs": "27. září – 18. října 2023"
   },
   "type": {
     "pl": "Wystawa zbiorowa",
-    "en": "Group exhibition"
+    "en": "Group exhibition",
+    "cs": "Kolektivní výstava"
   },
   "title": {
     "pl": "10 przykazań",
-    "en": "10 Commandments"
+    "en": "10 Commandments",
+    "cs": "10 přikázání"
   },
   "place": {
     "pl": "Galeria Obok ZPAF, Warszawa",
-    "en": "Galeria Obok ZPAF, Warsaw"
+    "en": "Galeria Obok ZPAF, Warsaw",
+    "cs": "Galeria Obok ZPAF, Varšava"
   },
   "venue": {
     "name": {
       "pl": "Galeria Obok ZPAF",
-      "en": "Galeria Obok ZPAF"
+      "en": "Galeria Obok ZPAF",
+      "cs": "Galeria Obok ZPAF"
     },
     "locality": {
       "pl": "Warszawa",
-      "en": "Warsaw"
+      "en": "Warsaw",
+      "cs": "Varšava"
     },
     "country": "PL"
   },
   "description": {
     "pl": "Wystawa zbiorowa będąca owocem rocznej pracy jedenastu słuchaczy Studium Fotografii ZPAF pod kierunkiem Jolanty Rycerskiej. Dekalog — jako temat i wspólny mianownik projektu — skłonił autorów do wizualnych analiz świata wartości, zarówno tych historycznych, wpisanych w naszą kulturę, jak i tych aktualnie przetwarzanych pod wpływem dynamicznych zmian społecznych. Wielogłos pytań, nie odpowiedzi. Kuratorka: Jolanta Rycerska.",
-    "en": "Group exhibition — the fruit of one year's work by eleven students of the ZPAF School of Photography under the guidance of Jolanta Rycerska. The Decalogue — as theme and common denominator — led the authors to visual analyses of values, both historical, embedded in our culture, and those currently being reworked under dynamic social change. A multi-voice of questions rather than answers. Curator: Jolanta Rycerska."
+    "en": "Group exhibition — the fruit of one year's work by eleven students of the ZPAF School of Photography under the guidance of Jolanta Rycerska. The Decalogue — as theme and common denominator — led the authors to visual analyses of values, both historical, embedded in our culture, and those currently being reworked under dynamic social change. A multi-voice of questions rather than answers. Curator: Jolanta Rycerska.",
+    "cs": "Kolektivní výstava, která je výsledkem ročního tvůrčího úsilí jedenácti studentů Studia fotografie ZPAF pod vedením Jolanty Rycerské. Desatero — jako téma a společný jmenovatel projektu — přimělo autory k vizuálním analýzám světa hodnot, a to jak těch historických, vepsaných do naší kultury, tak těch, které se právě proměňují pod vlivem dynamických společenských změn. Mnohohlas otázek, ne odpovědí. Kurátorka: Jolanta Rycerska."
   },
   "seo": {
     "pl": {
@@ -39,13 +46,17 @@
     },
     "en": {
       "description": "“10 Commandments” — a group exhibition by eleven students of the ZPAF School of Photography at Galeria Obok ZPAF in Warsaw, with the Decalogue as its theme."
+    },
+    "cs": {
+      "description": "„10 přikázání“ — kolektivní výstava jedenácti studentů Studia fotografie ZPAF v Galerii Obok ZPAF ve Varšavě. Desatero jako východisko pro analýzu hodnot."
     }
   },
   "links": [
     {
       "label": {
         "pl": "Strona wystawy na ZPAF",
-        "en": "Exhibition page at ZPAF"
+        "en": "Exhibition page at ZPAF",
+        "cs": "Stránka výstavy na webu ZPAF"
       },
       "url": "https://www.zpaf.pl/aktualnosci/galeria-obok-zpaf/10-przykazan-sluchacze-SF-ZPAF/"
     }

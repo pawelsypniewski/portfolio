@@ -5,16 +5,19 @@
   "no": "07",
   "title": {
     "pl": "Danie dnia",
-    "en": "Dish of the Day"
+    "en": "Dish of the Day",
+    "cs": "Jídlo dne"
   },
   "year": "2025",
   "category": {
     "pl": "Studium / Dokument / Ekologia",
-    "en": "Studio / Documentary / Ecology"
+    "en": "Studio / Documentary / Ecology",
+    "cs": "Studio / Dokument / Ekologie"
   },
   "place": {
     "pl": "Marnowanie żywności",
-    "en": "Food waste"
+    "en": "Food waste",
+    "cs": "Plýtvání potravinami"
   },
   "works": 20,
   "flashEffect": false,
@@ -22,7 +25,8 @@
   "thumb": "images/danie-dnia/book/19.webp",
   "caption": {
     "pl": "Warzywa i owoce przeznaczone przez sklep do wyrzucenia — sfotografowane, potem zjedzone. Projekt dokumentalny o marnowaniu żywności.",
-    "en": "Vegetables and fruit marked for disposal by the shop — photographed, then eaten. A documentary project on food waste."
+    "en": "Vegetables and fruit marked for disposal by the shop — photographed, then eaten. A documentary project on food waste.",
+    "cs": "Zelenina a ovoce, které obchod určil k vyhození — vyfotografované a pak snědené. Dokumentární projekt o plýtvání potravinami."
   },
   "seo": {
     "pl": {
@@ -32,11 +36,16 @@
     "en": {
       "title": "Dish of the Day — photobook on food waste",
       "description": "Dish of the Day — an artist's photobook by Paweł Sypniewski on food waste. Twenty works to leaf through like the pages of a book."
+    },
+    "cs": {
+      "title": "Jídlo dne — fotografická kniha o plýtvání potravinami",
+      "description": "Jídlo dne — autorská fotografická kniha Pawła Sypniewského o plýtvání potravinami. Dvacet snímků, které se listují jako stránky knihy."
     }
   },
   "description": {
     "pl": "W Polsce rocznie marnuje się ok. 5 mln ton żywności. Aż 60% tej skali pochodzi z gospodarstw domowych — to ok. 3 mln ton wyrzucanego jedzenia rocznie. 45% Polaków przyznaje się do wyrzucania żywności przynajmniej od czasu do czasu. Najczęściej do kosza trafiają wędliny (36%), warzywa (34%) i owoce (30%).",
-    "en": "In Poland, around 5 million tonnes of food are wasted every year. As much as 60% of this comes from households — about 3 million tonnes of discarded food per year. 45% of Poles admit to throwing food away at least occasionally. The most commonly discarded products are cold cuts (36%), vegetables (34%), and fruit (30%)."
+    "en": "In Poland, around 5 million tonnes of food are wasted every year. As much as 60% of this comes from households — about 3 million tonnes of discarded food per year. 45% of Poles admit to throwing food away at least occasionally. The most commonly discarded products are cold cuts (36%), vegetables (34%), and fruit (30%).",
+    "cs": "V Polsku se ročně vyplýtvá přibližně 5 milionů tun potravin. Až 60 % tohoto objemu pochází z domácností — to jsou zhruba 3 miliony tun vyhozeného jídla ročně. 45 % Poláků přiznává, že alespoň občas vyhazuje potraviny. Nejčastěji končí v koši uzeniny (36 %), zelenina (34 %) a ovoce (30 %)."
   },
   "images": [
     "images/danie-dnia/book/01.webp",

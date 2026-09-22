@@ -4,34 +4,41 @@
   "dateEndISO": "2025-10-12",
   "date": {
     "pl": "10 – 12 października 2025",
-    "en": "10 – 12 October 2025"
+    "en": "10 – 12 October 2025",
+    "cs": "10.–12. října 2025"
   },
   "type": {
     "pl": "Laureat / Pokaz festiwalowy",
-    "en": "Laureate / Festival screening"
+    "en": "Laureate / Festival screening",
+    "cs": "Laureát / Festivalová projekce"
   },
   "title": {
     "pl": "DIAS SHOW — laureat XI FotoArtFestival",
-    "en": "DIAS SHOW — XI FotoArtFestival laureate"
+    "en": "DIAS SHOW — XI FotoArtFestival laureate",
+    "cs": "DIAS SHOW — laureát 11. FotoArtFestivalu"
   },
   "place": {
     "pl": "Foto Art Festival, Bielsko-Biała",
-    "en": "Foto Art Festival, Bielsko-Biała"
+    "en": "Foto Art Festival, Bielsko-Biała",
+    "cs": "Foto Art Festival, Bílsko-Bělá"
   },
   "venue": {
     "name": {
       "pl": "Foto Art Festival",
-      "en": "Foto Art Festival"
+      "en": "Foto Art Festival",
+      "cs": "Foto Art Festival"
     },
     "locality": {
       "pl": "Bielsko-Biała",
-      "en": "Bielsko-Biała"
+      "en": "Bielsko-Biała",
+      "cs": "Bílsko-Bělá"
     },
     "country": "PL"
   },
   "description": {
     "pl": "Wyróżnienie w międzynarodowym konkursie multimedialnym DIAS SHOW podczas 11. edycji Foto Art Festival w Bielsku-Białej. Cykl „Labirynt” znalazł się wśród dziewięciu zwycięskich prac. Laureaci otrzymują możliwość zorganizowania wystawy indywidualnej w Galerii Fotografii B&B lub podczas kolejnej edycji festiwalu. DIAS SHOW łączy fotografię z muzyką i narracją, prezentując dynamiczne sekwencje obrazów na dużym ekranie.",
-    "en": "Distinction in the international multimedia competition DIAS SHOW during the 11th edition of Foto Art Festival in Bielsko-Biała. The \"Labirynt\" series was among nine winning works. Laureates receive the opportunity to organise a solo exhibition at the B&B Photography Gallery or during a future festival edition. DIAS SHOW combines photography with music and narration, presenting dynamic image sequences on a large screen."
+    "en": "Distinction in the international multimedia competition DIAS SHOW during the 11th edition of Foto Art Festival in Bielsko-Biała. The \"Labirynt\" series was among nine winning works. Laureates receive the opportunity to organise a solo exhibition at the B&B Photography Gallery or during a future festival edition. DIAS SHOW combines photography with music and narration, presenting dynamic image sequences on a large screen.",
+    "cs": "Ocenění v mezinárodní multimediální soutěži DIAS SHOW během 11. ročníku Foto Art Festivalu v Bílsku-Bělé. Cyklus „Labyrint“ se zařadil mezi devět vítězných prací. Laureáti získávají možnost uspořádat samostatnou výstavu v Galerii fotografie B&B nebo během dalšího ročníku festivalu. DIAS SHOW propojuje fotografii s hudbou a vyprávěním a představuje dynamické sekvence obrazů na velkém plátně."
   },
   "seo": {
     "pl": {
@@ -39,20 +46,25 @@
     },
     "en": {
       "description": "The “Labirynt” series among nine winning works of the DIAS SHOW competition at the 11th FotoArtFestival in Bielsko-Biała, Poland."
+    },
+    "cs": {
+      "description": "Cyklus „Labyrint“ mezi devíti vítěznými pracemi soutěže DIAS SHOW na 11. FotoArtFestivalu v Bílsku-Bělé. Ocenění v multimediální soutěži."
     }
   },
   "links": [
     {
       "label": {
         "pl": "Lista laureatów DIAS SHOW",
-        "en": "DIAS SHOW laureates"
+        "en": "DIAS SHOW laureates",
+        "cs": "Seznam laureátů DIAS SHOW"
       },
       "url": "https://fotoartfestival.com/finalisci-dias-show-2025/"
     },
     {
       "label": {
         "pl": "Slideshow „Labirynt” na YouTube",
-        "en": "\"Labirynt\" slideshow on YouTube"
+        "en": "\"Labirynt\" slideshow on YouTube",
+        "cs": "Slideshow „Labyrint“ na YouTube"
       },
       "url": "https://www.youtube.com/watch?v=4JCT6mdi9NA"
     }

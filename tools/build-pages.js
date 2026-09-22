@@ -11,10 +11,11 @@
  * Wejście:  index.html (szablon), content/*.json (treść), data.js (teksty UI)
  * Wyjście:  PL — /labirynt/, /o-autorze/, /kontakt/, /aktualnosci/ …
  *           EN — /en/, /en/labirynt/, /en/about/, /en/contact/, /en/news/ …
+ *           CS — /cs/, /cs/labirynt/, /cs/o-autorovi/, /cs/kontakt/, /cs/aktuality/ …
  *           każda aktualność osobno: /aktualnosci/offoto-opole-2026/
  *           oraz 404.html i sitemap.xml
  *
- * Adres projektu ma w obu wersjach ten sam slug (/labirynt/ i /en/labirynt/) —
+ * Adres projektu ma we wszystkich wersjach ten sam slug (/labirynt/, /en/labirynt/, /cs/labirynt/) —
  * slug jest nazwą własną cyklu, a angielskie słowa kluczowe niesie tytuł
  * i opis strony. Strony siostrzane wskazują na siebie przez hreflang.
  *
@@ -34,9 +35,11 @@ const { execFileSync } = require("child_process");
 const ROOT = path.join(__dirname, "..");
 const BASE = "https://pawelsypniewski.pl";
 const AUTHOR = "Paweł Sypniewski";
-const LANGS = ["pl", "en"];
-const LOCALE = { pl: "pl_PL", en: "en_US" };
-const INLANG = { pl: "pl-PL", en: "en-US" };
+const LANGS = ["pl", "en", "cs"];
+const LOCALE = { pl: "pl_PL", en: "en_US", cs: "cs_CZ" };
+const INLANG = { pl: "pl-PL", en: "en-US", cs: "cs-CZ" };
+// Przedrostek adresu każdej wersji — musi zgadzać się z LANG_PREFIX w app.js.
+const LANG_PREFIX = { pl: "/", en: "/en/", cs: "/cs/" };
 
 /* ------------------------------------------------------------------ */
 /* Pomocnicze                                                          */
@@ -82,10 +85,24 @@ function loadI18n() {
   vm.createContext(box);
   vm.runInContext(fs.readFileSync(path.join(ROOT, "data.js"), "utf8"), box);
   const i18n = box.window.I18N;
-  if (!i18n || !i18n.pl || !i18n.en) {
+  if (!i18n || LANGS.some((l) => !i18n[l])) {
     throw new Error("data.js nie udostępnił window.I18N — sprawdź, czy plik się nie zmienił.");
   }
   return i18n;
+}
+
+// Teksty interfejsu wczytane raz — jedno źródło z app.js (data.js).
+const I18N = loadI18n();
+// Tekst w danym języku; brakujący klucz bierzemy z angielskiego.
+function tr(key, L) {
+  const d = I18N[L] || {};
+  return d[key] != null ? d[key] : (I18N.en[key] || "");
+}
+// Liczba prac z właściwą formą — bliźniak worksLabel() z app.js.
+function worksLabel(n, L) {
+  if (L === "pl") return "prac";
+  if (L === "cs") return n >= 1 && n <= 4 ? "práce" : "prací";
+  return n === 1 ? "work" : "works";
 }
 
 /* Teksty „O autorze” i „Kontakt” to markdown w content/settings/*.json, który
@@ -107,23 +124,24 @@ async function loadTexts() {
   vm.createContext(box);
   vm.runInContext(fs.readFileSync(path.join(ROOT, "loader.js"), "utf8"), box);
   await box.window.__DATA_READY;
-  const { ABOUT, CONTACT } = box.window;
+  const { ABOUT, CONTACT, fillMissingLangs } = box.window;
   if (!ABOUT || !ABOUT.pl || !ABOUT.pl.side || !CONTACT || !CONTACT.pl) {
     throw new Error(
       "loader.js nie zbudował treści O autorze / Kontaktu — sprawdź, czy plik " +
       "albo content/settings/*.json się nie zmieniły."
     );
   }
-  return { ABOUT, CONTACT };
+  return { ABOUT, CONTACT, fillMissingLangs };
 }
 
 // Adresy widoków. Musi zgadzać się z PATH_BY_ROUTE / routeToPath w app.js.
 const PATHS = {
   pl: { home: "/", about: "/o-autorze/", contact: "/kontakt/", achievements: "/aktualnosci/" },
   en: { home: "/en/", about: "/en/about/", contact: "/en/contact/", achievements: "/en/news/" },
+  cs: { home: "/cs/", about: "/cs/o-autorovi/", contact: "/cs/kontakt/", achievements: "/cs/aktuality/" },
 };
 function pathFor(route, slug, lang) {
-  if (route === "project") return (lang === "en" ? "/en/" : "/") + slug + "/";
+  if (route === "project") return LANG_PREFIX[lang] + slug + "/";
   // Pojedyncza aktualność leży POD listą (/aktualnosci/wpis/) — adres pokazuje
   // przynależność, a wyszukiwarka dostaje czytelną hierarchię zamiast płaskiej
   // listy adresów w korzeniu witryny.
@@ -202,7 +220,6 @@ function applyHead(html, page) {
   const lang = page.lang;
   const url = BASE + page.path;
   const selfPl = BASE + pathFor(page.route, page.slug, "pl");
-  const selfEn = BASE + pathFor(page.route, page.slug, "en");
   const title = escapeHtml(page.title);
   const desc = escapeHtml(page.description);
   const img = escapeHtml(page.image.url);
@@ -233,11 +250,11 @@ function applyHead(html, page) {
       : "",
     "zapowiedź pierwszego kafla");
 
-  // hreflang — para adresów siostrzanych; x-default kieruje na wersję polską
+  // hreflang — adresy siostrzane we wszystkich językach; x-default kieruje
+  // na wersję polską
   html = replaceOnce(html,
     /<link rel="alternate" href="[^"]*" hreflang="pl">[\s\S]*?<link rel="alternate" href="[^"]*" hreflang="x-default">/,
-    `<link rel="alternate" href="${selfPl}" hreflang="pl">\n` +
-    `<link rel="alternate" href="${selfEn}" hreflang="en">\n` +
+    LANGS.map((l) => `<link rel="alternate" href="${BASE + pathFor(page.route, page.slug, l)}" hreflang="${l}">\n`).join("") +
     `<link rel="alternate" href="${selfPl}" hreflang="x-default">`,
     "link rel=alternate hreflang");
 
@@ -251,8 +268,11 @@ function applyHead(html, page) {
     `<meta property="og:type" content="${page.ogType || "website"}">`, "og:type");
   html = replaceOnce(html, /<meta property="og:locale" content="[^"]*">/,
     `<meta property="og:locale" content="${LOCALE[lang]}">`, "og:locale");
-  html = replaceOnce(html, /<meta property="og:locale:alternate" content="[^"]*">/,
-    `<meta property="og:locale:alternate" content="${LOCALE[lang === "pl" ? "en" : "pl"]}">`,
+  // Po jednym og:locale:alternate na każdą pozostałą wersję. Wzorzec łapie
+  // cały ciąg takich znaczników, więc kolejne uruchomienia ich nie mnożą.
+  html = replaceOnce(html, /<meta property="og:locale:alternate" content="[^"]*">(?:\n<meta property="og:locale:alternate" content="[^"]*">)*/,
+    LANGS.filter((l) => l !== lang)
+      .map((l) => `<meta property="og:locale:alternate" content="${LOCALE[l]}">`).join("\n"),
     "og:locale:alternate");
 
   html = replaceOnce(html, /<meta property="og:image" content="[^"]*">/,
@@ -326,6 +346,14 @@ function enrichGallery(html, projects, lang) {
 
   galeria.url = BASE + pathFor("home", null, lang);
   galeria.inLanguage = INLANG[lang];
+
+  // Strona profilu w języku tej podstrony — wcześniej angielskie podstrony
+  // deklarowały polską stronę główną (pl-PL) jako swoją stronę profilu.
+  const profil = (graf["@graph"] || []).find((n) => n["@type"] === "ProfilePage");
+  if (profil) {
+    profil.url = BASE + pathFor("home", null, lang);
+    profil.inLanguage = INLANG[lang];
+  }
   galeria.hasPart = (galeria.hasPart || []).map((cz) => {
     const p = wgTytulu.get(cz.name);
     if (!p) {
@@ -337,10 +365,10 @@ function enrichGallery(html, projects, lang) {
       url: BASE + pathFor("project", p.slug, lang),
       image: absUrl(p.thumb || p.images[0]),
     });
-    if (lang === "en") {
-      out.name = p.title.en;
-      out.genre = p.category.en;
-      out.description = String((p.description && p.description.en) || p.caption.en)
+    if (lang !== "pl") {
+      out.name = p.title[lang];
+      out.genre = p.category[lang];
+      out.description = String((p.description && p.description[lang]) || p.caption[lang])
         .replace(/\s+/g, " ")
         .trim();
     }
@@ -455,8 +483,7 @@ const COVER = {
 // do projektów nie istniały w kodzie źródłowym: Google je wyrenderuje, ale
 // roboty Bing i boty AI (GPTBot, ClaudeBot) zwykle JavaScriptu nie uruchamiają.
 function homeGrid(projects, lang) {
-  const works = lang === "pl" ? "PRACE" : "WORKS";
-  const worksLabel = lang === "pl" ? "prac" : "works";
+  const works = tr("w.works", lang);
   return projects
     .map((p, i) => {
       const title = escapeHtml(p.title[lang]);
@@ -466,9 +493,9 @@ function homeGrid(projects, lang) {
       <div class="num">${escapeHtml(p.no)} / ${works}</div>
       <div class="title">
         <h2 class="title-text"><a href="${href}" itemprop="url"><span itemprop="name">${title}</span></a></h2>
-        <div class="thumb-frame" role="img" aria-label="${title} — ${lang === "pl" ? "podgląd" : "preview"}"${thumbStyle(p.thumb || (p.images || [])[0])}></div>
+        <div class="thumb-frame" role="img" aria-label="${title} — ${tr("w.preview", lang)}"${thumbStyle(p.thumb || (p.images || [])[0])}></div>
       </div>
-      <div class="meta"><span itemprop="dateCreated">${escapeHtml(p.year)}</span> · <span itemprop="contentLocation">${escapeHtml(p.place[lang])}</span> · ${p.works} ${worksLabel}</div>
+      <div class="meta"><span itemprop="dateCreated">${escapeHtml(p.year)}</span> · <span itemprop="contentLocation">${escapeHtml(p.place[lang])}</span> · ${p.works} ${worksLabel(p.works, lang)}</div>
     </article>
   `;
     })
@@ -578,8 +605,8 @@ function newsListHtml(items, lang, i18n, single) {
     const title = escapeHtml(a.title[L]);
     // Zdjęcia z wydarzeń miały puste alt, więc dla wyszukiwarki grafiki nie
     // znaczyły nic. Opis niesie tytuł wydarzenia, miejsce i numer zdjęcia.
-    const photoWord = L === "pl" ? "zdjęcie" : "photo";
-    const ofWord = L === "pl" ? "z" : "of";
+    const photoWord = tr("w.photo", L);
+    const ofWord = tr("w.of", L);
     const photos = (a.images || []).map((src, i) => {
       const opis = escapeHtml(
         `${a.title[L]}, ${a.place[L]} — ${photoWord} ${i + 1} ${ofWord} ${(a.images || []).length}`
@@ -595,7 +622,7 @@ function newsListHtml(items, lang, i18n, single) {
       ).join("");
       link = `<div class="achievement-links">${list}</div>`;
     } else if (a.url) {
-      const fallback = L === "pl" ? "Zobacz więcej →" : "Learn more →";
+      const fallback = tr("news.more", L);
       link = `<a class="achievement-link" href="${escapeHtml(a.url)}" target="_blank" rel="noopener noreferrer">${fallback}</a>`;
     }
 
@@ -630,6 +657,14 @@ function newsListHtml(items, lang, i18n, single) {
   }).join("");
 }
 
+// Tytuł strony wpisu — bliźniak newsTitle() z app.js. Tytuły dłuższe niż
+// ok. 70 znaków Google ucina, więc wtedy rodzaj wydarzenia odpada, a nazwisko
+// autora zostaje. Wcześniej dwa wpisy miały tytuły ponad 90-znakowe.
+function newsTitle(a, L) {
+  const full = `${a.title[L]} — ${a.type[L]} · ${AUTHOR}`;
+  return full.length <= 70 ? full : `${a.title[L]} · ${AUTHOR}`;
+}
+
 function newsItemPage(a, lang, i18n) {
   const L = lang;
   const self = pathFor("newsItem", a.id, L);
@@ -651,7 +686,7 @@ function newsItemPage(a, lang, i18n) {
     h1InContent: true,
     listSingle: true,
     crumb: a.title[L],
-    title: `${a.title[L]} — ${a.type[L]} · ${AUTHOR}`,
+    title: newsTitle(a, L),
     description: shorten(seoDesc || descText),
     image: images.length
       ? { url: BASE + images[0], alt: `${a.title[L]} — ${a.place[L]}`, type: "image/webp", hasKnownSize: false }
@@ -676,8 +711,8 @@ function projectPage(p, lang, projects) {
   const images = p.images.map(abs);
   const descText = (p.description && p.description[L]) || p.caption[L];
   const seo = (p.seo && p.seo[L]) || {};
-  const photoWord = L === "pl" ? "zdjęcie" : "photo";
-  const ofWord = L === "pl" ? "z" : "of";
+  const photoWord = tr("w.photo", L);
+  const ofWord = tr("w.of", L);
 
   const slides = images
     .map((src, i) =>
@@ -718,7 +753,7 @@ function projectPage(p, lang, projects) {
     fill: {
       homeListPoster: homeGrid(projects, L),
       pjSub: escapeHtml(`${p.no} / ${p.category[L]}`),
-      pjMeta: `${escapeHtml(p.year)}<br>${escapeHtml(p.place[L])}<br>${p.works} ${L === "pl" ? "prac" : "works"}`,
+      pjMeta: `${escapeHtml(p.year)}<br>${escapeHtml(p.place[L])}<br>${p.works} ${worksLabel(p.works, L)}`,
       pjTrack: slides,
       pjCaption: escapeHtml(p.caption[L]),
       pjCounter: `01/${String(images.length).padStart(2, "0")}`,
@@ -729,7 +764,10 @@ function projectPage(p, lang, projects) {
       "@type": p.book ? "Book" : "CreativeWork",
       "@id": `${BASE}${pathFor("project", p.slug, L)}#work`,
       name: title,
-      alternateName: p.title[L === "pl" ? "en" : "pl"],
+      // Tytuły cyklu w pozostałych językach (bez powtórzeń — np. „Labirynt”
+      // i „Labyrint” różnią się, ale nazwy własne bywają identyczne).
+      alternateName: [...new Set(LANGS.filter((l) => l !== L).map((l) => p.title[l]))]
+        .filter((n) => n && n !== title),
       url: `${BASE}${pathFor("project", p.slug, L)}`,
       dateCreated: p.year,
       genre: p.category[L],
@@ -751,56 +789,11 @@ function projectPage(p, lang, projects) {
   };
 }
 
-const TEXTS = {
-  home: {
-    pl: {
-      title: `${AUTHOR} — Fotograf i Artysta Wizualny | Warszawa, ZPAF`,
-      description:
-        "Paweł Sypniewski — fotograf i artysta wizualny z Warszawy, członek ZPAF. Fotografia dokumentalna i kreacyjna, zdjęcia z cykli autorskich, techniki szlachetne.",
-    },
-    en: {
-      title: `${AUTHOR} — Photographer and Visual Artist | Warsaw, ZPAF`,
-      description:
-        "Paweł Sypniewski — photographer and visual artist from Warsaw. Documentary, reportage and constructed works. Member of ZPAF, Warsaw Branch.",
-    },
-  },
-  about: {
-    pl: {
-      title: `O autorze — ${AUTHOR}, fotograf i artysta wizualny`,
-      description:
-        "Paweł Sypniewski (ur. 1987) — fotograf i artysta wizualny z Warszawy, członek ZPAF. Edukacja: ITF Opawa, Sputnik Photos.",
-    },
-    en: {
-      title: `About — ${AUTHOR}, photographer and visual artist`,
-      description:
-        "Paweł Sypniewski (b. 1987) — photographer and visual artist from Warsaw, ZPAF member. Education: ITF Opava, Sputnik Photos.",
-    },
-  },
-  contact: {
-    pl: {
-      title: `Kontakt — ${AUTHOR}`,
-      description:
-        "Limitowane odbitki autorskie. Skontaktuj się mailowo w sprawie nakładu, formatów i cen.",
-    },
-    en: {
-      title: `Contact — ${AUTHOR}`,
-      description:
-        "Limited-edition artist prints available. Get in touch by email for sizes and pricing.",
-    },
-  },
-  achievements: {
-    pl: {
-      title: `Aktualności — ${AUTHOR}`,
-      description:
-        "Aktualne wystawy, pokazy festiwalowe i wydarzenia z udziałem Pawła Sypniewskiego — fotografa i artysty wizualnego z Warszawy.",
-    },
-    en: {
-      title: `News — ${AUTHOR}`,
-      description:
-        "Current exhibitions, festival screenings and events featuring Paweł Sypniewski — photographer and visual artist based in Warsaw.",
-    },
-  },
-};
+// Tytuły i opisy stron sekcji mieszkają w data.js (klucze seo.*) — tam samo
+// czyta je app.js przy przełączaniu widoków, więc nie mogą się rozjechać.
+function sectionText(route, lang) {
+  return { title: tr(`seo.${route}.title`, lang), description: tr(`seo.${route}.desc`, lang) };
+}
 
 /* Okruszki nawigacyjne. Google pokazuje je w wyniku wyszukiwania ZAMIAST
    gołego adresu: „Paweł Sypniewski › Aktualności › Nocne ptaki…” zamiast
@@ -849,8 +842,8 @@ function sectionPage(route, lang, viewId, extra) {
       lang,
       path: pathFor(route, null, lang),
       viewId,
-      title: TEXTS[route][lang].title,
-      description: TEXTS[route][lang].description,
+      title: sectionText(route, lang).title,
+      description: sectionText(route, lang).description,
       image: COVER,
     },
     extra || {}
@@ -862,7 +855,7 @@ function newsJsonLd(news, lang) {
     "@context": "https://schema.org",
     "@type": "ItemList",
     "@id": `${BASE}${pathFor("achievements", null, lang)}#lista`,
-    name: lang === "pl" ? "Wystawy i wydarzenia" : "Exhibitions and events",
+    name: tr("news.listName", lang),
     inLanguage: INLANG[lang],
     itemListElement: newsSorted(news)
       .map((n, i) => ({
@@ -876,10 +869,28 @@ function newsJsonLd(news, lang) {
 /* ------------------------------------------------------------------ */
 
 async function build() {
-  const i18n = loadI18n();
-  const { ABOUT, CONTACT } = await loadTexts();
+  const i18n = I18N;
+  const { ABOUT, CONTACT, fillMissingLangs } = await loadTexts();
   const projects = readJSON("content/projects.json").filter((p) => !p.hidden);
   const news = readJSON("content/news.json");
+
+  // Brakujące tłumaczenia: głośno o nich mówimy, a stronę i tak budujemy —
+  // loader.js podstawia wtedy tekst angielski (tak samo robi w przeglądarce).
+  const braki = [];
+  const szukaj = (node, gdzie) => {
+    if (Array.isArray(node)) return node.forEach((x, i) => szukaj(x, `${gdzie}[${i}]`));
+    if (!node || typeof node !== "object") return;
+    if ("pl" in node) LANGS.forEach((l) => { if (node[l] == null) braki.push(`${gdzie} [${l}]`); });
+    for (const k of Object.keys(node)) szukaj(node[k], `${gdzie}.${k}`);
+  };
+  projects.forEach((p) => szukaj(p, p.slug));
+  news.forEach((a) => szukaj(a, a.id));
+  if (braki.length) {
+    console.warn(`  ! brak tłumaczeń (${braki.length}) — w ich miejscu pójdzie tekst angielski:`);
+    braki.slice(0, 20).forEach((b) => console.warn("    ·", b));
+  }
+  fillMissingLangs(projects);
+  fillMissingLangs(news);
 
   // Polska strona główna: uzupełniamy ją o siatkę kafelków i dopiero TEN plik
   // służy za szablon dla pozostałych podstron. Dzięki temu każda podstrona ma
@@ -905,10 +916,10 @@ async function build() {
 
   const pages = [];
   for (const lang of LANGS) {
-    if (lang === "en") {
+    if (lang !== "pl") {
       pages.push(
-        sectionPage("home", "en", "view-home", {
-          fill: { homeListPoster: homeGrid(projects, "en") },
+        sectionPage("home", lang, "view-home", {
+          fill: { homeListPoster: homeGrid(projects, lang) },
           lcpImage,
         })
       );
@@ -1004,7 +1015,7 @@ async function build() {
   fs.writeFileSync(path.join(ROOT, "404.html"), applyBody(applyHead(template, nf), nf, i18n), "utf8");
   console.log("  ✓ /404.html");
 
-  // Mapa strony — obie wersje językowe, każda z odsyłaczem do siostrzanej.
+  // Mapa strony — wszystkie wersje językowe, każda z odsyłaczami do siostrzanych.
   //
   // lastmod = dzień, w którym ostatnio zmienił się PLIK Z TREŚCIĄ danej
   // podstrony (z historii git), a nie dzień uruchomienia generatora. Wcześniej
@@ -1055,7 +1066,8 @@ async function build() {
         const loc = BASE + pathFor(e.route, e.slug, e.lang);
         const alts = LANGS.map(
           (l) => `    <xhtml:link rel="alternate" hreflang="${l}" href="${BASE + pathFor(e.route, e.slug, l)}"/>`
-        ).join("\n");
+        ).concat(`    <xhtml:link rel="alternate" hreflang="x-default" href="${BASE + pathFor(e.route, e.slug, "pl")}"/>`)
+          .join("\n");
         return (
           `  <url>\n    <loc>${loc}</loc>\n${alts}\n    <lastmod>${e.lastmod || today}</lastmod>\n` +
           `    <changefreq>${e.changefreq}</changefreq>\n    <priority>${e.priority}</priority>\n  </url>`

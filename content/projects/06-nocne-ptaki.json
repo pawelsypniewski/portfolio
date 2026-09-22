@@ -5,16 +5,19 @@
   "no": "06",
   "title": {
     "pl": "Nocne Ptaki Późno Wracają Do Domu",
-    "en": "Night Birds Come Home Late"
+    "en": "Night Birds Come Home Late",
+    "cs": "Noční ptáci se vracejí domů pozdě"
   },
   "year": "2025",
   "category": {
     "pl": "Dokument / Reportaż / Street",
-    "en": "Documentary / Reportage / Street"
+    "en": "Documentary / Reportage / Street",
+    "cs": "Dokument / Reportáž / Street"
   },
   "place": {
     "pl": "Nocny styl życia",
-    "en": "Nocturnal life"
+    "en": "Nocturnal life",
+    "cs": "Noční život"
   },
   "works": 8,
   "flashEffect": true,
@@ -22,7 +25,8 @@
   "thumb": "",
   "caption": {
     "pl": "Zapis dokumentalny nocnego stylu życia. Refleksja nad normami społecznymi.",
-    "en": "A documentary record of nocturnal life. A reflection on social norms."
+    "en": "A documentary record of nocturnal life. A reflection on social norms.",
+    "cs": "Dokumentární záznam nočního životního stylu. Úvaha o společenských normách."
   },
   "seo": {
     "pl": {
@@ -32,11 +36,16 @@
     "en": {
       "title": "Night Birds Come Home Late — night photography",
       "description": "Night Birds Come Home Late — a documentary series by Paweł Sypniewski on Warsaw nightlife. Night and street photography of a weekly weekend ritual."
+    },
+    "cs": {
+      "title": "Noční ptáci se vracejí domů pozdě — noční fotografie",
+      "description": "Noční ptáci se vracejí domů pozdě — dokumentární cyklus Pawła Sypniewského o nočním životě Varšavy. Noční a pouliční fotografie víkendového rituálu."
     }
   },
   "description": {
     "pl": "Od poniedziałku do piątku żyją w ramach surowego reżimu społecznego. Chodzą do pracy, na uczelnię, zachowują twarz i panują nad emocjami. Jednak gdy tylko nadchodzi weekendowy wieczór, ulice zmieniają się w scenę, na której padają wszelkie zahamowania. Zmęczeni całym tygodniem, napędzani pragnieniem rozładowania stresu i wspomagani substancjami odurzającymi, stają się częścią nocnego spektaklu.\n\nDokumentując ten cotygodniowy rytuał, zadaję sobie jedno zasadnicze pytanie dotyczące ich tożsamości. Czy w tym nocnym chaosie ci ludzie wreszcie zdejmują swoje codzienne maski i są w stu procentach sobą? A może ulica to tylko kolejna scena, na której wchodzą w nową, weekendową rolę nieskrępowanego imprezowicza?",
-    "en": "From Monday to Friday they live within a strict social regime. They go to work, to university, they keep up appearances and keep their emotions in check. But as soon as the weekend evening arrives, the streets turn into a stage on which every inhibition falls away. Worn out by the whole week, driven by the urge to release stress and aided by intoxicants, they become part of the nocturnal spectacle.\n\nDocumenting this weekly ritual, I ask myself one fundamental question about their identity. In this nocturnal chaos, do these people finally take off their everyday masks and become one hundred percent themselves? Or is the street just another stage, on which they step into a new, weekend role — that of the uninhibited partygoer?"
+    "en": "From Monday to Friday they live within a strict social regime. They go to work, to university, they keep up appearances and keep their emotions in check. But as soon as the weekend evening arrives, the streets turn into a stage on which every inhibition falls away. Worn out by the whole week, driven by the urge to release stress and aided by intoxicants, they become part of the nocturnal spectacle.\n\nDocumenting this weekly ritual, I ask myself one fundamental question about their identity. In this nocturnal chaos, do these people finally take off their everyday masks and become one hundred percent themselves? Or is the street just another stage, on which they step into a new, weekend role — that of the uninhibited partygoer?",
+    "cs": "Od pondělí do pátku žijí v přísném společenském režimu. Chodí do práce, na vysokou školu, drží tvář a ovládají emoce. Jakmile však nastane víkendový večer, promění se ulice v jeviště, na kterém padají všechny zábrany. Unavení celým týdnem, hnaní touhou zbavit se stresu a posilnění omamnými látkami se stávají součástí nočního představení.\n\nPři dokumentování tohoto týdenního rituálu si kladu jednu zásadní otázku týkající se jejich identity. Odkládají tito lidé v nočním chaosu konečně své každodenní masky a jsou stoprocentně sami sebou? Nebo je ulice jen další scénou, na níž vstupují do nové, víkendové role nespoutaného pařana?"
   },
   "images": [
     "images/nocne-ptaki/04.webp",

@@ -70,7 +70,33 @@ const PATH_BY_ROUTE = {
     contact:      "/en/contact/",
     achievements: "/en/news/",
   },
+  cs: {
+    home:         "/cs/",
+    about:        "/cs/o-autorovi/",
+    contact:      "/cs/kontakt/",
+    achievements: "/cs/aktuality/",
+  },
 };
+// Wersje językowe i przedrostek adresu każdej z nich. Polska mieszka
+// w korzeniu witryny, pozostałe pod własnym katalogiem (/en/, /cs/).
+const LANGS = ["pl", "en", "cs"];
+const LANG_PREFIX = { pl: "/", en: "/en/", cs: "/cs/" };
+const OG_LOCALE = { pl: "pl_PL", en: "en_US", cs: "cs_CZ" };
+
+// Tekst interfejsu w danym języku (data.js → window.I18N). Brakujący klucz
+// bierzemy z angielskiego, żeby nigdy nie pokazać pustego miejsca.
+function tr(key, L) {
+  const lang = L || state.lang;
+  const dict = window.I18N[lang] || {};
+  return dict[key] != null ? dict[key] : ((window.I18N.en || {})[key] || "");
+}
+
+// Liczba prac z właściwą formą: po czesku 1 práce / 2–4 práce / 5+ prací.
+function worksLabel(n, L) {
+  if (L === "pl") return "prac";
+  if (L === "cs") return n >= 1 && n <= 4 ? "práce" : "prací";
+  return n === 1 ? "work" : "works";
+}
 // Ścieżka (bez ukośników na brzegach) → widok i język
 const ROUTE_BY_PATH = {
   "o-autorze":   { route: "about",        lang: "pl" },
@@ -80,6 +106,10 @@ const ROUTE_BY_PATH = {
   "en/about":    { route: "about",        lang: "en" },
   "en/contact":  { route: "contact",      lang: "en" },
   "en/news":     { route: "achievements", lang: "en" },
+  "cs":             { route: "home",         lang: "cs" },
+  "cs/o-autorovi":  { route: "about",        lang: "cs" },
+  "cs/kontakt":     { route: "contact",      lang: "cs" },
+  "cs/aktuality":   { route: "achievements", lang: "cs" },
 };
 // Stare hashe → nazwa widoku (PL i EN slug dla osiągnięć — zachowujemy oba)
 const ROUTE_BY_HASH = {
@@ -116,14 +146,14 @@ function currentSlug() {
 // a angielskie słowa kluczowe niesie tytuł i opis strony.
 function routeToPath(route, slug, lang) {
   const L = lang || state.lang;
-  if (route === "project" && slug) return (L === "en" ? "/en/" : "/") + slug + "/";
+  if (route === "project" && slug) return (LANG_PREFIX[L] || "/") + slug + "/";
   // Aktualność mieszka POD listą aktualności — adres pokazuje tę zależność
   // i człowiekowi, i wyszukiwarce (/aktualnosci/ → /aktualnosci/wpis/).
   if (route === "newsItem") {
     const list = (PATH_BY_ROUTE[L] || PATH_BY_ROUTE.pl).achievements;
     return slug ? list + slug + "/" : list;
   }
-  return (PATH_BY_ROUTE[L] || PATH_BY_ROUTE.pl)[route] || (L === "en" ? "/en/" : "/");
+  return (PATH_BY_ROUTE[L] || PATH_BY_ROUTE.pl)[route] || LANG_PREFIX[L] || "/";
 }
 
 // Adres → widok i język. Zwraca null dla ścieżek, których nie znamy
@@ -139,12 +169,18 @@ function routeFromPath(pathname) {
   if (seg.startsWith("aktualnosci/") && isNewsSlug(seg.slice(12))) {
     return { route: "newsItem", slug: seg.slice(12), lang: "pl" };
   }
-  if (seg.startsWith("en/news/") && isNewsSlug(seg.slice(8))) {
-    return { route: "newsItem", slug: seg.slice(8), lang: "en" };
-  }
   if (isProjectSlug(seg)) return { route: "project", slug: seg, lang: "pl" };
-  if (seg.startsWith("en/") && isProjectSlug(seg.slice(3))) {
-    return { route: "project", slug: seg.slice(3), lang: "en" };
+  // Pozostałe wersje językowe: /en/…, /cs/… — lista aktualności i cykle.
+  for (const L of LANGS) {
+    if (L === "pl") continue;
+    const prefix = LANG_PREFIX[L].slice(1);          // "en/", "cs/"
+    const news = PATH_BY_ROUTE[L].achievements.slice(1); // "en/news/", "cs/aktuality/"
+    if (seg.startsWith(news) && isNewsSlug(seg.slice(news.length))) {
+      return { route: "newsItem", slug: seg.slice(news.length), lang: L };
+    }
+    if (seg.startsWith(prefix) && isProjectSlug(seg.slice(prefix.length))) {
+      return { route: "project", slug: seg.slice(prefix.length), lang: L };
+    }
   }
   return null;
 }
@@ -155,7 +191,7 @@ function parseRoute() {
   let paramLang = null;
   try {
     const v = new URLSearchParams(window.location.search).get("lang");
-    if (v === "pl" || v === "en") paramLang = v;
+    if (LANGS.includes(v)) paramLang = v;
   } catch (e) { /* nietypowy URL — ignoruj */ }
 
   const withLang = (r) => {
@@ -181,10 +217,11 @@ function parseRoute() {
     if (isProjectSlug(hash)) return { route: "project", slug: hash, lang, legacy: true };
   }
   // 3. Adres nie pasuje do niczego — GitHub Pages podał 404.html. Pokazujemy
-  //    stronę główną z komunikatem, w języku, na który wskazuje przedrostek /en/.
+  //    stronę główną z komunikatem, w języku, na który wskazuje przedrostek
+  //    adresu (/en/…, /cs/…).
   if (!fromPath) {
-    const en = /^\/en(\/|$)/.test(window.location.pathname);
-    return withLang({ route: "home", lang: en ? "en" : "pl", notFound: true });
+    const m = /^\/(en|cs)(\/|$)/.exec(window.location.pathname);
+    return withLang({ route: "home", lang: m ? m[1] : "pl", notFound: true });
   }
   return withLang(fromPath);
 }
@@ -229,12 +266,12 @@ function renderHome() {
   $("#homeListPoster").innerHTML = projs.map((p, i) => {
     return `
     <article class="cell c${i+1}" data-slug="${p.slug}" itemscope itemtype="https://schema.org/CreativeWork">
-      <div class="num">${p.no} / ${L==="pl"?"PRACE":"WORKS"}</div>
+      <div class="num">${p.no} / ${tr("w.works", L)}</div>
       <div class="title">
-        <h2 class="title-text"><a href="/${p.slug}/" itemprop="url"><span itemprop="name">${p.title[L]}</span></a></h2>
-        <div class="thumb-frame" role="img" aria-label="${p.title[L]} — podgląd"${homeCellThumb(p) ? ` style="background-image:url('${thumbPath(homeCellThumb(p))}')"` : ""}></div>
+        <h2 class="title-text"><a href="${routeToPath("project", p.slug, L)}" itemprop="url"><span itemprop="name">${p.title[L]}</span></a></h2>
+        <div class="thumb-frame" role="img" aria-label="${attr(p.title[L])} — ${tr("w.preview", L)}"${homeCellThumb(p) ? ` style="background-image:url('${thumbPath(homeCellThumb(p))}')"` : ""}></div>
       </div>
-      <div class="meta"><span itemprop="dateCreated">${p.year}</span> · <span itemprop="contentLocation">${p.place[L]}</span> · ${p.works} ${L==="pl"?"prac":"works"}</div>
+      <div class="meta"><span itemprop="dateCreated">${p.year}</span> · <span itemprop="contentLocation">${p.place[L]}</span> · ${p.works} ${worksLabel(p.works, L)}</div>
     </article>
   `;}).join("");
 
@@ -519,9 +556,9 @@ const DanieBook = (function () {
       <div class="bp-section">${esc(r.section[L] || r.section.pl)}</div>
       <div class="bp-recipe-title">${esc(r.title)}</div>
       <div class="bp-rule"></div>
-      <div class="bp-ing-h">${L === "pl" ? "Składniki" : "Ingredients"}</div>
+      <div class="bp-ing-h">${tr("book.ing", L)}</div>
       <ul class="bp-ing">${ing}</ul>
-      <div class="bp-steps-h">${L === "pl" ? "Wykonanie" : "Method"}</div>
+      <div class="bp-steps-h">${tr("book.steps", L)}</div>
       <p class="bp-steps">${esc(r.steps)}</p>
     </div></div>`;
   }
@@ -759,7 +796,7 @@ function renderProject() {
 
   $("#pjTitle").textContent = p.title[L];
   $("#pjSub").textContent   = `${p.no} / ${p.category[L]}`;
-  $("#pjMeta").innerHTML    = `${p.year}<br>${p.place[L]}<br>${p.works} ${L==="pl"?"prac":"works"}`;
+  $("#pjMeta").innerHTML    = `${p.year}<br>${p.place[L]}<br>${p.works} ${worksLabel(p.works, L)}`;
   $("#pjCaption").textContent = p.caption[L];
 
   const descEl = $("#pjDescription");
@@ -792,10 +829,10 @@ function renderProject() {
     });
     prevBtn.innerHTML = `<span class="pn-arrow">←</span> <span class="pn-label">${prev.no} ${prev.title[L]}</span>`;
     prevBtn.setAttribute("href", routeToPath("project", prev.slug));
-    prevBtn.setAttribute("aria-label", (L==="pl"?"Poprzedni projekt: ":"Previous project: ") + prev.title[L]);
+    prevBtn.setAttribute("aria-label", tr("proj.prevLabel", L) + prev.title[L]);
     nextBtn.innerHTML = `<span class="pn-label">${next.no} ${next.title[L]}</span> <span class="pn-arrow">→</span>`;
     nextBtn.setAttribute("href", routeToPath("project", next.slug));
-    nextBtn.setAttribute("aria-label", (L==="pl"?"Następny projekt: ":"Next project: ") + next.title[L]);
+    nextBtn.setAttribute("aria-label", tr("proj.nextLabel", L) + next.title[L]);
   }
 
   // Stykówkę budujemy zawsze — także dla trybu książki, gdzie podejrzenie
@@ -981,8 +1018,8 @@ function buildSheet(p, L) {
   const sheet = $("#pjSheet");
   if (!sheet) return;
   const imgs = p.images || [];
-  const photoWord = L === "pl" ? "zdjęcie" : "photo";
-  const ofWord = L === "pl" ? "z" : "of";
+  const photoWord = tr("w.photo", L);
+  const ofWord = tr("w.of", L);
 
   sheet.innerHTML = imgs.map((src, i) => {
     const label = `${attr(p.title[L])} — ${photoWord} ${i + 1} ${ofWord} ${imgs.length}`;
@@ -1044,7 +1081,7 @@ function setSheetMode(on) {
   const counter = $("#pjCounter");
   if (counter) {
     counter.style.visibility = (isBook && !state.sheetOpen) ? "hidden" : "";
-    if (state.sheetOpen) counter.textContent = `${p.images.length} ${L === "pl" ? "prac" : "works"}`;
+    if (state.sheetOpen) counter.textContent = `${p.images.length} ${worksLabel(p.images.length, L)}`;
     else if (!isBook) updateSlide();
   }
 }
@@ -1103,9 +1140,8 @@ function openLightbox(images, index, opts = {}) {
     const ile = p.images.length;
     opts = {
       flash: !!p.flashEffect,
-      alts: p.images.map((_, i) => L0 === "pl"
-        ? `${p.title[L0]} — zdjęcie ${i + 1} z ${ile}, ${p.year}, ${p.category[L0]}`
-        : `${p.title[L0]} — photo ${i + 1} of ${ile}, ${p.year}, ${p.category[L0]}`),
+      alts: p.images.map((_, i) =>
+        `${p.title[L0]} — ${tr("w.photo", L0)} ${i + 1} ${tr("w.of", L0)} ${ile}, ${p.year}, ${p.category[L0]}`),
     };
     index = images;
     images = p.images;
@@ -1247,9 +1283,16 @@ function syncNewsHeading(single) {
    puste miejsce. Ten sam tekst wpisuje generator do gotowych plików. */
 function newsPhotoAlt(a, i, L) {
   const ile = (a.images || []).length;
-  return L === "pl"
-    ? `${a.title[L]}, ${a.place[L]} — zdjęcie ${i + 1} z ${ile}`
-    : `${a.title[L]}, ${a.place[L]} — photo ${i + 1} of ${ile}`;
+  return `${a.title[L]}, ${a.place[L]} — ${tr("w.photo", L)} ${i + 1} ${tr("w.of", L)} ${ile}`;
+}
+
+/* Tytuł strony wpisu. Google ucina tytuły w okolicach 60–70 znaków, więc
+   gdy tytuł wpisu z rodzajem wydarzenia byłby za długi, rodzaj odpada —
+   ważniejsze, żeby w wyniku wyszukiwania zmieściło się nazwisko autora.
+   Ta sama reguła żyje w tools/build-pages.js (newsTitle). */
+function newsTitle(a, L) {
+  const full = `${a.title[L]} — ${a.type[L]} · Paweł Sypniewski`;
+  return full.length <= 70 ? full : `${a.title[L]} · Paweł Sypniewski`;
 }
 
 function thumbPath(src) {
@@ -1332,7 +1375,7 @@ function renderAchievements() {
       ).join("");
       link = `<div class="achievement-links">${items}</div>`;
     } else if (a.url) {
-      const fallback = L === "pl" ? "Zobacz więcej →" : "Learn more →";
+      const fallback = tr("news.more", L);
       link = `<a class="achievement-link" href="${a.url}" target="_blank" rel="noopener noreferrer">${fallback}</a>`;
     }
     // Data wyświetlana — preferuj `date` (string PL/EN), fallback do `year`
@@ -1522,17 +1565,13 @@ function updateSEO(route) {
       url   = BASE_URL + routeToPath("project", p.slug);
     }
   } else if (route === "about") {
-    title = L === "pl"
-      ? "O autorze — Paweł Sypniewski, fotograf i artysta wizualny"
-      : "About — Paweł Sypniewski, photographer and visual artist";
-    desc  = L === "pl"
-      ? "Paweł Sypniewski (ur. 1987) — fotograf i artysta wizualny z Warszawy, członek ZPAF. Edukacja: ITF Opawa, Sputnik Photos."
-      : "Paweł Sypniewski (b. 1987) — photographer and visual artist from Warsaw, ZPAF member. Education: ITF Opava, Sputnik Photos.";
+    title = tr("seo.about.title", L);
+    desc  = tr("seo.about.desc", L);
     url   = BASE_URL + routeToPath("about");
   } else if (route === "newsItem" && state.newsSlug) {
     const a = findNews(state.newsSlug);
     if (a) {
-      title = `${a.title[L]} — ${a.type[L]} · Paweł Sypniewski`;
+      title = newsTitle(a, L);
       const src = String(
         (a.seo && a.seo[L] && a.seo[L].description) || (a.description && a.description[L]) || ""
       ).replace(/\s+/g, " ").trim();
@@ -1540,34 +1579,21 @@ function updateSEO(route) {
       url = BASE_URL + routeToPath("newsItem", a.id);
     }
   } else if (route === "achievements") {
-    title = L === "pl"
-      ? "Aktualności — Paweł Sypniewski"
-      : "News — Paweł Sypniewski";
-    desc  = L === "pl"
-      ? "Aktualne wystawy, pokazy festiwalowe i wydarzenia z udziałem Pawła Sypniewskiego — fotografa i artysty wizualnego z Warszawy."
-      : "Current exhibitions, festival screenings and events featuring Paweł Sypniewski — photographer and visual artist based in Warsaw.";
+    title = tr("seo.achievements.title", L);
+    desc  = tr("seo.achievements.desc", L);
     url   = BASE_URL + routeToPath("achievements");
   } else if (route === "contact") {
-    title = L === "pl"
-      ? "Kontakt — Paweł Sypniewski"
-      : "Contact — Paweł Sypniewski";
-    desc  = L === "pl"
-      ? "Limitowane odbitki autorskie. Skontaktuj się mailowo w sprawie nakładu, formatów i cen."
-      : "Limited-edition artist prints available. Get in touch by email for sizes and pricing.";
+    title = tr("seo.contact.title", L);
+    desc  = tr("seo.contact.desc", L);
     url   = BASE_URL + routeToPath("contact");
   } else if (state.notFound) {
     // Strona 404: tytuł mówi, co się stało, zamiast udawać stronę główną.
-    const dict = window.I18N[L] || {};
-    title = dict["notfound.title"] || document.title;
-    desc  = dict["notfound.desc"] || "";
+    title = tr("notfound.title", L) || document.title;
+    desc  = tr("notfound.desc", L);
     url   = BASE_URL + routeToPath("home");
   } else {
-    title = L === "pl"
-      ? "Paweł Sypniewski — Fotograf i Artysta Wizualny | Warszawa, ZPAF"
-      : "Paweł Sypniewski — Photographer and Visual Artist | Warsaw, ZPAF";
-    desc  = L === "pl"
-      ? "Paweł Sypniewski — fotograf i artysta wizualny z Warszawy, członek ZPAF. Fotografia dokumentalna i kreacyjna, zdjęcia z cykli autorskich, techniki szlachetne."
-      : "Paweł Sypniewski — photographer and visual artist from Warsaw. Documentary, reportage and constructed works. Member of ZPAF, Warsaw Branch.";
+    title = tr("seo.home.title", L);
+    desc  = tr("seo.home.desc", L);
     url   = BASE_URL + routeToPath("home");
   }
 
@@ -1584,21 +1610,22 @@ function updateSEO(route) {
   if (canonical && url) canonical.setAttribute("href", url);
 
   // Wersja językowa strony — dla Facebooka/LinkedIna i dla wyszukiwarek
-  setMeta('meta[property="og:locale"]', L === "pl" ? "pl_PL" : "en_US");
-  setMeta('meta[property="og:locale:alternate"]', L === "pl" ? "en_US" : "pl_PL");
+  setMeta('meta[property="og:locale"]', OG_LOCALE[L]);
+  // Tagi og:locale:alternate są dwa (po jednym na każdą pozostałą wersję).
+  const others = LANGS.filter((l) => l !== L);
+  $$('meta[property="og:locale:alternate"]').forEach((el, i) => {
+    if (others[i]) el.setAttribute("content", OG_LOCALE[others[i]]);
+  });
   const contentLang = document.querySelector('meta[http-equiv="content-language"]');
   if (contentLang) contentLang.setAttribute("content", L);
 
-  // hreflang — para adresów siostrzanych dla bieżącego widoku
-  const selfPl = BASE_URL + routeToPath(route, currentSlug(), "pl");
-  const selfEn = BASE_URL + routeToPath(route, currentSlug(), "en");
+  // hreflang — adresy siostrzane bieżącego widoku we wszystkich językach
   const setAlt = (lang, href) => {
     const el = document.querySelector(`link[rel="alternate"][hreflang="${lang}"]`);
     if (el) el.setAttribute("href", href);
   };
-  setAlt("pl", selfPl);
-  setAlt("en", selfEn);
-  setAlt("x-default", selfPl);
+  for (const l of LANGS) setAlt(l, BASE_URL + routeToPath(route, currentSlug(), l));
+  setAlt("x-default", BASE_URL + routeToPath(route, currentSlug(), "pl"));
 
   // Google Analytics 4 — virtual page_view dla SPA
   if (typeof window.gtag === "function" && url) {
@@ -1764,7 +1791,7 @@ function applyLang(lang) {
 // a nie przełącznik w miejscu: każda wersja językowa ma własny, indeksowalny
 // adres i własny canonical.
 function setLang(lang) {
-  if (lang !== "pl" && lang !== "en") return;
+  if (!LANGS.includes(lang)) return;
   if (lang === state.lang) return;
   applyLang(lang);
   setRoute(state.route, { skipScroll: true });
@@ -2058,7 +2085,7 @@ function buildNavPreview(route, L) {
         <span class="np-thumb" style="background-image:url('${p.thumb || p.images[0]}')"></span>
         <span class="np-text"><span class="np-no">${p.no}</span><span class="np-name">${p.title[L]}</span></span>
       </button>`).join("");
-    return `<div class="np-head">${L === "pl" ? "Wybrane realizacje" : "Selected works"}</div>
+    return `<div class="np-head">${tr("np.works", L)}</div>
       <div class="np-works">${items}</div>`;
   }
 
@@ -2074,7 +2101,7 @@ function buildNavPreview(route, L) {
         <span class="np-news-title">${a.title[L]}</span>
         <span class="np-news-place">${a.place[L]}</span>
       </div>`).join("");
-    return `<div class="np-head">${L === "pl" ? "Najnowsze" : "Latest"}</div>${items}`;
+    return `<div class="np-head">${tr("np.latest", L)}</div>${items}`;
   }
 
   if (route === "about") {
@@ -2082,9 +2109,7 @@ function buildNavPreview(route, L) {
     tmp.innerHTML = window.ABOUT[L].body;
     const firstP = tmp.querySelector("p");
     const intro = firstP ? firstP.textContent : "";
-    const facts = L === "pl"
-      ? ["ZPAF", "ITF Opawa", "Sputnik Photos", "Warszawa / Opawa"]
-      : ["ZPAF", "ITF Opava", "Sputnik Photos", "Warsaw / Opava"];
+    const facts = tr("np.facts", L).split("|");
     return `
       <div class="np-about">
         <span class="np-portrait" style="background-image:url('/images/about/portrait-web.webp')"></span>
@@ -2095,7 +2120,7 @@ function buildNavPreview(route, L) {
 
   if (route === "contact") {
     return `
-      <div class="np-head">${L === "pl" ? "Kontakt" : "Get in touch"}</div>
+      <div class="np-head">${tr("np.contact", L)}</div>
       <div class="np-contact">
         <div class="np-cline">
           <span class="np-clabel">E-mail</span>
@@ -2105,9 +2130,7 @@ function buildNavPreview(route, L) {
           <span class="np-clabel">Instagram</span>
           <a href="https://www.instagram.com/sypniewskistudio/" target="_blank" rel="noopener noreferrer">@sypniewskistudio</a>
         </div>
-        <p class="np-cnote">${L === "pl"
-          ? "Odbitki autorskie w limitowanych edycjach — napisz w sprawie formatów i cen."
-          : "Limited-edition artist prints — get in touch about sizes and pricing."}</p>
+        <p class="np-cnote">${tr("np.cnote", L)}</p>
       </div>`;
   }
 

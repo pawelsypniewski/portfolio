@@ -5,34 +5,41 @@
     "dateEndISO": "2023-10-18",
     "date": {
       "pl": "27 września – 18 października 2023",
-      "en": "27 September – 18 October 2023"
+      "en": "27 September – 18 October 2023",
+      "cs": "27. září – 18. října 2023"
     },
     "type": {
       "pl": "Wystawa zbiorowa",
-      "en": "Group exhibition"
+      "en": "Group exhibition",
+      "cs": "Kolektivní výstava"
     },
     "title": {
       "pl": "10 przykazań",
-      "en": "10 Commandments"
+      "en": "10 Commandments",
+      "cs": "10 přikázání"
     },
     "place": {
       "pl": "Galeria Obok ZPAF, Warszawa",
-      "en": "Galeria Obok ZPAF, Warsaw"
+      "en": "Galeria Obok ZPAF, Warsaw",
+      "cs": "Galeria Obok ZPAF, Varšava"
     },
     "venue": {
       "name": {
         "pl": "Galeria Obok ZPAF",
-        "en": "Galeria Obok ZPAF"
+        "en": "Galeria Obok ZPAF",
+        "cs": "Galeria Obok ZPAF"
       },
       "locality": {
         "pl": "Warszawa",
-        "en": "Warsaw"
+        "en": "Warsaw",
+        "cs": "Varšava"
       },
       "country": "PL"
     },
     "description": {
       "pl": "Wystawa zbiorowa będąca owocem rocznej pracy jedenastu słuchaczy Studium Fotografii ZPAF pod kierunkiem Jolanty Rycerskiej. Dekalog — jako temat i wspólny mianownik projektu — skłonił autorów do wizualnych analiz świata wartości, zarówno tych historycznych, wpisanych w naszą kulturę, jak i tych aktualnie przetwarzanych pod wpływem dynamicznych zmian społecznych. Wielogłos pytań, nie odpowiedzi. Kuratorka: Jolanta Rycerska.",
-      "en": "Group exhibition — the fruit of one year's work by eleven students of the ZPAF School of Photography under the guidance of Jolanta Rycerska. The Decalogue — as theme and common denominator — led the authors to visual analyses of values, both historical, embedded in our culture, and those currently being reworked under dynamic social change. A multi-voice of questions rather than answers. Curator: Jolanta Rycerska."
+      "en": "Group exhibition — the fruit of one year's work by eleven students of the ZPAF School of Photography under the guidance of Jolanta Rycerska. The Decalogue — as theme and common denominator — led the authors to visual analyses of values, both historical, embedded in our culture, and those currently being reworked under dynamic social change. A multi-voice of questions rather than answers. Curator: Jolanta Rycerska.",
+      "cs": "Kolektivní výstava, která je výsledkem ročního tvůrčího úsilí jedenácti studentů Studia fotografie ZPAF pod vedením Jolanty Rycerské. Desatero — jako téma a společný jmenovatel projektu — přimělo autory k vizuálním analýzám světa hodnot, a to jak těch historických, vepsaných do naší kultury, tak těch, které se právě proměňují pod vlivem dynamických společenských změn. Mnohohlas otázek, ne odpovědí. Kurátorka: Jolanta Rycerska."
     },
     "seo": {
       "pl": {
@@ -40,13 +47,17 @@
       },
       "en": {
         "description": "“10 Commandments” — a group exhibition by eleven students of the ZPAF School of Photography at Galeria Obok ZPAF in Warsaw, with the Decalogue as its theme."
+      },
+      "cs": {
+        "description": "„10 přikázání“ — kolektivní výstava jedenácti studentů Studia fotografie ZPAF v Galerii Obok ZPAF ve Varšavě. Desatero jako východisko pro analýzu hodnot."
       }
     },
     "links": [
       {
         "label": {
           "pl": "Strona wystawy na ZPAF",
-          "en": "Exhibition page at ZPAF"
+          "en": "Exhibition page at ZPAF",
+          "cs": "Stránka výstavy na webu ZPAF"
         },
         "url": "https://www.zpaf.pl/aktualnosci/galeria-obok-zpaf/10-przykazan-sluchacze-SF-ZPAF/"
       }
@@ -66,34 +77,41 @@
     "dateEndISO": "2025-03-28",
     "date": {
       "pl": "28 marca 2025",
-      "en": "28 March 2025"
+      "en": "28 March 2025",
+      "cs": "28. března 2025"
     },
     "type": {
       "pl": "Pokaz festiwalowy",
-      "en": "Festival screening"
+      "en": "Festival screening",
+      "cs": "Festivalová projekce"
     },
     "title": {
       "pl": "Rybnik Foto Festival — slideshow „Labirynt”",
-      "en": "Rybnik Foto Festival — \"Labirynt\" slideshow"
+      "en": "Rybnik Foto Festival — \"Labirynt\" slideshow",
+      "cs": "Rybnik Foto Festival — slideshow „Labyrint“"
     },
     "place": {
       "pl": "Galeria Sztuki Rzeczna, Rybnik",
-      "en": "Galeria Sztuki Rzeczna, Rybnik"
+      "en": "Galeria Sztuki Rzeczna, Rybnik",
+      "cs": "Galeria Sztuki Rzeczna, Rybnik"
     },
     "venue": {
       "name": {
         "pl": "Galeria Sztuki Rzeczna",
-        "en": "Galeria Sztuki Rzeczna"
+        "en": "Galeria Sztuki Rzeczna",
+        "cs": "Galeria Sztuki Rzeczna"
       },
       "locality": {
         "pl": "Rybnik",
-        "en": "Rybnik"
+        "en": "Rybnik",
+        "cs": "Rybnik"
       },
       "country": "PL"
     },
     "description": {
       "pl": "Prezentacja slideshow cyklu „Labirynt” na 22. edycji Rybnik Foto Festival. Opowieść o młodych ludziach uwikłanych przez małe miasteczka. Metafora trudności do pokonania i zawiłości życiowych wyborów: czy widz znajdzie drogę wyjścia?",
-      "en": "Slideshow presentation of the \"Labirynt\" series at the 22nd edition of Rybnik Foto Festival. A story of young people entangled in small towns. A metaphor for difficulties to overcome and the tangled nature of life choices: will the viewer find a way out?"
+      "en": "Slideshow presentation of the \"Labirynt\" series at the 22nd edition of Rybnik Foto Festival. A story of young people entangled in small towns. A metaphor for difficulties to overcome and the tangled nature of life choices: will the viewer find a way out?",
+      "cs": "Projekce slideshow cyklu „Labyrint“ na 22. ročníku Rybnik Foto Festivalu. Příběh mladých lidí, které do svých sítí zapletla malá města. Metafora překážek, které je třeba překonat, a spletitosti životních rozhodnutí: najde divák cestu ven?"
     },
     "seo": {
       "pl": {
@@ -101,27 +119,33 @@
       },
       "en": {
         "description": "Slideshow of the “Labirynt” series at the 22nd Rybnik Foto Festival. A story of young people entangled in small towns and the tangle of life’s choices."
+      },
+      "cs": {
+        "description": "Projekce slideshow cyklu „Labyrint“ na 22. Rybnik Foto Festivalu. Příběh mladých lidí zapletených do malých měst a spletitosti životních rozhodnutí."
       }
     },
     "links": [
       {
         "label": {
           "pl": "Strona festiwalu",
-          "en": "Festival website"
+          "en": "Festival website",
+          "cs": "Web festivalu"
         },
         "url": "https://festiwal.rybnik.pl/"
       },
       {
         "label": {
           "pl": "Slideshow na YouTube",
-          "en": "Slideshow on YouTube"
+          "en": "Slideshow on YouTube",
+          "cs": "Slideshow na YouTube"
         },
         "url": "https://www.youtube.com/watch?v=4JCT6mdi9NA"
       },
       {
         "label": {
           "pl": "Post festiwalu na Instagramie",
-          "en": "Festival's Instagram post"
+          "en": "Festival's Instagram post",
+          "cs": "Příspěvek festivalu na Instagramu"
         },
         "url": "https://www.instagram.com/p/DHIWSF6uK1I/"
       }
@@ -136,34 +160,41 @@
     "dateEndISO": "2025-06-16",
     "date": {
       "pl": "16 czerwca 2025",
-      "en": "16 June 2025"
+      "en": "16 June 2025",
+      "cs": "16. června 2025"
     },
     "type": {
       "pl": "Edukacja",
-      "en": "Education"
+      "en": "Education",
+      "cs": "Vzdělávání"
     },
     "title": {
       "pl": "Rozpoczęcie studiów — ITF Opawa",
-      "en": "Studies started — ITF Opava"
+      "en": "Studies started — ITF Opava",
+      "cs": "Zahájení studia — ITF Opava"
     },
     "place": {
       "pl": "Institut tvůrčí fotografie, Uniwersytet Śląski w Opawie, Czechy",
-      "en": "Institut tvůrčí fotografie, Silesian University in Opava, Czech Republic"
+      "en": "Institut tvůrčí fotografie, Silesian University in Opava, Czech Republic",
+      "cs": "Institut tvůrčí fotografie, Slezská univerzita v Opavě"
     },
     "venue": {
       "name": {
         "pl": "Institut tvůrčí fotografie, Uniwersytet Śląski w Opawie",
-        "en": "Institute of Creative Photography, Silesian University in Opava"
+        "en": "Institute of Creative Photography, Silesian University in Opava",
+        "cs": "Institut tvůrčí fotografie, Slezská univerzita v Opavě"
       },
       "locality": {
         "pl": "Opawa",
-        "en": "Opava"
+        "en": "Opava",
+        "cs": "Opava"
       },
       "country": "CZ"
     },
     "description": {
       "pl": "Rozpoczęcie studiów w Instytucie Fotografii Twórczej (Institut tvůrčí fotografie) na Uniwersytecie Śląskim w Opawie — jednej z najbardziej prestiżowych europejskich szkół fotografii artystycznej. Założony w 1990 roku, kształci kolejne pokolenia fotografów z całego regionu Europy Środkowej.",
-      "en": "Beginning studies at the Institute of Creative Photography (Institut tvůrčí fotografie) at Silesian University in Opava — one of Europe's most prestigious schools of art photography. Founded in 1990, it has shaped generations of photographers across Central Europe."
+      "en": "Beginning studies at the Institute of Creative Photography (Institut tvůrčí fotografie) at Silesian University in Opava — one of Europe's most prestigious schools of art photography. Founded in 1990, it has shaped generations of photographers across Central Europe.",
+      "cs": "Zahájení studia na Institutu tvůrčí fotografie Slezské univerzity v Opavě — jedné z nejprestižnějších evropských škol umělecké fotografie. Institut, založený v roce 1990, vychovává další generace fotografů z celého regionu střední Evropy."
     },
     "seo": {
       "pl": {
@@ -171,13 +202,17 @@
       },
       "en": {
         "description": "Start of studies at the Institute of Creative Photography, Silesian University in Opava, one of Europe’s leading schools of art photography."
+      },
+      "cs": {
+        "description": "Zahájení studia na Institutu tvůrčí fotografie Slezské univerzity v Opavě, jedné z nejvýznamnějších evropských škol umělecké fotografie."
       }
     },
     "links": [
       {
         "label": {
           "pl": "Strona ITF Opawa",
-          "en": "ITF Opava website"
+          "en": "ITF Opava website",
+          "cs": "Web ITF Opava"
         },
         "url": "https://itf.fpf.slu.cz/"
       }
@@ -195,34 +230,41 @@
     "dateEndISO": "2025-09-19",
     "date": {
       "pl": "5 – 19 września 2025",
-      "en": "5 – 19 September 2025"
+      "en": "5 – 19 September 2025",
+      "cs": "5.–19. září 2025"
     },
     "type": {
       "pl": "Wystawa indywidualna",
-      "en": "Solo exhibition"
+      "en": "Solo exhibition",
+      "cs": "Samostatná výstava"
     },
     "title": {
       "pl": "W głowie się nie mieści",
-      "en": "W głowie się nie mieści"
+      "en": "W głowie się nie mieści",
+      "cs": "W głowie się nie mieści"
     },
     "place": {
       "pl": "Lokal Bródno, Warszawa",
-      "en": "Lokal Bródno, Warsaw"
+      "en": "Lokal Bródno, Warsaw",
+      "cs": "Lokal Bródno, Varšava"
     },
     "venue": {
       "name": {
         "pl": "Lokal Bródno",
-        "en": "Lokal Bródno"
+        "en": "Lokal Bródno",
+        "cs": "Lokal Bródno"
       },
       "locality": {
         "pl": "Warszawa",
-        "en": "Warsaw"
+        "en": "Warsaw",
+        "cs": "Varšava"
       },
       "country": "PL"
     },
     "description": {
       "pl": "Indywidualna wystawa łącząca cztery cykle artysty — „Pamiętnik przetrwania”, „Flashback”, „Labirynt” i „Superpozycja”. Podróż w głąb ludzkiej świadomości i podświadomości: o pamięci, granicach wolności, lękach i pragnieniach. Fotografia jako narzędzie dialogu — z samym sobą, z odbiorcą, ze światem. Kuratorka: Agata Rząsowska-Grabicka.",
-      "en": "Solo exhibition bringing together four of the artist's series — \"Diary of Survival\", \"Flashback\", \"Labyrinth\" and \"Superposition\". A journey into human consciousness and subconsciousness — memory, limits of freedom, fears and desires. Photography as a tool for dialogue — with oneself, the viewer and the world. Curator: Agata Rząsowska-Grabicka."
+      "en": "Solo exhibition bringing together four of the artist's series — \"Diary of Survival\", \"Flashback\", \"Labyrinth\" and \"Superposition\". A journey into human consciousness and subconsciousness — memory, limits of freedom, fears and desires. Photography as a tool for dialogue — with oneself, the viewer and the world. Curator: Agata Rząsowska-Grabicka.",
+      "cs": "Samostatná výstava spojující čtyři autorovy cykly — „Deník přežití“, „Flashback“, „Labyrint“ a „Superpozice“. Cesta do hlubin lidského vědomí i podvědomí: o paměti, hranicích svobody, strachu a touhách. Fotografie jako nástroj dialogu — se sebou samým, s divákem, se světem. Kurátorka: Agata Rząsowska-Grabicka."
     },
     "seo": {
       "pl": {
@@ -230,6 +272,9 @@
       },
       "en": {
         "description": "“W głowie się nie mieści” — a solo exhibition at Lokal Bródno in Warsaw. Four series on memory, the limits of freedom, fears and desires."
+      },
+      "cs": {
+        "description": "„W głowie się nie mieści“ — samostatná výstava v prostoru Lokal Bródno ve Varšavě. Čtyři cykly o paměti, hranicích svobody, strachu a touhách."
       }
     },
     "links": [],
@@ -247,34 +292,41 @@
     "dateEndISO": "2025-10-12",
     "date": {
       "pl": "10 – 12 października 2025",
-      "en": "10 – 12 October 2025"
+      "en": "10 – 12 October 2025",
+      "cs": "10.–12. října 2025"
     },
     "type": {
       "pl": "Laureat / Pokaz festiwalowy",
-      "en": "Laureate / Festival screening"
+      "en": "Laureate / Festival screening",
+      "cs": "Laureát / Festivalová projekce"
     },
     "title": {
       "pl": "DIAS SHOW — laureat XI FotoArtFestival",
-      "en": "DIAS SHOW — XI FotoArtFestival laureate"
+      "en": "DIAS SHOW — XI FotoArtFestival laureate",
+      "cs": "DIAS SHOW — laureát 11. FotoArtFestivalu"
     },
     "place": {
       "pl": "Foto Art Festival, Bielsko-Biała",
-      "en": "Foto Art Festival, Bielsko-Biała"
+      "en": "Foto Art Festival, Bielsko-Biała",
+      "cs": "Foto Art Festival, Bílsko-Bělá"
     },
     "venue": {
       "name": {
         "pl": "Foto Art Festival",
-        "en": "Foto Art Festival"
+        "en": "Foto Art Festival",
+        "cs": "Foto Art Festival"
       },
       "locality": {
         "pl": "Bielsko-Biała",
-        "en": "Bielsko-Biała"
+        "en": "Bielsko-Biała",
+        "cs": "Bílsko-Bělá"
       },
       "country": "PL"
     },
     "description": {
       "pl": "Wyróżnienie w międzynarodowym konkursie multimedialnym DIAS SHOW podczas 11. edycji Foto Art Festival w Bielsku-Białej. Cykl „Labirynt” znalazł się wśród dziewięciu zwycięskich prac. Laureaci otrzymują możliwość zorganizowania wystawy indywidualnej w Galerii Fotografii B&B lub podczas kolejnej edycji festiwalu. DIAS SHOW łączy fotografię z muzyką i narracją, prezentując dynamiczne sekwencje obrazów na dużym ekranie.",
-      "en": "Distinction in the international multimedia competition DIAS SHOW during the 11th edition of Foto Art Festival in Bielsko-Biała. The \"Labirynt\" series was among nine winning works. Laureates receive the opportunity to organise a solo exhibition at the B&B Photography Gallery or during a future festival edition. DIAS SHOW combines photography with music and narration, presenting dynamic image sequences on a large screen."
+      "en": "Distinction in the international multimedia competition DIAS SHOW during the 11th edition of Foto Art Festival in Bielsko-Biała. The \"Labirynt\" series was among nine winning works. Laureates receive the opportunity to organise a solo exhibition at the B&B Photography Gallery or during a future festival edition. DIAS SHOW combines photography with music and narration, presenting dynamic image sequences on a large screen.",
+      "cs": "Ocenění v mezinárodní multimediální soutěži DIAS SHOW během 11. ročníku Foto Art Festivalu v Bílsku-Bělé. Cyklus „Labyrint“ se zařadil mezi devět vítězných prací. Laureáti získávají možnost uspořádat samostatnou výstavu v Galerii fotografie B&B nebo během dalšího ročníku festivalu. DIAS SHOW propojuje fotografii s hudbou a vyprávěním a představuje dynamické sekvence obrazů na velkém plátně."
     },
     "seo": {
       "pl": {
@@ -282,20 +334,25 @@
       },
       "en": {
         "description": "The “Labirynt” series among nine winning works of the DIAS SHOW competition at the 11th FotoArtFestival in Bielsko-Biała, Poland."
+      },
+      "cs": {
+        "description": "Cyklus „Labyrint“ mezi devíti vítěznými pracemi soutěže DIAS SHOW na 11. FotoArtFestivalu v Bílsku-Bělé. Ocenění v multimediální soutěži."
       }
     },
     "links": [
       {
         "label": {
           "pl": "Lista laureatów DIAS SHOW",
-          "en": "DIAS SHOW laureates"
+          "en": "DIAS SHOW laureates",
+          "cs": "Seznam laureátů DIAS SHOW"
         },
         "url": "https://fotoartfestival.com/finalisci-dias-show-2025/"
       },
       {
         "label": {
           "pl": "Slideshow „Labirynt” na YouTube",
-          "en": "\"Labirynt\" slideshow on YouTube"
+          "en": "\"Labirynt\" slideshow on YouTube",
+          "cs": "Slideshow „Labyrint“ na YouTube"
         },
         "url": "https://www.youtube.com/watch?v=4JCT6mdi9NA"
       }
@@ -312,34 +369,41 @@
     "dateEndISO": "2026-01-10",
     "date": {
       "pl": "3 grudnia 2025 – 10 stycznia 2026",
-      "en": "3 December 2025 – 10 January 2026"
+      "en": "3 December 2025 – 10 January 2026",
+      "cs": "3. prosince 2025 – 10. ledna 2026"
     },
     "type": {
       "pl": "Wystawa indywidualna",
-      "en": "Solo exhibition"
+      "en": "Solo exhibition",
+      "cs": "Samostatná výstava"
     },
     "title": {
       "pl": "Pamiętnik przetrwania",
-      "en": "Diary of Survival"
+      "en": "Diary of Survival",
+      "cs": "Deník přežití"
     },
     "place": {
       "pl": "Galeria MAL — Terminal Kultury Gocław, Warszawa",
-      "en": "MAL Gallery — Terminal Kultury Gocław, Warsaw"
+      "en": "MAL Gallery — Terminal Kultury Gocław, Warsaw",
+      "cs": "Galeria MAL — Terminal Kultury Gocław, Varšava"
     },
     "venue": {
       "name": {
         "pl": "Galeria MAL — Terminal Kultury Gocław",
-        "en": "Galeria MAL — Terminal Kultury Gocław"
+        "en": "Galeria MAL — Terminal Kultury Gocław",
+        "cs": "Galeria MAL — Terminal Kultury Gocław"
       },
       "locality": {
         "pl": "Warszawa",
-        "en": "Warsaw"
+        "en": "Warsaw",
+        "cs": "Varšava"
       },
       "country": "PL"
     },
     "description": {
       "pl": "Osobisty zapis fotograficzny walki z depresją. Projekt powstał z potrzeby przełamania społecznego tabu wokół chorób psychicznych i dotarcia do osób zmagających się z podobnymi doświadczeniami — z myślą, że prośba o pomoc nie jest oznaką słabości, lecz odwagą.",
-      "en": "A personal photographic record of struggle with depression. The project was born from the need to break the social taboo around mental illness and to reach others fighting similar battles — with the conviction that asking for help is not a sign of weakness, but of courage."
+      "en": "A personal photographic record of struggle with depression. The project was born from the need to break the social taboo around mental illness and to reach others fighting similar battles — with the conviction that asking for help is not a sign of weakness, but of courage.",
+      "cs": "Osobní fotografický záznam boje s depresí. Projekt vznikl z potřeby prolomit společenské tabu kolem duševních onemocnění a oslovit lidi, kteří se potýkají s podobnými zkušenostmi — s myšlenkou, že prosba o pomoc není projevem slabosti, ale odvahy."
     },
     "seo": {
       "pl": {
@@ -347,6 +411,9 @@
       },
       "en": {
         "description": "“Diary of Survival” — a solo exhibition at Galeria MAL, Terminal Kultury Gocław in Warsaw. A personal photographic record of a struggle with depression."
+      },
+      "cs": {
+        "description": "„Deník přežití“ — samostatná výstava v Galerii MAL, Terminal Kultury Gocław ve Varšavě. Osobní fotografický záznam boje s depresí."
       }
     },
     "links": [],
@@ -365,34 +432,41 @@
     "dateEndISO": "2025-12-05",
     "date": {
       "pl": "5 grudnia 2025",
-      "en": "5 December 2025"
+      "en": "5 December 2025",
+      "cs": "5. prosince 2025"
     },
     "type": {
       "pl": "Członkostwo",
-      "en": "Membership"
+      "en": "Membership",
+      "cs": "Členství"
     },
     "title": {
       "pl": "Przyjęcie do ZPAF — Okręg Warszawski",
-      "en": "Admission to ZPAF — Warsaw Branch"
+      "en": "Admission to ZPAF — Warsaw Branch",
+      "cs": "Přijetí do ZPAF — varšavská pobočka"
     },
     "place": {
       "pl": "Związek Polskich Artystów Fotografików, Warszawa",
-      "en": "Union of Polish Art Photographers, Warsaw"
+      "en": "Union of Polish Art Photographers, Warsaw",
+      "cs": "Svaz polských umělců fotografů (ZPAF), Varšava"
     },
     "venue": {
       "name": {
         "pl": "Związek Polskich Artystów Fotografików",
-        "en": "Union of Polish Art Photographers"
+        "en": "Union of Polish Art Photographers",
+        "cs": "Svaz polských umělců fotografů (ZPAF)"
       },
       "locality": {
         "pl": "Warszawa",
-        "en": "Warsaw"
+        "en": "Warsaw",
+        "cs": "Varšava"
       },
       "country": "PL"
     },
     "description": {
       "pl": "Przyjęcie do Związku Polskich Artystów Fotografików (ZPAF) — najstarszego i najważniejszego stowarzyszenia fotografów artystycznych w Polsce, działającego od 1947 roku. Rada Artystyczna ZPAF przyjęła w grudniu 2025 grono ośmiorga nowych członków, w tym sześcioro do Okręgu Warszawskiego.",
-      "en": "Admission to the Union of Polish Art Photographers (ZPAF) — the oldest and most prestigious association of art photographers in Poland, founded in 1947. In December 2025 the ZPAF Artistic Council admitted a group of eight new members, including six to the Warsaw Branch."
+      "en": "Admission to the Union of Polish Art Photographers (ZPAF) — the oldest and most prestigious association of art photographers in Poland, founded in 1947. In December 2025 the ZPAF Artistic Council admitted a group of eight new members, including six to the Warsaw Branch.",
+      "cs": "Přijetí do Svazu polských umělců fotografů (ZPAF) — nejstaršího a nejvýznamnějšího sdružení uměleckých fotografů v Polsku, které působí od roku 1947. Umělecká rada ZPAF přijala v prosinci 2025 osm nových členů, z toho šest do varšavské pobočky."
     },
     "seo": {
       "pl": {
@@ -400,13 +474,17 @@
       },
       "en": {
         "description": "Admission to the Union of Polish Art Photographers, Warsaw Branch. Founded in 1947, ZPAF is the oldest association of art photographers in Poland."
+      },
+      "cs": {
+        "description": "Přijetí do Svazu polských umělců fotografů, varšavská pobočka. ZPAF působí od roku 1947 a je nejstarším sdružením fotografů v Polsku."
       }
     },
     "links": [
       {
         "label": {
           "pl": "Komunikat ZPAF",
-          "en": "ZPAF announcement"
+          "en": "ZPAF announcement",
+          "cs": "Oznámení ZPAF"
         },
         "url": "https://zpaf.pl/aktualnosci/8-nowych-zpaf-12-2025/"
       }
@@ -426,34 +504,41 @@
     "dateEndISO": "2026-07-06",
     "date": {
       "pl": "6 lipca 2026",
-      "en": "6 July 2026"
+      "en": "6 July 2026",
+      "cs": "6. července 2026"
     },
     "type": {
       "pl": "Wystawa",
-      "en": "Exhibition"
+      "en": "Exhibition",
+      "cs": "Výstava"
     },
     "title": {
       "pl": "„Nocne ptaki” na Opolskim Festiwalu Fotografii",
-      "en": "\"Night Birds\" at the Opole Photography Festival"
+      "en": "\"Night Birds\" at the Opole Photography Festival",
+      "cs": "„Noční ptáci“ na Opolském festivalu fotografie"
     },
     "place": {
       "pl": "Opolski Festiwal Fotografii (OFFoto), Opole",
-      "en": "Opole Photography Festival (OFFoto), Opole, Poland"
+      "en": "Opole Photography Festival (OFFoto), Opole, Poland",
+      "cs": "Opolský festival fotografie (OFFoto), Opolí"
     },
     "venue": {
       "name": {
         "pl": "Opolski Festiwal Fotografii (OFFoto)",
-        "en": "Opole Photography Festival (OFFoto)"
+        "en": "Opole Photography Festival (OFFoto)",
+        "cs": "Opolský festival fotografie (OFFoto)"
       },
       "locality": {
         "pl": "Opole",
-        "en": "Opole"
+        "en": "Opole",
+        "cs": "Opolí"
       },
       "country": "PL"
     },
     "description": {
       "pl": "Fragment cyklu „Nocne ptaki późno wracają do domu” został zaprezentowany na wystawie Instytutu Fotografii Twórczej (Institut tvůrčí fotografie) podczas Opolskiego Festiwalu Fotografii. Serdeczne podziękowania dla Vladimíra Birgusa za pokazanie prac oraz dla całej ekipy, która podjęła się montażu tej ogromnej wystawy: Vladimír Birgus, Arkadiusz Gola, Michał Szalast, David Macháč, Miroslav Zeman i Lukáš Lamla.\n\nCykl to opowieść o ludziach, którzy od poniedziałku do piątku żyją w rygorze społecznych ról — chodzą do pracy, na studia, zachowują twarz i panują nad emocjami. Kiedy jednak nadchodzi weekendowy wieczór, ulice zamieniają się w scenę, na której opadają wszelkie hamulce. Dokumentując ten cotygodniowy rytuał, zadaję sobie pytanie: czy w nocnym chaosie wreszcie zdejmują codzienne maski i są w pełni sobą? Czy może ulica to tylko kolejna scena, na której wchodzą w nową, weekendową rolę nieokiełznanego imprezowicza?\n\nFotografie z wystawy: Maria Książek i Maks Skrzeczkowski.",
-      "en": "A selection from the series \"Night Birds Come Home Late\" was presented at the Institute of Creative Photography (Institut tvůrčí fotografie) exhibition during the Opole Photography Festival. Warm thanks to Vladimír Birgus for showing the works, and to the whole team that mounted this vast exhibition: Vladimír Birgus, Arkadiusz Gola, Michał Szalast, David Macháč, Miroslav Zeman and Lukáš Lamla.\n\nThe series tells the story of people who, from Monday to Friday, live within the rigour of social roles — going to work or university, keeping face, holding their emotions in check. But when the weekend evening comes, the streets turn into a stage where all inhibitions fall away. Documenting this weekly ritual, I keep asking one essential question about their identity: in the chaos of the night, do they finally drop their everyday masks and become fully themselves? Or is the street just another stage, where they take on a new weekend role — the unbridled reveller?\n\nExhibition photos: Maria Książek and Maks Skrzeczkowski."
+      "en": "A selection from the series \"Night Birds Come Home Late\" was presented at the Institute of Creative Photography (Institut tvůrčí fotografie) exhibition during the Opole Photography Festival. Warm thanks to Vladimír Birgus for showing the works, and to the whole team that mounted this vast exhibition: Vladimír Birgus, Arkadiusz Gola, Michał Szalast, David Macháč, Miroslav Zeman and Lukáš Lamla.\n\nThe series tells the story of people who, from Monday to Friday, live within the rigour of social roles — going to work or university, keeping face, holding their emotions in check. But when the weekend evening comes, the streets turn into a stage where all inhibitions fall away. Documenting this weekly ritual, I keep asking one essential question about their identity: in the chaos of the night, do they finally drop their everyday masks and become fully themselves? Or is the street just another stage, where they take on a new weekend role — the unbridled reveller?\n\nExhibition photos: Maria Książek and Maks Skrzeczkowski.",
+      "cs": "Výběr z cyklu „Noční ptáci se vracejí domů pozdě“ byl představen na výstavě Institutu tvůrčí fotografie během Opolského festivalu fotografie. Srdečné díky Vladimíru Birgusovi za prezentaci prací a celému týmu, který se ujal instalace této rozsáhlé výstavy: Vladimír Birgus, Arkadiusz Gola, Michał Szalast, David Macháč, Miroslav Zeman a Lukáš Lamla.\n\nCyklus vypráví o lidech, kteří od pondělí do pátku žijí v zajetí společenských rolí — chodí do práce, na vysokou školu, drží tvář a ovládají emoce. Když však nastane víkendový večer, promění se ulice v jeviště, na kterém padají všechny zábrany. Při dokumentování tohoto týdenního rituálu si kladu otázku: odkládají v nočním chaosu konečně své každodenní masky a jsou plně sami sebou? Nebo je ulice jen další scénou, na níž vstupují do nové, víkendové role nespoutaného pařana?\n\nFotografie z výstavy: Maria Książek a Maks Skrzeczkowski."
     },
     "seo": {
       "pl": {
@@ -461,13 +546,17 @@
       },
       "en": {
         "description": "A selection from “Night Birds Come Home Late” at the Institute of Creative Photography exhibition during the Opole Photography Festival OFFoto."
+      },
+      "cs": {
+        "description": "Výběr z cyklu „Noční ptáci se vracejí domů pozdě“ na výstavě Institutu tvůrčí fotografie během Opolského festivalu fotografie OFFoto."
       }
     },
     "links": [
       {
         "label": {
           "pl": "Strona festiwalu OFFoto",
-          "en": "OFFoto festival website"
+          "en": "OFFoto festival website",
+          "cs": "Web festivalu OFFoto"
         },
         "url": "https://offoto.pl/"
       }

@@ -4,34 +4,41 @@
   "dateEndISO": "2026-01-10",
   "date": {
     "pl": "3 grudnia 2025 – 10 stycznia 2026",
-    "en": "3 December 2025 – 10 January 2026"
+    "en": "3 December 2025 – 10 January 2026",
+    "cs": "3. prosince 2025 – 10. ledna 2026"
   },
   "type": {
     "pl": "Wystawa indywidualna",
-    "en": "Solo exhibition"
+    "en": "Solo exhibition",
+    "cs": "Samostatná výstava"
   },
   "title": {
     "pl": "Pamiętnik przetrwania",
-    "en": "Diary of Survival"
+    "en": "Diary of Survival",
+    "cs": "Deník přežití"
   },
   "place": {
     "pl": "Galeria MAL — Terminal Kultury Gocław, Warszawa",
-    "en": "MAL Gallery — Terminal Kultury Gocław, Warsaw"
+    "en": "MAL Gallery — Terminal Kultury Gocław, Warsaw",
+    "cs": "Galeria MAL — Terminal Kultury Gocław, Varšava"
   },
   "venue": {
     "name": {
       "pl": "Galeria MAL — Terminal Kultury Gocław",
-      "en": "Galeria MAL — Terminal Kultury Gocław"
+      "en": "Galeria MAL — Terminal Kultury Gocław",
+      "cs": "Galeria MAL — Terminal Kultury Gocław"
     },
     "locality": {
       "pl": "Warszawa",
-      "en": "Warsaw"
+      "en": "Warsaw",
+      "cs": "Varšava"
     },
     "country": "PL"
   },
   "description": {
     "pl": "Osobisty zapis fotograficzny walki z depresją. Projekt powstał z potrzeby przełamania społecznego tabu wokół chorób psychicznych i dotarcia do osób zmagających się z podobnymi doświadczeniami — z myślą, że prośba o pomoc nie jest oznaką słabości, lecz odwagą.",
-    "en": "A personal photographic record of struggle with depression. The project was born from the need to break the social taboo around mental illness and to reach others fighting similar battles — with the conviction that asking for help is not a sign of weakness, but of courage."
+    "en": "A personal photographic record of struggle with depression. The project was born from the need to break the social taboo around mental illness and to reach others fighting similar battles — with the conviction that asking for help is not a sign of weakness, but of courage.",
+    "cs": "Osobní fotografický záznam boje s depresí. Projekt vznikl z potřeby prolomit společenské tabu kolem duševních onemocnění a oslovit lidi, kteří se potýkají s podobnými zkušenostmi — s myšlenkou, že prosba o pomoc není projevem slabosti, ale odvahy."
   },
   "seo": {
     "pl": {
@@ -39,6 +46,9 @@
     },
     "en": {
       "description": "“Diary of Survival” — a solo exhibition at Galeria MAL, Terminal Kultury Gocław in Warsaw. A personal photographic record of a struggle with depression."
+    },
+    "cs": {
+      "description": "„Deník přežití“ — samostatná výstava v Galerii MAL, Terminal Kultury Gocław ve Varšavě. Osobní fotografický záznam boje s depresí."
     }
   },
   "links": [],

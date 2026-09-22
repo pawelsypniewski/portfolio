@@ -70,7 +70,7 @@ function doPost(e) {
     const email     = przytnij(dane.email, 160);
     const temat     = przytnij(dane.topic, 80);
     const wiadomosc = przytnij(dane.message, 4000);
-    const jezyk     = dane.language === "en" ? "angielski" : "polski";
+    const jezyk     = ({ en: "angielski", cs: "czeski" })[dane.language] || "polski";
 
     if (!imie || !email || !wiadomosc) {
       return odpowiedz({ success: false, message: "Brak wymaganych pól." });

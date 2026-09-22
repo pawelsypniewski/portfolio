@@ -4,34 +4,41 @@
   "dateEndISO": "2025-09-19",
   "date": {
     "pl": "5 – 19 września 2025",
-    "en": "5 – 19 September 2025"
+    "en": "5 – 19 September 2025",
+    "cs": "5.–19. září 2025"
   },
   "type": {
     "pl": "Wystawa indywidualna",
-    "en": "Solo exhibition"
+    "en": "Solo exhibition",
+    "cs": "Samostatná výstava"
   },
   "title": {
     "pl": "W głowie się nie mieści",
-    "en": "W głowie się nie mieści"
+    "en": "W głowie się nie mieści",
+    "cs": "W głowie się nie mieści"
   },
   "place": {
     "pl": "Lokal Bródno, Warszawa",
-    "en": "Lokal Bródno, Warsaw"
+    "en": "Lokal Bródno, Warsaw",
+    "cs": "Lokal Bródno, Varšava"
   },
   "venue": {
     "name": {
       "pl": "Lokal Bródno",
-      "en": "Lokal Bródno"
+      "en": "Lokal Bródno",
+      "cs": "Lokal Bródno"
     },
     "locality": {
       "pl": "Warszawa",
-      "en": "Warsaw"
+      "en": "Warsaw",
+      "cs": "Varšava"
     },
     "country": "PL"
   },
   "description": {
     "pl": "Indywidualna wystawa łącząca cztery cykle artysty — „Pamiętnik przetrwania”, „Flashback”, „Labirynt” i „Superpozycja”. Podróż w głąb ludzkiej świadomości i podświadomości: o pamięci, granicach wolności, lękach i pragnieniach. Fotografia jako narzędzie dialogu — z samym sobą, z odbiorcą, ze światem. Kuratorka: Agata Rząsowska-Grabicka.",
-    "en": "Solo exhibition bringing together four of the artist's series — \"Diary of Survival\", \"Flashback\", \"Labyrinth\" and \"Superposition\". A journey into human consciousness and subconsciousness — memory, limits of freedom, fears and desires. Photography as a tool for dialogue — with oneself, the viewer and the world. Curator: Agata Rząsowska-Grabicka."
+    "en": "Solo exhibition bringing together four of the artist's series — \"Diary of Survival\", \"Flashback\", \"Labyrinth\" and \"Superposition\". A journey into human consciousness and subconsciousness — memory, limits of freedom, fears and desires. Photography as a tool for dialogue — with oneself, the viewer and the world. Curator: Agata Rząsowska-Grabicka.",
+    "cs": "Samostatná výstava spojující čtyři autorovy cykly — „Deník přežití“, „Flashback“, „Labyrint“ a „Superpozice“. Cesta do hlubin lidského vědomí i podvědomí: o paměti, hranicích svobody, strachu a touhách. Fotografie jako nástroj dialogu — se sebou samým, s divákem, se světem. Kurátorka: Agata Rząsowska-Grabicka."
   },
   "seo": {
     "pl": {
@@ -39,6 +46,9 @@
     },
     "en": {
       "description": "“W głowie się nie mieści” — a solo exhibition at Lokal Bródno in Warsaw. Four series on memory, the limits of freedom, fears and desires."
+    },
+    "cs": {
+      "description": "„W głowie się nie mieści“ — samostatná výstava v prostoru Lokal Bródno ve Varšavě. Čtyři cykly o paměti, hranicích svobody, strachu a touhách."
     }
   },
   "links": [],

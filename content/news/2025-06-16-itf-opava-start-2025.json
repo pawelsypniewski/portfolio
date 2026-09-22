@@ -4,34 +4,41 @@
   "dateEndISO": "2025-06-16",
   "date": {
     "pl": "16 czerwca 2025",
-    "en": "16 June 2025"
+    "en": "16 June 2025",
+    "cs": "16. června 2025"
   },
   "type": {
     "pl": "Edukacja",
-    "en": "Education"
+    "en": "Education",
+    "cs": "Vzdělávání"
   },
   "title": {
     "pl": "Rozpoczęcie studiów — ITF Opawa",
-    "en": "Studies started — ITF Opava"
+    "en": "Studies started — ITF Opava",
+    "cs": "Zahájení studia — ITF Opava"
   },
   "place": {
     "pl": "Institut tvůrčí fotografie, Uniwersytet Śląski w Opawie, Czechy",
-    "en": "Institut tvůrčí fotografie, Silesian University in Opava, Czech Republic"
+    "en": "Institut tvůrčí fotografie, Silesian University in Opava, Czech Republic",
+    "cs": "Institut tvůrčí fotografie, Slezská univerzita v Opavě"
   },
   "venue": {
     "name": {
       "pl": "Institut tvůrčí fotografie, Uniwersytet Śląski w Opawie",
-      "en": "Institute of Creative Photography, Silesian University in Opava"
+      "en": "Institute of Creative Photography, Silesian University in Opava",
+      "cs": "Institut tvůrčí fotografie, Slezská univerzita v Opavě"
     },
     "locality": {
       "pl": "Opawa",
-      "en": "Opava"
+      "en": "Opava",
+      "cs": "Opava"
     },
     "country": "CZ"
   },
   "description": {
     "pl": "Rozpoczęcie studiów w Instytucie Fotografii Twórczej (Institut tvůrčí fotografie) na Uniwersytecie Śląskim w Opawie — jednej z najbardziej prestiżowych europejskich szkół fotografii artystycznej. Założony w 1990 roku, kształci kolejne pokolenia fotografów z całego regionu Europy Środkowej.",
-    "en": "Beginning studies at the Institute of Creative Photography (Institut tvůrčí fotografie) at Silesian University in Opava — one of Europe's most prestigious schools of art photography. Founded in 1990, it has shaped generations of photographers across Central Europe."
+    "en": "Beginning studies at the Institute of Creative Photography (Institut tvůrčí fotografie) at Silesian University in Opava — one of Europe's most prestigious schools of art photography. Founded in 1990, it has shaped generations of photographers across Central Europe.",
+    "cs": "Zahájení studia na Institutu tvůrčí fotografie Slezské univerzity v Opavě — jedné z nejprestižnějších evropských škol umělecké fotografie. Institut, založený v roce 1990, vychovává další generace fotografů z celého regionu střední Evropy."
   },
   "seo": {
     "pl": {
@@ -39,13 +46,17 @@
     },
     "en": {
       "description": "Start of studies at the Institute of Creative Photography, Silesian University in Opava, one of Europe’s leading schools of art photography."
+    },
+    "cs": {
+      "description": "Zahájení studia na Institutu tvůrčí fotografie Slezské univerzity v Opavě, jedné z nejvýznamnějších evropských škol umělecké fotografie."
     }
   },
   "links": [
     {
       "label": {
         "pl": "Strona ITF Opawa",
-        "en": "ITF Opava website"
+        "en": "ITF Opava website",
+        "cs": "Web ITF Opava"
       },
       "url": "https://itf.fpf.slu.cz/"
     }

@@ -5,16 +5,19 @@
   "no": "03",
   "title": {
     "pl": "Gra o tron",
-    "en": "Game of Thrones"
+    "en": "Game of Thrones",
+    "cs": "Hra o trůny"
   },
   "year": "2022",
   "category": {
     "pl": "Dokument / Found",
-    "en": "Documentary / Found"
+    "en": "Documentary / Found",
+    "cs": "Dokument / Found"
   },
   "place": {
     "pl": "Walka polityczna",
-    "en": "Political fight"
+    "en": "Political fight",
+    "cs": "Politický boj"
   },
   "works": 12,
   "flashEffect": true,
@@ -22,7 +25,8 @@
   "thumb": "",
   "caption": {
     "pl": "Polityczna ikonografia polskiej prowincji. Plakaty, ołtarzyki, prowizoryczne pomniki — krajobraz przed wyborami.",
-    "en": "Political iconography of the Polish countryside. Posters, makeshift shrines, monuments — the landscape before an election."
+    "en": "Political iconography of the Polish countryside. Posters, makeshift shrines, monuments — the landscape before an election.",
+    "cs": "Politická ikonografie polského venkova. Plakáty, oltáříky, provizorní pomníky — krajina před volbami."
   },
   "seo": {
     "pl": {
@@ -32,11 +36,16 @@
     "en": {
       "title": "Game of Thrones — political photo series, Poland",
       "description": "Game of Thrones — a photo series by Paweł Sypniewski on the political iconography of provincial Poland. Election posters, shrines, makeshift monuments."
+    },
+    "cs": {
+      "title": "Hra o trůny — fotografický cyklus o politice v Polsku",
+      "description": "Hra o trůny — fotografický cyklus Pawła Sypniewského o politické ikonografii polského venkova. Volební plakáty, oltáříky, provizorní pomníky."
     }
   },
   "description": {
     "pl": "",
-    "en": ""
+    "en": "",
+    "cs": ""
   },
   "images": [
     "images/gra_o_tron/01.webp",
