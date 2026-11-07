@@ -30,7 +30,7 @@
   },
   "seo": {
     "pl": {
-      "title": "Ustawienia domyślne — cykl fotograficzny o AI",
+      "title": "Ustawienia domyślne — fotografia o AI",
       "description": "Ustawienia domyślne — fotografia o glitchach i artefaktach obrazów z AI. Cykl Pawła Sypniewskiego: negatyw średnioformatowy na mokrej płycie kolodionowej."
     },
     "en": {
@@ -38,7 +38,7 @@
       "description": "Default Settings — a photo series by Paweł Sypniewski on glitches and artefacts of AI-generated images. Medium format negative on wet plate collodion."
     },
     "cs": {
-      "title": "Výchozí nastavení — fotografický cyklus o AI",
+      "title": "Výchozí nastavení — fotografie o AI",
       "description": "Výchozí nastavení — fotografický cyklus Pawła Sypniewského o glitchích a artefaktech obrazů z AI. Středoformátový negativ na mokré kolodiové desce."
     }
   },
@@ -65,5 +65,64 @@
     "images/ustawienia/15.webp",
     "images/ustawienia/16.webp",
     "images/ustawienia/17.webp"
-  ]
+  ],
+  "alts": {
+    "pl": [
+      "Tablica tytułowa cyklu: drobny tekst i kod QR na białej płycie",
+      "Tors postaci w kostiumie z płytek drukowanych, dłonie oparte o uda; mokra płyta kolodionowa",
+      "Portret kobiety z ogoloną głową w napierśniku z układów scalonych, dłonie złożone na piersi",
+      "Drobna postać w ciemnym kostiumie pośrodku pustej, zamglonej przestrzeni; zacieki emulsji przy krawędziach",
+      "Ludzie czekający na miejskim przystanku autobusowym, w tle wieżowce; obraz z zaciekami emulsji",
+      "Postać obejmuje ogromną, pomarszczoną kulistą formę na trawniku; w tle drzewa",
+      "Postać w kostiumie z układów scalonych z wyciągniętą ręką przed żywopłotem i ogrodzeniem; jasne zacieki na płycie",
+      "Osoba z ogoloną głową w kostiumie siedzi bokiem przy stoliku na tarasie kawiarni",
+      "Grupa ludzi przy stole w ogródku kawiarni, wśród nich postać w kostiumie z płytek drukowanych",
+      "Postacie idące gęsiego chodnikiem przed budynkiem; u góry ich odbicia do góry nogami",
+      "Przechodnie na przejściu dla pieszych, między nimi postać w kostiumie; w tle wieżowce i zacieki na płycie",
+      "Postać w napierśniku z układów scalonych na tle szklanych biurowców",
+      "Publiczność w leżakach pod parasolami na plenerowym pokazie; obraz zamglony, z uszkodzeniami emulsji",
+      "Twarz z ogoloną głową wyłania się spod wielkich ciemnych liści; rozmazana emulsja",
+      "Dwie ciemne sylwetki w półmroku, jedna w kostiumie z układów scalonych; ziarnista, poplamiona płyta",
+      "Postać w kostiumie stoi wśród wielkich liści bananowca w ogrodzie",
+      "Portret kobiety z ogoloną głową w pancerzu z układów scalonych, wokół rozmyte okrągłe światła"
+    ],
+    "en": [
+      "Title plate of the series: small text and a QR code on a white plate",
+      "Torso of a figure in a costume made of circuit boards, hands resting on the thighs; wet plate collodion",
+      "Portrait of a woman with a shaved head in a breastplate of circuit boards, hands folded on her chest",
+      "A small figure in a dark costume in the middle of an empty, hazy space; emulsion streaks along the edges",
+      "People waiting at a city bus stop with high-rises behind them; image marked by emulsion streaks",
+      "A figure embracing a huge wrinkled spherical form on a lawn; trees in the background",
+      "A figure in a circuit-board costume with an outstretched arm in front of a hedge and a fence; bright streaks on the plate",
+      "A person with a shaved head in a costume sitting sideways at a table on a café terrace",
+      "A group of people at a table in a café garden, among them a figure in a circuit-board costume",
+      "Figures walking in single file along a pavement in front of a building; their upside-down reflections at the top",
+      "Pedestrians on a crossing, a costumed figure among them; high-rises and plate streaks in the background",
+      "A figure in a circuit-board breastplate against glass office towers",
+      "An audience in deckchairs under parasols at an outdoor screening; hazy image with emulsion damage",
+      "A face with a shaved head emerging from beneath large dark leaves; smeared emulsion",
+      "Two dark silhouettes in half-light, one in a circuit-board costume; grainy, stained plate",
+      "A costumed figure standing among large banana leaves in a garden",
+      "Portrait of a woman with a shaved head in circuit-board armour, blurred round lights around her"
+    ],
+    "cs": [
+      "Titulní deska cyklu: drobný text a QR kód na bílé desce",
+      "Trup postavy v kostýmu z plošných spojů, ruce opřené o stehna; mokrý kolodiový proces",
+      "Portrét ženy s oholenou hlavou v náprsníku z plošných spojů, ruce složené na hrudi",
+      "Drobná postava v tmavém kostýmu uprostřed prázdného, zamlženého prostoru; šmouhy emulze při okrajích",
+      "Lidé čekající na městské autobusové zastávce, v pozadí výškové budovy; obraz se šmouhami emulze",
+      "Postava objímá obrovský zvrásněný kulovitý tvar na trávníku; v pozadí stromy",
+      "Postava v kostýmu z plošných spojů s nataženou rukou před živým plotem a oplocením; světlé šmouhy na desce",
+      "Osoba s oholenou hlavou v kostýmu sedí bokem u stolku na kavárenské terase",
+      "Skupina lidí u stolu na kavárenské zahrádce, mezi nimi postava v kostýmu z plošných spojů",
+      "Postavy jdoucí husím pochodem po chodníku před budovou; nahoře jejich obrácené odrazy",
+      "Chodci na přechodu, mezi nimi postava v kostýmu; v pozadí výškové budovy a šmouhy na desce",
+      "Postava v náprsníku z plošných spojů před skleněnými kancelářskými budovami",
+      "Publikum v lehátkách pod slunečníky na venkovní projekci; zamlžený obraz s poškozenou emulzí",
+      "Tvář s oholenou hlavou vystupuje zpod velkých tmavých listů; rozmazaná emulze",
+      "Dvě tmavé siluety v pološeru, jedna v kostýmu z plošných spojů; zrnitá, skvrnitá deska",
+      "Postava v kostýmu stojí mezi velkými listy banánovníku v zahradě",
+      "Portrét ženy s oholenou hlavou v brnění z plošných spojů, kolem rozostřená kulatá světla"
+    ]
+  }
 }

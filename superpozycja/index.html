@@ -33,7 +33,7 @@
 ">
 
 <!-- ============ PRIMARY META ============ -->
-<title>Superpozycja — fotograficzny portret kreacyjny · Paweł Sypniewski</title>
+<title>Superpozycja — portret kreacyjny · Paweł Sypniewski</title>
 <meta name="description" content="Superpozycja — cykl fotograficzny Pawła Sypniewskiego. Fotografia i portret kreacyjny o jednoczesności przeszłości, teraźniejszości i przyszłości.">
 <meta name="author" content="Paweł Sypniewski">
 <meta name="publisher" content="Paweł Sypniewski">
@@ -121,7 +121,7 @@
 <!-- ============ OPEN GRAPH ============ -->
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Paweł Sypniewski">
-<meta property="og:title" content="Superpozycja — fotograficzny portret kreacyjny · Paweł Sypniewski">
+<meta property="og:title" content="Superpozycja — portret kreacyjny · Paweł Sypniewski">
 <meta property="og:description" content="Superpozycja — cykl fotograficzny Pawła Sypniewskiego. Fotografia i portret kreacyjny o jednoczesności przeszłości, teraźniejszości i przyszłości.">
 <meta property="og:url" content="https://pawelsypniewski.pl/superpozycja/">
 <meta property="og:image" content="https://pawelsypniewski.pl/images/superpozycja/01.webp">
@@ -135,7 +135,7 @@
 
 <!-- ============ TWITTER CARD ============ -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Superpozycja — fotograficzny portret kreacyjny · Paweł Sypniewski">
+<meta name="twitter:title" content="Superpozycja — portret kreacyjny · Paweł Sypniewski">
 <meta name="twitter:description" content="Superpozycja — cykl fotograficzny Pawła Sypniewskiego. Fotografia i portret kreacyjny o jednoczesności przeszłości, teraźniejszości i przyszłości.">
 <meta name="twitter:image" content="https://pawelsypniewski.pl/images/superpozycja/01.webp">
 <meta name="twitter:image:alt" content="Superpozycja — Kreacja / Portret, 2023">
@@ -160,6 +160,11 @@
      Podzbiory: latin (angielski) + latin-ext (polskie znaki: ą, ę, ł…). -->
 <link rel="preload" href="/fonts/jost-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/jost-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+<!-- JetBrains Mono pisze menu, podtytuły i metryczki na pierwszym ekranie
+     każdej podstrony. Bez zapowiedzi tekst rysował się najpierw czcionką
+     zastępczą i przeskakiwał po dociągnięciu pliku (przesunięcie układu). -->
+<link rel="preload" href="/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/jetbrains-mono-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
 
 <!-- ============ ZAPOWIEDŹ PIERWSZEGO KAFLA ============
      Zdjęcia kafli są tłem w atrybucie style, a tła przeglądarka odkrywa
@@ -1930,7 +1935,7 @@
     text-transform: uppercase;
     line-height: 1.7;
   }
-  .text-page .side h3 {
+  .text-page .side h2 {
     font-weight: 500;
     font-size: 11px;
     letter-spacing: 0.1em;
@@ -2160,7 +2165,7 @@
     .text-page .body { font-size: 18px; line-height: 1.55; }
     .proj-description { font-size: 18px; line-height: 1.55; }
     .text-page .side { font-size: 13px; }
-    .text-page .side h3 { font-size: 12px; }
+    .text-page .side h2 { font-size: 12px; }
 
     .home-topline { padding: 18px 56px; font-size: 13px; }
   }
@@ -2508,7 +2513,13 @@
       transition: height 240ms cubic-bezier(0.4, 0.1, 0.2, 1);
     }
     .proj-slide { padding: 10px 12px; }
-    .proj-slide img { cursor: pointer; }
+    /* width: 100% — bez tego, przy width: auto, przeglądarka nie zna rozmiaru
+       zdjęcia, dopóki go nie pobierze (atrybuty width/height dają tylko
+       proporcje), więc scena startowała z zerową wysokością i skakała o ~600 px,
+       gdy zdjęcie nadeszło. Z szerokością z kontenera wysokość wynika
+       z proporcji od pierwszego rysowania; object-fit: contain pilnuje, żeby
+       pionowe kadry ograniczone wysokością sceny nie były rozciągane. */
+    .proj-slide img { cursor: pointer; width: 100%; }
     .proj-nav-left, .proj-nav-right { display: none; }
     .proj-bottom {
       padding: 12px 18px 16px;
@@ -2750,6 +2761,21 @@
     .lightbox { padding: 30px 12px; }
   }
 
+
+  /* ============================================================
+     CZYTELNOŚĆ NA TELEFONIE
+     Google (Lighthouse) i czytniki ekranu uznają tekst poniżej 12 px za
+     nieczytelny; na stronie głównej takich było 63 % tekstu (numery kafli,
+     pasek „Prace”, stopka, baner cookies). Blok stoi na końcu arkusza, więc
+     wygrywa z wcześniejszymi regułami o tej samej wadze. Komputer bez zmian.
+     ============================================================ */
+  @media (max-width: 720px), (max-height: 500px) and (orientation: landscape) and (max-width: 950px) {
+    .home-poster .cell .num,
+    .home-topline,
+    .sidefoot,
+    .cb-text,
+    .cb-btn { font-size: 12px; }
+  }
 </style>
 <script type="application/ld+json">
 {
@@ -2779,7 +2805,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/superpozycja/01.webp",
-      "caption": "Superpozycja — zdjęcie 1 z 8, 2023",
+      "caption": "Fasada wieżowca fotografowana z dołu, rzędy okien rozmyte wielokrotną ekspozycją",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2789,7 +2815,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/superpozycja/02.webp",
-      "caption": "Superpozycja — zdjęcie 2 z 8, 2023",
+      "caption": "Zarys wieżowca na tle nieba, rozedrgany wielokrotną ekspozycją",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2799,7 +2825,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/superpozycja/03.webp",
-      "caption": "Superpozycja — zdjęcie 3 z 8, 2023",
+      "caption": "Zaokrąglony szklany biurowiec między ciemnymi bryłami, obraz rozciągnięty ruchem aparatu",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2809,7 +2835,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/superpozycja/04.webp",
-      "caption": "Superpozycja — zdjęcie 4 z 8, 2023",
+      "caption": "Nakładające się na siebie fasady biurowców z siatką okien, kadr pionowy",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2819,7 +2845,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/superpozycja/05.webp",
-      "caption": "Superpozycja — zdjęcie 5 z 8, 2023",
+      "caption": "Łuk okrągłej konstrukcji i promieniste smugi, rozmycie zoomem",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2829,7 +2855,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/superpozycja/06.webp",
-      "caption": "Superpozycja — zdjęcie 6 z 8, 2023",
+      "caption": "Szczyty biurowców widziane z dołu, nachylone i rozmyte na tle białego nieba",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2839,7 +2865,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/superpozycja/07.webp",
-      "caption": "Superpozycja — zdjęcie 7 z 8, 2023",
+      "caption": "Koncentryczne kręgi i spiralne smugi wokół ciemnego punktu, abstrakcja z wielokrotnej ekspozycji",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2849,7 +2875,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/superpozycja/08.webp",
-      "caption": "Superpozycja — zdjęcie 8 z 8, 2023",
+      "caption": "Jasne belki zbiegające się promieniście ku ciemnemu niebu, rozmyte ruchem",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2934,10 +2960,10 @@
         <!-- Komunikat strony 404. GitHub Pages przy nieznanym adresie podaje
              404.html (kopię strony głównej); app.js odsłania ten pasek, gdy
              adres w przeglądarce nie pasuje do żadnego widoku. -->
-        <div class="home-notfound" id="notFoundNote" role="status" hidden>
-          <strong data-i18n="notfound.h">Nie znaleziono strony.</strong>
-          <span data-i18n="notfound.text">Ten adres nie istnieje — poniżej wybrane prace.</span>
-        </div>
+        <!-- @notfound — generator (tools/build-pages.js) wstawia tu komunikat
+             „Nie znaleziono strony” WYŁĄCZNIE w 404.html. Zwykłe podstrony nie
+             mogą mieć tego tekstu w kodzie: Google potrafi uznać stronę z takim
+             komunikatem za „miękkie 404” i wyrzucić ją z indeksu. -->
         <div class="home-topline">
           <span data-i18n="home.label">Prace / Wybrane realizacje</span>
         </div>
@@ -3031,7 +3057,7 @@
           <div class="pj-meta" id="pjMeta">2023<br>Kwantowa wizja<br>8 prac</div>
         </div>
         <div class="proj-stage">
-          <div class="proj-track" id="pjTrack"><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/superpozycja/m/01.webp"><img src="/images/superpozycja/01.webp" alt="Superpozycja — zdjęcie 1 z 8, 2023, Kreacja / Portret" data-index="0" loading="eager" fetchpriority="high" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/superpozycja/m/02.webp"><img src="/images/superpozycja/02.webp" alt="Superpozycja — zdjęcie 2 z 8, 2023, Kreacja / Portret" data-index="1" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/superpozycja/m/03.webp"><img src="/images/superpozycja/03.webp" alt="Superpozycja — zdjęcie 3 z 8, 2023, Kreacja / Portret" data-index="2" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/superpozycja/m/04.webp"><img src="/images/superpozycja/04.webp" alt="Superpozycja — zdjęcie 4 z 8, 2023, Kreacja / Portret" data-index="3" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/superpozycja/m/05.webp"><img src="/images/superpozycja/05.webp" alt="Superpozycja — zdjęcie 5 z 8, 2023, Kreacja / Portret" data-index="4" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/superpozycja/m/06.webp"><img src="/images/superpozycja/06.webp" alt="Superpozycja — zdjęcie 6 z 8, 2023, Kreacja / Portret" data-index="5" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/superpozycja/m/07.webp"><img src="/images/superpozycja/07.webp" alt="Superpozycja — zdjęcie 7 z 8, 2023, Kreacja / Portret" data-index="6" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/superpozycja/m/08.webp"><img src="/images/superpozycja/08.webp" alt="Superpozycja — zdjęcie 8 z 8, 2023, Kreacja / Portret" data-index="7" loading="lazy" fetchpriority="auto" decoding="async"></picture></div></div>
+          <div class="proj-track" id="pjTrack"><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/superpozycja/s/01.webp 800w, /images/superpozycja/m/01.webp 1200w" sizes="100vw"><img src="/images/superpozycja/01.webp" width="1500" height="1125" alt="Fasada wieżowca fotografowana z dołu, rzędy okien rozmyte wielokrotną ekspozycją" data-index="0" loading="eager" fetchpriority="high" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/superpozycja/s/02.webp 800w, /images/superpozycja/m/02.webp 1200w" sizes="100vw"><img src="/images/superpozycja/02.webp" width="1500" height="1125" alt="Zarys wieżowca na tle nieba, rozedrgany wielokrotną ekspozycją" data-index="1" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/superpozycja/s/03.webp 800w, /images/superpozycja/m/03.webp 1200w" sizes="100vw"><img src="/images/superpozycja/03.webp" width="1500" height="1125" alt="Zaokrąglony szklany biurowiec między ciemnymi bryłami, obraz rozciągnięty ruchem aparatu" data-index="2" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/superpozycja/s/04.webp 800w, /images/superpozycja/m/04.webp 1200w" sizes="100vw"><img src="/images/superpozycja/04.webp" width="1125" height="1500" alt="Nakładające się na siebie fasady biurowców z siatką okien, kadr pionowy" data-index="3" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/superpozycja/s/05.webp 800w, /images/superpozycja/m/05.webp 1200w" sizes="100vw"><img src="/images/superpozycja/05.webp" width="1500" height="1125" alt="Łuk okrągłej konstrukcji i promieniste smugi, rozmycie zoomem" data-index="4" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/superpozycja/s/06.webp 800w, /images/superpozycja/m/06.webp 1200w" sizes="100vw"><img src="/images/superpozycja/06.webp" width="1500" height="1125" alt="Szczyty biurowców widziane z dołu, nachylone i rozmyte na tle białego nieba" data-index="5" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/superpozycja/s/07.webp 800w, /images/superpozycja/m/07.webp 1200w" sizes="100vw"><img src="/images/superpozycja/07.webp" width="1500" height="1125" alt="Koncentryczne kręgi i spiralne smugi wokół ciemnego punktu, abstrakcja z wielokrotnej ekspozycji" data-index="6" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/superpozycja/s/08.webp 800w, /images/superpozycja/m/08.webp 1200w" sizes="100vw"><img src="/images/superpozycja/08.webp" width="1500" height="1125" alt="Jasne belki zbiegające się promieniście ku ciemnemu niebu, rozmyte ruchem" data-index="7" loading="lazy" fetchpriority="auto" decoding="async"></picture></div></div>
           <div class="proj-nav-left"  id="pjPrev"><span class="proj-nav-arrow">← <span data-i18n="proj.prev">poprzednie</span></span></div>
           <div class="proj-nav-right" id="pjNext"><span class="proj-nav-arrow"><span data-i18n="proj.next">następne</span> →</span></div>
         </div>
@@ -3091,7 +3117,7 @@
              w app.js jest wpisany adres skryptu (KONTAKT_ENDPOINT). Dzięki temu
              nikt nie zobaczy formularza, który nie ma dokąd wysłać. -->
         <form class="contact-form" id="contactForm" hidden>
-          <h3 class="cf-h" data-i18n="form.h">Napisz do mnie</h3>
+          <h2 class="cf-h" data-i18n="form.h">Napisz do mnie</h2>
 
           <!-- Pułapka na roboty: pole jest poza ekranem i poza kolejnością Tab,
                więc człowiek go nie wypełni, a automat owszem. -->

@@ -33,7 +33,7 @@
 ">
 
 <!-- ============ PRIMARY META ============ -->
-<title>About — Paweł Sypniewski, photographer and visual artist</title>
+<title>About — Paweł Sypniewski, photographer, Warsaw</title>
 <meta name="description" content="Paweł Sypniewski (b. 1987) — photographer and visual artist from Warsaw, ZPAF member. Education: ITF Opava, Sputnik Photos. Exhibitions, awards, press.">
 <meta name="author" content="Paweł Sypniewski">
 <meta name="publisher" content="Paweł Sypniewski">
@@ -121,7 +121,7 @@
 <!-- ============ OPEN GRAPH ============ -->
 <meta property="og:type" content="profile">
 <meta property="og:site_name" content="Paweł Sypniewski">
-<meta property="og:title" content="About — Paweł Sypniewski, photographer and visual artist">
+<meta property="og:title" content="About — Paweł Sypniewski, photographer, Warsaw">
 <meta property="og:description" content="Paweł Sypniewski (b. 1987) — photographer and visual artist from Warsaw, ZPAF member. Education: ITF Opava, Sputnik Photos. Exhibitions, awards, press.">
 <meta property="og:url" content="https://pawelsypniewski.pl/en/about/">
 <meta property="og:image" content="https://pawelsypniewski.pl/images/og-cover.jpg">
@@ -137,7 +137,7 @@
 
 <!-- ============ TWITTER CARD ============ -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="About — Paweł Sypniewski, photographer and visual artist">
+<meta name="twitter:title" content="About — Paweł Sypniewski, photographer, Warsaw">
 <meta name="twitter:description" content="Paweł Sypniewski (b. 1987) — photographer and visual artist from Warsaw, ZPAF member. Education: ITF Opava, Sputnik Photos. Exhibitions, awards, press.">
 <meta name="twitter:image" content="https://pawelsypniewski.pl/images/og-cover.jpg">
 <meta name="twitter:image:alt" content="Paweł Sypniewski — fragment cyklu Superpozycja">
@@ -162,6 +162,11 @@
      Podzbiory: latin (angielski) + latin-ext (polskie znaki: ą, ę, ł…). -->
 <link rel="preload" href="/fonts/jost-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/jost-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+<!-- JetBrains Mono pisze menu, podtytuły i metryczki na pierwszym ekranie
+     każdej podstrony. Bez zapowiedzi tekst rysował się najpierw czcionką
+     zastępczą i przeskakiwał po dociągnięciu pliku (przesunięcie układu). -->
+<link rel="preload" href="/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/jetbrains-mono-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
 
 <!-- ============ ZAPOWIEDŹ PIERWSZEGO KAFLA ============
      Zdjęcia kafli są tłem w atrybucie style, a tła przeglądarka odkrywa
@@ -1932,7 +1937,7 @@
     text-transform: uppercase;
     line-height: 1.7;
   }
-  .text-page .side h3 {
+  .text-page .side h2 {
     font-weight: 500;
     font-size: 11px;
     letter-spacing: 0.1em;
@@ -2162,7 +2167,7 @@
     .text-page .body { font-size: 18px; line-height: 1.55; }
     .proj-description { font-size: 18px; line-height: 1.55; }
     .text-page .side { font-size: 13px; }
-    .text-page .side h3 { font-size: 12px; }
+    .text-page .side h2 { font-size: 12px; }
 
     .home-topline { padding: 18px 56px; font-size: 13px; }
   }
@@ -2510,7 +2515,13 @@
       transition: height 240ms cubic-bezier(0.4, 0.1, 0.2, 1);
     }
     .proj-slide { padding: 10px 12px; }
-    .proj-slide img { cursor: pointer; }
+    /* width: 100% — bez tego, przy width: auto, przeglądarka nie zna rozmiaru
+       zdjęcia, dopóki go nie pobierze (atrybuty width/height dają tylko
+       proporcje), więc scena startowała z zerową wysokością i skakała o ~600 px,
+       gdy zdjęcie nadeszło. Z szerokością z kontenera wysokość wynika
+       z proporcji od pierwszego rysowania; object-fit: contain pilnuje, żeby
+       pionowe kadry ograniczone wysokością sceny nie były rozciągane. */
+    .proj-slide img { cursor: pointer; width: 100%; }
     .proj-nav-left, .proj-nav-right { display: none; }
     .proj-bottom {
       padding: 12px 18px 16px;
@@ -2752,6 +2763,21 @@
     .lightbox { padding: 30px 12px; }
   }
 
+
+  /* ============================================================
+     CZYTELNOŚĆ NA TELEFONIE
+     Google (Lighthouse) i czytniki ekranu uznają tekst poniżej 12 px za
+     nieczytelny; na stronie głównej takich było 63 % tekstu (numery kafli,
+     pasek „Prace”, stopka, baner cookies). Blok stoi na końcu arkusza, więc
+     wygrywa z wcześniejszymi regułami o tej samej wadze. Komputer bez zmian.
+     ============================================================ */
+  @media (max-width: 720px), (max-height: 500px) and (orientation: landscape) and (max-width: 950px) {
+    .home-poster .cell .num,
+    .home-topline,
+    .sidefoot,
+    .cb-text,
+    .cb-btn { font-size: 12px; }
+  }
 </style>
 <script type="application/ld+json">
 {
@@ -2828,10 +2854,10 @@
         <!-- Komunikat strony 404. GitHub Pages przy nieznanym adresie podaje
              404.html (kopię strony głównej); app.js odsłania ten pasek, gdy
              adres w przeglądarce nie pasuje do żadnego widoku. -->
-        <div class="home-notfound" id="notFoundNote" role="status" hidden>
-          <strong data-i18n="notfound.h">Page not found.</strong>
-          <span data-i18n="notfound.text">This address does not exist — selected works are below.</span>
-        </div>
+        <!-- @notfound — generator (tools/build-pages.js) wstawia tu komunikat
+             „Nie znaleziono strony” WYŁĄCZNIE w 404.html. Zwykłe podstrony nie
+             mogą mieć tego tekstu w kodzie: Google potrafi uznać stronę z takim
+             komunikatem za „miękkie 404” i wyrzucić ją z indeksu. -->
         <div class="home-topline">
           <span data-i18n="home.label">Works / Selected projects</span>
         </div>
@@ -2973,21 +2999,21 @@
 <p>Paweł Sypniewski (born 1987, Warsaw) — visual artist, photographer and performer. Student at the Institute of Creative Photography (ITF), Silesian University in Opava, and member of ZPAF (Union of Polish Art Photographers), Warsaw Branch. His practice consistently moves beyond the traditional frames of photography.</p>
 <p>He is interested in the relation between image and text, experimentation and provocation, and in combining photography with other artistic media. The breadth of his craft makes it difficult to place him within any single style.</p>
 <p>His portfolio spans documentary, reportage, constructed and studio work, alongside projects employing historical photographic processes, mixed media and collage. Drawing from conceptual art and the avant-garde, he produces works that resist simple categorisation.</p></div>
-        <div class="side" id="aboutSide"><h3>Membership</h3>
+        <div class="side" id="aboutSide"><h2>Membership</h2>
 <ul><li>ZPAF — Warsaw Branch, since 2025</li></ul>
-<h3>Courses and education</h3>
+<h2>Courses and education</h2>
 <ul><li>Institute of Creative Photography, Opava — since 2025</li><li>Sputnik Photos Mentor Programme — 2023/2024, diploma supervisor: Michał Łuczak</li><li>ZPAF School of Photography — 2021/2024, diploma supervisor: Wojciech Klimala</li><li>Lighting in photography — Open University of Warsaw, studio of Paweł Żak, 2023</li><li>Photography course — Szkoła Karola, 2019/2021</li></ul>
-<h3>Solo exhibitions</h3>
+<h2>Solo exhibitions</h2>
 <ul><li>2025.12.03 — “Pamiętnik przetrwania” (Diary of Survival), MAL Gallery, Terminal Kultury Gocław, Warsaw</li><li>2025.09.05 — “W głowie się nie mieści”, Lokal Bródno, Warsaw</li></ul>
-<h3>Awards</h3>
+<h2>Awards</h2>
 <ul><li>2025 — laureate of the 11th FotoArtFestival, DIAS SHOW screening, Bielsko-Biała</li></ul>
-<h3>Group exhibitions</h3>
+<h2>Group exhibitions</h2>
 <ul><li>2026.07.06 — Opole Photography Festival, 35 Years of the Opava School of Photography, Opole</li><li>2025.03.28 — “Labirynt” slideshow, Rybnik Foto Festival</li><li>2024.10.13 — 2nd Choszczówka Opening</li><li>2024.09.19 — ZPAF Diplomas, Stara Galeria ZPAF, Warsaw</li><li>2024.05.18 — “Między kreacją a rzeczywistością”, Centrum Kultury Lublin (curator and participant)</li><li>2024.04.05 — “Wystaw się w CSW”, CSW Toruń</li><li>2024.01.13 — “Wykluczony”, ASP Dłużew Plein-air House</li><li>2023.10.13 — FotoOpen, Kubiszówka, FotoArtFestival</li><li>2023.09.27 — “10 przykazań” (10 Commandments), Galeria Obok ZPAF, Warsaw</li><li>2023.06.29 — 22nd Annual Exhibition of the ZPAF School of Photography, Stara Galeria ZPAF</li><li>2022.06.30 — 21st Annual Exhibition of the ZPAF School of Photography, Stara Galeria ZPAF</li><li>2022.05.14 — “...forma jedna treści wiele...”, Municipal Culture Centre, Ząbki</li></ul>
-<h3>Publications</h3>
+<h2>Publications</h2>
 <ul><li>Catalogue of the 21st Annual Exhibition of the ZPAF School of Photography</li><li>Catalogue of the 22nd Annual Exhibition of the ZPAF School of Photography</li><li>FotoOpen X FotoArtFestival</li><li>“Wystaw się w CSW 2024” catalogue</li><li>“Co słychać?” newspaper</li><li>“Nasza Choszczówka” newspaper</li></ul>
-<h3>Practices</h3>
+<h2>Practices</h2>
 <ul><li>Documentary</li><li>Constructed portrait</li><li>Alternative processes</li><li>Mixed media / collage</li><li>Performance</li></ul>
-<h3>Based in</h3>
+<h2>Based in</h2>
 <ul><li>Warsaw, PL</li><li>Opava, CZ</li></ul></div>
       </div>
     </section>
@@ -3003,7 +3029,7 @@
              w app.js jest wpisany adres skryptu (KONTAKT_ENDPOINT). Dzięki temu
              nikt nie zobaczy formularza, który nie ma dokąd wysłać. -->
         <form class="contact-form" id="contactForm" hidden>
-          <h3 class="cf-h" data-i18n="form.h">Write to me</h3>
+          <h2 class="cf-h" data-i18n="form.h">Write to me</h2>
 
           <!-- Pułapka na roboty: pole jest poza ekranem i poza kolejnością Tab,
                więc człowiek go nie wypełni, a automat owszem. -->

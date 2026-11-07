@@ -30,15 +30,15 @@
   },
   "seo": {
     "pl": {
-      "title": "Nocne Ptaki Późno Wracają Do Domu — fotografia nocna",
+      "title": "Nocne ptaki — fotografia nocna",
       "description": "Nocne Ptaki Późno Wracają Do Domu — cykl Pawła Sypniewskiego o nocnym życiu Warszawy. Fotografia nocna i uliczna, weekendowy rytuał zdejmowania masek."
     },
     "en": {
-      "title": "Night Birds Come Home Late — night photography",
+      "title": "Night Birds — night photography",
       "description": "Night Birds Come Home Late — a documentary series by Paweł Sypniewski on Warsaw nightlife. Night and street photography of a weekly weekend ritual."
     },
     "cs": {
-      "title": "Noční ptáci se vracejí domů pozdě — noční fotografie",
+      "title": "Noční ptáci — noční fotografie",
       "description": "Noční ptáci se vracejí domů pozdě — dokumentární cyklus Pawła Sypniewského o nočním životě Varšavy. Noční a pouliční fotografie víkendového rituálu."
     }
   },
@@ -56,5 +56,37 @@
     "images/nocne-ptaki/08.webp",
     "images/nocne-ptaki/02.webp",
     "images/nocne-ptaki/05.webp"
-  ]
+  ],
+  "alts": {
+    "pl": [
+      "Tłum rozbawionych młodych ludzi na imprezie, półnagi mężczyzna z naklejką na czole, ktoś wskazuje palcem",
+      "Dwie młode kobiety z torbami na zakupy patrzą w telefony na skrzyżowaniu nocą",
+      "Para przy stoliku w barze otoczona kłębami dymu, niebieskie światło",
+      "Mężczyzna w czapce kapitańskiej wita się z kolegą, obok roześmiana kobieta; nocą na ulicy",
+      "Kobieta w czerwonej peruce i czerwonym futrze z papierosem w tłumie przed klubem",
+      "Trzy osoby idą nocą przez plac, jedna z kieliszkiem w ręce",
+      "Młody mężczyzna patrzy w telefon przy rusztowaniu, za nim koledzy; nocna impreza",
+      "Dwaj mężczyźni pochyleni nad czymś na chodniku, jeden w czerwonych spodniach; nocą"
+    ],
+    "en": [
+      "A crowd of young people having fun at a party, a bare-chested man with a sticker on his forehead, someone pointing",
+      "Two young women with shopping bags looking at their phones at a crossroads at night",
+      "A couple at a bar table surrounded by clouds of smoke, blue light",
+      "A man in a captain’s cap greeting a friend, a laughing woman beside them; on the street at night",
+      "A woman in a red wig and red fur coat with a cigarette in a crowd outside a club",
+      "Three people walking across a square at night, one holding a glass",
+      "A young man looking at his phone by scaffolding, friends behind him; night party",
+      "Two men bending over something on the pavement, one in red trousers; at night"
+    ],
+    "cs": [
+      "Dav rozdováděných mladých lidí na párty, polonahý muž s nálepkou na čele, někdo ukazuje prstem",
+      "Dvě mladé ženy s nákupními taškami hledí do telefonů na křižovatce v noci",
+      "Pár u barového stolku obklopený kotouči kouře, modré světlo",
+      "Muž v kapitánské čepici se zdraví s kamarádem, vedle rozesmátá žena; v noci na ulici",
+      "Žena v červené paruce a červeném kožichu s cigaretou v davu před klubem",
+      "Tři lidé jdou v noci přes náměstí, jeden se sklenkou v ruce",
+      "Mladý muž hledí do telefonu u lešení, za ním kamarádi; noční párty",
+      "Dva muži skloněni nad něčím na chodníku, jeden v červených kalhotách; v noci"
+    ]
+  }
 }

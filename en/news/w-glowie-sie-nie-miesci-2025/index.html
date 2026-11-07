@@ -127,7 +127,7 @@
 <meta property="og:image" content="https://pawelsypniewski.pl/images/achievements/w-glowie-sie-nie-miesci-2025/01.webp">
 <meta property="og:image:secure_url" content="https://pawelsypniewski.pl/images/achievements/w-glowie-sie-nie-miesci-2025/01.webp">
 <meta property="og:image:type" content="image/webp">
-<meta property="og:image:alt" content="W głowie się nie mieści — Lokal Bródno, Warsaw">
+<meta property="og:image:alt" content="A night landscape with scrub in flash light, bright specks of snow or rain in the air">
 <meta property="og:locale" content="en_US">
 <meta property="og:locale:alternate" content="pl_PL">
 <meta property="og:locale:alternate" content="cs_CZ">
@@ -138,7 +138,7 @@
 <meta name="twitter:title" content="W głowie się nie mieści — Solo exhibition · Paweł Sypniewski">
 <meta name="twitter:description" content="“W głowie się nie mieści” — a solo exhibition at Lokal Bródno in Warsaw. Four series on memory, the limits of freedom, fears and desires.">
 <meta name="twitter:image" content="https://pawelsypniewski.pl/images/achievements/w-glowie-sie-nie-miesci-2025/01.webp">
-<meta name="twitter:image:alt" content="W głowie się nie mieści — Lokal Bródno, Warsaw">
+<meta name="twitter:image:alt" content="A night landscape with scrub in flash light, bright specks of snow or rain in the air">
 
 <!-- ============ FAVICON / PWA ============ -->
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -160,6 +160,11 @@
      Podzbiory: latin (angielski) + latin-ext (polskie znaki: ą, ę, ł…). -->
 <link rel="preload" href="/fonts/jost-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/jost-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+<!-- JetBrains Mono pisze menu, podtytuły i metryczki na pierwszym ekranie
+     każdej podstrony. Bez zapowiedzi tekst rysował się najpierw czcionką
+     zastępczą i przeskakiwał po dociągnięciu pliku (przesunięcie układu). -->
+<link rel="preload" href="/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/jetbrains-mono-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
 
 <!-- ============ ZAPOWIEDŹ PIERWSZEGO KAFLA ============
      Zdjęcia kafli są tłem w atrybucie style, a tła przeglądarka odkrywa
@@ -1930,7 +1935,7 @@
     text-transform: uppercase;
     line-height: 1.7;
   }
-  .text-page .side h3 {
+  .text-page .side h2 {
     font-weight: 500;
     font-size: 11px;
     letter-spacing: 0.1em;
@@ -2160,7 +2165,7 @@
     .text-page .body { font-size: 18px; line-height: 1.55; }
     .proj-description { font-size: 18px; line-height: 1.55; }
     .text-page .side { font-size: 13px; }
-    .text-page .side h3 { font-size: 12px; }
+    .text-page .side h2 { font-size: 12px; }
 
     .home-topline { padding: 18px 56px; font-size: 13px; }
   }
@@ -2508,7 +2513,13 @@
       transition: height 240ms cubic-bezier(0.4, 0.1, 0.2, 1);
     }
     .proj-slide { padding: 10px 12px; }
-    .proj-slide img { cursor: pointer; }
+    /* width: 100% — bez tego, przy width: auto, przeglądarka nie zna rozmiaru
+       zdjęcia, dopóki go nie pobierze (atrybuty width/height dają tylko
+       proporcje), więc scena startowała z zerową wysokością i skakała o ~600 px,
+       gdy zdjęcie nadeszło. Z szerokością z kontenera wysokość wynika
+       z proporcji od pierwszego rysowania; object-fit: contain pilnuje, żeby
+       pionowe kadry ograniczone wysokością sceny nie były rozciągane. */
+    .proj-slide img { cursor: pointer; width: 100%; }
     .proj-nav-left, .proj-nav-right { display: none; }
     .proj-bottom {
       padding: 12px 18px 16px;
@@ -2750,6 +2761,21 @@
     .lightbox { padding: 30px 12px; }
   }
 
+
+  /* ============================================================
+     CZYTELNOŚĆ NA TELEFONIE
+     Google (Lighthouse) i czytniki ekranu uznają tekst poniżej 12 px za
+     nieczytelny; na stronie głównej takich było 63 % tekstu (numery kafli,
+     pasek „Prace”, stopka, baner cookies). Blok stoi na końcu arkusza, więc
+     wygrywa z wcześniejszymi regułami o tej samej wadze. Komputer bez zmian.
+     ============================================================ */
+  @media (max-width: 720px), (max-height: 500px) and (orientation: landscape) and (max-width: 950px) {
+    .home-poster .cell .num,
+    .home-topline,
+    .sidefoot,
+    .cb-text,
+    .cb-btn { font-size: 12px; }
+  }
 </style>
 <script type="application/ld+json">
 {
@@ -2786,31 +2812,31 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/achievements/w-glowie-sie-nie-miesci-2025/01.webp",
-      "caption": "W głowie się nie mieści — Lokal Bródno, Warsaw",
+      "caption": "A night landscape with scrub in flash light, bright specks of snow or rain in the air",
       "creditText": "Paweł Sypniewski"
     },
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/achievements/w-glowie-sie-nie-miesci-2025/02.webp",
-      "caption": "W głowie się nie mieści — Lokal Bródno, Warsaw",
+      "caption": "Portrait of a bearded man with black scribbles over his face, printed on crumpled cardboard",
       "creditText": "Paweł Sypniewski"
     },
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/achievements/w-glowie-sie-nie-miesci-2025/03.webp",
-      "caption": "W głowie się nie mieści — Lokal Bródno, Warsaw",
+      "caption": "Wisps of smoke from a cigarette held in a hand against black, vertical frame",
       "creditText": "Paweł Sypniewski"
     },
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/achievements/w-glowie-sie-nie-miesci-2025/04.webp",
-      "caption": "W głowie się nie mieści — Lokal Bródno, Warsaw",
+      "caption": "Concentric rings and spiral streaks around a dark point, an abstraction from multiple exposure",
       "creditText": "Paweł Sypniewski"
     },
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/achievements/w-glowie-sie-nie-miesci-2025/05.webp",
-      "caption": "W głowie się nie mieści — Lokal Bródno, Warsaw",
+      "caption": "Signposts and a round road sign lit by flash at an empty crossroads at night",
       "creditText": "Paweł Sypniewski"
     }
   ]
@@ -2897,10 +2923,10 @@
         <!-- Komunikat strony 404. GitHub Pages przy nieznanym adresie podaje
              404.html (kopię strony głównej); app.js odsłania ten pasek, gdy
              adres w przeglądarce nie pasuje do żadnego widoku. -->
-        <div class="home-notfound" id="notFoundNote" role="status" hidden>
-          <strong data-i18n="notfound.h">Page not found.</strong>
-          <span data-i18n="notfound.text">This address does not exist — selected works are below.</span>
-        </div>
+        <!-- @notfound — generator (tools/build-pages.js) wstawia tu komunikat
+             „Nie znaleziono strony” WYŁĄCZNIE w 404.html. Zwykłe podstrony nie
+             mogą mieć tego tekstu w kodzie: Google potrafi uznać stronę z takim
+             komunikatem za „miękkie 404” i wyrzucić ją z indeksu. -->
         <div class="home-topline">
           <span data-i18n="home.label">Works / Selected projects</span>
         </div>
@@ -3041,7 +3067,7 @@
           <div class="achievement-place">Lokal Bródno, Warsaw</div>
           
           <p class="achievement-desc">Solo exhibition bringing together four of the artist's series — &quot;Diary of Survival&quot;, &quot;Flashback&quot;, &quot;Labyrinth&quot; and &quot;Superposition&quot;. A journey into human consciousness and subconsciousness — memory, limits of freedom, fears and desires. Photography as a tool for dialogue — with oneself, the viewer and the world. Curator: Agata Rząsowska-Grabicka.</p>
-          <div class="achievement-photos"><div class="achievement-photo" data-achievement="0" data-photo="0" role="button" tabindex="0" aria-label="W głowie się nie mieści — 1"><img src="/images/achievements/w-glowie-sie-nie-miesci-2025/thumbs/01.webp" data-full="/images/achievements/w-glowie-sie-nie-miesci-2025/01.webp" alt="W głowie się nie mieści, Lokal Bródno, Warsaw — photo 1 of 5" loading="lazy" decoding="async"></div><div class="achievement-photo" data-achievement="0" data-photo="1" role="button" tabindex="0" aria-label="W głowie się nie mieści — 2"><img src="/images/achievements/w-glowie-sie-nie-miesci-2025/thumbs/02.webp" data-full="/images/achievements/w-glowie-sie-nie-miesci-2025/02.webp" alt="W głowie się nie mieści, Lokal Bródno, Warsaw — photo 2 of 5" loading="lazy" decoding="async"></div><div class="achievement-photo" data-achievement="0" data-photo="2" role="button" tabindex="0" aria-label="W głowie się nie mieści — 3"><img src="/images/achievements/w-glowie-sie-nie-miesci-2025/thumbs/03.webp" data-full="/images/achievements/w-glowie-sie-nie-miesci-2025/03.webp" alt="W głowie się nie mieści, Lokal Bródno, Warsaw — photo 3 of 5" loading="lazy" decoding="async"></div><div class="achievement-photo" data-achievement="0" data-photo="3" role="button" tabindex="0" aria-label="W głowie się nie mieści — 4"><img src="/images/achievements/w-glowie-sie-nie-miesci-2025/thumbs/04.webp" data-full="/images/achievements/w-glowie-sie-nie-miesci-2025/04.webp" alt="W głowie się nie mieści, Lokal Bródno, Warsaw — photo 4 of 5" loading="lazy" decoding="async"></div><div class="achievement-photo" data-achievement="0" data-photo="4" role="button" tabindex="0" aria-label="W głowie się nie mieści — 5"><img src="/images/achievements/w-glowie-sie-nie-miesci-2025/thumbs/05.webp" data-full="/images/achievements/w-glowie-sie-nie-miesci-2025/05.webp" alt="W głowie się nie mieści, Lokal Bródno, Warsaw — photo 5 of 5" loading="lazy" decoding="async"></div></div>
+          <div class="achievement-photos"><div class="achievement-photo" data-achievement="0" data-photo="0" role="button" tabindex="0" aria-label="W głowie się nie mieści — 1"><img src="/images/achievements/w-glowie-sie-nie-miesci-2025/thumbs/01.webp" srcset="/images/achievements/w-glowie-sie-nie-miesci-2025/xs/01.webp 320w, /images/achievements/w-glowie-sie-nie-miesci-2025/thumbs/01.webp 600w" sizes="(max-width: 720px) 30vw, 235px" data-full="/images/achievements/w-glowie-sie-nie-miesci-2025/01.webp" alt="A night landscape with scrub in flash light, bright specks of snow or rain in the air" loading="lazy" decoding="async"></div><div class="achievement-photo" data-achievement="0" data-photo="1" role="button" tabindex="0" aria-label="W głowie się nie mieści — 2"><img src="/images/achievements/w-glowie-sie-nie-miesci-2025/thumbs/02.webp" srcset="/images/achievements/w-glowie-sie-nie-miesci-2025/xs/02.webp 320w, /images/achievements/w-glowie-sie-nie-miesci-2025/thumbs/02.webp 600w" sizes="(max-width: 720px) 30vw, 235px" data-full="/images/achievements/w-glowie-sie-nie-miesci-2025/02.webp" alt="Portrait of a bearded man with black scribbles over his face, printed on crumpled cardboard" loading="lazy" decoding="async"></div><div class="achievement-photo" data-achievement="0" data-photo="2" role="button" tabindex="0" aria-label="W głowie się nie mieści — 3"><img src="/images/achievements/w-glowie-sie-nie-miesci-2025/thumbs/03.webp" srcset="/images/achievements/w-glowie-sie-nie-miesci-2025/xs/03.webp 320w, /images/achievements/w-glowie-sie-nie-miesci-2025/thumbs/03.webp 600w" sizes="(max-width: 720px) 30vw, 235px" data-full="/images/achievements/w-glowie-sie-nie-miesci-2025/03.webp" alt="Wisps of smoke from a cigarette held in a hand against black, vertical frame" loading="lazy" decoding="async"></div><div class="achievement-photo" data-achievement="0" data-photo="3" role="button" tabindex="0" aria-label="W głowie się nie mieści — 4"><img src="/images/achievements/w-glowie-sie-nie-miesci-2025/thumbs/04.webp" srcset="/images/achievements/w-glowie-sie-nie-miesci-2025/xs/04.webp 320w, /images/achievements/w-glowie-sie-nie-miesci-2025/thumbs/04.webp 600w" sizes="(max-width: 720px) 30vw, 235px" data-full="/images/achievements/w-glowie-sie-nie-miesci-2025/04.webp" alt="Concentric rings and spiral streaks around a dark point, an abstraction from multiple exposure" loading="lazy" decoding="async"></div><div class="achievement-photo" data-achievement="0" data-photo="4" role="button" tabindex="0" aria-label="W głowie się nie mieści — 5"><img src="/images/achievements/w-glowie-sie-nie-miesci-2025/thumbs/05.webp" srcset="/images/achievements/w-glowie-sie-nie-miesci-2025/xs/05.webp 320w, /images/achievements/w-glowie-sie-nie-miesci-2025/thumbs/05.webp 600w" sizes="(max-width: 720px) 30vw, 235px" data-full="/images/achievements/w-glowie-sie-nie-miesci-2025/05.webp" alt="Signposts and a round road sign lit by flash at an empty crossroads at night" loading="lazy" decoding="async"></div></div>
           
         </div>
       </article>
@@ -3069,7 +3095,7 @@
              w app.js jest wpisany adres skryptu (KONTAKT_ENDPOINT). Dzięki temu
              nikt nie zobaczy formularza, który nie ma dokąd wysłać. -->
         <form class="contact-form" id="contactForm" hidden>
-          <h3 class="cf-h" data-i18n="form.h">Write to me</h3>
+          <h2 class="cf-h" data-i18n="form.h">Write to me</h2>
 
           <!-- Pułapka na roboty: pole jest poza ekranem i poza kolejnością Tab,
                więc człowiek go nie wypełni, a automat owszem. -->

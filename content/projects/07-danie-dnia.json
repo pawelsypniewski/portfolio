@@ -30,7 +30,7 @@
   },
   "seo": {
     "pl": {
-      "title": "Danie dnia — książka fotograficzna o marnowaniu żywności",
+      "title": "Danie dnia — książka fotograficzna",
       "description": "Danie dnia — autorska książka fotograficzna Pawła Sypniewskiego. Marnowanie żywności w dwudziestu pracach do przeglądania jak kartki w książce."
     },
     "en": {
@@ -38,7 +38,7 @@
       "description": "Dish of the Day — an artist's photobook by Paweł Sypniewski on food waste. Twenty works to leaf through like the pages of a book."
     },
     "cs": {
-      "title": "Jídlo dne — fotografická kniha o plýtvání potravinami",
+      "title": "Jídlo dne — fotografická kniha",
       "description": "Jídlo dne — autorská fotografická kniha Pawła Sypniewského o plýtvání potravinami. Dvacet snímků, které se listují jako stránky knihy."
     }
   },
@@ -68,5 +68,73 @@
     "images/danie-dnia/book/18.webp",
     "images/danie-dnia/book/19.webp",
     "images/danie-dnia/book/20.webp"
-  ]
+  ],
+  "alts": {
+    "pl": [
+      "Cytryna z plamami pleśni na czarnym tle",
+      "Zwiędnięta gruszka z ciemnymi plamami na czarnym tle",
+      "Pomarszczone, wysuszone jabłko na czarnym tle",
+      "Pomarszczona główka sałaty na czarnym tle",
+      "Pęczek zeschniętych rzodkiewek z liśćmi na czarnym tle",
+      "Zeschnięte, cienkie łodygi rozchodzące się promieniście na czarnym tle",
+      "Zeschnięta cebula z długą, suchą łodygą na czarnym tle",
+      "Pomarszczony, pękający pośrodku owoc na czarnym tle",
+      "Zwiędnięty liść kapusty na czarnym tle",
+      "Kiełkująca cebula z wygiętymi pędami na czarnym tle",
+      "Zwiotczała, wygięta marchew na czarnym tle",
+      "Główka kapusty z zeschniętymi zewnętrznymi liśćmi na czarnym tle",
+      "Kiełkująca cebula z łuszczącą się łupiną na czarnym tle",
+      "Zeschnięta cebula z długą łodygą, kadr pionowy, czarne tło",
+      "Pomarszczony korzeń pietruszki lub pasternaku na czarnym tle",
+      "Zeschnięta różyczka brokułu na czarnym tle",
+      "Pomidor z zeschniętą szypułką na czarnym tle",
+      "Wysuszony plaster cytryny na czarnym tle",
+      "Pomarszczone jabłko z zapadniętym bokiem na czarnym tle",
+      "Zwiędnięty owoc cytrusowy z pomarszczoną skórką na czarnym tle"
+    ],
+    "en": [
+      "A lemon with mould spots on a black background",
+      "A withered pear with dark blotches on a black background",
+      "A wrinkled, dried-out apple on a black background",
+      "A wrinkled head of lettuce on a black background",
+      "A bunch of dried radishes with leaves on a black background",
+      "Dry thin stalks spreading radially on a black background",
+      "A dried onion with a long dry stalk on a black background",
+      "A wrinkled fruit splitting down the middle on a black background",
+      "A wilted cabbage leaf on a black background",
+      "A sprouting onion with curved shoots on a black background",
+      "A limp, bent carrot on a black background",
+      "A cabbage head with dried outer leaves on a black background",
+      "A sprouting onion with peeling skin on a black background",
+      "A dried onion with a long stalk, vertical frame, black background",
+      "A wrinkled parsley root or parsnip on a black background",
+      "A dried-up broccoli floret on a black background",
+      "A tomato with a dried stem on a black background",
+      "A dried slice of lemon on a black background",
+      "A wrinkled apple with a sunken side on a black background",
+      "A withered citrus fruit with wrinkled skin on a black background"
+    ],
+    "cs": [
+      "Citron se skvrnami plísně na černém pozadí",
+      "Zvadlá hruška s tmavými skvrnami na černém pozadí",
+      "Scvrklé, vysušené jablko na černém pozadí",
+      "Scvrklá hlávka salátu na černém pozadí",
+      "Svazek uschlých ředkviček s listy na černém pozadí",
+      "Uschlé tenké stonky rozbíhající se paprskovitě na černém pozadí",
+      "Uschlá cibule s dlouhým suchým stonkem na černém pozadí",
+      "Scvrklý plod puklý uprostřed na černém pozadí",
+      "Zvadlý list zelí na černém pozadí",
+      "Klíčící cibule s prohnutými výhonky na černém pozadí",
+      "Povadlá, prohnutá mrkev na černém pozadí",
+      "Hlávka zelí s uschlými vnějšími listy na černém pozadí",
+      "Klíčící cibule s odlupující se slupkou na černém pozadí",
+      "Uschlá cibule s dlouhým stonkem, svislý záběr, černé pozadí",
+      "Scvrklý kořen petržele nebo pastináku na černém pozadí",
+      "Uschlá růžička brokolice na černém pozadí",
+      "Rajče s uschlou stopkou na černém pozadí",
+      "Vysušený plátek citronu na černém pozadí",
+      "Scvrklé jablko s propadlým bokem na černém pozadí",
+      "Zvadlý citrusový plod se svraštělou slupkou na černém pozadí"
+    ]
+  }
 }

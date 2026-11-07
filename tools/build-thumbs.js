@@ -1,21 +1,30 @@
 /**
- * Pomniejszone wersje zdjęć — dwa rozmiary, każdy do innego miejsca:
+ * Pomniejszone wersje zdjęć — cztery rozmiary, każdy do innego miejsca:
  *
- *   thumbs/  600 px szerokości — kafelki w Aktualnościach i stykówka cyklu.
- *            Kafelek ma na ekranie ok. 235 × 235 px (470 px na Retinie);
- *            pełne pliki po 2000 px ważyły do 620 KB, a samo wejście na
- *            /aktualnosci/ ciągnęło ~8,5 MB.
- *   m/       1200 px dłuższego boku — galeria cyklu i lightbox NA TELEFONIE.
- *            Ekran telefonu ma 375–430 px szerokości (do ~1300 px fizycznych),
- *            więc oryginał 2000 px był tam trzykrotnie za duży: ~260 KB
- *            zamiast ~100 KB na każde przesunięcie zdjęcia. Komputer dalej
- *            dostaje oryginał.
+ *   thumbs/  600 px szerokości — kafle strony głównej, siatka Aktualności
+ *            na komputerze i stykówka cyklu. Kafelek ma na ekranie ok.
+ *            235 × 235 px (470 px na Retinie); pełne pliki po 2000 px ważyły
+ *            do 620 KB, a samo wejście na /aktualnosci/ ciągnęło ~8,5 MB.
+ *   xs/      320 px krótszego boku — siatka Aktualności NA TELEFONIE (tylko
+ *            images/achievements/). Kwadrat ma tam ~120 px, więc 600 px było
+ *            czterokrotnie za ciężkie: na liście ok. 1,1 MB do oszczędzenia.
+ *   s/       800 px szerokości — slajdy cyklu na telefonie o podwójnej
+ *            gęstości ekranu (tylko katalogi cykli). Przeglądarka dobiera
+ *            z srcset 800 albo 1200 px wedle tego, ile pikseli wyświetli.
+ *   m/       1200 px dłuższego boku — galeria cyklu (ekrany o potrójnej
+ *            gęstości) i lightbox NA TELEFONIE. Oryginał 2000 px był tam
+ *            trzykrotnie za duży. Komputer dalej dostaje oryginał.
+ *
+ * Do tego content/image-sizes.json: wymiary oryginałów, z których generator
+ * i app.js wpisują width/height na slajdach (przeglądarka rezerwuje miejsce,
+ * zanim zdjęcie się wczyta — nic nie przeskakuje).
  *
  *   node tools/build-thumbs.js        (albo: npm run thumbs)
  *
  * Wejście:  images/achievements/<wydarzenie>/NN.webp
  *           images/<cykl>/NN.webp — katalogi zdjęć z content/projects.json
- * Wyjście:  <ten sam katalog>/thumbs/NN.webp  oraz  <ten sam katalog>/m/NN.webp
+ * Wyjście:  <ten sam katalog>/thumbs/NN.webp, xs/, s/, m/  oraz
+ *           content/image-sizes.json
  *
  * Skrypt pomija pliki, których wersje są już aktualne, więc można go
  * uruchamiać wielokrotnie. Jeśli którejś wersji zabraknie, strona i tak
@@ -30,6 +39,11 @@ const ACHIEVEMENTS_DIR = path.join(ROOT, "images", "achievements");
 const VARIANTS = [
   // width: 235 px kafelka × 2 (Retina) + zapas
   { dir: "thumbs", quality: 78, resize: { width: 600, withoutEnlargement: true } },
+  // fit: "outside" pilnuje KRÓTSZEGO boku — kwadrat siatki kadruje obraz
+  // (object-fit: cover), więc liczy się, ile pikseli ma krótszy bok
+  { dir: "xs", quality: 76, only: "achievements",
+    resize: { width: 320, height: 320, fit: "outside", withoutEnlargement: true } },
+  { dir: "s", quality: 80, only: "projects", resize: { width: 800, withoutEnlargement: true } },
   // fit: "inside" ogranicza DŁUŻSZY bok — pion i poziom dostają tyle samo pikseli
   { dir: "m", quality: 80, resize: { width: 1200, height: 1200, fit: "inside", withoutEnlargement: true } },
 ];
@@ -98,21 +112,43 @@ function isFresh(src, thumb) {
   return fs.statSync(thumb).mtimeMs >= fs.statSync(src).mtimeMs;
 }
 
+/* Wymiary oryginałów → content/image-sizes.json (klucz = ścieżka jak w treści,
+   np. "images/labirynt/01.webp"). Posortowane, żeby plik nie zmieniał się bez
+   powodu między uruchomieniami. */
+async function writeSizes(sources) {
+  const out = {};
+  for (const src of sources.slice().sort()) {
+    const meta = await sharp(src).metadata();
+    if (!meta.width || !meta.height) continue;
+    out[path.relative(ROOT, src).split(path.sep).join("/")] = { w: meta.width, h: meta.height };
+  }
+  const file = path.join(ROOT, "content", "image-sizes.json");
+  const lines = Object.entries(out).map(([k, v]) => `  ${JSON.stringify(k)}: ${JSON.stringify(v)}`);
+  fs.writeFileSync(file, "{\n" + lines.join(",\n") + "\n}\n", "utf8");
+  console.log(`\ncontent/image-sizes.json: ${lines.length} zdjęć`);
+}
+
 async function main() {
   await buildPortrait();
-  const dirs = [ACHIEVEMENTS_DIR, ...projectDirs()];
-  const sources = [...new Set(dirs.flatMap((dir) => findSources(dir)))];
+  const achievementSources = findSources(ACHIEVEMENTS_DIR);
+  const projectSources = [...new Set(projectDirs().flatMap((dir) => findSources(dir)))];
+  const sources = [...new Set([...achievementSources, ...projectSources])];
   if (sources.length === 0) {
     console.log("Brak zdjęć do przetworzenia — nic do zrobienia.");
     return;
   }
 
   const mb = (b) => (b / 1024 / 1024).toFixed(1) + " MB";
-  const bytesBefore = sources.reduce((s, f) => s + fs.statSync(f).size, 0);
+  console.log(`Zdjęć źródłowych: ${sources.length} (${mb(sources.reduce((s, f) => s + fs.statSync(f).size, 0))})`);
 
   for (const v of VARIANTS) {
+    // Niektóre rozmiary mają sens tylko w jednym miejscu (xs/ — siatka
+    // Aktualności, s/ — slajdy cykli); reszta powstaje dla wszystkich zdjęć.
+    const targets = v.only === "achievements" ? achievementSources
+      : v.only === "projects" ? projectSources
+      : sources;
     let made = 0, skipped = 0, bytesAfter = 0;
-    for (const src of sources) {
+    for (const src of targets) {
       const outDir = path.join(path.dirname(src), v.dir);
       const out = path.join(outDir, path.basename(src));
 
@@ -134,9 +170,11 @@ async function main() {
     }
     console.log(
       `\n${v.dir}/: ${made} nowych, ${skipped} aktualnych — ` +
-      `${mb(bytesBefore)} oryginałów → ${mb(bytesAfter)}`
+      `${mb(targets.reduce((s, f) => s + fs.statSync(f).size, 0))} oryginałów → ${mb(bytesAfter)}`
     );
   }
+
+  await writeSizes(sources);
 }
 
 main().catch((e) => {

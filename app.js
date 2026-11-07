@@ -238,6 +238,14 @@ function writeUrl(route, slug) {
 /* ============================================================
    I18N
    ============================================================ */
+/* Zdarzenie do Google Analytics. Przed zgodą w banerze trafia tylko do kolejki
+   dataLayer; biblioteka Google (ładowana po „Akceptuj”) wysyła je dopiero wtedy.
+   Nazwy zdarzeń: contact_form_sent, photo_view, lang_switch, page_not_found —
+   w GA4 → Zdarzenia można oznaczyć je gwiazdką jako kluczowe. */
+function track(name, params) {
+  if (typeof window.gtag === "function") window.gtag("event", name, params || {});
+}
+
 function applyI18n() {
   document.documentElement.lang = state.lang;
   $$("[data-i18n]").forEach(el => {
@@ -827,12 +835,20 @@ function renderProject() {
       el.removeAttribute("aria-hidden");
       el.removeAttribute("tabindex");
     });
-    prevBtn.innerHTML = `<span class="pn-arrow">←</span> <span class="pn-label">${prev.no} ${prev.title[L]}</span>`;
+    // Nazwa linku dla czytnika ekranu = widoczny tekst + ukryty dopisek
+    // „poprzedni projekt”. Osobny aria-label („Poprzedni projekt: Labirynt”)
+    // nie zawierał widocznego „05 Labirynt” — dla użytkownika sterującego
+    // głosem link nazywał się inaczej, niż go widać (Lighthouse to wytyka).
+    const prevWord = tr("proj.prevLabel", L).replace(/[:\s]+$/, "");
+    const nextWord = tr("proj.nextLabel", L).replace(/[:\s]+$/, "");
+    prevBtn.innerHTML = `<span class="pn-arrow">←</span> <span class="pn-label">${prev.no} ${prev.title[L]}</span><span class="sr-only"> — ${prevWord}</span>`;
     prevBtn.setAttribute("href", routeToPath("project", prev.slug));
-    prevBtn.setAttribute("aria-label", tr("proj.prevLabel", L) + prev.title[L]);
-    nextBtn.innerHTML = `<span class="pn-label">${next.no} ${next.title[L]}</span> <span class="pn-arrow">→</span>`;
+    prevBtn.removeAttribute("aria-label");
+    prevBtn.setAttribute("title", prevWord);
+    nextBtn.innerHTML = `<span class="pn-label">${next.no} ${next.title[L]}</span> <span class="pn-arrow">→</span><span class="sr-only"> — ${nextWord}</span>`;
     nextBtn.setAttribute("href", routeToPath("project", next.slug));
-    nextBtn.setAttribute("aria-label", tr("proj.nextLabel", L) + next.title[L]);
+    nextBtn.removeAttribute("aria-label");
+    nextBtn.setAttribute("title", nextWord);
   }
 
   // Stykówkę budujemy zawsze — także dla trybu książki, gdzie podejrzenie
@@ -866,7 +882,7 @@ function renderProject() {
   // więc telefon nigdy nie ściąga 2000-pikselowego oryginału.
   const track = $("#pjTrack");
   track.innerHTML = p.images.map((src, i) =>
-    `<div class="proj-slide"><picture><source media="${MOBILE_MQ}" srcset="${mediumPath(src)}"><img src="${src}" alt="${p.title[L]} — zdjęcie ${i+1} z ${p.images.length}, ${p.year}, ${p.category[L]}" data-index="${i}" loading="${i === 0 ? 'eager' : 'lazy'}" fetchpriority="${i === 0 ? 'high' : 'auto'}" decoding="async"></picture></div>`
+    `<div class="proj-slide"><picture><source media="${MOBILE_MQ}" srcset="${mobileSrcset(src)}" sizes="100vw"><img src="${src}"${sizeAttrs(src)} alt="${attr(projectPhotoAlt(p, i, L))}" data-index="${i}" loading="${i === 0 ? 'eager' : 'lazy'}" fetchpriority="${i === 0 ? 'high' : 'auto'}" decoding="async"></picture></div>`
   ).join("");
 
   // Brak wersji 1200 px (zdjęcie dodane bez przebudowy) — po usunięciu
@@ -989,9 +1005,13 @@ function fitProjectStage() {
   const img = $$("#pjTrack img")[state.slideIndex];
   if (!img) { stage.style.height = ""; return; }
 
-  // Bez wymiarów własnych zdjęcia nie ma czego liczyć — mierzymy ponownie,
-  // gdy się wczyta (slajdy poza ekranem mają loading="lazy").
-  if (!img.naturalWidth) {
+  // Zanim zdjęcie się wczyta, liczymy z atrybutów width/height (wpisuje je
+  // generator i renderProject z content/image-sizes.json) — scena od razu ma
+  // docelową wysokość i opis pod nią nie przeskakuje. Bez atrybutów (zdjęcie
+  // dodane bez przebudowy) czekamy na wczytanie, jak dawniej.
+  const iw = img.naturalWidth || Number(img.getAttribute("width")) || 0;
+  const ih = img.naturalHeight || Number(img.getAttribute("height")) || 0;
+  if (!iw || !ih) {
     img.addEventListener("load", fitProjectStage, { once: true });
     return;
   }
@@ -1003,7 +1023,7 @@ function fitProjectStage() {
   const availW = stage.clientWidth - padX;
   // Zdjęcie pionowe potrafi być wyższe niż ekran — przycinamy je do 78%
   // wysokości okna, żeby podpis został w zasięgu wzroku bez przewijania.
-  const h = Math.min(img.naturalHeight * (availW / img.naturalWidth), window.innerHeight * 0.78);
+  const h = Math.min(ih * (availW / iw), window.innerHeight * 0.78);
   stage.style.height = Math.round(h + padY) + "px";
 }
 
@@ -1024,7 +1044,7 @@ function buildSheet(p, L) {
   sheet.innerHTML = imgs.map((src, i) => {
     const label = `${attr(p.title[L])} — ${photoWord} ${i + 1} ${ofWord} ${imgs.length}`;
     return `<button class="sheet-frame" type="button" data-index="${i}" aria-label="${label}">` +
-             `<img src="${attr(thumbPath(src))}" data-full="${attr(src)}" alt="${label}" loading="lazy" decoding="async">` +
+             `<img src="${attr(thumbPath(src))}" data-full="${attr(src)}" alt="${attr(projectPhotoAlt(p, i, L))}" loading="lazy" decoding="async">` +
              `<span class="sheet-no" aria-hidden="true">${String(i + 1).padStart(2, "0")}</span>` +
            `</button>`;
   }).join("");
@@ -1033,6 +1053,7 @@ function buildSheet(p, L) {
   $$("#pjSheet img").forEach(img => {
     img.addEventListener("error", () => {
       const full = img.dataset.full;
+      img.removeAttribute("srcset");
       if (full && img.getAttribute("src") !== full) img.setAttribute("src", full);
     }, { once: true });
   });
@@ -1137,11 +1158,10 @@ function openLightbox(images, index, opts = {}) {
     const p = window.PROJECTS.find(x => x.slug === state.projectSlug);
     if (!p) return;
     const L0 = state.lang;
-    const ile = p.images.length;
     opts = {
       flash: !!p.flashEffect,
-      alts: p.images.map((_, i) =>
-        `${p.title[L0]} — ${tr("w.photo", L0)} ${i + 1} ${tr("w.of", L0)} ${ile}, ${p.year}, ${p.category[L0]}`),
+      item: p.slug,
+      alts: p.images.map((_, i) => projectPhotoAlt(p, i, L0)),
     };
     index = images;
     images = p.images;
@@ -1153,6 +1173,9 @@ function openLightbox(images, index, opts = {}) {
   lbAlts = Array.isArray(opts.alts) ? opts.alts : [];
   lbIndex = Math.max(0, Math.min(index || 0, images.length - 1));
   lbWithFlash = !!opts.flash;
+  // Które zdjęcia ludzie powiększają — jedyny sygnał zainteresowania konkretną
+  // pracą, jaki strona galerii może dać (poza samym wejściem na cykl).
+  if (!wasOpen) track("photo_view", { item: opts.item || "", photo_index: lbIndex + 1, photos: images.length });
   setLightboxImage();
   $("#lbCounter").textContent =
     `${String(lbIndex+1).padStart(2,"0")} / ${String(lbImages.length).padStart(2,"0")}`;
@@ -1282,6 +1305,9 @@ function syncNewsHeading(single) {
    wyszukiwarki grafiki nie znaczyły nic, a przy nieudanym wczytaniu zostawało
    puste miejsce. Ten sam tekst wpisuje generator do gotowych plików. */
 function newsPhotoAlt(a, i, L) {
+  // Własny opis z pola `alts` wpisu (jak w cyklach — patrz projectPhotoAlt).
+  const own = a.alts && a.alts[L] && a.alts[L][i];
+  if (own) return own;
   const ile = (a.images || []).length;
   return `${a.title[L]}, ${a.place[L]} — ${tr("w.photo", L)} ${i + 1} ${tr("w.of", L)} ${ile}`;
 }
@@ -1291,8 +1317,11 @@ function newsPhotoAlt(a, i, L) {
    ważniejsze, żeby w wyniku wyszukiwania zmieściło się nazwisko autora.
    Ta sama reguła żyje w tools/build-pages.js (newsTitle). */
 function newsTitle(a, L) {
+  // Własny tytuł z pola `seo` wpisu (jak w cyklach) ma pierwszeństwo.
+  const own = a.seo && a.seo[L] && a.seo[L].title;
+  if (own) return `${own} · Paweł Sypniewski`;
   const full = `${a.title[L]} — ${a.type[L]} · Paweł Sypniewski`;
-  return full.length <= 70 ? full : `${a.title[L]} · Paweł Sypniewski`;
+  return full.length <= 60 ? full : `${a.title[L]} · Paweł Sypniewski`;
 }
 
 function thumbPath(src) {
@@ -1308,6 +1337,49 @@ function mediumPath(src) {
   const str = String(src || "");
   const i = str.lastIndexOf("/");
   return i < 0 ? str : str.slice(0, i) + "/m" + str.slice(i);
+}
+// Wersja 800 px (katalog s/) — dla telefonów o podwójnej gęstości ekranu
+// (Pixel, iPhone bez „Pro”): 1200 px było tam o połowę za duże. Przeglądarka
+// dobiera z srcset plik najbliższy temu, ile pikseli naprawdę wyświetli.
+function smallPath(src) {
+  const str = String(src || "");
+  const i = str.lastIndexOf("/");
+  return i < 0 ? str : str.slice(0, i) + "/s" + str.slice(i);
+}
+function mobileSrcset(src) {
+  return `${smallPath(src)} 800w, ${mediumPath(src)} 1200w`;
+}
+// Miniatura 320 px (katalog xs/) — kwadraty w siatce Aktualności na telefonie
+// mają ~120 px, więc 600-pikselowa miniatura była tam cztery razy za ciężka.
+function tinyPath(src) {
+  const str = String(src || "");
+  const i = str.lastIndexOf("/");
+  return i < 0 ? str : str.slice(0, i) + "/xs" + str.slice(i);
+}
+function newsThumbSrcset(src) {
+  return `${tinyPath(src)} 320w, ${thumbPath(src)} 600w`;
+}
+const NEWS_THUMB_SIZES = "(max-width: 720px) 30vw, 235px";
+
+// Atrybuty width/height z wymiarów oryginału (content/image-sizes.json →
+// window.IMAGE_SIZES). Przeglądarka rezerwuje z nich miejsce na zdjęcie, zanim
+// je wczyta, więc nic pod spodem nie przeskakuje. Pomniejszone wersje mają te
+// same proporcje, a tylko proporcje się tu liczą.
+function sizeAttrs(src) {
+  const key = String(src || "").replace(/^\//, "");
+  const sz = window.IMAGE_SIZES && window.IMAGE_SIZES[key];
+  return sz && sz.w && sz.h ? ` width="${sz.w}" height="${sz.h}"` : "";
+}
+
+/* Opis zdjęcia cyklu. Własny opis bierzemy z pola `alts` w pliku cyklu
+   (content/projects/*.json): { "alts": { "pl": ["…", …], "en": […], "cs": […] } },
+   po jednym wpisie na zdjęcie, w kolejności z `images`. Puste pole albo brak
+   tablicy = schemat „Tytuł — zdjęcie 3 z 15, rok, kategoria”. Ten sam opis
+   wpisuje generator do gotowych plików (tools/build-pages.js). */
+function projectPhotoAlt(p, i, L) {
+  const own = p.alts && p.alts[L] && p.alts[L][i];
+  if (own) return own;
+  return `${p.title[L]} — ${tr("w.photo", L)} ${i + 1} ${tr("w.of", L)} ${p.images.length}, ${p.year}, ${p.category[L]}`;
 }
 
 // Lightbox na telefonie też dostaje wersję 1200 px — ekran ma 375–430 px
@@ -1365,7 +1437,7 @@ function renderAchievements() {
 
   list.innerHTML = backLink + sorted.map((a, ai) => {
     const photos = (a.images || []).map((src, i) =>
-      `<div class="achievement-photo" data-achievement="${ai}" data-photo="${i}" role="button" tabindex="0" aria-label="${attr(a.title[L])} — ${i+1}"><img src="${attr(thumbPath(src))}" data-full="${attr(src)}" alt="${attr(newsPhotoAlt(a, i, L))}" loading="lazy" decoding="async"></div>`
+      `<div class="achievement-photo" data-achievement="${ai}" data-photo="${i}" role="button" tabindex="0" aria-label="${attr(a.title[L])} — ${i+1}"><img src="${attr(thumbPath(src))}" srcset="${attr(newsThumbSrcset(src))}" sizes="${NEWS_THUMB_SIZES}" data-full="${attr(src)}" alt="${attr(newsPhotoAlt(a, i, L))}" loading="lazy" decoding="async"></div>`
     ).join("");
     // Linki — obsługa zarówno pojedynczego `url` jak i tablicy `links`
     let link = "";
@@ -1417,6 +1489,7 @@ function renderAchievements() {
   $$(".achievement-photo img").forEach(img => {
     img.addEventListener("error", () => {
       const full = img.dataset.full;
+      img.removeAttribute("srcset");
       if (full && img.getAttribute("src") !== full) img.setAttribute("src", full);
     }, { once: true });
   });
@@ -1430,6 +1503,7 @@ function renderAchievements() {
       if (!a) return;
       openLightbox(a.images, pi, {
         flash: false,
+        item: a.id || "",
         alts: (a.images || []).map((_, i) => newsPhotoAlt(a, i, state.lang)),
       });
     };
@@ -1518,6 +1592,7 @@ function initContactForm() {
       form.reset();
       form.classList.remove("tried");
       say("ok", "form.ok");
+      track("contact_form_sent", { language: state.lang });
     } catch (err) {
       console.warn("Formularz kontaktowy:", err);
       say("err", "form.err");
@@ -1538,8 +1613,23 @@ const BASE_URL = "https://pawelsypniewski.pl";
    w szablonie ukryty; odsłaniamy go tylko na stronie głównej, gdy adres
    w przeglądarce nie pasuje do żadnego widoku. */
 function renderNotFound() {
-  const note = $("#notFoundNote");
-  if (note) note.hidden = !(state.notFound && state.route === "home");
+  const show = !!(state.notFound && state.route === "home");
+  let note = $("#notFoundNote");
+  // Komunikat jest w kodzie wyłącznie w 404.html (wstawia go generator).
+  // Zwykłe podstrony go nie mają — gdyby jednak był potrzebny, budujemy go tu.
+  if (!note) {
+    if (!show) return;
+    const anchor = document.querySelector("#view-home .home-topline");
+    if (!anchor) return;
+    note = document.createElement("div");
+    note.className = "home-notfound";
+    note.id = "notFoundNote";
+    note.setAttribute("role", "status");
+    note.innerHTML = '<strong data-i18n="notfound.h"></strong> <span data-i18n="notfound.text"></span>';
+    anchor.parentNode.insertBefore(note, anchor);
+    applyI18n();
+  }
+  note.hidden = !show;
 }
 
 function updateSEO(route) {
@@ -1627,12 +1717,15 @@ function updateSEO(route) {
   for (const l of LANGS) setAlt(l, BASE_URL + routeToPath(route, currentSlug(), l));
   setAlt("x-default", BASE_URL + routeToPath(route, currentSlug(), "pl"));
 
-  // Google Analytics 4 — virtual page_view dla SPA
-  if (typeof window.gtag === "function" && url) {
+  // Google Analytics 4 — virtual page_view dla SPA. Strona 404 raportuje swój
+  // prawdziwy adres (ten, którego nie było), a nie stronę główną — inaczej
+  // każde wejście w zły link liczyło się jako odsłona „/”.
+  const seen = state.notFound ? window.location.href : url;
+  if (typeof window.gtag === "function" && seen) {
     window.gtag('event', 'page_view', {
       page_title: title,
-      page_location: url,
-      page_path: url.replace("https://pawelsypniewski.pl", "") || "/"
+      page_location: seen,
+      page_path: seen.replace(/^https?:\/\/[^/]+/, "") || "/"
     });
   }
 }
@@ -1793,6 +1886,7 @@ function applyLang(lang) {
 function setLang(lang) {
   if (!LANGS.includes(lang)) return;
   if (lang === state.lang) return;
+  track("lang_switch", { from: state.lang, to: lang });
   applyLang(lang);
   setRoute(state.route, { skipScroll: true });
 }
@@ -2040,6 +2134,9 @@ function init() {
   loadPrefs();
   const initial = parseRoute();
   state.notFound = !!initial.notFound;
+  // Które adresy ludzie wpisują albo klikają, a strona ich nie ma — do
+  // naprawienia linku albo przekierowania. Raportuje prawdziwy adres.
+  if (state.notFound) track("page_not_found", { page_path: window.location.pathname + window.location.search });
 
   // 2. Język bierzemy z adresu i ustawiamy PRZED pierwszym rysowaniem,
   //    inaczej strona mignęłaby po polsku, zanim przełączy się na angielski.

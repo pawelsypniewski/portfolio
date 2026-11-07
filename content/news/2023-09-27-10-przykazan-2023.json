@@ -68,5 +68,31 @@
     "images/achievements/10-przykazan-2023/04.webp",
     "images/achievements/10-przykazan-2023/05.webp",
     "images/achievements/10-przykazan-2023/06.webp"
-  ]
+  ],
+  "alts": {
+    "pl": [
+      "Wejście do Galerii Obok ZPAF z otwartą kratą i zasłoną z fotografią, obok plakat wystawy",
+      "Wielkoformatowa fotografia otwartych ust z obrazkiem Jezusa na języku, obok opis pracy",
+      "Gablota z napisem „Bóg zapłać” i tabliczka z opisem pracy",
+      "Na drewnianym stole: wachlarz odbitek, naklejki w woreczkach i broszury „Wanted / Dead”",
+      "Zasłona z fotografią w oknie galerii, obok mała praca i tekst kuratorski na ścianie",
+      "Sala wystawy ze sklepieniem: fotografie na szarych ścianach, duży obraz ust z obrazkiem na języku"
+    ],
+    "en": [
+      "Entrance to Galeria Obok ZPAF with an open grille and a photo-printed curtain, exhibition poster beside it",
+      "A large-format photograph of an open mouth with a picture of Jesus on the tongue, with a caption beside it",
+      "A display case reading “Bóg zapłać” (God repay you) and a label describing the work",
+      "On a wooden table: a fan of prints, stickers in bags and “Wanted / Dead” booklets",
+      "A photo-printed curtain in the gallery window, a small work and curatorial text on the wall",
+      "A vaulted exhibition room: photographs on grey walls, a large image of a mouth with a picture on the tongue"
+    ],
+    "cs": [
+      "Vstup do Galerie Obok ZPAF s otevřenou mříží a závěsem s fotografií, vedle plakát výstavy",
+      "Velkoformátová fotografie otevřených úst s obrázkem Ježíše na jazyku, vedle popisek",
+      "Vitrína s nápisem „Bóg zapłać“ (Zaplať Bůh) a popisek díla",
+      "Na dřevěném stole: vějíř fotografií, nálepky v sáčcích a brožurky „Wanted / Dead“",
+      "Závěs s fotografií v okně galerie, vedle malé dílo a kurátorský text na stěně",
+      "Klenutý výstavní sál: fotografie na šedých stěnách, velký obraz úst s obrázkem na jazyku"
+    ]
+  }
 }

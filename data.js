@@ -195,13 +195,13 @@ window.I18N = {
 
     /* Tytuły i opisy stron dla wyszukiwarek — jedno źródło dla app.js
        (przełączanie widoków) i tools/build-pages.js (gotowe pliki). */
-    "seo.home.title": "Paweł Sypniewski — Fotograf i Artysta Wizualny | Warszawa, ZPAF",
+    "seo.home.title": "Paweł Sypniewski — fotograf, artysta wizualny, Warszawa",
     "seo.home.desc": "Paweł Sypniewski — fotograf i artysta wizualny z Warszawy, członek ZPAF. Fotografia dokumentalna i kreacyjna, autorskie cykle, techniki szlachetne.",
-    "seo.about.title": "O autorze — Paweł Sypniewski, fotograf i artysta wizualny",
+    "seo.about.title": "O autorze — Paweł Sypniewski, fotograf, Warszawa",
     "seo.about.desc": "Paweł Sypniewski (ur. 1987) — fotograf i artysta wizualny z Warszawy, członek ZPAF. Edukacja: ITF Opawa, Sputnik Photos. Wystawy, nagrody, publikacje.",
-    "seo.contact.title": "Kontakt — Paweł Sypniewski, fotograf | odbitki autorskie",
+    "seo.contact.title": "Kontakt — Paweł Sypniewski, odbitki autorskie",
     "seo.contact.desc": "Kontakt z Pawłem Sypniewskim, fotografem i artystą wizualnym z Warszawy. Limitowane odbitki autorskie, wystawy, współpraca i publikacje.",
-    "seo.achievements.title": "Aktualności — wystawy i wydarzenia · Paweł Sypniewski",
+    "seo.achievements.title": "Aktualności i wystawy · Paweł Sypniewski",
     "seo.achievements.desc": "Aktualne wystawy, pokazy festiwalowe i wydarzenia z udziałem Pawła Sypniewskiego — fotografa i artysty wizualnego z Warszawy."
   },
   en: {
@@ -260,13 +260,13 @@ window.I18N = {
     "np.cnote": "Limited-edition artist prints — get in touch about sizes and pricing.",
     "np.facts": "ZPAF|ITF Opava|Sputnik Photos|Warsaw / Opava",
 
-    "seo.home.title": "Paweł Sypniewski — Photographer and Visual Artist | Warsaw, ZPAF",
+    "seo.home.title": "Paweł Sypniewski — photographer, visual artist, Warsaw",
     "seo.home.desc": "Paweł Sypniewski — photographer and visual artist from Warsaw. Documentary, reportage and constructed works. Member of ZPAF, Warsaw Branch.",
-    "seo.about.title": "About — Paweł Sypniewski, photographer and visual artist",
+    "seo.about.title": "About — Paweł Sypniewski, photographer, Warsaw",
     "seo.about.desc": "Paweł Sypniewski (b. 1987) — photographer and visual artist from Warsaw, ZPAF member. Education: ITF Opava, Sputnik Photos. Exhibitions, awards, press.",
-    "seo.contact.title": "Contact — Paweł Sypniewski, photographer | artist prints",
+    "seo.contact.title": "Contact — Paweł Sypniewski, artist prints",
     "seo.contact.desc": "Get in touch with Paweł Sypniewski, photographer and visual artist from Warsaw. Limited-edition artist prints, exhibitions, collaborations and press.",
-    "seo.achievements.title": "News — exhibitions and events · Paweł Sypniewski",
+    "seo.achievements.title": "News and exhibitions · Paweł Sypniewski",
     "seo.achievements.desc": "Current exhibitions, festival screenings and events featuring Paweł Sypniewski — photographer and visual artist based in Warsaw."
   },
   cs: {
@@ -325,13 +325,13 @@ window.I18N = {
     "np.cnote": "Autorské tisky v limitovaných edicích — napište mi ohledně formátů a cen.",
     "np.facts": "ZPAF|ITF Opava|Sputnik Photos|Varšava / Opava",
 
-    "seo.home.title": "Paweł Sypniewski — fotograf a vizuální umělec | Varšava, Opava",
+    "seo.home.title": "Paweł Sypniewski — fotograf a vizuální umělec, Opava",
     "seo.home.desc": "Paweł Sypniewski — polský fotograf a vizuální umělec, člen ZPAF, student Institutu tvůrčí fotografie v Opavě. Dokumentární a inscenovaná fotografie.",
-    "seo.about.title": "O autorovi — Paweł Sypniewski, fotograf a vizuální umělec",
+    "seo.about.title": "O autorovi — Paweł Sypniewski, fotograf, Opava",
     "seo.about.desc": "Paweł Sypniewski (nar. 1987) — fotograf a vizuální umělec z Varšavy, člen ZPAF, student ITF v Opavě. Výstavy, ocenění a publikace.",
-    "seo.contact.title": "Kontakt — Paweł Sypniewski, fotograf | autorské tisky",
+    "seo.contact.title": "Kontakt — Paweł Sypniewski, autorské tisky",
     "seo.contact.desc": "Kontaktujte Pawła Sypniewského, fotografa a vizuálního umělce z Varšavy a Opavy. Autorské tisky v limitovaných edicích, výstavy, spolupráce a média.",
-    "seo.achievements.title": "Aktuality — výstavy a události · Paweł Sypniewski",
+    "seo.achievements.title": "Aktuality a výstavy · Paweł Sypniewski",
     "seo.achievements.desc": "Aktuální výstavy, festivalové projekce a události, na kterých se podílí Paweł Sypniewski — polský fotograf a vizuální umělec z Varšavy a Opavy."
   }
 };

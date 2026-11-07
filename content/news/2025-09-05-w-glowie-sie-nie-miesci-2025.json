@@ -58,5 +58,28 @@
     "images/achievements/w-glowie-sie-nie-miesci-2025/03.webp",
     "images/achievements/w-glowie-sie-nie-miesci-2025/04.webp",
     "images/achievements/w-glowie-sie-nie-miesci-2025/05.webp"
-  ]
+  ],
+  "alts": {
+    "pl": [
+      "Nocny pejzaż z zaroślami w świetle flesza, w powietrzu jasne punkty śniegu lub deszczu",
+      "Portret brodatego mężczyzny z czarnymi bazgrołami na twarzy, odbitka na pogniecionym kartonie",
+      "Smugi dymu z papierosa trzymanego w dłoni na czarnym tle, kadr pionowy",
+      "Koncentryczne kręgi i spiralne smugi wokół ciemnego punktu, abstrakcja z wielokrotnej ekspozycji",
+      "Drogowskazy i okrągły znak oświetlone fleszem na pustym skrzyżowaniu nocą"
+    ],
+    "en": [
+      "A night landscape with scrub in flash light, bright specks of snow or rain in the air",
+      "Portrait of a bearded man with black scribbles over his face, printed on crumpled cardboard",
+      "Wisps of smoke from a cigarette held in a hand against black, vertical frame",
+      "Concentric rings and spiral streaks around a dark point, an abstraction from multiple exposure",
+      "Signposts and a round road sign lit by flash at an empty crossroads at night"
+    ],
+    "cs": [
+      "Noční krajina s křovím ve světle blesku, ve vzduchu světlé body sněhu nebo deště",
+      "Portrét vousatého muže s černými čmáranicemi přes tvář, tisk na zmačkaném kartonu",
+      "Obláčky kouře z cigarety v ruce na černém pozadí, svislý záběr",
+      "Soustředné kruhy a spirálové šmouhy kolem tmavého bodu, abstrakce z vícenásobné expozice",
+      "Směrovky a kulatá dopravní značka osvětlené bleskem na prázdné křižovatce v noci"
+    ]
+  }
 }

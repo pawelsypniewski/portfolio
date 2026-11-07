@@ -42,12 +42,15 @@
   },
   "seo": {
     "pl": {
+      "title": "Nocne ptaki — Opolski Festiwal Fotografii",
       "description": "Fragment cyklu „Nocne ptaki późno wracają do domu” na wystawie Instytutu Fotografii Twórczej podczas Opolskiego Festiwalu Fotografii OFFoto w Opolu."
     },
     "en": {
+      "title": "Night Birds — Opole Photography Festival",
       "description": "A selection from “Night Birds Come Home Late” at the Institute of Creative Photography exhibition during the Opole Photography Festival OFFoto."
     },
     "cs": {
+      "title": "Noční ptáci — Opolský festival fotografie",
       "description": "Výběr z cyklu „Noční ptáci se vracejí domů pozdě“ na výstavě Institutu tvůrčí fotografie během Opolského festivalu fotografie OFFoto."
     }
   },
@@ -67,5 +70,28 @@
     "images/achievements/offoto-opole-2026/03.webp",
     "images/achievements/offoto-opole-2026/04.webp",
     "images/achievements/offoto-opole-2026/05.webp"
-  ]
+  ],
+  "alts": {
+    "pl": [
+      "Tłum rozbawionych młodych ludzi na imprezie, półnagi mężczyzna z naklejką na czole, ktoś wskazuje palcem",
+      "Trzy osoby idą nocą przez plac, jedna z kieliszkiem w ręce",
+      "Oprawione fotografie z cyklu „Nocne ptaki” na szarej ścianie galerii, zwiedzająca ogląda prace",
+      "Trzy oprawione fotografie z cyklu „Nocne ptaki” na ścianie wystawy, obok podpis",
+      "Dwie młode kobiety z torbami na zakupy patrzą w telefony na skrzyżowaniu nocą"
+    ],
+    "en": [
+      "A crowd of young people having fun at a party, a bare-chested man with a sticker on his forehead, someone pointing",
+      "Three people walking across a square at night, one holding a glass",
+      "Framed photographs from the “Night Birds” series on a grey gallery wall, a visitor looking at the works",
+      "Three framed photographs from the “Night Birds” series on the exhibition wall, a caption beside them",
+      "Two young women with shopping bags looking at their phones at a crossroads at night"
+    ],
+    "cs": [
+      "Dav rozdováděných mladých lidí na párty, polonahý muž s nálepkou na čele, někdo ukazuje prstem",
+      "Tři lidé jdou v noci přes náměstí, jeden se sklenkou v ruce",
+      "Zarámované fotografie z cyklu „Noční ptáci“ na šedé stěně galerie, návštěvnice si prohlíží díla",
+      "Tři zarámované fotografie z cyklu „Noční ptáci“ na stěně výstavy, vedle popisek",
+      "Dvě mladé ženy s nákupními taškami hledí do telefonů na křižovatce v noci"
+    ]
+  }
 }

@@ -66,5 +66,25 @@
     "images/achievements/itf-opava-start-2025/02.webp",
     "images/achievements/itf-opava-start-2025/03.webp",
     "images/achievements/itf-opava-start-2025/04.webp"
-  ]
+  ],
+  "alts": {
+    "pl": [
+      "Zdjęcie grupowe studentów i wykładowców ITF na łące, w tle jesienne wzgórza i domy",
+      "Sala z żyrandolem i sklepieniem, wykładowcy za stołem prezydialnym, widok zza pleców słuchaczy",
+      "Dłonie wznoszące toast kuflami piwa nad ciemnym stołem, widok z góry",
+      "Grupa osób pozuje z balonami „35” i miotłą na tle różowej ściany, autor stoi najwyżej"
+    ],
+    "en": [
+      "Group photo of ITF students and lecturers in a meadow, autumn hills and houses behind",
+      "A hall with a chandelier and vaulted ceiling, lecturers at the head table, seen from behind the audience",
+      "Hands raising a toast with beer mugs over a dark table, seen from above",
+      "A group posing with “35” balloons and a broom against a pink wall, the author standing highest"
+    ],
+    "cs": [
+      "Skupinová fotografie studentů a pedagogů ITF na louce, v pozadí podzimní kopce a domy",
+      "Sál s lustrem a klenbou, pedagogové za předsednickým stolem, pohled zpoza posluchačů",
+      "Ruce připíjející půllitry piva nad tmavým stolem, pohled shora",
+      "Skupina pózující s balónky „35“ a koštětem u růžové zdi, autor stojí nejvýše"
+    ]
+  }
 }

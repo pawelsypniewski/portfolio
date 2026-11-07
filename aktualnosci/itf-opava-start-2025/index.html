@@ -33,7 +33,7 @@
 ">
 
 <!-- ============ PRIMARY META ============ -->
-<title>Rozpoczęcie studiów — ITF Opawa — Edukacja · Paweł Sypniewski</title>
+<title>Rozpoczęcie studiów — ITF Opawa · Paweł Sypniewski</title>
 <meta name="description" content="Rozpoczęcie studiów w Instytucie Fotografii Twórczej na Uniwersytecie Śląskim w Opawie, jednej z najważniejszych europejskich szkół fotografii artystycznej.">
 <meta name="author" content="Paweł Sypniewski">
 <meta name="publisher" content="Paweł Sypniewski">
@@ -121,13 +121,13 @@
 <!-- ============ OPEN GRAPH ============ -->
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Paweł Sypniewski">
-<meta property="og:title" content="Rozpoczęcie studiów — ITF Opawa — Edukacja · Paweł Sypniewski">
+<meta property="og:title" content="Rozpoczęcie studiów — ITF Opawa · Paweł Sypniewski">
 <meta property="og:description" content="Rozpoczęcie studiów w Instytucie Fotografii Twórczej na Uniwersytecie Śląskim w Opawie, jednej z najważniejszych europejskich szkół fotografii artystycznej.">
 <meta property="og:url" content="https://pawelsypniewski.pl/aktualnosci/itf-opava-start-2025/">
 <meta property="og:image" content="https://pawelsypniewski.pl/images/achievements/itf-opava-start-2025/01.webp">
 <meta property="og:image:secure_url" content="https://pawelsypniewski.pl/images/achievements/itf-opava-start-2025/01.webp">
 <meta property="og:image:type" content="image/webp">
-<meta property="og:image:alt" content="Rozpoczęcie studiów — ITF Opawa — Institut tvůrčí fotografie, Uniwersytet Śląski w Opawie, Czechy">
+<meta property="og:image:alt" content="Zdjęcie grupowe studentów i wykładowców ITF na łące, w tle jesienne wzgórza i domy">
 <meta property="og:locale" content="pl_PL">
 <meta property="og:locale:alternate" content="en_US">
 <meta property="og:locale:alternate" content="cs_CZ">
@@ -135,10 +135,10 @@
 
 <!-- ============ TWITTER CARD ============ -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Rozpoczęcie studiów — ITF Opawa — Edukacja · Paweł Sypniewski">
+<meta name="twitter:title" content="Rozpoczęcie studiów — ITF Opawa · Paweł Sypniewski">
 <meta name="twitter:description" content="Rozpoczęcie studiów w Instytucie Fotografii Twórczej na Uniwersytecie Śląskim w Opawie, jednej z najważniejszych europejskich szkół fotografii artystycznej.">
 <meta name="twitter:image" content="https://pawelsypniewski.pl/images/achievements/itf-opava-start-2025/01.webp">
-<meta name="twitter:image:alt" content="Rozpoczęcie studiów — ITF Opawa — Institut tvůrčí fotografie, Uniwersytet Śląski w Opawie, Czechy">
+<meta name="twitter:image:alt" content="Zdjęcie grupowe studentów i wykładowców ITF na łące, w tle jesienne wzgórza i domy">
 
 <!-- ============ FAVICON / PWA ============ -->
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -160,6 +160,11 @@
      Podzbiory: latin (angielski) + latin-ext (polskie znaki: ą, ę, ł…). -->
 <link rel="preload" href="/fonts/jost-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/jost-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+<!-- JetBrains Mono pisze menu, podtytuły i metryczki na pierwszym ekranie
+     każdej podstrony. Bez zapowiedzi tekst rysował się najpierw czcionką
+     zastępczą i przeskakiwał po dociągnięciu pliku (przesunięcie układu). -->
+<link rel="preload" href="/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/jetbrains-mono-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
 
 <!-- ============ ZAPOWIEDŹ PIERWSZEGO KAFLA ============
      Zdjęcia kafli są tłem w atrybucie style, a tła przeglądarka odkrywa
@@ -1930,7 +1935,7 @@
     text-transform: uppercase;
     line-height: 1.7;
   }
-  .text-page .side h3 {
+  .text-page .side h2 {
     font-weight: 500;
     font-size: 11px;
     letter-spacing: 0.1em;
@@ -2160,7 +2165,7 @@
     .text-page .body { font-size: 18px; line-height: 1.55; }
     .proj-description { font-size: 18px; line-height: 1.55; }
     .text-page .side { font-size: 13px; }
-    .text-page .side h3 { font-size: 12px; }
+    .text-page .side h2 { font-size: 12px; }
 
     .home-topline { padding: 18px 56px; font-size: 13px; }
   }
@@ -2508,7 +2513,13 @@
       transition: height 240ms cubic-bezier(0.4, 0.1, 0.2, 1);
     }
     .proj-slide { padding: 10px 12px; }
-    .proj-slide img { cursor: pointer; }
+    /* width: 100% — bez tego, przy width: auto, przeglądarka nie zna rozmiaru
+       zdjęcia, dopóki go nie pobierze (atrybuty width/height dają tylko
+       proporcje), więc scena startowała z zerową wysokością i skakała o ~600 px,
+       gdy zdjęcie nadeszło. Z szerokością z kontenera wysokość wynika
+       z proporcji od pierwszego rysowania; object-fit: contain pilnuje, żeby
+       pionowe kadry ograniczone wysokością sceny nie były rozciągane. */
+    .proj-slide img { cursor: pointer; width: 100%; }
     .proj-nav-left, .proj-nav-right { display: none; }
     .proj-bottom {
       padding: 12px 18px 16px;
@@ -2750,6 +2761,21 @@
     .lightbox { padding: 30px 12px; }
   }
 
+
+  /* ============================================================
+     CZYTELNOŚĆ NA TELEFONIE
+     Google (Lighthouse) i czytniki ekranu uznają tekst poniżej 12 px za
+     nieczytelny; na stronie głównej takich było 63 % tekstu (numery kafli,
+     pasek „Prace”, stopka, baner cookies). Blok stoi na końcu arkusza, więc
+     wygrywa z wcześniejszymi regułami o tej samej wadze. Komputer bez zmian.
+     ============================================================ */
+  @media (max-width: 720px), (max-height: 500px) and (orientation: landscape) and (max-width: 950px) {
+    .home-poster .cell .num,
+    .home-topline,
+    .sidefoot,
+    .cb-text,
+    .cb-btn { font-size: 12px; }
+  }
 </style>
 <script type="application/ld+json">
 {
@@ -2786,25 +2812,25 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/achievements/itf-opava-start-2025/01.webp",
-      "caption": "Rozpoczęcie studiów — ITF Opawa — Institut tvůrčí fotografie, Uniwersytet Śląski w Opawie, Czechy",
+      "caption": "Zdjęcie grupowe studentów i wykładowców ITF na łące, w tle jesienne wzgórza i domy",
       "creditText": "Paweł Sypniewski"
     },
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/achievements/itf-opava-start-2025/02.webp",
-      "caption": "Rozpoczęcie studiów — ITF Opawa — Institut tvůrčí fotografie, Uniwersytet Śląski w Opawie, Czechy",
+      "caption": "Sala z żyrandolem i sklepieniem, wykładowcy za stołem prezydialnym, widok zza pleców słuchaczy",
       "creditText": "Paweł Sypniewski"
     },
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/achievements/itf-opava-start-2025/03.webp",
-      "caption": "Rozpoczęcie studiów — ITF Opawa — Institut tvůrčí fotografie, Uniwersytet Śląski w Opawie, Czechy",
+      "caption": "Dłonie wznoszące toast kuflami piwa nad ciemnym stołem, widok z góry",
       "creditText": "Paweł Sypniewski"
     },
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/achievements/itf-opava-start-2025/04.webp",
-      "caption": "Rozpoczęcie studiów — ITF Opawa — Institut tvůrčí fotografie, Uniwersytet Śląski w Opawie, Czechy",
+      "caption": "Grupa osób pozuje z balonami „35” i miotłą na tle różowej ściany, autor stoi najwyżej",
       "creditText": "Paweł Sypniewski"
     }
   ]
@@ -2891,10 +2917,10 @@
         <!-- Komunikat strony 404. GitHub Pages przy nieznanym adresie podaje
              404.html (kopię strony głównej); app.js odsłania ten pasek, gdy
              adres w przeglądarce nie pasuje do żadnego widoku. -->
-        <div class="home-notfound" id="notFoundNote" role="status" hidden>
-          <strong data-i18n="notfound.h">Nie znaleziono strony.</strong>
-          <span data-i18n="notfound.text">Ten adres nie istnieje — poniżej wybrane prace.</span>
-        </div>
+        <!-- @notfound — generator (tools/build-pages.js) wstawia tu komunikat
+             „Nie znaleziono strony” WYŁĄCZNIE w 404.html. Zwykłe podstrony nie
+             mogą mieć tego tekstu w kodzie: Google potrafi uznać stronę z takim
+             komunikatem za „miękkie 404” i wyrzucić ją z indeksu. -->
         <div class="home-topline">
           <span data-i18n="home.label">Prace / Wybrane realizacje</span>
         </div>
@@ -3035,7 +3061,7 @@
           <div class="achievement-place">Institut tvůrčí fotografie, Uniwersytet Śląski w Opawie, Czechy</div>
           
           <p class="achievement-desc">Rozpoczęcie studiów w Instytucie Fotografii Twórczej (Institut tvůrčí fotografie) na Uniwersytecie Śląskim w Opawie — jednej z najbardziej prestiżowych europejskich szkół fotografii artystycznej. Założony w 1990 roku, kształci kolejne pokolenia fotografów z całego regionu Europy Środkowej.</p>
-          <div class="achievement-photos"><div class="achievement-photo" data-achievement="0" data-photo="0" role="button" tabindex="0" aria-label="Rozpoczęcie studiów — ITF Opawa — 1"><img src="/images/achievements/itf-opava-start-2025/thumbs/01.webp" data-full="/images/achievements/itf-opava-start-2025/01.webp" alt="Rozpoczęcie studiów — ITF Opawa, Institut tvůrčí fotografie, Uniwersytet Śląski w Opawie, Czechy — zdjęcie 1 z 4" loading="lazy" decoding="async"></div><div class="achievement-photo" data-achievement="0" data-photo="1" role="button" tabindex="0" aria-label="Rozpoczęcie studiów — ITF Opawa — 2"><img src="/images/achievements/itf-opava-start-2025/thumbs/02.webp" data-full="/images/achievements/itf-opava-start-2025/02.webp" alt="Rozpoczęcie studiów — ITF Opawa, Institut tvůrčí fotografie, Uniwersytet Śląski w Opawie, Czechy — zdjęcie 2 z 4" loading="lazy" decoding="async"></div><div class="achievement-photo" data-achievement="0" data-photo="2" role="button" tabindex="0" aria-label="Rozpoczęcie studiów — ITF Opawa — 3"><img src="/images/achievements/itf-opava-start-2025/thumbs/03.webp" data-full="/images/achievements/itf-opava-start-2025/03.webp" alt="Rozpoczęcie studiów — ITF Opawa, Institut tvůrčí fotografie, Uniwersytet Śląski w Opawie, Czechy — zdjęcie 3 z 4" loading="lazy" decoding="async"></div><div class="achievement-photo" data-achievement="0" data-photo="3" role="button" tabindex="0" aria-label="Rozpoczęcie studiów — ITF Opawa — 4"><img src="/images/achievements/itf-opava-start-2025/thumbs/04.webp" data-full="/images/achievements/itf-opava-start-2025/04.webp" alt="Rozpoczęcie studiów — ITF Opawa, Institut tvůrčí fotografie, Uniwersytet Śląski w Opawie, Czechy — zdjęcie 4 z 4" loading="lazy" decoding="async"></div></div>
+          <div class="achievement-photos"><div class="achievement-photo" data-achievement="0" data-photo="0" role="button" tabindex="0" aria-label="Rozpoczęcie studiów — ITF Opawa — 1"><img src="/images/achievements/itf-opava-start-2025/thumbs/01.webp" srcset="/images/achievements/itf-opava-start-2025/xs/01.webp 320w, /images/achievements/itf-opava-start-2025/thumbs/01.webp 600w" sizes="(max-width: 720px) 30vw, 235px" data-full="/images/achievements/itf-opava-start-2025/01.webp" alt="Zdjęcie grupowe studentów i wykładowców ITF na łące, w tle jesienne wzgórza i domy" loading="lazy" decoding="async"></div><div class="achievement-photo" data-achievement="0" data-photo="1" role="button" tabindex="0" aria-label="Rozpoczęcie studiów — ITF Opawa — 2"><img src="/images/achievements/itf-opava-start-2025/thumbs/02.webp" srcset="/images/achievements/itf-opava-start-2025/xs/02.webp 320w, /images/achievements/itf-opava-start-2025/thumbs/02.webp 600w" sizes="(max-width: 720px) 30vw, 235px" data-full="/images/achievements/itf-opava-start-2025/02.webp" alt="Sala z żyrandolem i sklepieniem, wykładowcy za stołem prezydialnym, widok zza pleców słuchaczy" loading="lazy" decoding="async"></div><div class="achievement-photo" data-achievement="0" data-photo="2" role="button" tabindex="0" aria-label="Rozpoczęcie studiów — ITF Opawa — 3"><img src="/images/achievements/itf-opava-start-2025/thumbs/03.webp" srcset="/images/achievements/itf-opava-start-2025/xs/03.webp 320w, /images/achievements/itf-opava-start-2025/thumbs/03.webp 600w" sizes="(max-width: 720px) 30vw, 235px" data-full="/images/achievements/itf-opava-start-2025/03.webp" alt="Dłonie wznoszące toast kuflami piwa nad ciemnym stołem, widok z góry" loading="lazy" decoding="async"></div><div class="achievement-photo" data-achievement="0" data-photo="3" role="button" tabindex="0" aria-label="Rozpoczęcie studiów — ITF Opawa — 4"><img src="/images/achievements/itf-opava-start-2025/thumbs/04.webp" srcset="/images/achievements/itf-opava-start-2025/xs/04.webp 320w, /images/achievements/itf-opava-start-2025/thumbs/04.webp 600w" sizes="(max-width: 720px) 30vw, 235px" data-full="/images/achievements/itf-opava-start-2025/04.webp" alt="Grupa osób pozuje z balonami „35” i miotłą na tle różowej ściany, autor stoi najwyżej" loading="lazy" decoding="async"></div></div>
           <div class="achievement-links"><a class="achievement-link" href="https://itf.fpf.slu.cz/" target="_blank" rel="noopener noreferrer">Strona ITF Opawa →</a></div>
         </div>
       </article>
@@ -3063,7 +3089,7 @@
              w app.js jest wpisany adres skryptu (KONTAKT_ENDPOINT). Dzięki temu
              nikt nie zobaczy formularza, który nie ma dokąd wysłać. -->
         <form class="contact-form" id="contactForm" hidden>
-          <h3 class="cf-h" data-i18n="form.h">Napisz do mnie</h3>
+          <h2 class="cf-h" data-i18n="form.h">Napisz do mnie</h2>
 
           <!-- Pułapka na roboty: pole jest poza ekranem i poza kolejnością Tab,
                więc człowiek go nie wypełni, a automat owszem. -->

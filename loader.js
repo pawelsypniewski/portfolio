@@ -69,7 +69,15 @@
       const line = raw.trim();
       if (line === "") { flushPara(); flushList(); continue; }
       const h = line.match(/^(#{1,6})\s+(.*)$/);
-      if (h) { flushPara(); flushList(); blocks.push(`<h${h[1].length}>${inlineMd(h[2].trim())}</h${h[1].length}>`); continue; }
+      // Nagłówki z panelu („### Wystawy”) siedzą pod nagłówkiem h1 strony,
+      // więc w HTML dostają poziom o jeden wyżej (### → h2): czytnik ekranu
+      // i Google widzą wtedy porządek h1 → h2, bez przeskoku do h3.
+      if (h) {
+        flushPara(); flushList();
+        const lvl = Math.min(6, Math.max(2, h[1].length - 1));
+        blocks.push(`<h${lvl}>${inlineMd(h[2].trim())}</h${lvl}>`);
+        continue;
+      }
       const li = line.match(/^[-*]\s+(.*)$/);
       if (li) { flushPara(); (list = list || []).push(li[1].trim()); continue; }
       flushList(); para.push(line);
@@ -163,6 +171,12 @@
         getJSON("/content/settings/about.json"),
         getJSON("/content/settings/contact.json"),
       ]);
+
+      // Wymiary oryginałów zdjęć (content/image-sizes.json, robi je
+      // tools/build-thumbs.js). Z nich app.js wpisuje width/height na slajdach,
+      // żeby przeglądarka zarezerwowała miejsce, zanim zdjęcie się wczyta.
+      // Brak pliku nie jest błędem — strona rysuje się wtedy jak dawniej.
+      window.IMAGE_SIZES = await getJSON("/content/image-sizes.json").catch(() => ({}));
 
       // Projekty: pomiń ukryte; zachowaj kolejność z pliku (już po `order`).
       window.PROJECTS = fillMissingLangs(absolutize((projects || []).filter((p) => !p.hidden)));

@@ -21,3 +21,6 @@ slowa*.svg
 make-idml.cjs
 _split_a4.cjs
 certificate-of-authenticity.svg
+
+# Audyty strony (raporty robocze) — nie publikować
+audyt-*.md

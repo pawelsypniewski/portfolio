@@ -73,5 +73,22 @@
     "images/achievements/fotoartfestival-dias-show-2025/01.webp",
     "images/achievements/fotoartfestival-dias-show-2025/02.webp",
     "images/achievements/fotoartfestival-dias-show-2025/03.webp"
-  ]
+  ],
+  "alts": {
+    "pl": [
+      "Dyplom XI FotoArtFestival: nominacja Pawła Sypniewskiego do nagrody głównej w konkursie Dias Show 2025",
+      "Nominowani autorzy ustawieni w rzędzie na scenie sali kinowej FotoArtFestivalu",
+      "Autor przemawia na scenie przed ekranem z logo FotoArt Festival, obok prowadząca z mikrofonem"
+    ],
+    "en": [
+      "XI FotoArtFestival diploma: Paweł Sypniewski’s nomination for the main prize in the Dias Show 2025 competition",
+      "Nominated authors lined up on stage in the FotoArtFestival cinema hall",
+      "The author speaking on stage in front of a screen with the FotoArt Festival logo, a presenter with a microphone beside him"
+    ],
+    "cs": [
+      "Diplom XI. FotoArtFestivalu: nominace Pawła Sypniewského na hlavní cenu soutěže Dias Show 2025",
+      "Nominovaní autoři seřazení na pódiu kinosálu FotoArtFestivalu",
+      "Autor mluví na pódiu před plátnem s logem FotoArt Festival, vedle moderátorka s mikrofonem"
+    ]
+  }
 }

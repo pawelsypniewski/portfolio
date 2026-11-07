@@ -30,15 +30,15 @@
   },
   "seo": {
     "pl": {
-      "title": "Gra o tron — cykl fotograficzny, fotografia polityczna",
+      "title": "Gra o tron — fotografia polityczna",
       "description": "Gra o tron — cykl fotograficzny Pawła Sypniewskiego o ikonografii politycznej polskiej prowincji. Plakaty wyborcze, ołtarzyki, prowizoryczne pomniki."
     },
     "en": {
-      "title": "Game of Thrones — political photo series, Poland",
+      "title": "Game of Thrones — political photo series",
       "description": "Game of Thrones — a photo series by Paweł Sypniewski on the political iconography of provincial Poland. Election posters, shrines, makeshift monuments."
     },
     "cs": {
-      "title": "Hra o trůny — fotografický cyklus o politice v Polsku",
+      "title": "Hra o trůny — fotografie o politice",
       "description": "Hra o trůny — fotografický cyklus Pawła Sypniewského o politické ikonografii polského venkova. Volební plakáty, oltáříky, provizorní pomníky."
     }
   },
@@ -60,5 +60,49 @@
     "images/gra_o_tron/10.webp",
     "images/gra_o_tron/11.webp",
     "images/gra_o_tron/12.webp"
-  ]
+  ],
+  "alts": {
+    "pl": [
+      "Szary kot na chodniku i wyciągnięta ku niemu dłoń, nocą w świetle lampy błyskowej",
+      "Baner wyborczy Konfederacji z Krzysztofem Bosakiem i Zbigniewem Kasperczukiem na płocie, niżej tabliczka „Teren monitorowany”",
+      "Ogrodowa figura z gałęzi z latarnią i tabliczką „Szuwarek” na rabacie; w tle czerwona ławka",
+      "Biały terier w czerwonych szelkach na smyczy, nocą na chodniku; za nim zeschnięte słoneczniki",
+      "Dłoń trzyma suchą, zwiędłą roślinę pod słońce na tle nieba",
+      "Drewniana brama z latarnią na szczycie, pomalowana na biało z rudymi przetarciami, na tle nieba z chmurami",
+      "Nogi w dżinsach i zielonych kaloszach na drewnianym pomoście nad rzeką",
+      "Kaczki na trawniku i palec wskazujący na nie w świetle flesza",
+      "Model samolotu z napisem „Smoleńsk” zawieszony w gałęziach krzewu",
+      "Odręczna tablica z wulgarnym napisem o Tusku i programie wyborczym za siatką ogrodzenia",
+      "Dwa białe rowery z różowymi wstążkami ustawione na trawie przy osiedlu",
+      "Ozdobne metalowe krzesło wśród gęstych cienkich pni i gałęzi"
+    ],
+    "en": [
+      "A grey cat on a pavement and a hand reaching towards it, at night in flash light",
+      "A Konfederacja election banner with Krzysztof Bosak and Zbigniew Kasperczuk on a fence, a “CCTV in operation” sign below",
+      "A garden figure made of branches with a lantern and a “Szuwarek” sign on a flower bed; a red bench behind",
+      "A white terrier in a red harness on a lead, at night on a pavement; dried sunflowers behind",
+      "A hand holding a dry, withered plant against the sun and the sky",
+      "A wooden gate with a lantern on top, painted white with rusty-brown worn patches, against a cloudy sky",
+      "Legs in jeans and green rubber boots on a wooden jetty over a river",
+      "Ducks on a lawn and a finger pointing at them in flash light",
+      "A model aeroplane marked “Smoleńsk” hanging in the branches of a shrub",
+      "A hand-written board with a vulgar message about Tusk and an election programme behind a wire fence",
+      "Two white bicycles with pink ribbons set up on the grass by a housing estate",
+      "An ornate metal chair among dense thin trunks and branches"
+    ],
+    "cs": [
+      "Šedá kočka na chodníku a ruka natažená k ní, v noci ve světle blesku",
+      "Volební banner Konfederace s Krzysztofem Bosakem a Zbigniewem Kasperczukem na plotě, dole cedule „Monitorovaný prostor“",
+      "Zahradní figura z větví s lucernou a cedulkou „Szuwarek“ na záhonu; v pozadí červená lavička",
+      "Bílý teriér v červeném postroji na vodítku, v noci na chodníku; za ním uschlé slunečnice",
+      "Ruka drží suchou, zvadlou rostlinu proti slunci a obloze",
+      "Dřevěná brána s lucernou na vrcholu, natřená bíle s rezavě hnědými oděrkami, proti zamračené obloze",
+      "Nohy v džínách a zelených holínkách na dřevěném molu nad řekou",
+      "Kachny na trávníku a prst, který na ně ukazuje, ve světle blesku",
+      "Model letadla s nápisem „Smoleńsk“ zavěšený ve větvích keře",
+      "Ručně psaná tabule s vulgárním nápisem o Tuskovi a volebním programu za drátěným plotem",
+      "Dvě bílá kola s růžovými stuhami postavená na trávě u sídliště",
+      "Ozdobná kovová židle mezi hustými tenkými kmeny a větvemi"
+    ]
+  }
 }

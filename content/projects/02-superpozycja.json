@@ -30,15 +30,15 @@
   },
   "seo": {
     "pl": {
-      "title": "Superpozycja — fotograficzny portret kreacyjny",
+      "title": "Superpozycja — portret kreacyjny",
       "description": "Superpozycja — cykl fotograficzny Pawła Sypniewskiego. Fotografia i portret kreacyjny o jednoczesności przeszłości, teraźniejszości i przyszłości."
     },
     "en": {
-      "title": "Superposition — constructed portrait series",
+      "title": "Superposition — constructed portraits",
       "description": "Superposition — a photo series by Paweł Sypniewski. A constructed portrait of the simultaneity of past, present and future."
     },
     "cs": {
-      "title": "Superpozice — inscenovaný fotografický portrét",
+      "title": "Superpozice — inscenovaný portrét",
       "description": "Superpozice — fotografický cyklus Pawła Sypniewského. Inscenovaný portrét o současnosti minulosti, přítomnosti a budoucnosti."
     }
   },
@@ -56,5 +56,37 @@
     "images/superpozycja/06.webp",
     "images/superpozycja/07.webp",
     "images/superpozycja/08.webp"
-  ]
+  ],
+  "alts": {
+    "pl": [
+      "Fasada wieżowca fotografowana z dołu, rzędy okien rozmyte wielokrotną ekspozycją",
+      "Zarys wieżowca na tle nieba, rozedrgany wielokrotną ekspozycją",
+      "Zaokrąglony szklany biurowiec między ciemnymi bryłami, obraz rozciągnięty ruchem aparatu",
+      "Nakładające się na siebie fasady biurowców z siatką okien, kadr pionowy",
+      "Łuk okrągłej konstrukcji i promieniste smugi, rozmycie zoomem",
+      "Szczyty biurowców widziane z dołu, nachylone i rozmyte na tle białego nieba",
+      "Koncentryczne kręgi i spiralne smugi wokół ciemnego punktu, abstrakcja z wielokrotnej ekspozycji",
+      "Jasne belki zbiegające się promieniście ku ciemnemu niebu, rozmyte ruchem"
+    ],
+    "en": [
+      "A skyscraper façade shot from below, rows of windows blurred by multiple exposure",
+      "Outline of a high-rise against the sky, shaken by multiple exposure",
+      "A rounded glass office tower between dark blocks, the image stretched by camera movement",
+      "Overlapping office façades with a grid of windows, vertical frame",
+      "The arc of a circular structure with radiating streaks, zoom blur",
+      "Tops of office towers seen from below, tilted and blurred against a white sky",
+      "Concentric rings and spiral streaks around a dark point, an abstraction from multiple exposure",
+      "Bright beams converging radially towards a dark sky, blurred by motion"
+    ],
+    "cs": [
+      "Fasáda mrakodrapu fotografovaná zdola, řady oken rozmazané vícenásobnou expozicí",
+      "Obrys výškové budovy proti obloze, rozechvělý vícenásobnou expozicí",
+      "Zaoblená skleněná kancelářská budova mezi tmavými hmotami, obraz roztažený pohybem fotoaparátu",
+      "Překrývající se fasády kancelářských budov s mřížkou oken, svislý záběr",
+      "Oblouk kruhové konstrukce a paprskovité šmouhy, rozostření zoomem",
+      "Vrcholy kancelářských budov zdola, nakloněné a rozmazané proti bílé obloze",
+      "Soustředné kruhy a spirálové šmouhy kolem tmavého bodu, abstrakce z vícenásobné expozice",
+      "Světlé nosníky sbíhající se paprskovitě k tmavé obloze, rozmazané pohybem"
+    ]
+  }
 }

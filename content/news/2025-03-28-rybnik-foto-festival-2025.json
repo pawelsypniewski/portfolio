@@ -42,12 +42,15 @@
   },
   "seo": {
     "pl": {
+      "title": "Pokaz „Labirynt” — Rybnik Foto Festival",
       "description": "Pokaz slideshow cyklu „Labirynt” na 22. Rybnik Foto Festival. Opowieść o młodych ludziach uwikłanych przez małe miasteczka i o zawiłości życiowych wyborów."
     },
     "en": {
+      "title": "“Labirynt” show — Rybnik Foto Festival",
       "description": "Slideshow of the “Labirynt” series at the 22nd Rybnik Foto Festival. A story of young people entangled in small towns and the tangle of life’s choices."
     },
     "cs": {
+      "title": "„Labyrint“ — Rybnik Foto Festival",
       "description": "Projekce slideshow cyklu „Labyrint“ na 22. Rybnik Foto Festivalu. Příběh mladých lidí zapletených do malých měst a spletitosti životních rozhodnutí."
     }
   },
@@ -79,5 +82,16 @@
   ],
   "images": [
     "images/achievements/rybnik-foto-festival-2025/01.webp"
-  ]
+  ],
+  "alts": {
+    "pl": [
+      "Grafika 22. Rybnik Foto Festival: pokaz slideshow „Labirynt” Pawła Sypniewskiego, 28.03.2025, Galeria Sztuki Rzeczna"
+    ],
+    "en": [
+      "Graphic for the 22nd Rybnik Foto Festival: “Labirynt” slideshow by Paweł Sypniewski, 28 March 2025, Galeria Sztuki Rzeczna"
+    ],
+    "cs": [
+      "Grafika 22. Rybnik Foto Festivalu: slideshow „Labyrint“ Pawła Sypniewského, 28. 3. 2025, Galeria Sztuki Rzeczna"
+    ]
+  }
 }

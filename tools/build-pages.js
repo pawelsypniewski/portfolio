@@ -58,9 +58,35 @@ function escapeHtml(s) {
 // Ścieżki w JSON są względne ("images/…"); strona działa pod adresami
 // typu /labirynt/, więc muszą być bezwzględne — tak samo jak w loader.js.
 const abs = (p) => (/^images\//.test(String(p)) ? "/" + p : String(p));
-// Wersja 1200 px dla telefonu (katalog m/, jak mediumPath w app.js).
-const medium = (p) => { const s = abs(p); const i = s.lastIndexOf("/"); return s.slice(0, i) + "/m" + s.slice(i); };
+// Wersje pomniejszone (robi je tools/build-thumbs.js; te same reguły co w app.js):
+// m/ 1200 px i s/ 800 px dla slajdów na telefonie, xs/ 320 px do siatki Aktualności.
+const variant = (p, dir) => { const s = abs(p); const i = s.lastIndexOf("/"); return s.slice(0, i) + "/" + dir + s.slice(i); };
+const medium = (p) => variant(p, "m");
+const mobileSrcset = (p) => `${variant(p, "s")} 800w, ${medium(p)} 1200w`;
+const newsThumbSrcset = (p) => `${variant(p, "xs")} 320w, ${thumbPath(abs(p))} 600w`;
+const NEWS_THUMB_SIZES = "(max-width: 720px) 30vw, 235px";
 const absUrl = (p) => BASE + abs(p);
+
+// Wymiary oryginałów (content/image-sizes.json, robi je tools/build-thumbs.js).
+// Z nich idą atrybuty width/height na slajdach — przeglądarka rezerwuje
+// miejsce na zdjęcie, zanim je wczyta. Bez pliku atrybutów po prostu nie ma.
+const IMAGE_SIZES = fs.existsSync(path.join(ROOT, "content", "image-sizes.json"))
+  ? readJSON("content/image-sizes.json")
+  : {};
+function sizeAttrs(p) {
+  const sz = IMAGE_SIZES[String(p || "").replace(/^\//, "")];
+  return sz && sz.w && sz.h ? ` width="${sz.w}" height="${sz.h}"` : "";
+}
+
+/* Własny opis zdjęcia z pola `alts` w treści (cykl albo wpis):
+     "alts": { "pl": ["opis 1", "opis 2", …], "en": […], "cs": […] }
+   — po jednym na zdjęcie, w kolejności z `images`. Puste pole lub brak
+   tablicy = opis schematyczny podany jako `fallback`. Bliźniak
+   projectPhotoAlt / newsPhotoAlt z app.js. */
+function ownAlt(item, i, L) {
+  const a = item && item.alts && item.alts[L];
+  return (Array.isArray(a) && a[i]) ? String(a[i]) : "";
+}
 
 // Skrót opisu do meta description. Google pokazuje ok. 160 znaków, ale liczy
 // się nie sama długość: urwany w pół słowa fragment wygląda w wynikach jak
@@ -455,6 +481,17 @@ function applyBody(html, page, i18n) {
       "#achievementsList");
   }
 
+  // Komunikat „Nie znaleziono strony” dostaje wyłącznie 404.html. W szablonie
+  // stoi znacznik-komentarz (@notfound): zwykłe podstrony zostają bez tego
+  // tekstu, bo Google potrafi uznać stronę z takim komunikatem za „miękkie 404”.
+  if (page.path === "/404.html") {
+    html = replaceOnce(html, /<!-- @notfound[\s\S]*?-->/,
+      `<div class="home-notfound" id="notFoundNote" role="status">` +
+      `<strong data-i18n="notfound.h">${escapeHtml(tr("notfound.h", page.lang))}</strong> ` +
+      `<span data-i18n="notfound.text">${escapeHtml(tr("notfound.text", page.lang))}</span></div>`,
+      "znacznik @notfound");
+  }
+
   for (const [id, value] of Object.entries(page.fill || {})) {
     html = setInner(html, id, value);
   }
@@ -609,10 +646,11 @@ function newsListHtml(items, lang, i18n, single) {
     const ofWord = tr("w.of", L);
     const photos = (a.images || []).map((src, i) => {
       const opis = escapeHtml(
+        ownAlt(a, i, L) ||
         `${a.title[L]}, ${a.place[L]} — ${photoWord} ${i + 1} ${ofWord} ${(a.images || []).length}`
       );
       return `<div class="achievement-photo" data-achievement="${ai}" data-photo="${i}" role="button" tabindex="0" aria-label="${title} — ${i + 1}">` +
-      `<img src="${escapeHtml(thumbPath(abs(src)))}" data-full="${escapeHtml(abs(src))}" alt="${opis}" loading="lazy" decoding="async"></div>`;
+      `<img src="${escapeHtml(thumbPath(abs(src)))}" srcset="${escapeHtml(newsThumbSrcset(src))}" sizes="${NEWS_THUMB_SIZES}" data-full="${escapeHtml(abs(src))}" alt="${opis}" loading="lazy" decoding="async"></div>`;
     }).join("");
 
     let link = "";
@@ -661,8 +699,12 @@ function newsListHtml(items, lang, i18n, single) {
 // ok. 70 znaków Google ucina, więc wtedy rodzaj wydarzenia odpada, a nazwisko
 // autora zostaje. Wcześniej dwa wpisy miały tytuły ponad 90-znakowe.
 function newsTitle(a, L) {
+  // Własny tytuł z pola `seo` wpisu (jak w cyklach) ma pierwszeństwo —
+  // np. gdy nazwa wydarzenia z nazwiskiem nie mieści się w 60 znakach.
+  const own = a.seo && a.seo[L] && a.seo[L].title;
+  if (own) return `${own} · ${AUTHOR}`;
   const full = `${a.title[L]} — ${a.type[L]} · ${AUTHOR}`;
-  return full.length <= 70 ? full : `${a.title[L]} · ${AUTHOR}`;
+  return full.length <= 60 ? full : `${a.title[L]} · ${AUTHOR}`;
 }
 
 function newsItemPage(a, lang, i18n) {
@@ -689,16 +731,16 @@ function newsItemPage(a, lang, i18n) {
     title: newsTitle(a, L),
     description: shorten(seoDesc || descText),
     image: images.length
-      ? { url: BASE + images[0], alt: `${a.title[L]} — ${a.place[L]}`, type: "image/webp", hasKnownSize: false }
+      ? { url: BASE + images[0], alt: ownAlt(a, 0, L) || `${a.title[L]} — ${a.place[L]}`, type: "image/webp", hasKnownSize: false }
       : COVER,
     fill: { achievementsList: newsListHtml([a], L, i18n, true) },
     jsonLd: {
       "@context": "https://schema.org",
       ...newsEventLd(a, L, true),
-      image: images.map((src) => ({
+      image: images.map((src, i) => ({
         "@type": "ImageObject",
         contentUrl: BASE + src,
-        caption: `${a.title[L]} — ${a.place[L]}`,
+        caption: ownAlt(a, i, L) || `${a.title[L]} — ${a.place[L]}`,
         creditText: AUTHOR,
       })),
     },
@@ -714,10 +756,14 @@ function projectPage(p, lang, projects) {
   const photoWord = tr("w.photo", L);
   const ofWord = tr("w.of", L);
 
+  // Opis zdjęcia: własny z `alts` albo schemat. Ten sam tekst idzie do alt
+  // i do podpisu w danych strukturalnych (Grafika Google czyta oba).
+  const photoAlt = (i) =>
+    ownAlt(p, i, L) || `${title} — ${photoWord} ${i + 1} ${ofWord} ${images.length}, ${p.year}, ${p.category[L]}`;
   const slides = images
     .map((src, i) =>
-      `<div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="${escapeHtml(medium(src))}"><img src="${escapeHtml(src)}" alt="${escapeHtml(
-        `${title} — ${photoWord} ${i + 1} ${ofWord} ${images.length}, ${p.year}, ${p.category[L]}`
+      `<div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="${escapeHtml(mobileSrcset(src))}" sizes="100vw"><img src="${escapeHtml(src)}"${sizeAttrs(src)} alt="${escapeHtml(
+        photoAlt(i)
       )}" data-index="${i}" loading="${i === 0 ? "eager" : "lazy"}" fetchpriority="${
         i === 0 ? "high" : "auto"
       }" decoding="async"></picture></div>`
@@ -780,7 +826,7 @@ function projectPage(p, lang, projects) {
       image: images.map((src, i) => ({
         "@type": "ImageObject",
         contentUrl: BASE + src,
-        caption: `${title} — ${photoWord} ${i + 1} ${ofWord} ${images.length}, ${p.year}`,
+        caption: ownAlt(p, i, L) || `${title} — ${photoWord} ${i + 1} ${ofWord} ${images.length}, ${p.year}`,
         creditText: AUTHOR,
         creator: { "@id": `${BASE}/#person` },
         copyrightNotice: `© ${p.year} ${AUTHOR}`,

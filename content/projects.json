@@ -31,7 +31,7 @@
     },
     "seo": {
       "pl": {
-        "title": "Ustawienia domyślne — cykl fotograficzny o AI",
+        "title": "Ustawienia domyślne — fotografia o AI",
         "description": "Ustawienia domyślne — fotografia o glitchach i artefaktach obrazów z AI. Cykl Pawła Sypniewskiego: negatyw średnioformatowy na mokrej płycie kolodionowej."
       },
       "en": {
@@ -39,7 +39,7 @@
         "description": "Default Settings — a photo series by Paweł Sypniewski on glitches and artefacts of AI-generated images. Medium format negative on wet plate collodion."
       },
       "cs": {
-        "title": "Výchozí nastavení — fotografický cyklus o AI",
+        "title": "Výchozí nastavení — fotografie o AI",
         "description": "Výchozí nastavení — fotografický cyklus Pawła Sypniewského o glitchích a artefaktech obrazů z AI. Středoformátový negativ na mokré kolodiové desce."
       }
     },
@@ -66,7 +66,66 @@
       "images/ustawienia/15.webp",
       "images/ustawienia/16.webp",
       "images/ustawienia/17.webp"
-    ]
+    ],
+    "alts": {
+      "pl": [
+        "Tablica tytułowa cyklu: drobny tekst i kod QR na białej płycie",
+        "Tors postaci w kostiumie z płytek drukowanych, dłonie oparte o uda; mokra płyta kolodionowa",
+        "Portret kobiety z ogoloną głową w napierśniku z układów scalonych, dłonie złożone na piersi",
+        "Drobna postać w ciemnym kostiumie pośrodku pustej, zamglonej przestrzeni; zacieki emulsji przy krawędziach",
+        "Ludzie czekający na miejskim przystanku autobusowym, w tle wieżowce; obraz z zaciekami emulsji",
+        "Postać obejmuje ogromną, pomarszczoną kulistą formę na trawniku; w tle drzewa",
+        "Postać w kostiumie z układów scalonych z wyciągniętą ręką przed żywopłotem i ogrodzeniem; jasne zacieki na płycie",
+        "Osoba z ogoloną głową w kostiumie siedzi bokiem przy stoliku na tarasie kawiarni",
+        "Grupa ludzi przy stole w ogródku kawiarni, wśród nich postać w kostiumie z płytek drukowanych",
+        "Postacie idące gęsiego chodnikiem przed budynkiem; u góry ich odbicia do góry nogami",
+        "Przechodnie na przejściu dla pieszych, między nimi postać w kostiumie; w tle wieżowce i zacieki na płycie",
+        "Postać w napierśniku z układów scalonych na tle szklanych biurowców",
+        "Publiczność w leżakach pod parasolami na plenerowym pokazie; obraz zamglony, z uszkodzeniami emulsji",
+        "Twarz z ogoloną głową wyłania się spod wielkich ciemnych liści; rozmazana emulsja",
+        "Dwie ciemne sylwetki w półmroku, jedna w kostiumie z układów scalonych; ziarnista, poplamiona płyta",
+        "Postać w kostiumie stoi wśród wielkich liści bananowca w ogrodzie",
+        "Portret kobiety z ogoloną głową w pancerzu z układów scalonych, wokół rozmyte okrągłe światła"
+      ],
+      "en": [
+        "Title plate of the series: small text and a QR code on a white plate",
+        "Torso of a figure in a costume made of circuit boards, hands resting on the thighs; wet plate collodion",
+        "Portrait of a woman with a shaved head in a breastplate of circuit boards, hands folded on her chest",
+        "A small figure in a dark costume in the middle of an empty, hazy space; emulsion streaks along the edges",
+        "People waiting at a city bus stop with high-rises behind them; image marked by emulsion streaks",
+        "A figure embracing a huge wrinkled spherical form on a lawn; trees in the background",
+        "A figure in a circuit-board costume with an outstretched arm in front of a hedge and a fence; bright streaks on the plate",
+        "A person with a shaved head in a costume sitting sideways at a table on a café terrace",
+        "A group of people at a table in a café garden, among them a figure in a circuit-board costume",
+        "Figures walking in single file along a pavement in front of a building; their upside-down reflections at the top",
+        "Pedestrians on a crossing, a costumed figure among them; high-rises and plate streaks in the background",
+        "A figure in a circuit-board breastplate against glass office towers",
+        "An audience in deckchairs under parasols at an outdoor screening; hazy image with emulsion damage",
+        "A face with a shaved head emerging from beneath large dark leaves; smeared emulsion",
+        "Two dark silhouettes in half-light, one in a circuit-board costume; grainy, stained plate",
+        "A costumed figure standing among large banana leaves in a garden",
+        "Portrait of a woman with a shaved head in circuit-board armour, blurred round lights around her"
+      ],
+      "cs": [
+        "Titulní deska cyklu: drobný text a QR kód na bílé desce",
+        "Trup postavy v kostýmu z plošných spojů, ruce opřené o stehna; mokrý kolodiový proces",
+        "Portrét ženy s oholenou hlavou v náprsníku z plošných spojů, ruce složené na hrudi",
+        "Drobná postava v tmavém kostýmu uprostřed prázdného, zamlženého prostoru; šmouhy emulze při okrajích",
+        "Lidé čekající na městské autobusové zastávce, v pozadí výškové budovy; obraz se šmouhami emulze",
+        "Postava objímá obrovský zvrásněný kulovitý tvar na trávníku; v pozadí stromy",
+        "Postava v kostýmu z plošných spojů s nataženou rukou před živým plotem a oplocením; světlé šmouhy na desce",
+        "Osoba s oholenou hlavou v kostýmu sedí bokem u stolku na kavárenské terase",
+        "Skupina lidí u stolu na kavárenské zahrádce, mezi nimi postava v kostýmu z plošných spojů",
+        "Postavy jdoucí husím pochodem po chodníku před budovou; nahoře jejich obrácené odrazy",
+        "Chodci na přechodu, mezi nimi postava v kostýmu; v pozadí výškové budovy a šmouhy na desce",
+        "Postava v náprsníku z plošných spojů před skleněnými kancelářskými budovami",
+        "Publikum v lehátkách pod slunečníky na venkovní projekci; zamlžený obraz s poškozenou emulzí",
+        "Tvář s oholenou hlavou vystupuje zpod velkých tmavých listů; rozmazaná emulze",
+        "Dvě tmavé siluety v pološeru, jedna v kostýmu z plošných spojů; zrnitá, skvrnitá deska",
+        "Postava v kostýmu stojí mezi velkými listy banánovníku v zahradě",
+        "Portrét ženy s oholenou hlavou v brnění z plošných spojů, kolem rozostřená kulatá světla"
+      ]
+    }
   },
   {
     "order": 2,
@@ -100,15 +159,15 @@
     },
     "seo": {
       "pl": {
-        "title": "Superpozycja — fotograficzny portret kreacyjny",
+        "title": "Superpozycja — portret kreacyjny",
         "description": "Superpozycja — cykl fotograficzny Pawła Sypniewskiego. Fotografia i portret kreacyjny o jednoczesności przeszłości, teraźniejszości i przyszłości."
       },
       "en": {
-        "title": "Superposition — constructed portrait series",
+        "title": "Superposition — constructed portraits",
         "description": "Superposition — a photo series by Paweł Sypniewski. A constructed portrait of the simultaneity of past, present and future."
       },
       "cs": {
-        "title": "Superpozice — inscenovaný fotografický portrét",
+        "title": "Superpozice — inscenovaný portrét",
         "description": "Superpozice — fotografický cyklus Pawła Sypniewského. Inscenovaný portrét o současnosti minulosti, přítomnosti a budoucnosti."
       }
     },
@@ -126,7 +185,39 @@
       "images/superpozycja/06.webp",
       "images/superpozycja/07.webp",
       "images/superpozycja/08.webp"
-    ]
+    ],
+    "alts": {
+      "pl": [
+        "Fasada wieżowca fotografowana z dołu, rzędy okien rozmyte wielokrotną ekspozycją",
+        "Zarys wieżowca na tle nieba, rozedrgany wielokrotną ekspozycją",
+        "Zaokrąglony szklany biurowiec między ciemnymi bryłami, obraz rozciągnięty ruchem aparatu",
+        "Nakładające się na siebie fasady biurowców z siatką okien, kadr pionowy",
+        "Łuk okrągłej konstrukcji i promieniste smugi, rozmycie zoomem",
+        "Szczyty biurowców widziane z dołu, nachylone i rozmyte na tle białego nieba",
+        "Koncentryczne kręgi i spiralne smugi wokół ciemnego punktu, abstrakcja z wielokrotnej ekspozycji",
+        "Jasne belki zbiegające się promieniście ku ciemnemu niebu, rozmyte ruchem"
+      ],
+      "en": [
+        "A skyscraper façade shot from below, rows of windows blurred by multiple exposure",
+        "Outline of a high-rise against the sky, shaken by multiple exposure",
+        "A rounded glass office tower between dark blocks, the image stretched by camera movement",
+        "Overlapping office façades with a grid of windows, vertical frame",
+        "The arc of a circular structure with radiating streaks, zoom blur",
+        "Tops of office towers seen from below, tilted and blurred against a white sky",
+        "Concentric rings and spiral streaks around a dark point, an abstraction from multiple exposure",
+        "Bright beams converging radially towards a dark sky, blurred by motion"
+      ],
+      "cs": [
+        "Fasáda mrakodrapu fotografovaná zdola, řady oken rozmazané vícenásobnou expozicí",
+        "Obrys výškové budovy proti obloze, rozechvělý vícenásobnou expozicí",
+        "Zaoblená skleněná kancelářská budova mezi tmavými hmotami, obraz roztažený pohybem fotoaparátu",
+        "Překrývající se fasády kancelářských budov s mřížkou oken, svislý záběr",
+        "Oblouk kruhové konstrukce a paprskovité šmouhy, rozostření zoomem",
+        "Vrcholy kancelářských budov zdola, nakloněné a rozmazané proti bílé obloze",
+        "Soustředné kruhy a spirálové šmouhy kolem tmavého bodu, abstrakce z vícenásobné expozice",
+        "Světlé nosníky sbíhající se paprskovitě k tmavé obloze, rozmazané pohybem"
+      ]
+    }
   },
   {
     "order": 3,
@@ -160,15 +251,15 @@
     },
     "seo": {
       "pl": {
-        "title": "Gra o tron — cykl fotograficzny, fotografia polityczna",
+        "title": "Gra o tron — fotografia polityczna",
         "description": "Gra o tron — cykl fotograficzny Pawła Sypniewskiego o ikonografii politycznej polskiej prowincji. Plakaty wyborcze, ołtarzyki, prowizoryczne pomniki."
       },
       "en": {
-        "title": "Game of Thrones — political photo series, Poland",
+        "title": "Game of Thrones — political photo series",
         "description": "Game of Thrones — a photo series by Paweł Sypniewski on the political iconography of provincial Poland. Election posters, shrines, makeshift monuments."
       },
       "cs": {
-        "title": "Hra o trůny — fotografický cyklus o politice v Polsku",
+        "title": "Hra o trůny — fotografie o politice",
         "description": "Hra o trůny — fotografický cyklus Pawła Sypniewského o politické ikonografii polského venkova. Volební plakáty, oltáříky, provizorní pomníky."
       }
     },
@@ -190,7 +281,51 @@
       "images/gra_o_tron/10.webp",
       "images/gra_o_tron/11.webp",
       "images/gra_o_tron/12.webp"
-    ]
+    ],
+    "alts": {
+      "pl": [
+        "Szary kot na chodniku i wyciągnięta ku niemu dłoń, nocą w świetle lampy błyskowej",
+        "Baner wyborczy Konfederacji z Krzysztofem Bosakiem i Zbigniewem Kasperczukiem na płocie, niżej tabliczka „Teren monitorowany”",
+        "Ogrodowa figura z gałęzi z latarnią i tabliczką „Szuwarek” na rabacie; w tle czerwona ławka",
+        "Biały terier w czerwonych szelkach na smyczy, nocą na chodniku; za nim zeschnięte słoneczniki",
+        "Dłoń trzyma suchą, zwiędłą roślinę pod słońce na tle nieba",
+        "Drewniana brama z latarnią na szczycie, pomalowana na biało z rudymi przetarciami, na tle nieba z chmurami",
+        "Nogi w dżinsach i zielonych kaloszach na drewnianym pomoście nad rzeką",
+        "Kaczki na trawniku i palec wskazujący na nie w świetle flesza",
+        "Model samolotu z napisem „Smoleńsk” zawieszony w gałęziach krzewu",
+        "Odręczna tablica z wulgarnym napisem o Tusku i programie wyborczym za siatką ogrodzenia",
+        "Dwa białe rowery z różowymi wstążkami ustawione na trawie przy osiedlu",
+        "Ozdobne metalowe krzesło wśród gęstych cienkich pni i gałęzi"
+      ],
+      "en": [
+        "A grey cat on a pavement and a hand reaching towards it, at night in flash light",
+        "A Konfederacja election banner with Krzysztof Bosak and Zbigniew Kasperczuk on a fence, a “CCTV in operation” sign below",
+        "A garden figure made of branches with a lantern and a “Szuwarek” sign on a flower bed; a red bench behind",
+        "A white terrier in a red harness on a lead, at night on a pavement; dried sunflowers behind",
+        "A hand holding a dry, withered plant against the sun and the sky",
+        "A wooden gate with a lantern on top, painted white with rusty-brown worn patches, against a cloudy sky",
+        "Legs in jeans and green rubber boots on a wooden jetty over a river",
+        "Ducks on a lawn and a finger pointing at them in flash light",
+        "A model aeroplane marked “Smoleńsk” hanging in the branches of a shrub",
+        "A hand-written board with a vulgar message about Tusk and an election programme behind a wire fence",
+        "Two white bicycles with pink ribbons set up on the grass by a housing estate",
+        "An ornate metal chair among dense thin trunks and branches"
+      ],
+      "cs": [
+        "Šedá kočka na chodníku a ruka natažená k ní, v noci ve světle blesku",
+        "Volební banner Konfederace s Krzysztofem Bosakem a Zbigniewem Kasperczukem na plotě, dole cedule „Monitorovaný prostor“",
+        "Zahradní figura z větví s lucernou a cedulkou „Szuwarek“ na záhonu; v pozadí červená lavička",
+        "Bílý teriér v červeném postroji na vodítku, v noci na chodníku; za ním uschlé slunečnice",
+        "Ruka drží suchou, zvadlou rostlinu proti slunci a obloze",
+        "Dřevěná brána s lucernou na vrcholu, natřená bíle s rezavě hnědými oděrkami, proti zamračené obloze",
+        "Nohy v džínách a zelených holínkách na dřevěném molu nad řekou",
+        "Kachny na trávníku a prst, který na ně ukazuje, ve světle blesku",
+        "Model letadla s nápisem „Smoleńsk“ zavěšený ve větvích keře",
+        "Ručně psaná tabule s vulgárním nápisem o Tuskovi a volebním programu za drátěným plotem",
+        "Dvě bílá kola s růžovými stuhami postavená na trávě u sídliště",
+        "Ozdobná kovová židle mezi hustými tenkými kmeny a větvemi"
+      ]
+    }
   },
   {
     "order": 4,
@@ -224,15 +359,15 @@
     },
     "seo": {
       "pl": {
-        "title": "Post-Topografia Polski — krajobraz po transformacji",
+        "title": "Post-Topografia Polski — krajobraz",
         "description": "Post-Topografia Polski — czarno-biały cykl fotograficzny o krajobrazie po transformacji. Nowa topografia przedmieść Warszawy w duchu New Topographics."
       },
       "en": {
-        "title": "Post-Topography of Poland — landscape after 1989",
+        "title": "Post-Topography of Poland — landscape",
         "description": "Post-Topography of Poland — a black-and-white photo series on the Polish landscape after the transition, in the spirit of New Topographics."
       },
       "cs": {
-        "title": "Post-topografie Polska — krajina po transformaci",
+        "title": "Post-topografie Polska — krajina",
         "description": "Post-topografie Polska — černobílý fotografický cyklus o krajině po roce 1989. Předměstí Varšavy v duchu New Topographics. Autor: Paweł Sypniewski."
       }
     },
@@ -256,7 +391,57 @@
       "images/topografia/12.webp",
       "images/topografia/13.webp",
       "images/topografia/14.webp"
-    ]
+    ],
+    "alts": {
+      "pl": [
+        "Młode bezlistne drzewko przed ścianą z białych bloczków, zeschnięta trawa; czarno-biały kadr",
+        "Tablica ogłoszeń pokryta starymi plakatami i ulotkami, wokół bezlistne drzewa",
+        "Opuszczona ławka bez oparcia na skraju lasu, wydeptana ziemia i zarośla",
+        "Pusta metalowa rama gablot na białej ścianie budynku z numerem 51",
+        "Wiata przystanku pokryta graffiti, pod nią dwie ławki i śmieci",
+        "Ogrodzenie z betonowych słupków i blachy, u góry gałąź iglaka; cegła w podmurówce",
+        "Stara tablica ogłoszeń z resztkami zerwanych plakatów",
+        "Zniszczony biały samochód z łuszczącym się lakierem zaparkowany pod oknem bloku",
+        "Rozjeżdżona błotnista droga, w oddali dźwigi na budowie i zabudowa miasta",
+        "Hala z blaszanym dachem, maszt telefonii komórkowej i stos desek pod ścianą",
+        "Rzędy skrzynek na listy na ścianie klatki schodowej",
+        "Wykarczowany pień na przyczepie samochodowej przed szpalerem tui",
+        "Dom z mansardowym dachem za betonowym płotem, przed nim asfaltowa droga",
+        "Pranie na sznurze między drzewami w ogrodzie, zeschnięte liście na ziemi"
+      ],
+      "en": [
+        "A young leafless tree in front of a wall of white blocks, dry grass; black and white",
+        "A notice board covered with old posters and leaflets, leafless trees around",
+        "An abandoned backless bench at the edge of a forest, trampled ground and undergrowth",
+        "An empty metal display frame on the white wall of a building numbered 51",
+        "A graffiti-covered shelter with two benches and litter under it",
+        "A fence of concrete posts and sheet metal with a conifer branch at the top; brick base",
+        "An old notice board with remnants of torn-off posters",
+        "A battered white car with peeling paint parked under the window of a block of flats",
+        "A rutted muddy road, construction cranes and city buildings in the distance",
+        "A hall with a sheet-metal roof, a mobile phone mast and a pile of boards by the wall",
+        "Rows of letterboxes on a stairwell wall",
+        "An uprooted stump on a car trailer in front of a row of thujas",
+        "A house with a mansard roof behind a concrete fence, an asphalt road in front",
+        "Washing on a line between trees in a garden, dry leaves on the ground"
+      ],
+      "cs": [
+        "Mladý bezlistý stromek před zdí z bílých tvárnic, uschlá tráva; černobílý záběr",
+        "Vývěska pokrytá starými plakáty a letáky, kolem bezlisté stromy",
+        "Opuštěná lavička bez opěradla na kraji lesa, ušlapaná zem a křoví",
+        "Prázdný kovový rám vývěsky na bílé zdi budovy s číslem 51",
+        "Přístřešek zastávky pokrytý graffiti, pod ním dvě lavičky a odpadky",
+        "Plot z betonových sloupků a plechu, nahoře větev jehličnanu; cihlová podezdívka",
+        "Stará vývěska se zbytky strhaných plakátů",
+        "Poškozené bílé auto s oloupaným lakem zaparkované pod oknem paneláku",
+        "Rozježděná blátivá cesta, v dálce jeřáby na stavbě a městská zástavba",
+        "Hala s plechovou střechou, stožár mobilní sítě a hromada prken u zdi",
+        "Řady poštovních schránek na zdi schodiště",
+        "Vykopaný pařez na přívěsu za auto před řadou tújí",
+        "Dům s mansardovou střechou za betonovým plotem, před ním asfaltová silnice",
+        "Prádlo na šňůře mezi stromy na zahradě, uschlé listí na zemi"
+      ]
+    }
   },
   {
     "order": 5,
@@ -323,7 +508,60 @@
       "images/labirynt/13.webp",
       "images/labirynt/14.webp",
       "images/labirynt/15.webp"
-    ]
+    ],
+    "alts": {
+      "pl": [
+        "Roześmiany młody mężczyzna z krótko ostrzyżoną głową, portret z bliska w świetle flesza",
+        "Smugi dymu z papierosa w dłoni na czarnym tle",
+        "Osoba zasłania twarz dłonią przed aparatem, mocne światło flesza",
+        "Rzędy białych krzyży na cmentarzu nocą, oświetlone fleszem",
+        "Słupki ogrodzenia na nasypie wzdłuż drogi nocą, czarne niebo",
+        "Nocny pejzaż: zarośla i drzewa w świetle flesza, w powietrzu płatki śniegu lub deszcz",
+        "Stara budka telefoniczna z okrągłą osłoną przy siatce ogrodzenia, nocą",
+        "Samotna postać idąca nocą po zaśnieżonym terenie, w powietrzu płatki śniegu",
+        "Most na filarach nad rzeką nocą, z lewej oświetlone fleszem gałęzie",
+        "Młoda kobieta w dużych okularach, z błyszczącymi wstążkami na głowie, zbliżenie",
+        "Ślady opon na zaśnieżonym placu nocą, w tle latarnie",
+        "Pióropusz dymu i iskier z odpalanej rakiety nad zaroślami, nocą",
+        "Kula dyskotekowa zawieszona na gałęzi w ciemności, odbija światło flesza",
+        "Pusty narożnik surowego pomieszczenia z rurami i zaślepkami w ścianach",
+        "Profil młodej kobiety z dużym kolczykiem w uchu i otwartymi ustami, zbliżenie w świetle flesza"
+      ],
+      "en": [
+        "A laughing young man with cropped hair, close-up portrait in flash light",
+        "Wisps of smoke from a cigarette held in a hand against a black background",
+        "A person covering their face with a hand against the camera, hard flash light",
+        "Rows of white crosses in a cemetery at night, lit by flash",
+        "Fence posts on an embankment along a road at night, black sky",
+        "Night landscape: scrub and trees in flash light, snowflakes or rain in the air",
+        "An old telephone booth with a round hood by a wire fence, at night",
+        "A lone figure walking across snowy ground at night, snowflakes in the air",
+        "A bridge on piers over a river at night, flash-lit branches on the left",
+        "A young woman in large glasses with shiny ribbons on her head, close-up",
+        "Tyre tracks on a snowy lot at night, street lamps behind",
+        "A plume of smoke and sparks from a firework rocket over bushes, at night",
+        "A disco ball hanging from a branch in the dark, reflecting the flash",
+        "An empty corner of a bare room with pipes and stubs in the walls",
+        "Profile of a young woman with a large hoop earring and open mouth, close-up in flash light"
+      ],
+      "cs": [
+        "Rozesmátý mladý muž s krátce ostříhanými vlasy, portrét zblízka ve světle blesku",
+        "Obláčky kouře z cigarety v ruce na černém pozadí",
+        "Osoba si zakrývá tvář rukou před fotoaparátem, tvrdé světlo blesku",
+        "Řady bílých křížů na hřbitově v noci, osvětlené bleskem",
+        "Sloupky plotu na náspu podél cesty v noci, černá obloha",
+        "Noční krajina: křoví a stromy ve světle blesku, ve vzduchu sněhové vločky nebo déšť",
+        "Stará telefonní budka s kulatým krytem u drátěného plotu, v noci",
+        "Osamělá postava jdoucí v noci po zasněženém terénu, ve vzduchu sněhové vločky",
+        "Most na pilířích přes řeku v noci, vlevo bleskem osvětlené větve",
+        "Mladá žena ve velkých brýlích s lesklými stuhami na hlavě, detail",
+        "Stopy pneumatik na zasněženém prostranství v noci, v pozadí lampy",
+        "Chochol kouře a jisker z odpalované rakety nad křovím, v noci",
+        "Diskokoule zavěšená na větvi ve tmě, odráží světlo blesku",
+        "Prázdný kout syrové místnosti s trubkami a zaslepenými vývody ve zdech",
+        "Profil mladé ženy s velkou náušnicí a otevřenými ústy, detail ve světle blesku"
+      ]
+    }
   },
   {
     "order": 6,
@@ -357,15 +595,15 @@
     },
     "seo": {
       "pl": {
-        "title": "Nocne Ptaki Późno Wracają Do Domu — fotografia nocna",
+        "title": "Nocne ptaki — fotografia nocna",
         "description": "Nocne Ptaki Późno Wracają Do Domu — cykl Pawła Sypniewskiego o nocnym życiu Warszawy. Fotografia nocna i uliczna, weekendowy rytuał zdejmowania masek."
       },
       "en": {
-        "title": "Night Birds Come Home Late — night photography",
+        "title": "Night Birds — night photography",
         "description": "Night Birds Come Home Late — a documentary series by Paweł Sypniewski on Warsaw nightlife. Night and street photography of a weekly weekend ritual."
       },
       "cs": {
-        "title": "Noční ptáci se vracejí domů pozdě — noční fotografie",
+        "title": "Noční ptáci — noční fotografie",
         "description": "Noční ptáci se vracejí domů pozdě — dokumentární cyklus Pawła Sypniewského o nočním životě Varšavy. Noční a pouliční fotografie víkendového rituálu."
       }
     },
@@ -383,7 +621,39 @@
       "images/nocne-ptaki/08.webp",
       "images/nocne-ptaki/02.webp",
       "images/nocne-ptaki/05.webp"
-    ]
+    ],
+    "alts": {
+      "pl": [
+        "Tłum rozbawionych młodych ludzi na imprezie, półnagi mężczyzna z naklejką na czole, ktoś wskazuje palcem",
+        "Dwie młode kobiety z torbami na zakupy patrzą w telefony na skrzyżowaniu nocą",
+        "Para przy stoliku w barze otoczona kłębami dymu, niebieskie światło",
+        "Mężczyzna w czapce kapitańskiej wita się z kolegą, obok roześmiana kobieta; nocą na ulicy",
+        "Kobieta w czerwonej peruce i czerwonym futrze z papierosem w tłumie przed klubem",
+        "Trzy osoby idą nocą przez plac, jedna z kieliszkiem w ręce",
+        "Młody mężczyzna patrzy w telefon przy rusztowaniu, za nim koledzy; nocna impreza",
+        "Dwaj mężczyźni pochyleni nad czymś na chodniku, jeden w czerwonych spodniach; nocą"
+      ],
+      "en": [
+        "A crowd of young people having fun at a party, a bare-chested man with a sticker on his forehead, someone pointing",
+        "Two young women with shopping bags looking at their phones at a crossroads at night",
+        "A couple at a bar table surrounded by clouds of smoke, blue light",
+        "A man in a captain’s cap greeting a friend, a laughing woman beside them; on the street at night",
+        "A woman in a red wig and red fur coat with a cigarette in a crowd outside a club",
+        "Three people walking across a square at night, one holding a glass",
+        "A young man looking at his phone by scaffolding, friends behind him; night party",
+        "Two men bending over something on the pavement, one in red trousers; at night"
+      ],
+      "cs": [
+        "Dav rozdováděných mladých lidí na párty, polonahý muž s nálepkou na čele, někdo ukazuje prstem",
+        "Dvě mladé ženy s nákupními taškami hledí do telefonů na křižovatce v noci",
+        "Pár u barového stolku obklopený kotouči kouře, modré světlo",
+        "Muž v kapitánské čepici se zdraví s kamarádem, vedle rozesmátá žena; v noci na ulici",
+        "Žena v červené paruce a červeném kožichu s cigaretou v davu před klubem",
+        "Tři lidé jdou v noci přes náměstí, jeden se sklenkou v ruce",
+        "Mladý muž hledí do telefonu u lešení, za ním kamarádi; noční párty",
+        "Dva muži skloněni nad něčím na chodníku, jeden v červených kalhotách; v noci"
+      ]
+    }
   },
   {
     "order": 7,
@@ -417,7 +687,7 @@
     },
     "seo": {
       "pl": {
-        "title": "Danie dnia — książka fotograficzna o marnowaniu żywności",
+        "title": "Danie dnia — książka fotograficzna",
         "description": "Danie dnia — autorska książka fotograficzna Pawła Sypniewskiego. Marnowanie żywności w dwudziestu pracach do przeglądania jak kartki w książce."
       },
       "en": {
@@ -425,7 +695,7 @@
         "description": "Dish of the Day — an artist's photobook by Paweł Sypniewski on food waste. Twenty works to leaf through like the pages of a book."
       },
       "cs": {
-        "title": "Jídlo dne — fotografická kniha o plýtvání potravinami",
+        "title": "Jídlo dne — fotografická kniha",
         "description": "Jídlo dne — autorská fotografická kniha Pawła Sypniewského o plýtvání potravinami. Dvacet snímků, které se listují jako stránky knihy."
       }
     },
@@ -455,6 +725,74 @@
       "images/danie-dnia/book/18.webp",
       "images/danie-dnia/book/19.webp",
       "images/danie-dnia/book/20.webp"
-    ]
+    ],
+    "alts": {
+      "pl": [
+        "Cytryna z plamami pleśni na czarnym tle",
+        "Zwiędnięta gruszka z ciemnymi plamami na czarnym tle",
+        "Pomarszczone, wysuszone jabłko na czarnym tle",
+        "Pomarszczona główka sałaty na czarnym tle",
+        "Pęczek zeschniętych rzodkiewek z liśćmi na czarnym tle",
+        "Zeschnięte, cienkie łodygi rozchodzące się promieniście na czarnym tle",
+        "Zeschnięta cebula z długą, suchą łodygą na czarnym tle",
+        "Pomarszczony, pękający pośrodku owoc na czarnym tle",
+        "Zwiędnięty liść kapusty na czarnym tle",
+        "Kiełkująca cebula z wygiętymi pędami na czarnym tle",
+        "Zwiotczała, wygięta marchew na czarnym tle",
+        "Główka kapusty z zeschniętymi zewnętrznymi liśćmi na czarnym tle",
+        "Kiełkująca cebula z łuszczącą się łupiną na czarnym tle",
+        "Zeschnięta cebula z długą łodygą, kadr pionowy, czarne tło",
+        "Pomarszczony korzeń pietruszki lub pasternaku na czarnym tle",
+        "Zeschnięta różyczka brokułu na czarnym tle",
+        "Pomidor z zeschniętą szypułką na czarnym tle",
+        "Wysuszony plaster cytryny na czarnym tle",
+        "Pomarszczone jabłko z zapadniętym bokiem na czarnym tle",
+        "Zwiędnięty owoc cytrusowy z pomarszczoną skórką na czarnym tle"
+      ],
+      "en": [
+        "A lemon with mould spots on a black background",
+        "A withered pear with dark blotches on a black background",
+        "A wrinkled, dried-out apple on a black background",
+        "A wrinkled head of lettuce on a black background",
+        "A bunch of dried radishes with leaves on a black background",
+        "Dry thin stalks spreading radially on a black background",
+        "A dried onion with a long dry stalk on a black background",
+        "A wrinkled fruit splitting down the middle on a black background",
+        "A wilted cabbage leaf on a black background",
+        "A sprouting onion with curved shoots on a black background",
+        "A limp, bent carrot on a black background",
+        "A cabbage head with dried outer leaves on a black background",
+        "A sprouting onion with peeling skin on a black background",
+        "A dried onion with a long stalk, vertical frame, black background",
+        "A wrinkled parsley root or parsnip on a black background",
+        "A dried-up broccoli floret on a black background",
+        "A tomato with a dried stem on a black background",
+        "A dried slice of lemon on a black background",
+        "A wrinkled apple with a sunken side on a black background",
+        "A withered citrus fruit with wrinkled skin on a black background"
+      ],
+      "cs": [
+        "Citron se skvrnami plísně na černém pozadí",
+        "Zvadlá hruška s tmavými skvrnami na černém pozadí",
+        "Scvrklé, vysušené jablko na černém pozadí",
+        "Scvrklá hlávka salátu na černém pozadí",
+        "Svazek uschlých ředkviček s listy na černém pozadí",
+        "Uschlé tenké stonky rozbíhající se paprskovitě na černém pozadí",
+        "Uschlá cibule s dlouhým suchým stonkem na černém pozadí",
+        "Scvrklý plod puklý uprostřed na černém pozadí",
+        "Zvadlý list zelí na černém pozadí",
+        "Klíčící cibule s prohnutými výhonky na černém pozadí",
+        "Povadlá, prohnutá mrkev na černém pozadí",
+        "Hlávka zelí s uschlými vnějšími listy na černém pozadí",
+        "Klíčící cibule s odlupující se slupkou na černém pozadí",
+        "Uschlá cibule s dlouhým stonkem, svislý záběr, černé pozadí",
+        "Scvrklý kořen petržele nebo pastináku na černém pozadí",
+        "Uschlá růžička brokolice na černém pozadí",
+        "Rajče s uschlou stopkou na černém pozadí",
+        "Vysušený plátek citronu na černém pozadí",
+        "Scvrklé jablko s propadlým bokem na černém pozadí",
+        "Zvadlý citrusový plod se svraštělou slupkou na černém pozadí"
+      ]
+    }
   }
 ]

@@ -59,5 +59,31 @@
     "images/achievements/pamietnik-przetrwania-2025/04.webp",
     "images/achievements/pamietnik-przetrwania-2025/05.webp",
     "images/achievements/pamietnik-przetrwania-2025/06.webp"
-  ]
+  ],
+  "alts": {
+    "pl": [
+      "Plakat wystawy „Pamiętnik przetrwania” Pawła Sypniewskiego: podwójny portret krzyczącego mężczyzny, wernisaż 3.12.2025, Galeria MAL",
+      "Tablica kierunkowa Centrum Zdrowia Psychicznego: poradnia, punkt zgłoszeniowo-koordynacyjny, zespół leczenia środowiskowego",
+      "Pusta poczekalnia z rzędem krzeseł pod oknem, białe ściany",
+      "Czarno-białe odbitki portretów i blistry z tabletkami rozłożone na stole",
+      "Goście wernisażu na korytarzu galerii słuchają autora, jedna osoba fotografuje telefonem",
+      "Grupa osób pozuje na korytarzu wystawy, obok tablica z plakatami i prace na ścianach"
+    ],
+    "en": [
+      "Poster for Paweł Sypniewski’s exhibition “Pamiętnik przetrwania”: a doubled portrait of a shouting man, opening 3 December 2025, Galeria MAL",
+      "A directional sign for a Mental Health Centre: outpatient clinic, intake point and community treatment team",
+      "An empty waiting room with a row of chairs under a window, white walls",
+      "Black-and-white portrait prints and blister packs of pills spread on a table",
+      "Opening-night guests in the gallery corridor listening to the author, one person taking a photo with a phone",
+      "A group posing in the exhibition corridor, a board with posters and works on the walls beside them"
+    ],
+    "cs": [
+      "Plakát výstavy „Pamiętnik przetrwania“ Pawła Sypniewského: zdvojený portrét křičícího muže, vernisáž 3. 12. 2025, Galeria MAL",
+      "Směrová tabule Centra duševního zdraví: poradna, kontaktní místo a tým komunitní léčby",
+      "Prázdná čekárna s řadou židlí pod oknem, bílé stěny",
+      "Černobílé portrétní fotografie a blistry s tabletami rozložené na stole",
+      "Hosté vernisáže na chodbě galerie poslouchají autora, jedna osoba fotografuje telefonem",
+      "Skupina lidí pózuje na chodbě výstavy, vedle nástěnka s plakáty a díla na stěnách"
+    ]
+  }
 }

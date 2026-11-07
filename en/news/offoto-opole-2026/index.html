@@ -33,7 +33,7 @@
 ">
 
 <!-- ============ PRIMARY META ============ -->
-<title>&quot;Night Birds&quot; at the Opole Photography Festival · Paweł Sypniewski</title>
+<title>Night Birds — Opole Photography Festival · Paweł Sypniewski</title>
 <meta name="description" content="A selection from “Night Birds Come Home Late” at the Institute of Creative Photography exhibition during the Opole Photography Festival OFFoto.">
 <meta name="author" content="Paweł Sypniewski">
 <meta name="publisher" content="Paweł Sypniewski">
@@ -121,13 +121,13 @@
 <!-- ============ OPEN GRAPH ============ -->
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Paweł Sypniewski">
-<meta property="og:title" content="&quot;Night Birds&quot; at the Opole Photography Festival · Paweł Sypniewski">
+<meta property="og:title" content="Night Birds — Opole Photography Festival · Paweł Sypniewski">
 <meta property="og:description" content="A selection from “Night Birds Come Home Late” at the Institute of Creative Photography exhibition during the Opole Photography Festival OFFoto.">
 <meta property="og:url" content="https://pawelsypniewski.pl/en/news/offoto-opole-2026/">
 <meta property="og:image" content="https://pawelsypniewski.pl/images/achievements/offoto-opole-2026/01.webp">
 <meta property="og:image:secure_url" content="https://pawelsypniewski.pl/images/achievements/offoto-opole-2026/01.webp">
 <meta property="og:image:type" content="image/webp">
-<meta property="og:image:alt" content="&quot;Night Birds&quot; at the Opole Photography Festival — Opole Photography Festival (OFFoto), Opole, Poland">
+<meta property="og:image:alt" content="A crowd of young people having fun at a party, a bare-chested man with a sticker on his forehead, someone pointing">
 <meta property="og:locale" content="en_US">
 <meta property="og:locale:alternate" content="pl_PL">
 <meta property="og:locale:alternate" content="cs_CZ">
@@ -135,10 +135,10 @@
 
 <!-- ============ TWITTER CARD ============ -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="&quot;Night Birds&quot; at the Opole Photography Festival · Paweł Sypniewski">
+<meta name="twitter:title" content="Night Birds — Opole Photography Festival · Paweł Sypniewski">
 <meta name="twitter:description" content="A selection from “Night Birds Come Home Late” at the Institute of Creative Photography exhibition during the Opole Photography Festival OFFoto.">
 <meta name="twitter:image" content="https://pawelsypniewski.pl/images/achievements/offoto-opole-2026/01.webp">
-<meta name="twitter:image:alt" content="&quot;Night Birds&quot; at the Opole Photography Festival — Opole Photography Festival (OFFoto), Opole, Poland">
+<meta name="twitter:image:alt" content="A crowd of young people having fun at a party, a bare-chested man with a sticker on his forehead, someone pointing">
 
 <!-- ============ FAVICON / PWA ============ -->
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -160,6 +160,11 @@
      Podzbiory: latin (angielski) + latin-ext (polskie znaki: ą, ę, ł…). -->
 <link rel="preload" href="/fonts/jost-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/jost-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+<!-- JetBrains Mono pisze menu, podtytuły i metryczki na pierwszym ekranie
+     każdej podstrony. Bez zapowiedzi tekst rysował się najpierw czcionką
+     zastępczą i przeskakiwał po dociągnięciu pliku (przesunięcie układu). -->
+<link rel="preload" href="/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/jetbrains-mono-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
 
 <!-- ============ ZAPOWIEDŹ PIERWSZEGO KAFLA ============
      Zdjęcia kafli są tłem w atrybucie style, a tła przeglądarka odkrywa
@@ -1930,7 +1935,7 @@
     text-transform: uppercase;
     line-height: 1.7;
   }
-  .text-page .side h3 {
+  .text-page .side h2 {
     font-weight: 500;
     font-size: 11px;
     letter-spacing: 0.1em;
@@ -2160,7 +2165,7 @@
     .text-page .body { font-size: 18px; line-height: 1.55; }
     .proj-description { font-size: 18px; line-height: 1.55; }
     .text-page .side { font-size: 13px; }
-    .text-page .side h3 { font-size: 12px; }
+    .text-page .side h2 { font-size: 12px; }
 
     .home-topline { padding: 18px 56px; font-size: 13px; }
   }
@@ -2508,7 +2513,13 @@
       transition: height 240ms cubic-bezier(0.4, 0.1, 0.2, 1);
     }
     .proj-slide { padding: 10px 12px; }
-    .proj-slide img { cursor: pointer; }
+    /* width: 100% — bez tego, przy width: auto, przeglądarka nie zna rozmiaru
+       zdjęcia, dopóki go nie pobierze (atrybuty width/height dają tylko
+       proporcje), więc scena startowała z zerową wysokością i skakała o ~600 px,
+       gdy zdjęcie nadeszło. Z szerokością z kontenera wysokość wynika
+       z proporcji od pierwszego rysowania; object-fit: contain pilnuje, żeby
+       pionowe kadry ograniczone wysokością sceny nie były rozciągane. */
+    .proj-slide img { cursor: pointer; width: 100%; }
     .proj-nav-left, .proj-nav-right { display: none; }
     .proj-bottom {
       padding: 12px 18px 16px;
@@ -2750,6 +2761,21 @@
     .lightbox { padding: 30px 12px; }
   }
 
+
+  /* ============================================================
+     CZYTELNOŚĆ NA TELEFONIE
+     Google (Lighthouse) i czytniki ekranu uznają tekst poniżej 12 px za
+     nieczytelny; na stronie głównej takich było 63 % tekstu (numery kafli,
+     pasek „Prace”, stopka, baner cookies). Blok stoi na końcu arkusza, więc
+     wygrywa z wcześniejszymi regułami o tej samej wadze. Komputer bez zmian.
+     ============================================================ */
+  @media (max-width: 720px), (max-height: 500px) and (orientation: landscape) and (max-width: 950px) {
+    .home-poster .cell .num,
+    .home-topline,
+    .sidefoot,
+    .cb-text,
+    .cb-btn { font-size: 12px; }
+  }
 </style>
 <script type="application/ld+json">
 {
@@ -2786,31 +2812,31 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/achievements/offoto-opole-2026/01.webp",
-      "caption": "\"Night Birds\" at the Opole Photography Festival — Opole Photography Festival (OFFoto), Opole, Poland",
+      "caption": "A crowd of young people having fun at a party, a bare-chested man with a sticker on his forehead, someone pointing",
       "creditText": "Paweł Sypniewski"
     },
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/achievements/offoto-opole-2026/02.webp",
-      "caption": "\"Night Birds\" at the Opole Photography Festival — Opole Photography Festival (OFFoto), Opole, Poland",
+      "caption": "Three people walking across a square at night, one holding a glass",
       "creditText": "Paweł Sypniewski"
     },
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/achievements/offoto-opole-2026/03.webp",
-      "caption": "\"Night Birds\" at the Opole Photography Festival — Opole Photography Festival (OFFoto), Opole, Poland",
+      "caption": "Framed photographs from the “Night Birds” series on a grey gallery wall, a visitor looking at the works",
       "creditText": "Paweł Sypniewski"
     },
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/achievements/offoto-opole-2026/04.webp",
-      "caption": "\"Night Birds\" at the Opole Photography Festival — Opole Photography Festival (OFFoto), Opole, Poland",
+      "caption": "Three framed photographs from the “Night Birds” series on the exhibition wall, a caption beside them",
       "creditText": "Paweł Sypniewski"
     },
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/achievements/offoto-opole-2026/05.webp",
-      "caption": "\"Night Birds\" at the Opole Photography Festival — Opole Photography Festival (OFFoto), Opole, Poland",
+      "caption": "Two young women with shopping bags looking at their phones at a crossroads at night",
       "creditText": "Paweł Sypniewski"
     }
   ]
@@ -2897,10 +2923,10 @@
         <!-- Komunikat strony 404. GitHub Pages przy nieznanym adresie podaje
              404.html (kopię strony głównej); app.js odsłania ten pasek, gdy
              adres w przeglądarce nie pasuje do żadnego widoku. -->
-        <div class="home-notfound" id="notFoundNote" role="status" hidden>
-          <strong data-i18n="notfound.h">Page not found.</strong>
-          <span data-i18n="notfound.text">This address does not exist — selected works are below.</span>
-        </div>
+        <!-- @notfound — generator (tools/build-pages.js) wstawia tu komunikat
+             „Nie znaleziono strony” WYŁĄCZNIE w 404.html. Zwykłe podstrony nie
+             mogą mieć tego tekstu w kodzie: Google potrafi uznać stronę z takim
+             komunikatem za „miękkie 404” i wyrzucić ją z indeksu. -->
         <div class="home-topline">
           <span data-i18n="home.label">Works / Selected projects</span>
         </div>
@@ -3045,7 +3071,7 @@
 The series tells the story of people who, from Monday to Friday, live within the rigour of social roles — going to work or university, keeping face, holding their emotions in check. But when the weekend evening comes, the streets turn into a stage where all inhibitions fall away. Documenting this weekly ritual, I keep asking one essential question about their identity: in the chaos of the night, do they finally drop their everyday masks and become fully themselves? Or is the street just another stage, where they take on a new weekend role — the unbridled reveller?
 
 Exhibition photos: Maria Książek and Maks Skrzeczkowski.</p>
-          <div class="achievement-photos"><div class="achievement-photo" data-achievement="0" data-photo="0" role="button" tabindex="0" aria-label="&quot;Night Birds&quot; at the Opole Photography Festival — 1"><img src="/images/achievements/offoto-opole-2026/thumbs/01.webp" data-full="/images/achievements/offoto-opole-2026/01.webp" alt="&quot;Night Birds&quot; at the Opole Photography Festival, Opole Photography Festival (OFFoto), Opole, Poland — photo 1 of 5" loading="lazy" decoding="async"></div><div class="achievement-photo" data-achievement="0" data-photo="1" role="button" tabindex="0" aria-label="&quot;Night Birds&quot; at the Opole Photography Festival — 2"><img src="/images/achievements/offoto-opole-2026/thumbs/02.webp" data-full="/images/achievements/offoto-opole-2026/02.webp" alt="&quot;Night Birds&quot; at the Opole Photography Festival, Opole Photography Festival (OFFoto), Opole, Poland — photo 2 of 5" loading="lazy" decoding="async"></div><div class="achievement-photo" data-achievement="0" data-photo="2" role="button" tabindex="0" aria-label="&quot;Night Birds&quot; at the Opole Photography Festival — 3"><img src="/images/achievements/offoto-opole-2026/thumbs/03.webp" data-full="/images/achievements/offoto-opole-2026/03.webp" alt="&quot;Night Birds&quot; at the Opole Photography Festival, Opole Photography Festival (OFFoto), Opole, Poland — photo 3 of 5" loading="lazy" decoding="async"></div><div class="achievement-photo" data-achievement="0" data-photo="3" role="button" tabindex="0" aria-label="&quot;Night Birds&quot; at the Opole Photography Festival — 4"><img src="/images/achievements/offoto-opole-2026/thumbs/04.webp" data-full="/images/achievements/offoto-opole-2026/04.webp" alt="&quot;Night Birds&quot; at the Opole Photography Festival, Opole Photography Festival (OFFoto), Opole, Poland — photo 4 of 5" loading="lazy" decoding="async"></div><div class="achievement-photo" data-achievement="0" data-photo="4" role="button" tabindex="0" aria-label="&quot;Night Birds&quot; at the Opole Photography Festival — 5"><img src="/images/achievements/offoto-opole-2026/thumbs/05.webp" data-full="/images/achievements/offoto-opole-2026/05.webp" alt="&quot;Night Birds&quot; at the Opole Photography Festival, Opole Photography Festival (OFFoto), Opole, Poland — photo 5 of 5" loading="lazy" decoding="async"></div></div>
+          <div class="achievement-photos"><div class="achievement-photo" data-achievement="0" data-photo="0" role="button" tabindex="0" aria-label="&quot;Night Birds&quot; at the Opole Photography Festival — 1"><img src="/images/achievements/offoto-opole-2026/thumbs/01.webp" srcset="/images/achievements/offoto-opole-2026/xs/01.webp 320w, /images/achievements/offoto-opole-2026/thumbs/01.webp 600w" sizes="(max-width: 720px) 30vw, 235px" data-full="/images/achievements/offoto-opole-2026/01.webp" alt="A crowd of young people having fun at a party, a bare-chested man with a sticker on his forehead, someone pointing" loading="lazy" decoding="async"></div><div class="achievement-photo" data-achievement="0" data-photo="1" role="button" tabindex="0" aria-label="&quot;Night Birds&quot; at the Opole Photography Festival — 2"><img src="/images/achievements/offoto-opole-2026/thumbs/02.webp" srcset="/images/achievements/offoto-opole-2026/xs/02.webp 320w, /images/achievements/offoto-opole-2026/thumbs/02.webp 600w" sizes="(max-width: 720px) 30vw, 235px" data-full="/images/achievements/offoto-opole-2026/02.webp" alt="Three people walking across a square at night, one holding a glass" loading="lazy" decoding="async"></div><div class="achievement-photo" data-achievement="0" data-photo="2" role="button" tabindex="0" aria-label="&quot;Night Birds&quot; at the Opole Photography Festival — 3"><img src="/images/achievements/offoto-opole-2026/thumbs/03.webp" srcset="/images/achievements/offoto-opole-2026/xs/03.webp 320w, /images/achievements/offoto-opole-2026/thumbs/03.webp 600w" sizes="(max-width: 720px) 30vw, 235px" data-full="/images/achievements/offoto-opole-2026/03.webp" alt="Framed photographs from the “Night Birds” series on a grey gallery wall, a visitor looking at the works" loading="lazy" decoding="async"></div><div class="achievement-photo" data-achievement="0" data-photo="3" role="button" tabindex="0" aria-label="&quot;Night Birds&quot; at the Opole Photography Festival — 4"><img src="/images/achievements/offoto-opole-2026/thumbs/04.webp" srcset="/images/achievements/offoto-opole-2026/xs/04.webp 320w, /images/achievements/offoto-opole-2026/thumbs/04.webp 600w" sizes="(max-width: 720px) 30vw, 235px" data-full="/images/achievements/offoto-opole-2026/04.webp" alt="Three framed photographs from the “Night Birds” series on the exhibition wall, a caption beside them" loading="lazy" decoding="async"></div><div class="achievement-photo" data-achievement="0" data-photo="4" role="button" tabindex="0" aria-label="&quot;Night Birds&quot; at the Opole Photography Festival — 5"><img src="/images/achievements/offoto-opole-2026/thumbs/05.webp" srcset="/images/achievements/offoto-opole-2026/xs/05.webp 320w, /images/achievements/offoto-opole-2026/thumbs/05.webp 600w" sizes="(max-width: 720px) 30vw, 235px" data-full="/images/achievements/offoto-opole-2026/05.webp" alt="Two young women with shopping bags looking at their phones at a crossroads at night" loading="lazy" decoding="async"></div></div>
           <div class="achievement-links"><a class="achievement-link" href="https://offoto.pl/" target="_blank" rel="noopener noreferrer">OFFoto festival website →</a></div>
         </div>
       </article>
@@ -3073,7 +3099,7 @@ Exhibition photos: Maria Książek and Maks Skrzeczkowski.</p>
              w app.js jest wpisany adres skryptu (KONTAKT_ENDPOINT). Dzięki temu
              nikt nie zobaczy formularza, który nie ma dokąd wysłać. -->
         <form class="contact-form" id="contactForm" hidden>
-          <h3 class="cf-h" data-i18n="form.h">Write to me</h3>
+          <h2 class="cf-h" data-i18n="form.h">Write to me</h2>
 
           <!-- Pułapka na roboty: pole jest poza ekranem i poza kolejnością Tab,
                więc człowiek go nie wypełni, a automat owszem. -->

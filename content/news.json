@@ -69,7 +69,33 @@
       "images/achievements/10-przykazan-2023/04.webp",
       "images/achievements/10-przykazan-2023/05.webp",
       "images/achievements/10-przykazan-2023/06.webp"
-    ]
+    ],
+    "alts": {
+      "pl": [
+        "Wejście do Galerii Obok ZPAF z otwartą kratą i zasłoną z fotografią, obok plakat wystawy",
+        "Wielkoformatowa fotografia otwartych ust z obrazkiem Jezusa na języku, obok opis pracy",
+        "Gablota z napisem „Bóg zapłać” i tabliczka z opisem pracy",
+        "Na drewnianym stole: wachlarz odbitek, naklejki w woreczkach i broszury „Wanted / Dead”",
+        "Zasłona z fotografią w oknie galerii, obok mała praca i tekst kuratorski na ścianie",
+        "Sala wystawy ze sklepieniem: fotografie na szarych ścianach, duży obraz ust z obrazkiem na języku"
+      ],
+      "en": [
+        "Entrance to Galeria Obok ZPAF with an open grille and a photo-printed curtain, exhibition poster beside it",
+        "A large-format photograph of an open mouth with a picture of Jesus on the tongue, with a caption beside it",
+        "A display case reading “Bóg zapłać” (God repay you) and a label describing the work",
+        "On a wooden table: a fan of prints, stickers in bags and “Wanted / Dead” booklets",
+        "A photo-printed curtain in the gallery window, a small work and curatorial text on the wall",
+        "A vaulted exhibition room: photographs on grey walls, a large image of a mouth with a picture on the tongue"
+      ],
+      "cs": [
+        "Vstup do Galerie Obok ZPAF s otevřenou mříží a závěsem s fotografií, vedle plakát výstavy",
+        "Velkoformátová fotografie otevřených úst s obrázkem Ježíše na jazyku, vedle popisek",
+        "Vitrína s nápisem „Bóg zapłać“ (Zaplať Bůh) a popisek díla",
+        "Na dřevěném stole: vějíř fotografií, nálepky v sáčcích a brožurky „Wanted / Dead“",
+        "Závěs s fotografií v okně galerie, vedle malé dílo a kurátorský text na stěně",
+        "Klenutý výstavní sál: fotografie na šedých stěnách, velký obraz úst s obrázkem na jazyku"
+      ]
+    }
   },
   {
     "id": "rybnik-foto-festival-2025",
@@ -115,12 +141,15 @@
     },
     "seo": {
       "pl": {
+        "title": "Pokaz „Labirynt” — Rybnik Foto Festival",
         "description": "Pokaz slideshow cyklu „Labirynt” na 22. Rybnik Foto Festival. Opowieść o młodych ludziach uwikłanych przez małe miasteczka i o zawiłości życiowych wyborów."
       },
       "en": {
+        "title": "“Labirynt” show — Rybnik Foto Festival",
         "description": "Slideshow of the “Labirynt” series at the 22nd Rybnik Foto Festival. A story of young people entangled in small towns and the tangle of life’s choices."
       },
       "cs": {
+        "title": "„Labyrint“ — Rybnik Foto Festival",
         "description": "Projekce slideshow cyklu „Labyrint“ na 22. Rybnik Foto Festivalu. Příběh mladých lidí zapletených do malých měst a spletitosti životních rozhodnutí."
       }
     },
@@ -152,7 +181,18 @@
     ],
     "images": [
       "images/achievements/rybnik-foto-festival-2025/01.webp"
-    ]
+    ],
+    "alts": {
+      "pl": [
+        "Grafika 22. Rybnik Foto Festival: pokaz slideshow „Labirynt” Pawła Sypniewskiego, 28.03.2025, Galeria Sztuki Rzeczna"
+      ],
+      "en": [
+        "Graphic for the 22nd Rybnik Foto Festival: “Labirynt” slideshow by Paweł Sypniewski, 28 March 2025, Galeria Sztuki Rzeczna"
+      ],
+      "cs": [
+        "Grafika 22. Rybnik Foto Festivalu: slideshow „Labyrint“ Pawła Sypniewského, 28. 3. 2025, Galeria Sztuki Rzeczna"
+      ]
+    }
   },
   {
     "id": "itf-opava-start-2025",
@@ -222,7 +262,27 @@
       "images/achievements/itf-opava-start-2025/02.webp",
       "images/achievements/itf-opava-start-2025/03.webp",
       "images/achievements/itf-opava-start-2025/04.webp"
-    ]
+    ],
+    "alts": {
+      "pl": [
+        "Zdjęcie grupowe studentów i wykładowców ITF na łące, w tle jesienne wzgórza i domy",
+        "Sala z żyrandolem i sklepieniem, wykładowcy za stołem prezydialnym, widok zza pleców słuchaczy",
+        "Dłonie wznoszące toast kuflami piwa nad ciemnym stołem, widok z góry",
+        "Grupa osób pozuje z balonami „35” i miotłą na tle różowej ściany, autor stoi najwyżej"
+      ],
+      "en": [
+        "Group photo of ITF students and lecturers in a meadow, autumn hills and houses behind",
+        "A hall with a chandelier and vaulted ceiling, lecturers at the head table, seen from behind the audience",
+        "Hands raising a toast with beer mugs over a dark table, seen from above",
+        "A group posing with “35” balloons and a broom against a pink wall, the author standing highest"
+      ],
+      "cs": [
+        "Skupinová fotografie studentů a pedagogů ITF na louce, v pozadí podzimní kopce a domy",
+        "Sál s lustrem a klenbou, pedagogové za předsednickým stolem, pohled zpoza posluchačů",
+        "Ruce připíjející půllitry piva nad tmavým stolem, pohled shora",
+        "Skupina pózující s balónky „35“ a koštětem u růžové zdi, autor stojí nejvýše"
+      ]
+    }
   },
   {
     "id": "w-glowie-sie-nie-miesci-2025",
@@ -284,7 +344,30 @@
       "images/achievements/w-glowie-sie-nie-miesci-2025/03.webp",
       "images/achievements/w-glowie-sie-nie-miesci-2025/04.webp",
       "images/achievements/w-glowie-sie-nie-miesci-2025/05.webp"
-    ]
+    ],
+    "alts": {
+      "pl": [
+        "Nocny pejzaż z zaroślami w świetle flesza, w powietrzu jasne punkty śniegu lub deszczu",
+        "Portret brodatego mężczyzny z czarnymi bazgrołami na twarzy, odbitka na pogniecionym kartonie",
+        "Smugi dymu z papierosa trzymanego w dłoni na czarnym tle, kadr pionowy",
+        "Koncentryczne kręgi i spiralne smugi wokół ciemnego punktu, abstrakcja z wielokrotnej ekspozycji",
+        "Drogowskazy i okrągły znak oświetlone fleszem na pustym skrzyżowaniu nocą"
+      ],
+      "en": [
+        "A night landscape with scrub in flash light, bright specks of snow or rain in the air",
+        "Portrait of a bearded man with black scribbles over his face, printed on crumpled cardboard",
+        "Wisps of smoke from a cigarette held in a hand against black, vertical frame",
+        "Concentric rings and spiral streaks around a dark point, an abstraction from multiple exposure",
+        "Signposts and a round road sign lit by flash at an empty crossroads at night"
+      ],
+      "cs": [
+        "Noční krajina s křovím ve světle blesku, ve vzduchu světlé body sněhu nebo deště",
+        "Portrét vousatého muže s černými čmáranicemi přes tvář, tisk na zmačkaném kartonu",
+        "Obláčky kouře z cigarety v ruce na černém pozadí, svislý záběr",
+        "Soustředné kruhy a spirálové šmouhy kolem tmavého bodu, abstrakce z vícenásobné expozice",
+        "Směrovky a kulatá dopravní značka osvětlené bleskem na prázdné křižovatce v noci"
+      ]
+    }
   },
   {
     "id": "fotoartfestival-dias-show-2025",
@@ -361,7 +444,24 @@
       "images/achievements/fotoartfestival-dias-show-2025/01.webp",
       "images/achievements/fotoartfestival-dias-show-2025/02.webp",
       "images/achievements/fotoartfestival-dias-show-2025/03.webp"
-    ]
+    ],
+    "alts": {
+      "pl": [
+        "Dyplom XI FotoArtFestival: nominacja Pawła Sypniewskiego do nagrody głównej w konkursie Dias Show 2025",
+        "Nominowani autorzy ustawieni w rzędzie na scenie sali kinowej FotoArtFestivalu",
+        "Autor przemawia na scenie przed ekranem z logo FotoArt Festival, obok prowadząca z mikrofonem"
+      ],
+      "en": [
+        "XI FotoArtFestival diploma: Paweł Sypniewski’s nomination for the main prize in the Dias Show 2025 competition",
+        "Nominated authors lined up on stage in the FotoArtFestival cinema hall",
+        "The author speaking on stage in front of a screen with the FotoArt Festival logo, a presenter with a microphone beside him"
+      ],
+      "cs": [
+        "Diplom XI. FotoArtFestivalu: nominace Pawła Sypniewského na hlavní cenu soutěže Dias Show 2025",
+        "Nominovaní autoři seřazení na pódiu kinosálu FotoArtFestivalu",
+        "Autor mluví na pódiu před plátnem s logem FotoArt Festival, vedle moderátorka s mikrofonem"
+      ]
+    }
   },
   {
     "id": "pamietnik-przetrwania-2025",
@@ -424,7 +524,33 @@
       "images/achievements/pamietnik-przetrwania-2025/04.webp",
       "images/achievements/pamietnik-przetrwania-2025/05.webp",
       "images/achievements/pamietnik-przetrwania-2025/06.webp"
-    ]
+    ],
+    "alts": {
+      "pl": [
+        "Plakat wystawy „Pamiętnik przetrwania” Pawła Sypniewskiego: podwójny portret krzyczącego mężczyzny, wernisaż 3.12.2025, Galeria MAL",
+        "Tablica kierunkowa Centrum Zdrowia Psychicznego: poradnia, punkt zgłoszeniowo-koordynacyjny, zespół leczenia środowiskowego",
+        "Pusta poczekalnia z rzędem krzeseł pod oknem, białe ściany",
+        "Czarno-białe odbitki portretów i blistry z tabletkami rozłożone na stole",
+        "Goście wernisażu na korytarzu galerii słuchają autora, jedna osoba fotografuje telefonem",
+        "Grupa osób pozuje na korytarzu wystawy, obok tablica z plakatami i prace na ścianach"
+      ],
+      "en": [
+        "Poster for Paweł Sypniewski’s exhibition “Pamiętnik przetrwania”: a doubled portrait of a shouting man, opening 3 December 2025, Galeria MAL",
+        "A directional sign for a Mental Health Centre: outpatient clinic, intake point and community treatment team",
+        "An empty waiting room with a row of chairs under a window, white walls",
+        "Black-and-white portrait prints and blister packs of pills spread on a table",
+        "Opening-night guests in the gallery corridor listening to the author, one person taking a photo with a phone",
+        "A group posing in the exhibition corridor, a board with posters and works on the walls beside them"
+      ],
+      "cs": [
+        "Plakát výstavy „Pamiętnik przetrwania“ Pawła Sypniewského: zdvojený portrét křičícího muže, vernisáž 3. 12. 2025, Galeria MAL",
+        "Směrová tabule Centra duševního zdraví: poradna, kontaktní místo a tým komunitní léčby",
+        "Prázdná čekárna s řadou židlí pod oknem, bílé stěny",
+        "Černobílé portrétní fotografie a blistry s tabletami rozložené na stole",
+        "Hosté vernisáže na chodbě galerie poslouchají autora, jedna osoba fotografuje telefonem",
+        "Skupina lidí pózuje na chodbě výstavy, vedle nástěnka s plakáty a díla na stěnách"
+      ]
+    }
   },
   {
     "id": "zpaf-przyjecie-2025",
@@ -496,7 +622,33 @@
       "images/achievements/zpaf-przyjecie-2025/03.webp",
       "images/achievements/zpaf-przyjecie-2025/04.webp",
       "images/achievements/zpaf-przyjecie-2025/05.webp"
-    ]
+    ],
+    "alts": {
+      "pl": [
+        "Autoportret: twarz mężczyzny z brodą oświetlona od dołu na czarnym tle",
+        "Grupa nowo przyjętych członków ZPAF i członków komisji pozuje pod ceglaną ścianą galerii",
+        "Komisja ogląda odbitki rozłożone na podłodze galerii, prace także na ścianach",
+        "Odbitki ułożone na posadzce galerii, w tle dwie osoby przy ścianie z pracami",
+        "Członkowie komisji omawiają prace leżące na podłodze galerii, widok z góry",
+        "Trzy roześmiane osoby pod tablicą Związku Polskich Artystów Fotografików"
+      ],
+      "en": [
+        "Self-portrait: a bearded man’s face lit from below on a black background",
+        "A group of newly admitted ZPAF members and jury members posing by the gallery’s brick wall",
+        "The jury looking at prints laid out on the gallery floor, more works on the walls",
+        "Prints arranged on the gallery floor, two people by a wall of works in the background",
+        "Jury members discussing works lying on the gallery floor, seen from above",
+        "Three laughing people under the plaque of the Association of Polish Art Photographers (ZPAF)"
+      ],
+      "cs": [
+        "Autoportrét: tvář vousatého muže osvětlená zdola na černém pozadí",
+        "Skupina nově přijatých členů ZPAF a členů komise pózuje u cihlové zdi galerie",
+        "Komise si prohlíží fotografie rozložené na podlaze galerie, další díla na stěnách",
+        "Fotografie rozložené na podlaze galerie, v pozadí dvě osoby u stěny s díly",
+        "Členové komise diskutují nad díly ležícími na podlaze galerie, pohled shora",
+        "Tři rozesmátí lidé pod tabulí Svazu polských uměleckých fotografů (ZPAF)"
+      ]
+    }
   },
   {
     "id": "offoto-opole-2026",
@@ -542,12 +694,15 @@
     },
     "seo": {
       "pl": {
+        "title": "Nocne ptaki — Opolski Festiwal Fotografii",
         "description": "Fragment cyklu „Nocne ptaki późno wracają do domu” na wystawie Instytutu Fotografii Twórczej podczas Opolskiego Festiwalu Fotografii OFFoto w Opolu."
       },
       "en": {
+        "title": "Night Birds — Opole Photography Festival",
         "description": "A selection from “Night Birds Come Home Late” at the Institute of Creative Photography exhibition during the Opole Photography Festival OFFoto."
       },
       "cs": {
+        "title": "Noční ptáci — Opolský festival fotografie",
         "description": "Výběr z cyklu „Noční ptáci se vracejí domů pozdě“ na výstavě Institutu tvůrčí fotografie během Opolského festivalu fotografie OFFoto."
       }
     },
@@ -567,6 +722,29 @@
       "images/achievements/offoto-opole-2026/03.webp",
       "images/achievements/offoto-opole-2026/04.webp",
       "images/achievements/offoto-opole-2026/05.webp"
-    ]
+    ],
+    "alts": {
+      "pl": [
+        "Tłum rozbawionych młodych ludzi na imprezie, półnagi mężczyzna z naklejką na czole, ktoś wskazuje palcem",
+        "Trzy osoby idą nocą przez plac, jedna z kieliszkiem w ręce",
+        "Oprawione fotografie z cyklu „Nocne ptaki” na szarej ścianie galerii, zwiedzająca ogląda prace",
+        "Trzy oprawione fotografie z cyklu „Nocne ptaki” na ścianie wystawy, obok podpis",
+        "Dwie młode kobiety z torbami na zakupy patrzą w telefony na skrzyżowaniu nocą"
+      ],
+      "en": [
+        "A crowd of young people having fun at a party, a bare-chested man with a sticker on his forehead, someone pointing",
+        "Three people walking across a square at night, one holding a glass",
+        "Framed photographs from the “Night Birds” series on a grey gallery wall, a visitor looking at the works",
+        "Three framed photographs from the “Night Birds” series on the exhibition wall, a caption beside them",
+        "Two young women with shopping bags looking at their phones at a crossroads at night"
+      ],
+      "cs": [
+        "Dav rozdováděných mladých lidí na párty, polonahý muž s nálepkou na čele, někdo ukazuje prstem",
+        "Tři lidé jdou v noci přes náměstí, jeden se sklenkou v ruce",
+        "Zarámované fotografie z cyklu „Noční ptáci“ na šedé stěně galerie, návštěvnice si prohlíží díla",
+        "Tři zarámované fotografie z cyklu „Noční ptáci“ na stěně výstavy, vedle popisek",
+        "Dvě mladé ženy s nákupními taškami hledí do telefonů na křižovatce v noci"
+      ]
+    }
   }
 ]

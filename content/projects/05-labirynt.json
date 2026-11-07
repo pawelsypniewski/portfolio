@@ -63,5 +63,58 @@
     "images/labirynt/13.webp",
     "images/labirynt/14.webp",
     "images/labirynt/15.webp"
-  ]
+  ],
+  "alts": {
+    "pl": [
+      "Roześmiany młody mężczyzna z krótko ostrzyżoną głową, portret z bliska w świetle flesza",
+      "Smugi dymu z papierosa w dłoni na czarnym tle",
+      "Osoba zasłania twarz dłonią przed aparatem, mocne światło flesza",
+      "Rzędy białych krzyży na cmentarzu nocą, oświetlone fleszem",
+      "Słupki ogrodzenia na nasypie wzdłuż drogi nocą, czarne niebo",
+      "Nocny pejzaż: zarośla i drzewa w świetle flesza, w powietrzu płatki śniegu lub deszcz",
+      "Stara budka telefoniczna z okrągłą osłoną przy siatce ogrodzenia, nocą",
+      "Samotna postać idąca nocą po zaśnieżonym terenie, w powietrzu płatki śniegu",
+      "Most na filarach nad rzeką nocą, z lewej oświetlone fleszem gałęzie",
+      "Młoda kobieta w dużych okularach, z błyszczącymi wstążkami na głowie, zbliżenie",
+      "Ślady opon na zaśnieżonym placu nocą, w tle latarnie",
+      "Pióropusz dymu i iskier z odpalanej rakiety nad zaroślami, nocą",
+      "Kula dyskotekowa zawieszona na gałęzi w ciemności, odbija światło flesza",
+      "Pusty narożnik surowego pomieszczenia z rurami i zaślepkami w ścianach",
+      "Profil młodej kobiety z dużym kolczykiem w uchu i otwartymi ustami, zbliżenie w świetle flesza"
+    ],
+    "en": [
+      "A laughing young man with cropped hair, close-up portrait in flash light",
+      "Wisps of smoke from a cigarette held in a hand against a black background",
+      "A person covering their face with a hand against the camera, hard flash light",
+      "Rows of white crosses in a cemetery at night, lit by flash",
+      "Fence posts on an embankment along a road at night, black sky",
+      "Night landscape: scrub and trees in flash light, snowflakes or rain in the air",
+      "An old telephone booth with a round hood by a wire fence, at night",
+      "A lone figure walking across snowy ground at night, snowflakes in the air",
+      "A bridge on piers over a river at night, flash-lit branches on the left",
+      "A young woman in large glasses with shiny ribbons on her head, close-up",
+      "Tyre tracks on a snowy lot at night, street lamps behind",
+      "A plume of smoke and sparks from a firework rocket over bushes, at night",
+      "A disco ball hanging from a branch in the dark, reflecting the flash",
+      "An empty corner of a bare room with pipes and stubs in the walls",
+      "Profile of a young woman with a large hoop earring and open mouth, close-up in flash light"
+    ],
+    "cs": [
+      "Rozesmátý mladý muž s krátce ostříhanými vlasy, portrét zblízka ve světle blesku",
+      "Obláčky kouře z cigarety v ruce na černém pozadí",
+      "Osoba si zakrývá tvář rukou před fotoaparátem, tvrdé světlo blesku",
+      "Řady bílých křížů na hřbitově v noci, osvětlené bleskem",
+      "Sloupky plotu na náspu podél cesty v noci, černá obloha",
+      "Noční krajina: křoví a stromy ve světle blesku, ve vzduchu sněhové vločky nebo déšť",
+      "Stará telefonní budka s kulatým krytem u drátěného plotu, v noci",
+      "Osamělá postava jdoucí v noci po zasněženém terénu, ve vzduchu sněhové vločky",
+      "Most na pilířích přes řeku v noci, vlevo bleskem osvětlené větve",
+      "Mladá žena ve velkých brýlích s lesklými stuhami na hlavě, detail",
+      "Stopy pneumatik na zasněženém prostranství v noci, v pozadí lampy",
+      "Chochol kouře a jisker z odpalované rakety nad křovím, v noci",
+      "Diskokoule zavěšená na větvi ve tmě, odráží světlo blesku",
+      "Prázdný kout syrové místnosti s trubkami a zaslepenými vývody ve zdech",
+      "Profil mladé ženy s velkou náušnicí a otevřenými ústy, detail ve světle blesku"
+    ]
+  }
 }

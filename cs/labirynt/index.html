@@ -160,6 +160,11 @@
      Podzbiory: latin (angielski) + latin-ext (polskie znaki: ą, ę, ł…). -->
 <link rel="preload" href="/fonts/jost-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/jost-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+<!-- JetBrains Mono pisze menu, podtytuły i metryczki na pierwszym ekranie
+     każdej podstrony. Bez zapowiedzi tekst rysował się najpierw czcionką
+     zastępczą i przeskakiwał po dociągnięciu pliku (przesunięcie układu). -->
+<link rel="preload" href="/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/jetbrains-mono-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
 
 <!-- ============ ZAPOWIEDŹ PIERWSZEGO KAFLA ============
      Zdjęcia kafli są tłem w atrybucie style, a tła przeglądarka odkrywa
@@ -1930,7 +1935,7 @@
     text-transform: uppercase;
     line-height: 1.7;
   }
-  .text-page .side h3 {
+  .text-page .side h2 {
     font-weight: 500;
     font-size: 11px;
     letter-spacing: 0.1em;
@@ -2160,7 +2165,7 @@
     .text-page .body { font-size: 18px; line-height: 1.55; }
     .proj-description { font-size: 18px; line-height: 1.55; }
     .text-page .side { font-size: 13px; }
-    .text-page .side h3 { font-size: 12px; }
+    .text-page .side h2 { font-size: 12px; }
 
     .home-topline { padding: 18px 56px; font-size: 13px; }
   }
@@ -2508,7 +2513,13 @@
       transition: height 240ms cubic-bezier(0.4, 0.1, 0.2, 1);
     }
     .proj-slide { padding: 10px 12px; }
-    .proj-slide img { cursor: pointer; }
+    /* width: 100% — bez tego, przy width: auto, przeglądarka nie zna rozmiaru
+       zdjęcia, dopóki go nie pobierze (atrybuty width/height dają tylko
+       proporcje), więc scena startowała z zerową wysokością i skakała o ~600 px,
+       gdy zdjęcie nadeszło. Z szerokością z kontenera wysokość wynika
+       z proporcji od pierwszego rysowania; object-fit: contain pilnuje, żeby
+       pionowe kadry ograniczone wysokością sceny nie były rozciągane. */
+    .proj-slide img { cursor: pointer; width: 100%; }
     .proj-nav-left, .proj-nav-right { display: none; }
     .proj-bottom {
       padding: 12px 18px 16px;
@@ -2750,6 +2761,21 @@
     .lightbox { padding: 30px 12px; }
   }
 
+
+  /* ============================================================
+     CZYTELNOŚĆ NA TELEFONIE
+     Google (Lighthouse) i czytniki ekranu uznają tekst poniżej 12 px za
+     nieczytelny; na stronie głównej takich było 63 % tekstu (numery kafli,
+     pasek „Prace”, stopka, baner cookies). Blok stoi na końcu arkusza, więc
+     wygrywa z wcześniejszymi regułami o tej samej wadze. Komputer bez zmian.
+     ============================================================ */
+  @media (max-width: 720px), (max-height: 500px) and (orientation: landscape) and (max-width: 950px) {
+    .home-poster .cell .num,
+    .home-topline,
+    .sidefoot,
+    .cb-text,
+    .cb-btn { font-size: 12px; }
+  }
 </style>
 <script type="application/ld+json">
 {
@@ -2779,7 +2805,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/labirynt/01.webp",
-      "caption": "Labyrint — snímek 1 z 15, 2024",
+      "caption": "Rozesmátý mladý muž s krátce ostříhanými vlasy, portrét zblízka ve světle blesku",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2789,7 +2815,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/labirynt/02.webp",
-      "caption": "Labyrint — snímek 2 z 15, 2024",
+      "caption": "Obláčky kouře z cigarety v ruce na černém pozadí",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2799,7 +2825,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/labirynt/03.webp",
-      "caption": "Labyrint — snímek 3 z 15, 2024",
+      "caption": "Osoba si zakrývá tvář rukou před fotoaparátem, tvrdé světlo blesku",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2809,7 +2835,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/labirynt/04.webp",
-      "caption": "Labyrint — snímek 4 z 15, 2024",
+      "caption": "Řady bílých křížů na hřbitově v noci, osvětlené bleskem",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2819,7 +2845,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/labirynt/05.webp",
-      "caption": "Labyrint — snímek 5 z 15, 2024",
+      "caption": "Sloupky plotu na náspu podél cesty v noci, černá obloha",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2829,7 +2855,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/labirynt/06.webp",
-      "caption": "Labyrint — snímek 6 z 15, 2024",
+      "caption": "Noční krajina: křoví a stromy ve světle blesku, ve vzduchu sněhové vločky nebo déšť",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2839,7 +2865,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/labirynt/07.webp",
-      "caption": "Labyrint — snímek 7 z 15, 2024",
+      "caption": "Stará telefonní budka s kulatým krytem u drátěného plotu, v noci",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2849,7 +2875,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/labirynt/08.webp",
-      "caption": "Labyrint — snímek 8 z 15, 2024",
+      "caption": "Osamělá postava jdoucí v noci po zasněženém terénu, ve vzduchu sněhové vločky",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2859,7 +2885,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/labirynt/09.webp",
-      "caption": "Labyrint — snímek 9 z 15, 2024",
+      "caption": "Most na pilířích přes řeku v noci, vlevo bleskem osvětlené větve",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2869,7 +2895,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/labirynt/10.webp",
-      "caption": "Labyrint — snímek 10 z 15, 2024",
+      "caption": "Mladá žena ve velkých brýlích s lesklými stuhami na hlavě, detail",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2879,7 +2905,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/labirynt/11.webp",
-      "caption": "Labyrint — snímek 11 z 15, 2024",
+      "caption": "Stopy pneumatik na zasněženém prostranství v noci, v pozadí lampy",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2889,7 +2915,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/labirynt/12.webp",
-      "caption": "Labyrint — snímek 12 z 15, 2024",
+      "caption": "Chochol kouře a jisker z odpalované rakety nad křovím, v noci",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2899,7 +2925,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/labirynt/13.webp",
-      "caption": "Labyrint — snímek 13 z 15, 2024",
+      "caption": "Diskokoule zavěšená na větvi ve tmě, odráží světlo blesku",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2909,7 +2935,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/labirynt/14.webp",
-      "caption": "Labyrint — snímek 14 z 15, 2024",
+      "caption": "Prázdný kout syrové místnosti s trubkami a zaslepenými vývody ve zdech",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2919,7 +2945,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/labirynt/15.webp",
-      "caption": "Labyrint — snímek 15 z 15, 2024",
+      "caption": "Profil mladé ženy s velkou náušnicí a otevřenými ústy, detail ve světle blesku",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -3004,10 +3030,10 @@
         <!-- Komunikat strony 404. GitHub Pages przy nieznanym adresie podaje
              404.html (kopię strony głównej); app.js odsłania ten pasek, gdy
              adres w przeglądarce nie pasuje do żadnego widoku. -->
-        <div class="home-notfound" id="notFoundNote" role="status" hidden>
-          <strong data-i18n="notfound.h">Stránka nenalezena.</strong>
-          <span data-i18n="notfound.text">Tato adresa neexistuje — níže jsou vybrané práce.</span>
-        </div>
+        <!-- @notfound — generator (tools/build-pages.js) wstawia tu komunikat
+             „Nie znaleziono strony” WYŁĄCZNIE w 404.html. Zwykłe podstrony nie
+             mogą mieć tego tekstu w kodzie: Google potrafi uznać stronę z takim
+             komunikatem za „miękkie 404” i wyrzucić ją z indeksu. -->
         <div class="home-topline">
           <span data-i18n="home.label">Práce / Vybrané projekty</span>
         </div>
@@ -3101,7 +3127,7 @@
           <div class="pj-meta" id="pjMeta">2024<br>Ztracení<br>15 prací</div>
         </div>
         <div class="proj-stage">
-          <div class="proj-track" id="pjTrack"><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/labirynt/m/01.webp"><img src="/images/labirynt/01.webp" alt="Labyrint — snímek 1 z 15, 2024, Dokument / Kniha" data-index="0" loading="eager" fetchpriority="high" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/labirynt/m/02.webp"><img src="/images/labirynt/02.webp" alt="Labyrint — snímek 2 z 15, 2024, Dokument / Kniha" data-index="1" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/labirynt/m/03.webp"><img src="/images/labirynt/03.webp" alt="Labyrint — snímek 3 z 15, 2024, Dokument / Kniha" data-index="2" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/labirynt/m/04.webp"><img src="/images/labirynt/04.webp" alt="Labyrint — snímek 4 z 15, 2024, Dokument / Kniha" data-index="3" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/labirynt/m/05.webp"><img src="/images/labirynt/05.webp" alt="Labyrint — snímek 5 z 15, 2024, Dokument / Kniha" data-index="4" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/labirynt/m/06.webp"><img src="/images/labirynt/06.webp" alt="Labyrint — snímek 6 z 15, 2024, Dokument / Kniha" data-index="5" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/labirynt/m/07.webp"><img src="/images/labirynt/07.webp" alt="Labyrint — snímek 7 z 15, 2024, Dokument / Kniha" data-index="6" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/labirynt/m/08.webp"><img src="/images/labirynt/08.webp" alt="Labyrint — snímek 8 z 15, 2024, Dokument / Kniha" data-index="7" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/labirynt/m/09.webp"><img src="/images/labirynt/09.webp" alt="Labyrint — snímek 9 z 15, 2024, Dokument / Kniha" data-index="8" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/labirynt/m/10.webp"><img src="/images/labirynt/10.webp" alt="Labyrint — snímek 10 z 15, 2024, Dokument / Kniha" data-index="9" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/labirynt/m/11.webp"><img src="/images/labirynt/11.webp" alt="Labyrint — snímek 11 z 15, 2024, Dokument / Kniha" data-index="10" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/labirynt/m/12.webp"><img src="/images/labirynt/12.webp" alt="Labyrint — snímek 12 z 15, 2024, Dokument / Kniha" data-index="11" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/labirynt/m/13.webp"><img src="/images/labirynt/13.webp" alt="Labyrint — snímek 13 z 15, 2024, Dokument / Kniha" data-index="12" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/labirynt/m/14.webp"><img src="/images/labirynt/14.webp" alt="Labyrint — snímek 14 z 15, 2024, Dokument / Kniha" data-index="13" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/labirynt/m/15.webp"><img src="/images/labirynt/15.webp" alt="Labyrint — snímek 15 z 15, 2024, Dokument / Kniha" data-index="14" loading="lazy" fetchpriority="auto" decoding="async"></picture></div></div>
+          <div class="proj-track" id="pjTrack"><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/labirynt/s/01.webp 800w, /images/labirynt/m/01.webp 1200w" sizes="100vw"><img src="/images/labirynt/01.webp" width="1000" height="1500" alt="Rozesmátý mladý muž s krátce ostříhanými vlasy, portrét zblízka ve světle blesku" data-index="0" loading="eager" fetchpriority="high" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/labirynt/s/02.webp 800w, /images/labirynt/m/02.webp 1200w" sizes="100vw"><img src="/images/labirynt/02.webp" width="1500" height="1000" alt="Obláčky kouře z cigarety v ruce na černém pozadí" data-index="1" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/labirynt/s/03.webp 800w, /images/labirynt/m/03.webp 1200w" sizes="100vw"><img src="/images/labirynt/03.webp" width="1500" height="998" alt="Osoba si zakrývá tvář rukou před fotoaparátem, tvrdé světlo blesku" data-index="2" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/labirynt/s/04.webp 800w, /images/labirynt/m/04.webp 1200w" sizes="100vw"><img src="/images/labirynt/04.webp" width="1500" height="998" alt="Řady bílých křížů na hřbitově v noci, osvětlené bleskem" data-index="3" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/labirynt/s/05.webp 800w, /images/labirynt/m/05.webp 1200w" sizes="100vw"><img src="/images/labirynt/05.webp" width="998" height="1500" alt="Sloupky plotu na náspu podél cesty v noci, černá obloha" data-index="4" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/labirynt/s/06.webp 800w, /images/labirynt/m/06.webp 1200w" sizes="100vw"><img src="/images/labirynt/06.webp" width="1500" height="998" alt="Noční krajina: křoví a stromy ve světle blesku, ve vzduchu sněhové vločky nebo déšť" data-index="5" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/labirynt/s/07.webp 800w, /images/labirynt/m/07.webp 1200w" sizes="100vw"><img src="/images/labirynt/07.webp" width="998" height="1500" alt="Stará telefonní budka s kulatým krytem u drátěného plotu, v noci" data-index="6" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/labirynt/s/08.webp 800w, /images/labirynt/m/08.webp 1200w" sizes="100vw"><img src="/images/labirynt/08.webp" width="998" height="1500" alt="Osamělá postava jdoucí v noci po zasněženém terénu, ve vzduchu sněhové vločky" data-index="7" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/labirynt/s/09.webp 800w, /images/labirynt/m/09.webp 1200w" sizes="100vw"><img src="/images/labirynt/09.webp" width="1500" height="998" alt="Most na pilířích přes řeku v noci, vlevo bleskem osvětlené větve" data-index="8" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/labirynt/s/10.webp 800w, /images/labirynt/m/10.webp 1200w" sizes="100vw"><img src="/images/labirynt/10.webp" width="1000" height="1500" alt="Mladá žena ve velkých brýlích s lesklými stuhami na hlavě, detail" data-index="9" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/labirynt/s/11.webp 800w, /images/labirynt/m/11.webp 1200w" sizes="100vw"><img src="/images/labirynt/11.webp" width="1500" height="1000" alt="Stopy pneumatik na zasněženém prostranství v noci, v pozadí lampy" data-index="10" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/labirynt/s/12.webp 800w, /images/labirynt/m/12.webp 1200w" sizes="100vw"><img src="/images/labirynt/12.webp" width="1000" height="1500" alt="Chochol kouře a jisker z odpalované rakety nad křovím, v noci" data-index="11" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/labirynt/s/13.webp 800w, /images/labirynt/m/13.webp 1200w" sizes="100vw"><img src="/images/labirynt/13.webp" width="1000" height="1500" alt="Diskokoule zavěšená na větvi ve tmě, odráží světlo blesku" data-index="12" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/labirynt/s/14.webp 800w, /images/labirynt/m/14.webp 1200w" sizes="100vw"><img src="/images/labirynt/14.webp" width="1500" height="998" alt="Prázdný kout syrové místnosti s trubkami a zaslepenými vývody ve zdech" data-index="13" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/labirynt/s/15.webp 800w, /images/labirynt/m/15.webp 1200w" sizes="100vw"><img src="/images/labirynt/15.webp" width="998" height="1500" alt="Profil mladé ženy s velkou náušnicí a otevřenými ústy, detail ve světle blesku" data-index="14" loading="lazy" fetchpriority="auto" decoding="async"></picture></div></div>
           <div class="proj-nav-left"  id="pjPrev"><span class="proj-nav-arrow">← <span data-i18n="proj.prev">předchozí</span></span></div>
           <div class="proj-nav-right" id="pjNext"><span class="proj-nav-arrow"><span data-i18n="proj.next">další</span> →</span></div>
         </div>
@@ -3161,7 +3187,7 @@
              w app.js jest wpisany adres skryptu (KONTAKT_ENDPOINT). Dzięki temu
              nikt nie zobaczy formularza, który nie ma dokąd wysłać. -->
         <form class="contact-form" id="contactForm" hidden>
-          <h3 class="cf-h" data-i18n="form.h">Napište mi</h3>
+          <h2 class="cf-h" data-i18n="form.h">Napište mi</h2>
 
           <!-- Pułapka na roboty: pole jest poza ekranem i poza kolejnością Tab,
                więc człowiek go nie wypełni, a automat owszem. -->

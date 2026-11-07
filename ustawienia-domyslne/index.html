@@ -33,7 +33,7 @@
 ">
 
 <!-- ============ PRIMARY META ============ -->
-<title>Ustawienia domyślne — cykl fotograficzny o AI · Paweł Sypniewski</title>
+<title>Ustawienia domyślne — fotografia o AI · Paweł Sypniewski</title>
 <meta name="description" content="Ustawienia domyślne — fotografia o glitchach i artefaktach obrazów z AI. Cykl Pawła Sypniewskiego: negatyw średnioformatowy na mokrej płycie kolodionowej.">
 <meta name="author" content="Paweł Sypniewski">
 <meta name="publisher" content="Paweł Sypniewski">
@@ -121,7 +121,7 @@
 <!-- ============ OPEN GRAPH ============ -->
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Paweł Sypniewski">
-<meta property="og:title" content="Ustawienia domyślne — cykl fotograficzny o AI · Paweł Sypniewski">
+<meta property="og:title" content="Ustawienia domyślne — fotografia o AI · Paweł Sypniewski">
 <meta property="og:description" content="Ustawienia domyślne — fotografia o glitchach i artefaktach obrazów z AI. Cykl Pawła Sypniewskiego: negatyw średnioformatowy na mokrej płycie kolodionowej.">
 <meta property="og:url" content="https://pawelsypniewski.pl/ustawienia-domyslne/">
 <meta property="og:image" content="https://pawelsypniewski.pl/images/ustawienia/03.webp">
@@ -135,7 +135,7 @@
 
 <!-- ============ TWITTER CARD ============ -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Ustawienia domyślne — cykl fotograficzny o AI · Paweł Sypniewski">
+<meta name="twitter:title" content="Ustawienia domyślne — fotografia o AI · Paweł Sypniewski">
 <meta name="twitter:description" content="Ustawienia domyślne — fotografia o glitchach i artefaktach obrazów z AI. Cykl Pawła Sypniewskiego: negatyw średnioformatowy na mokrej płycie kolodionowej.">
 <meta name="twitter:image" content="https://pawelsypniewski.pl/images/ustawienia/03.webp">
 <meta name="twitter:image:alt" content="Ustawienia domyślne — Dokument, 2024">
@@ -160,6 +160,11 @@
      Podzbiory: latin (angielski) + latin-ext (polskie znaki: ą, ę, ł…). -->
 <link rel="preload" href="/fonts/jost-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/jost-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+<!-- JetBrains Mono pisze menu, podtytuły i metryczki na pierwszym ekranie
+     każdej podstrony. Bez zapowiedzi tekst rysował się najpierw czcionką
+     zastępczą i przeskakiwał po dociągnięciu pliku (przesunięcie układu). -->
+<link rel="preload" href="/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/jetbrains-mono-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
 
 <!-- ============ ZAPOWIEDŹ PIERWSZEGO KAFLA ============
      Zdjęcia kafli są tłem w atrybucie style, a tła przeglądarka odkrywa
@@ -1930,7 +1935,7 @@
     text-transform: uppercase;
     line-height: 1.7;
   }
-  .text-page .side h3 {
+  .text-page .side h2 {
     font-weight: 500;
     font-size: 11px;
     letter-spacing: 0.1em;
@@ -2160,7 +2165,7 @@
     .text-page .body { font-size: 18px; line-height: 1.55; }
     .proj-description { font-size: 18px; line-height: 1.55; }
     .text-page .side { font-size: 13px; }
-    .text-page .side h3 { font-size: 12px; }
+    .text-page .side h2 { font-size: 12px; }
 
     .home-topline { padding: 18px 56px; font-size: 13px; }
   }
@@ -2508,7 +2513,13 @@
       transition: height 240ms cubic-bezier(0.4, 0.1, 0.2, 1);
     }
     .proj-slide { padding: 10px 12px; }
-    .proj-slide img { cursor: pointer; }
+    /* width: 100% — bez tego, przy width: auto, przeglądarka nie zna rozmiaru
+       zdjęcia, dopóki go nie pobierze (atrybuty width/height dają tylko
+       proporcje), więc scena startowała z zerową wysokością i skakała o ~600 px,
+       gdy zdjęcie nadeszło. Z szerokością z kontenera wysokość wynika
+       z proporcji od pierwszego rysowania; object-fit: contain pilnuje, żeby
+       pionowe kadry ograniczone wysokością sceny nie były rozciągane. */
+    .proj-slide img { cursor: pointer; width: 100%; }
     .proj-nav-left, .proj-nav-right { display: none; }
     .proj-bottom {
       padding: 12px 18px 16px;
@@ -2750,6 +2761,21 @@
     .lightbox { padding: 30px 12px; }
   }
 
+
+  /* ============================================================
+     CZYTELNOŚĆ NA TELEFONIE
+     Google (Lighthouse) i czytniki ekranu uznają tekst poniżej 12 px za
+     nieczytelny; na stronie głównej takich było 63 % tekstu (numery kafli,
+     pasek „Prace”, stopka, baner cookies). Blok stoi na końcu arkusza, więc
+     wygrywa z wcześniejszymi regułami o tej samej wadze. Komputer bez zmian.
+     ============================================================ */
+  @media (max-width: 720px), (max-height: 500px) and (orientation: landscape) and (max-width: 950px) {
+    .home-poster .cell .num,
+    .home-topline,
+    .sidefoot,
+    .cb-text,
+    .cb-btn { font-size: 12px; }
+  }
 </style>
 <script type="application/ld+json">
 {
@@ -2779,7 +2805,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/ustawienia/01.webp",
-      "caption": "Ustawienia domyślne — zdjęcie 1 z 17, 2024",
+      "caption": "Tablica tytułowa cyklu: drobny tekst i kod QR na białej płycie",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2789,7 +2815,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/ustawienia/02.webp",
-      "caption": "Ustawienia domyślne — zdjęcie 2 z 17, 2024",
+      "caption": "Tors postaci w kostiumie z płytek drukowanych, dłonie oparte o uda; mokra płyta kolodionowa",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2799,7 +2825,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/ustawienia/03.webp",
-      "caption": "Ustawienia domyślne — zdjęcie 3 z 17, 2024",
+      "caption": "Portret kobiety z ogoloną głową w napierśniku z układów scalonych, dłonie złożone na piersi",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2809,7 +2835,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/ustawienia/04.webp",
-      "caption": "Ustawienia domyślne — zdjęcie 4 z 17, 2024",
+      "caption": "Drobna postać w ciemnym kostiumie pośrodku pustej, zamglonej przestrzeni; zacieki emulsji przy krawędziach",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2819,7 +2845,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/ustawienia/05.webp",
-      "caption": "Ustawienia domyślne — zdjęcie 5 z 17, 2024",
+      "caption": "Ludzie czekający na miejskim przystanku autobusowym, w tle wieżowce; obraz z zaciekami emulsji",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2829,7 +2855,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/ustawienia/06.webp",
-      "caption": "Ustawienia domyślne — zdjęcie 6 z 17, 2024",
+      "caption": "Postać obejmuje ogromną, pomarszczoną kulistą formę na trawniku; w tle drzewa",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2839,7 +2865,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/ustawienia/07.webp",
-      "caption": "Ustawienia domyślne — zdjęcie 7 z 17, 2024",
+      "caption": "Postać w kostiumie z układów scalonych z wyciągniętą ręką przed żywopłotem i ogrodzeniem; jasne zacieki na płycie",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2849,7 +2875,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/ustawienia/08.webp",
-      "caption": "Ustawienia domyślne — zdjęcie 8 z 17, 2024",
+      "caption": "Osoba z ogoloną głową w kostiumie siedzi bokiem przy stoliku na tarasie kawiarni",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2859,7 +2885,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/ustawienia/09.webp",
-      "caption": "Ustawienia domyślne — zdjęcie 9 z 17, 2024",
+      "caption": "Grupa ludzi przy stole w ogródku kawiarni, wśród nich postać w kostiumie z płytek drukowanych",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2869,7 +2895,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/ustawienia/10.webp",
-      "caption": "Ustawienia domyślne — zdjęcie 10 z 17, 2024",
+      "caption": "Postacie idące gęsiego chodnikiem przed budynkiem; u góry ich odbicia do góry nogami",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2879,7 +2905,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/ustawienia/11.webp",
-      "caption": "Ustawienia domyślne — zdjęcie 11 z 17, 2024",
+      "caption": "Przechodnie na przejściu dla pieszych, między nimi postać w kostiumie; w tle wieżowce i zacieki na płycie",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2889,7 +2915,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/ustawienia/12.webp",
-      "caption": "Ustawienia domyślne — zdjęcie 12 z 17, 2024",
+      "caption": "Postać w napierśniku z układów scalonych na tle szklanych biurowców",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2899,7 +2925,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/ustawienia/13.webp",
-      "caption": "Ustawienia domyślne — zdjęcie 13 z 17, 2024",
+      "caption": "Publiczność w leżakach pod parasolami na plenerowym pokazie; obraz zamglony, z uszkodzeniami emulsji",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2909,7 +2935,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/ustawienia/14.webp",
-      "caption": "Ustawienia domyślne — zdjęcie 14 z 17, 2024",
+      "caption": "Twarz z ogoloną głową wyłania się spod wielkich ciemnych liści; rozmazana emulsja",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2919,7 +2945,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/ustawienia/15.webp",
-      "caption": "Ustawienia domyślne — zdjęcie 15 z 17, 2024",
+      "caption": "Dwie ciemne sylwetki w półmroku, jedna w kostiumie z układów scalonych; ziarnista, poplamiona płyta",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2929,7 +2955,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/ustawienia/16.webp",
-      "caption": "Ustawienia domyślne — zdjęcie 16 z 17, 2024",
+      "caption": "Postać w kostiumie stoi wśród wielkich liści bananowca w ogrodzie",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -2939,7 +2965,7 @@
     {
       "@type": "ImageObject",
       "contentUrl": "https://pawelsypniewski.pl/images/ustawienia/17.webp",
-      "caption": "Ustawienia domyślne — zdjęcie 17 z 17, 2024",
+      "caption": "Portret kobiety z ogoloną głową w pancerzu z układów scalonych, wokół rozmyte okrągłe światła",
       "creditText": "Paweł Sypniewski",
       "creator": {
         "@id": "https://pawelsypniewski.pl/#person"
@@ -3024,10 +3050,10 @@
         <!-- Komunikat strony 404. GitHub Pages przy nieznanym adresie podaje
              404.html (kopię strony głównej); app.js odsłania ten pasek, gdy
              adres w przeglądarce nie pasuje do żadnego widoku. -->
-        <div class="home-notfound" id="notFoundNote" role="status" hidden>
-          <strong data-i18n="notfound.h">Nie znaleziono strony.</strong>
-          <span data-i18n="notfound.text">Ten adres nie istnieje — poniżej wybrane prace.</span>
-        </div>
+        <!-- @notfound — generator (tools/build-pages.js) wstawia tu komunikat
+             „Nie znaleziono strony” WYŁĄCZNIE w 404.html. Zwykłe podstrony nie
+             mogą mieć tego tekstu w kodzie: Google potrafi uznać stronę z takim
+             komunikatem za „miękkie 404” i wyrzucić ją z indeksu. -->
         <div class="home-topline">
           <span data-i18n="home.label">Prace / Wybrane realizacje</span>
         </div>
@@ -3121,7 +3147,7 @@
           <div class="pj-meta" id="pjMeta">2024<br>O sztucznej inteligencji<br>17 prac</div>
         </div>
         <div class="proj-stage">
-          <div class="proj-track" id="pjTrack"><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/m/01.webp"><img src="/images/ustawienia/01.webp" alt="Ustawienia domyślne — zdjęcie 1 z 17, 2024, Dokument" data-index="0" loading="eager" fetchpriority="high" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/m/02.webp"><img src="/images/ustawienia/02.webp" alt="Ustawienia domyślne — zdjęcie 2 z 17, 2024, Dokument" data-index="1" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/m/03.webp"><img src="/images/ustawienia/03.webp" alt="Ustawienia domyślne — zdjęcie 3 z 17, 2024, Dokument" data-index="2" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/m/04.webp"><img src="/images/ustawienia/04.webp" alt="Ustawienia domyślne — zdjęcie 4 z 17, 2024, Dokument" data-index="3" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/m/05.webp"><img src="/images/ustawienia/05.webp" alt="Ustawienia domyślne — zdjęcie 5 z 17, 2024, Dokument" data-index="4" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/m/06.webp"><img src="/images/ustawienia/06.webp" alt="Ustawienia domyślne — zdjęcie 6 z 17, 2024, Dokument" data-index="5" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/m/07.webp"><img src="/images/ustawienia/07.webp" alt="Ustawienia domyślne — zdjęcie 7 z 17, 2024, Dokument" data-index="6" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/m/08.webp"><img src="/images/ustawienia/08.webp" alt="Ustawienia domyślne — zdjęcie 8 z 17, 2024, Dokument" data-index="7" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/m/09.webp"><img src="/images/ustawienia/09.webp" alt="Ustawienia domyślne — zdjęcie 9 z 17, 2024, Dokument" data-index="8" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/m/10.webp"><img src="/images/ustawienia/10.webp" alt="Ustawienia domyślne — zdjęcie 10 z 17, 2024, Dokument" data-index="9" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/m/11.webp"><img src="/images/ustawienia/11.webp" alt="Ustawienia domyślne — zdjęcie 11 z 17, 2024, Dokument" data-index="10" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/m/12.webp"><img src="/images/ustawienia/12.webp" alt="Ustawienia domyślne — zdjęcie 12 z 17, 2024, Dokument" data-index="11" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/m/13.webp"><img src="/images/ustawienia/13.webp" alt="Ustawienia domyślne — zdjęcie 13 z 17, 2024, Dokument" data-index="12" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/m/14.webp"><img src="/images/ustawienia/14.webp" alt="Ustawienia domyślne — zdjęcie 14 z 17, 2024, Dokument" data-index="13" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/m/15.webp"><img src="/images/ustawienia/15.webp" alt="Ustawienia domyślne — zdjęcie 15 z 17, 2024, Dokument" data-index="14" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/m/16.webp"><img src="/images/ustawienia/16.webp" alt="Ustawienia domyślne — zdjęcie 16 z 17, 2024, Dokument" data-index="15" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/m/17.webp"><img src="/images/ustawienia/17.webp" alt="Ustawienia domyślne — zdjęcie 17 z 17, 2024, Dokument" data-index="16" loading="lazy" fetchpriority="auto" decoding="async"></picture></div></div>
+          <div class="proj-track" id="pjTrack"><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/s/01.webp 800w, /images/ustawienia/m/01.webp 1200w" sizes="100vw"><img src="/images/ustawienia/01.webp" width="1500" height="1500" alt="Tablica tytułowa cyklu: drobny tekst i kod QR na białej płycie" data-index="0" loading="eager" fetchpriority="high" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/s/02.webp 800w, /images/ustawienia/m/02.webp 1200w" sizes="100vw"><img src="/images/ustawienia/02.webp" width="1500" height="1500" alt="Tors postaci w kostiumie z płytek drukowanych, dłonie oparte o uda; mokra płyta kolodionowa" data-index="1" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/s/03.webp 800w, /images/ustawienia/m/03.webp 1200w" sizes="100vw"><img src="/images/ustawienia/03.webp" width="1500" height="1500" alt="Portret kobiety z ogoloną głową w napierśniku z układów scalonych, dłonie złożone na piersi" data-index="2" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/s/04.webp 800w, /images/ustawienia/m/04.webp 1200w" sizes="100vw"><img src="/images/ustawienia/04.webp" width="1500" height="1500" alt="Drobna postać w ciemnym kostiumie pośrodku pustej, zamglonej przestrzeni; zacieki emulsji przy krawędziach" data-index="3" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/s/05.webp 800w, /images/ustawienia/m/05.webp 1200w" sizes="100vw"><img src="/images/ustawienia/05.webp" width="1500" height="1500" alt="Ludzie czekający na miejskim przystanku autobusowym, w tle wieżowce; obraz z zaciekami emulsji" data-index="4" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/s/06.webp 800w, /images/ustawienia/m/06.webp 1200w" sizes="100vw"><img src="/images/ustawienia/06.webp" width="1500" height="1500" alt="Postać obejmuje ogromną, pomarszczoną kulistą formę na trawniku; w tle drzewa" data-index="5" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/s/07.webp 800w, /images/ustawienia/m/07.webp 1200w" sizes="100vw"><img src="/images/ustawienia/07.webp" width="1500" height="1500" alt="Postać w kostiumie z układów scalonych z wyciągniętą ręką przed żywopłotem i ogrodzeniem; jasne zacieki na płycie" data-index="6" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/s/08.webp 800w, /images/ustawienia/m/08.webp 1200w" sizes="100vw"><img src="/images/ustawienia/08.webp" width="1500" height="1500" alt="Osoba z ogoloną głową w kostiumie siedzi bokiem przy stoliku na tarasie kawiarni" data-index="7" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/s/09.webp 800w, /images/ustawienia/m/09.webp 1200w" sizes="100vw"><img src="/images/ustawienia/09.webp" width="1500" height="1500" alt="Grupa ludzi przy stole w ogródku kawiarni, wśród nich postać w kostiumie z płytek drukowanych" data-index="8" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/s/10.webp 800w, /images/ustawienia/m/10.webp 1200w" sizes="100vw"><img src="/images/ustawienia/10.webp" width="1500" height="1500" alt="Postacie idące gęsiego chodnikiem przed budynkiem; u góry ich odbicia do góry nogami" data-index="9" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/s/11.webp 800w, /images/ustawienia/m/11.webp 1200w" sizes="100vw"><img src="/images/ustawienia/11.webp" width="1500" height="1500" alt="Przechodnie na przejściu dla pieszych, między nimi postać w kostiumie; w tle wieżowce i zacieki na płycie" data-index="10" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/s/12.webp 800w, /images/ustawienia/m/12.webp 1200w" sizes="100vw"><img src="/images/ustawienia/12.webp" width="1500" height="1500" alt="Postać w napierśniku z układów scalonych na tle szklanych biurowców" data-index="11" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/s/13.webp 800w, /images/ustawienia/m/13.webp 1200w" sizes="100vw"><img src="/images/ustawienia/13.webp" width="1500" height="1500" alt="Publiczność w leżakach pod parasolami na plenerowym pokazie; obraz zamglony, z uszkodzeniami emulsji" data-index="12" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/s/14.webp 800w, /images/ustawienia/m/14.webp 1200w" sizes="100vw"><img src="/images/ustawienia/14.webp" width="1500" height="1500" alt="Twarz z ogoloną głową wyłania się spod wielkich ciemnych liści; rozmazana emulsja" data-index="13" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/s/15.webp 800w, /images/ustawienia/m/15.webp 1200w" sizes="100vw"><img src="/images/ustawienia/15.webp" width="1500" height="1500" alt="Dwie ciemne sylwetki w półmroku, jedna w kostiumie z układów scalonych; ziarnista, poplamiona płyta" data-index="14" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/s/16.webp 800w, /images/ustawienia/m/16.webp 1200w" sizes="100vw"><img src="/images/ustawienia/16.webp" width="1500" height="1500" alt="Postać w kostiumie stoi wśród wielkich liści bananowca w ogrodzie" data-index="15" loading="lazy" fetchpriority="auto" decoding="async"></picture></div><div class="proj-slide"><picture><source media="(max-width: 720px)" srcset="/images/ustawienia/s/17.webp 800w, /images/ustawienia/m/17.webp 1200w" sizes="100vw"><img src="/images/ustawienia/17.webp" width="1500" height="1500" alt="Portret kobiety z ogoloną głową w pancerzu z układów scalonych, wokół rozmyte okrągłe światła" data-index="16" loading="lazy" fetchpriority="auto" decoding="async"></picture></div></div>
           <div class="proj-nav-left"  id="pjPrev"><span class="proj-nav-arrow">← <span data-i18n="proj.prev">poprzednie</span></span></div>
           <div class="proj-nav-right" id="pjNext"><span class="proj-nav-arrow"><span data-i18n="proj.next">następne</span> →</span></div>
         </div>
@@ -3181,7 +3207,7 @@
              w app.js jest wpisany adres skryptu (KONTAKT_ENDPOINT). Dzięki temu
              nikt nie zobaczy formularza, który nie ma dokąd wysłać. -->
         <form class="contact-form" id="contactForm" hidden>
-          <h3 class="cf-h" data-i18n="form.h">Napisz do mnie</h3>
+          <h2 class="cf-h" data-i18n="form.h">Napisz do mnie</h2>
 
           <!-- Pułapka na roboty: pole jest poza ekranem i poza kolejnością Tab,
                więc człowiek go nie wypełni, a automat owszem. -->

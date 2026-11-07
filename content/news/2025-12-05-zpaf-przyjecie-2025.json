@@ -68,5 +68,31 @@
     "images/achievements/zpaf-przyjecie-2025/03.webp",
     "images/achievements/zpaf-przyjecie-2025/04.webp",
     "images/achievements/zpaf-przyjecie-2025/05.webp"
-  ]
+  ],
+  "alts": {
+    "pl": [
+      "Autoportret: twarz mężczyzny z brodą oświetlona od dołu na czarnym tle",
+      "Grupa nowo przyjętych członków ZPAF i członków komisji pozuje pod ceglaną ścianą galerii",
+      "Komisja ogląda odbitki rozłożone na podłodze galerii, prace także na ścianach",
+      "Odbitki ułożone na posadzce galerii, w tle dwie osoby przy ścianie z pracami",
+      "Członkowie komisji omawiają prace leżące na podłodze galerii, widok z góry",
+      "Trzy roześmiane osoby pod tablicą Związku Polskich Artystów Fotografików"
+    ],
+    "en": [
+      "Self-portrait: a bearded man’s face lit from below on a black background",
+      "A group of newly admitted ZPAF members and jury members posing by the gallery’s brick wall",
+      "The jury looking at prints laid out on the gallery floor, more works on the walls",
+      "Prints arranged on the gallery floor, two people by a wall of works in the background",
+      "Jury members discussing works lying on the gallery floor, seen from above",
+      "Three laughing people under the plaque of the Association of Polish Art Photographers (ZPAF)"
+    ],
+    "cs": [
+      "Autoportrét: tvář vousatého muže osvětlená zdola na černém pozadí",
+      "Skupina nově přijatých členů ZPAF a členů komise pózuje u cihlové zdi galerie",
+      "Komise si prohlíží fotografie rozložené na podlaze galerie, další díla na stěnách",
+      "Fotografie rozložené na podlaze galerie, v pozadí dvě osoby u stěny s díly",
+      "Členové komise diskutují nad díly ležícími na podlaze galerie, pohled shora",
+      "Tři rozesmátí lidé pod tabulí Svazu polských uměleckých fotografů (ZPAF)"
+    ]
+  }
 }

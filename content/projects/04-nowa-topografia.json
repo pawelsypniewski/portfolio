@@ -30,15 +30,15 @@
   },
   "seo": {
     "pl": {
-      "title": "Post-Topografia Polski — krajobraz po transformacji",
+      "title": "Post-Topografia Polski — krajobraz",
       "description": "Post-Topografia Polski — czarno-biały cykl fotograficzny o krajobrazie po transformacji. Nowa topografia przedmieść Warszawy w duchu New Topographics."
     },
     "en": {
-      "title": "Post-Topography of Poland — landscape after 1989",
+      "title": "Post-Topography of Poland — landscape",
       "description": "Post-Topography of Poland — a black-and-white photo series on the Polish landscape after the transition, in the spirit of New Topographics."
     },
     "cs": {
-      "title": "Post-topografie Polska — krajina po transformaci",
+      "title": "Post-topografie Polska — krajina",
       "description": "Post-topografie Polska — černobílý fotografický cyklus o krajině po roce 1989. Předměstí Varšavy v duchu New Topographics. Autor: Paweł Sypniewski."
     }
   },
@@ -62,5 +62,55 @@
     "images/topografia/12.webp",
     "images/topografia/13.webp",
     "images/topografia/14.webp"
-  ]
+  ],
+  "alts": {
+    "pl": [
+      "Młode bezlistne drzewko przed ścianą z białych bloczków, zeschnięta trawa; czarno-biały kadr",
+      "Tablica ogłoszeń pokryta starymi plakatami i ulotkami, wokół bezlistne drzewa",
+      "Opuszczona ławka bez oparcia na skraju lasu, wydeptana ziemia i zarośla",
+      "Pusta metalowa rama gablot na białej ścianie budynku z numerem 51",
+      "Wiata przystanku pokryta graffiti, pod nią dwie ławki i śmieci",
+      "Ogrodzenie z betonowych słupków i blachy, u góry gałąź iglaka; cegła w podmurówce",
+      "Stara tablica ogłoszeń z resztkami zerwanych plakatów",
+      "Zniszczony biały samochód z łuszczącym się lakierem zaparkowany pod oknem bloku",
+      "Rozjeżdżona błotnista droga, w oddali dźwigi na budowie i zabudowa miasta",
+      "Hala z blaszanym dachem, maszt telefonii komórkowej i stos desek pod ścianą",
+      "Rzędy skrzynek na listy na ścianie klatki schodowej",
+      "Wykarczowany pień na przyczepie samochodowej przed szpalerem tui",
+      "Dom z mansardowym dachem za betonowym płotem, przed nim asfaltowa droga",
+      "Pranie na sznurze między drzewami w ogrodzie, zeschnięte liście na ziemi"
+    ],
+    "en": [
+      "A young leafless tree in front of a wall of white blocks, dry grass; black and white",
+      "A notice board covered with old posters and leaflets, leafless trees around",
+      "An abandoned backless bench at the edge of a forest, trampled ground and undergrowth",
+      "An empty metal display frame on the white wall of a building numbered 51",
+      "A graffiti-covered shelter with two benches and litter under it",
+      "A fence of concrete posts and sheet metal with a conifer branch at the top; brick base",
+      "An old notice board with remnants of torn-off posters",
+      "A battered white car with peeling paint parked under the window of a block of flats",
+      "A rutted muddy road, construction cranes and city buildings in the distance",
+      "A hall with a sheet-metal roof, a mobile phone mast and a pile of boards by the wall",
+      "Rows of letterboxes on a stairwell wall",
+      "An uprooted stump on a car trailer in front of a row of thujas",
+      "A house with a mansard roof behind a concrete fence, an asphalt road in front",
+      "Washing on a line between trees in a garden, dry leaves on the ground"
+    ],
+    "cs": [
+      "Mladý bezlistý stromek před zdí z bílých tvárnic, uschlá tráva; černobílý záběr",
+      "Vývěska pokrytá starými plakáty a letáky, kolem bezlisté stromy",
+      "Opuštěná lavička bez opěradla na kraji lesa, ušlapaná zem a křoví",
+      "Prázdný kovový rám vývěsky na bílé zdi budovy s číslem 51",
+      "Přístřešek zastávky pokrytý graffiti, pod ním dvě lavičky a odpadky",
+      "Plot z betonových sloupků a plechu, nahoře větev jehličnanu; cihlová podezdívka",
+      "Stará vývěska se zbytky strhaných plakátů",
+      "Poškozené bílé auto s oloupaným lakem zaparkované pod oknem paneláku",
+      "Rozježděná blátivá cesta, v dálce jeřáby na stavbě a městská zástavba",
+      "Hala s plechovou střechou, stožár mobilní sítě a hromada prken u zdi",
+      "Řady poštovních schránek na zdi schodiště",
+      "Vykopaný pařez na přívěsu za auto před řadou tújí",
+      "Dům s mansardovou střechou za betonovým plotem, před ním asfaltová silnice",
+      "Prádlo na šňůře mezi stromy na zahradě, uschlé listí na zemi"
+    ]
+  }
 }
